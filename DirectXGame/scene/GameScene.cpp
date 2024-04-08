@@ -2,6 +2,10 @@
 #include "TextureManager.h"
 #include <cassert>
 
+#include "ImGuiManager.h"
+
+
+
 GameScene::GameScene() {}
 
 GameScene::~GameScene() {
@@ -36,9 +40,23 @@ void GameScene::Initialize() {
 	soundDataHandle_ = audio_->LoadWave("fanfare.wav");
 	voiceHandle_ = audio_->PlayWave(soundDataHandle_);
 
+
 }
 
 void GameScene::Update() {
+
+#ifdef _DEBUG
+
+	ImGui::Begin("Debug1");
+	//ImGui::Text("Kamata Tarou %d.%d.%d", 2050, 12, 31);
+	ImGui::InputFloat3("InputFloat3", inputFloat3_);
+	ImGui::SliderFloat3("SliderFloat3", inputFloat3_, 0.0f, 1.0f);
+	ImGui::End();
+
+	ImGui::ShowDemoWindow();
+
+#endif // _DEBUG
+
 
 	///- textureの移動
 	position_.x += 2.0f;

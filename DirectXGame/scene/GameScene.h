@@ -67,4 +67,7 @@ private: // メンバ変数
 	uint32_t soundDataHandle_ = 0;
 	uint32_t voiceHandle_ = 0;
 
+	///- デバッグテキスト
+	float inputFloat3_[3] = { 0.0f,0.0f,0.0f };
+
 };
