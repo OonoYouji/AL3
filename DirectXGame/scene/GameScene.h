@@ -56,6 +56,7 @@ private: // メンバ変数
 	///- テクスチャの読み込み
 	uint32_t textureHandle_ = 0;
 	Sprite* sprite_ = nullptr;
+	Vector2 position_;
 
 
 };

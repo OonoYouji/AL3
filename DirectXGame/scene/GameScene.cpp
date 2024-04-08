@@ -23,12 +23,22 @@ void GameScene::Initialize() {
 
 	///- テクスチャ読み込み
 	textureHandle_ = TextureManager::Load("uvChecker.png");
-
 	sprite_ = Sprite::Create(textureHandle_, { 100, 50 });
+	position_ = sprite_->GetPosition();
+
+	
 
 }
 
-void GameScene::Update() {}
+void GameScene::Update() {
+
+	///- textureの移動
+	position_.x += 2.0f;
+	position_.y += 1.0f;
+	sprite_->SetPosition(position_);
+
+
+}
 
 void GameScene::Draw() {
 
