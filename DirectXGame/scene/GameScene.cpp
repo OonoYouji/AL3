@@ -32,6 +32,10 @@ void GameScene::Initialize() {
 	worldTransform_.Initialize();
 	viewProjection_.Initialize();
 
+	///- オーディオとキーボード入力
+	soundDataHandle_ = audio_->LoadWave("fanfare.wav");
+	voiceHandle_ = audio_->PlayWave(soundDataHandle_);
+
 }
 
 void GameScene::Update() {
@@ -41,7 +45,10 @@ void GameScene::Update() {
 	position_.y += 1.0f;
 	sprite_->SetPosition(position_);
 
-
+	///- 音の停止
+	if(input_->TriggerKey(DIK_SPACE)) {
+		audio_->StopWave(voiceHandle_);
+	}
 
 }
 
