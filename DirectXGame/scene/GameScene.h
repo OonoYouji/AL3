@@ -9,7 +9,10 @@
 #include "WorldTransform.h"
 
 #include <cmath>
+#include <memory>
 #include <DebugCamera.h>
+#include "ViewProjection.h"
+
 
 
 /// <summary>
@@ -52,6 +55,7 @@ private: // メンバ変数
 	/// ゲームシーン用
 	/// </summary>
 
+	ViewProjection viewProjection_;
 
 
 };
