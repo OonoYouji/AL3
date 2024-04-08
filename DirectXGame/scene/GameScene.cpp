@@ -4,6 +4,7 @@
 
 #include "ImGuiManager.h"
 #include "PrimitiveDrawer.h"
+#include "AxisIndicator.h"
 
 
 GameScene::GameScene() {}
@@ -41,12 +42,15 @@ void GameScene::Initialize() {
 	soundDataHandle_ = audio_->LoadWave("fanfare.wav");
 	voiceHandle_ = audio_->PlayWave(soundDataHandle_);
 
-
 	///- デバッグカメラ
 	debugCamera_ = new DebugCamera(1280, 720);
 
 	///- ラインの描画
 	PrimitiveDrawer::GetInstance()->SetViewProjection(&debugCamera_->GetViewProjection());
+
+	///- 軸方向表示
+	AxisIndicator::GetInstance()->SetVisible(true);
+	AxisIndicator::GetInstance()->SetTargetViewProjection(&debugCamera_->GetViewProjection());
 
 }
 
@@ -93,7 +97,7 @@ void GameScene::Draw() {
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
 
-	//sprite_->Draw();
+	sprite_->Draw();
 
 
 	// スプライト描画後処理
