@@ -8,6 +8,10 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 
+#include <cmath>
+
+
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -47,4 +51,11 @@ private: // メンバ変数
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
+
+
+	///- テクスチャの読み込み
+	uint32_t textureHandle_ = 0;
+	Sprite* sprite_ = nullptr;
+
+
 };
