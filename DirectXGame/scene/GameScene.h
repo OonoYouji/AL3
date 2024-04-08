@@ -9,7 +9,7 @@
 #include "WorldTransform.h"
 
 #include <cmath>
-
+#include <DebugCamera.h>
 
 
 /// <summary>
@@ -69,5 +69,8 @@ private: // メンバ変数
 
 	///- デバッグテキスト
 	float inputFloat3_[3] = { 0.0f,0.0f,0.0f };
+
+	///- デバッグカメラ
+	DebugCamera* debugCamera_ = nullptr;
 
 };

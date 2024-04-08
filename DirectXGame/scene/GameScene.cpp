@@ -3,7 +3,7 @@
 #include <cassert>
 
 #include "ImGuiManager.h"
-
+#include "PrimitiveDrawer.h"
 
 
 GameScene::GameScene() {}
@@ -12,6 +12,7 @@ GameScene::~GameScene() {
 
 	delete sprite_;
 	delete model_;
+	delete debugCamera_;
 
 }
 
@@ -41,6 +42,12 @@ void GameScene::Initialize() {
 	voiceHandle_ = audio_->PlayWave(soundDataHandle_);
 
 
+	///- デバッグカメラ
+	debugCamera_ = new DebugCamera(1280, 720);
+
+	///- ラインの描画
+	PrimitiveDrawer::GetInstance()->SetViewProjection(&debugCamera_->GetViewProjection());
+
 }
 
 void GameScene::Update() {
@@ -67,6 +74,9 @@ void GameScene::Update() {
 	if(input_->TriggerKey(DIK_SPACE)) {
 		audio_->StopWave(voiceHandle_);
 	}
+
+
+	debugCamera_->Update();
 
 }
 
@@ -99,8 +109,35 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
+	model_->Draw(worldTransform_, debugCamera_->GetViewProjection(), textureHandle_);
 
+
+	///- グリッド線の描画
+
+	const float kGridHalfWidth = 20;	// 1つあたりの幅
+	const uint32_t kSubdivision = 25;	// 分割数
+	const float kGridEvery = (kGridHalfWidth * 2.0f) / static_cast<float>(kSubdivision); // 1つ分の長さ
+
+	for(uint32_t xIndex = 0; xIndex <= kSubdivision; xIndex++) {
+		Vector3 start = { -kGridHalfWidth, 0.0f, (xIndex - kSubdivision / 2.0f) * kGridEvery };
+		Vector3 end = { kGridHalfWidth, 0.0f, (xIndex - kSubdivision / 2.0f) * kGridEvery };
+		//PrimitiveDrawer::GetInstance()->DrawLine3d(start, end, { 1.0f,0.0f,0.0f,1.0f });
+		if(xIndex == kSubdivision / 2) {
+			PrimitiveDrawer::GetInstance()->DrawLine3d(start, end, { 0.0f,0.0f,1.0f,1.0f });
+		} else {
+			PrimitiveDrawer::GetInstance()->DrawLine3d(start, end, { 0x20 / 255.0f, 0x20 / 255.0f, 0x20 / 255.0f,1.0f });
+		}
+	}
+
+	for(uint32_t zIndex = 0; zIndex <= kSubdivision; zIndex++) {
+		Vector3 start = { (zIndex - kSubdivision / 2.0f) * kGridEvery, 0.0f, -kGridHalfWidth };
+		Vector3 end = { (zIndex - kSubdivision / 2.0f) * kGridEvery, 0.0f, kGridHalfWidth };
+		if(zIndex == kSubdivision / 2) {
+			PrimitiveDrawer::GetInstance()->DrawLine3d(start, end, { 0.0f,0.0f,1.0f,1.0f });
+		} else {
+			PrimitiveDrawer::GetInstance()->DrawLine3d(start, end, { 0x20 / 255.0f, 0x20 / 255.0f, 0x20 / 255.0f,1.0f });
+		}
+	}
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
