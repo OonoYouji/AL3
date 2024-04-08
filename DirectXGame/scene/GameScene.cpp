@@ -7,13 +7,9 @@
 #include "AxisIndicator.h"
 
 
+
 GameScene::GameScene() {}
-
 GameScene::~GameScene() {
-
-	delete sprite_;
-	delete model_;
-	delete debugCamera_;
 
 }
 
@@ -28,57 +24,11 @@ void GameScene::Initialize() {
 	/// メンバ変数の初期化
 	/// -------------------------
 
-	///- テクスチャ読み込み
-	textureHandle_ = TextureManager::Load("uvChecker.png");
-	sprite_ = Sprite::Create(textureHandle_, { 100, 50 });
-	position_ = sprite_->GetPosition();
 
-	///- モデル生成
-	model_ = Model::Create();
-	worldTransform_.Initialize();
-	viewProjection_.Initialize();
-
-	///- オーディオとキーボード入力
-	soundDataHandle_ = audio_->LoadWave("fanfare.wav");
-	voiceHandle_ = audio_->PlayWave(soundDataHandle_);
-
-	///- デバッグカメラ
-	debugCamera_ = new DebugCamera(1280, 720);
-
-	///- ラインの描画
-	PrimitiveDrawer::GetInstance()->SetViewProjection(&debugCamera_->GetViewProjection());
-
-	///- 軸方向表示
-	AxisIndicator::GetInstance()->SetVisible(true);
-	AxisIndicator::GetInstance()->SetTargetViewProjection(&debugCamera_->GetViewProjection());
 
 }
 
 void GameScene::Update() {
-
-#ifdef _DEBUG
-
-	ImGui::Begin("Debug1");
-	//ImGui::Text("Kamata Tarou %d.%d.%d", 2050, 12, 31);
-	ImGui::InputFloat3("InputFloat3", inputFloat3_);
-	ImGui::SliderFloat3("SliderFloat3", inputFloat3_, 0.0f, 1.0f);
-	ImGui::End();
-
-	ImGui::ShowDemoWindow();
-
-#endif // _DEBUG
-
-
-	///- textureの移動
-	position_.x += 2.0f;
-	position_.y += 1.0f;
-	sprite_->SetPosition(position_);
-
-	///- 音の停止
-	if(input_->TriggerKey(DIK_SPACE)) {
-		audio_->StopWave(voiceHandle_);
-	}
-
 
 	debugCamera_->Update();
 
@@ -96,7 +46,6 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
-	sprite_->Draw();
 
 
 
@@ -113,7 +62,6 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	model_->Draw(worldTransform_, debugCamera_->GetViewProjection(), textureHandle_);
 
 
 	///- グリッド線の描画
