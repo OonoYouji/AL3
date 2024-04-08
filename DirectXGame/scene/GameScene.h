@@ -58,5 +58,9 @@ private: // メンバ変数
 	Sprite* sprite_ = nullptr;
 	Vector2 position_;
 
+	///- モデル
+	Model* model_ = nullptr;
+	WorldTransform worldTransform_;
+	ViewProjection viewProjection_;
 
 };

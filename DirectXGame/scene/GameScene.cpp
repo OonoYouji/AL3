@@ -7,6 +7,7 @@ GameScene::GameScene() {}
 GameScene::~GameScene() {
 
 	delete sprite_;
+	delete model_;
 
 }
 
@@ -26,7 +27,10 @@ void GameScene::Initialize() {
 	sprite_ = Sprite::Create(textureHandle_, { 100, 50 });
 	position_ = sprite_->GetPosition();
 
-	
+	///- モデル生成
+	model_ = Model::Create();
+	worldTransform_.Initialize();
+	viewProjection_.Initialize();
 
 }
 
@@ -36,6 +40,7 @@ void GameScene::Update() {
 	position_.x += 2.0f;
 	position_.y += 1.0f;
 	sprite_->SetPosition(position_);
+
 
 
 }
@@ -52,7 +57,8 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
-	sprite_->Draw();
+
+	//sprite_->Draw();
 
 
 	// スプライト描画後処理
@@ -68,6 +74,8 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
+	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
+
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
