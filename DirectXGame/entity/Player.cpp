@@ -2,7 +2,7 @@
 
 #include <assert.h>
 #include "TextureManager.h"
-
+#include "ImGuiManager.h"
 
 Player::Player() {}
 Player::~Player() {}
@@ -27,6 +27,8 @@ void Player::Init(Model* model, uint32_t textureHandle) {
 
 void Player::Update() {
 
+	ImGui();
+
 	move_ = { 0.0f,0.0f,0.0f };
 
 	///- 左右移動
@@ -48,6 +50,10 @@ void Player::Update() {
 
 	worldTransform_.translation_ += move_;
 
+	///- 移動制限
+	MoveLimit();
+
+	///- world行列の生成
 	worldTransform_.matWorld_ = Mat4::MakeAffine(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
 
 	///- 定数バッファに転送
@@ -57,5 +63,29 @@ void Player::Update() {
 void Player::Draw(const ViewProjection& viewProjection) {
 
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
+
+}
+
+void Player::ImGui() {
+#ifdef _DEBUG
+
+	ImGui::Begin("player");
+
+	ImGui::DragFloat3("transform", &worldTransform_.translation_.x);
+
+	ImGui::End();
+
+#endif // _DEBUG
+}
+
+void Player::MoveLimit() {
+	const float kLimitX = 32;
+	const float kLimitY = 16;
+
+	///- transformがLimitを超えたとき押し戻される
+	worldTransform_.translation_.x = max(worldTransform_.translation_.x, -kLimitX);
+	worldTransform_.translation_.x = min(worldTransform_.translation_.x, +kLimitX);
+	worldTransform_.translation_.y = max(worldTransform_.translation_.y, -kLimitY);
+	worldTransform_.translation_.y = min(worldTransform_.translation_.y, +kLimitY);
 
 }

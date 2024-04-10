@@ -29,4 +29,10 @@ private:
 	Vec3f move_;
 	float speed_;
 
+
+	///- メンバ関数
+	void ImGui();
+
+	void MoveLimit();
+
 };

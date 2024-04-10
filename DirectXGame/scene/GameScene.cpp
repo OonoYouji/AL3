@@ -24,15 +24,53 @@ void GameScene::Initialize() {
 	/// メンバ変数の初期化
 	/// -------------------------
 
+	debugCamera_ = std::make_unique<DebugCamera>(1280, 720);
+	isDebugCameraActive_ = false;
+
 	viewProjection_.Initialize();
 
 	player_ = std::make_unique<Player>();
 	player_->Init(Model::Create(), TextureManager::Load("uvChecker.png"));
 
+	///- 右上の軸表示
+	AxisIndicator::GetInstance()->SetVisible(true);
+	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 
 }
 
 void GameScene::Update() {
+#ifdef _DEBUG
+	///- Debugでしか動かない
+	if(input_->TriggerKey(DIK_TAB)) {
+		///- フラグを切り替え
+		if(isDebugCameraActive_) {
+			isDebugCameraActive_ = false;
+		} else {
+			isDebugCameraActive_ = true;
+		}
+	}
+
+	ImGui::Begin("main");
+	if(isDebugCameraActive_) {
+		ImGui::Text("isDebugCameraActive: True");
+	} else {
+		ImGui::Text("isDebugCameraActive: False");
+	}
+	ImGui::End();
+
+	if(isDebugCameraActive_) {
+		debugCamera_->Update();
+		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
+		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
+		///- 行列の転送
+		viewProjection_.TransferMatrix();
+	} else {
+		///- 行列の更新と転送
+		viewProjection_.UpdateMatrix();
+	}
+
+#endif // _DEBUG
+
 
 	player_->Update();
 }
