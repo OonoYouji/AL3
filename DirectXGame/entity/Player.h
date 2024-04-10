@@ -20,8 +20,13 @@ public:
 
 private:
 
+	Input* input_;
+
 	std::unique_ptr<Model> model_;
 	WorldTransform worldTransform_;
 	uint32_t textureHandle_;
+
+	Vec3f move_;
+	float speed_;
 
 };
