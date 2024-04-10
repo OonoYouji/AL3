@@ -35,6 +35,8 @@ namespace Mat4 {
 	Matrix4x4 MakeInverse(const Matrix4x4& m);
 
 	Matrix4x4 MakeTranspose(const Matrix4x4& m);
-
-
 }
+
+
+///- 名前を追加
+using Mat4 = Matrix4x4;
