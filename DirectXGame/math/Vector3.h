@@ -114,3 +114,7 @@ inline Vector3& Vector3::operator*=(float value) {
 	this->z *= value;
 	return *this;
 }
+
+
+///- 名前を追加
+using Vec3f = Vector3;
