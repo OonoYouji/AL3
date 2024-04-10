@@ -9,7 +9,7 @@ PlayerBullet::~PlayerBullet() {}
 
 
 
-void PlayerBullet::Init(Model* model, const Vec3f& position) {
+void PlayerBullet::Init(Model* model, const Vec3f& position, const Vec3f& velocity) {
 	assert(model);
 
 	///- モデル
@@ -22,10 +22,25 @@ void PlayerBullet::Init(Model* model, const Vec3f& position) {
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = position;
 
+	velocity_ = velocity;
+
+	///- 寿命
+	deathTimer_ = kLifeTime;
+	isDead_ = false;
+
 }
 
 void PlayerBullet::Update() {
 
+	///- 座標の更新
+	worldTransform_.translation_ += velocity_;
+
+	///- 時間経過で消滅
+	if(--deathTimer_ <= 0) {
+		isDead_ = true;
+	}
+
+	///- 行列の計算・転送
 	worldTransform_.UpdateMatrix();
 }
 

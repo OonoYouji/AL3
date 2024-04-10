@@ -140,3 +140,13 @@ Matrix4x4 Mat4::MakeTranspose(const Matrix4x4& m) {
 	}
 	return result;
 }
+
+Vec3f Mat4::TransformNormal(const Vec3f& v, const Matrix4x4& matrix) {
+	Vec3f result{
+		v.x * matrix.m[0][0] + v.y * matrix.m[1][0] + v.z * matrix.m[2][0],
+		v.x * matrix.m[0][1] + v.y * matrix.m[1][1] + v.z * matrix.m[2][1],
+		v.x * matrix.m[0][2] + v.y * matrix.m[1][2] + v.z * matrix.m[2][2]
+	};
+
+	return result;
+}

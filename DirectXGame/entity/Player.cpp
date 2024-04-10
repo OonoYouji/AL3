@@ -23,6 +23,8 @@ void Player::Init(Model* model, uint32_t textureHandle) {
 	move_ = { 0.0f,0.0f,0.0f };
 	speed_ = 0.2f;
 
+	bulletSpeed_ = 1.0f;
+
 }
 
 void Player::Update() {
@@ -61,6 +63,16 @@ void Player::Update() {
 	for(auto& bullet : bullets_) {
 		bullet->Update();
 	}
+
+	///- デスフラグの立った弾を削除
+	bullets_.remove_if([](auto& bullet) {
+		if(bullet->IsDead()) {
+			//delete bullet;
+			return true;
+		} else {
+			return false;
+		}
+	});
 
 	///- 座標更新
 	worldTransform_.translation_ += move_;
@@ -110,8 +122,12 @@ void Player::Attack() {
 
 	if(input_->TriggerKey(DIK_SPACE)) {
 
+		Vec3f velocity = { 0.0f,0.0f,bulletSpeed_ };
+
+		velocity = Mat4::TransformNormal(velocity, worldTransform_.matWorld_);
+
 		std::unique_ptr<PlayerBullet> newBullet = std::make_unique<PlayerBullet>();
-		newBullet->Init(Model::Create(), worldTransform_.translation_);
+		newBullet->Init(Model::Create(), worldTransform_.translation_, velocity);
 
 		bullets_.push_back(std::move(newBullet));
 	}

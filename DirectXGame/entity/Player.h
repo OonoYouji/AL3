@@ -33,6 +33,7 @@ private:
 
 	///- 弾
 	std::list<std::unique_ptr<PlayerBullet>> bullets_;
+	float bulletSpeed_;
 
 	///- メンバ関数
 

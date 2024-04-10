@@ -35,5 +35,8 @@ namespace Mat4 {
 	Matrix4x4 MakeInverse(const Matrix4x4& m);
 
 	Matrix4x4 MakeTranspose(const Matrix4x4& m);
+
+	Vec3f TransformNormal(const Vec3f& v, const Matrix4x4& matrix);
+
 }
 
