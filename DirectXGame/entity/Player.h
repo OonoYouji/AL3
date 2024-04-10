@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <memory>
+#include <list>
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 #include "Model.h"
@@ -31,7 +32,7 @@ private:
 	float speed_;
 
 	///- 弾
-	std::unique_ptr<PlayerBullet> bullet_;
+	std::list<std::unique_ptr<PlayerBullet>> bullets_;
 
 	///- メンバ関数
 

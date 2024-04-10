@@ -58,8 +58,8 @@ void Player::Update() {
 
 	///- 弾の更新
 	Attack();
-	if(bullet_.get()) {
-		bullet_->Update();
+	for(auto& bullet : bullets_) {
+		bullet->Update();
 	}
 
 	///- 座標更新
@@ -76,8 +76,8 @@ void Player::Draw(const ViewProjection& viewProjection) {
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
 
 	///- 弾の描画
-	if(bullet_.get()) {
-		bullet_->Draw(viewProjection);
+	for(auto& bullet : bullets_) {
+		bullet->Draw(viewProjection);
 	}
 
 }
@@ -110,15 +110,10 @@ void Player::Attack() {
 
 	if(input_->TriggerKey(DIK_SPACE)) {
 
-		///- すでに弾を生成していたら解放してから次の弾を生成する
-		if(bullet_.get() != nullptr) {
-			bullet_.release();
-		}
-
 		std::unique_ptr<PlayerBullet> newBullet = std::make_unique<PlayerBullet>();
 		newBullet->Init(Model::Create(), worldTransform_.translation_);
 
-		bullet_ = std::move(newBullet);
+		bullets_.push_back(std::move(newBullet));
 	}
 
 }
