@@ -29,6 +29,7 @@ void Player::Update() {
 
 	ImGui();
 
+	///- 移動量のリセット
 	move_ = { 0.0f,0.0f,0.0f };
 
 	///- 左右移動
@@ -47,22 +48,37 @@ void Player::Update() {
 		move_.y -= speed_;
 	}
 
+	///- 左右回転
+	if(input_->PushKey(DIK_A)) {
+		worldTransform_.rotation_.y += 0.02f;
+	}
+	if(input_->PushKey(DIK_D)) {
+		worldTransform_.rotation_.y -= 0.02f;
+	}
 
+	///- 弾の更新
+	Attack();
+	if(bullet_.get()) {
+		bullet_->Update();
+	}
+
+	///- 座標更新
 	worldTransform_.translation_ += move_;
 
 	///- 移動制限
 	MoveLimit();
 
-	///- world行列の生成
-	worldTransform_.matWorld_ = Mat4::MakeAffine(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
-
-	///- 定数バッファに転送
-	worldTransform_.TransferMatrix();
+	worldTransform_.UpdateMatrix();
 }
 
 void Player::Draw(const ViewProjection& viewProjection) {
 
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
+
+	///- 弾の描画
+	if(bullet_.get()) {
+		bullet_->Draw(viewProjection);
+	}
 
 }
 
@@ -87,5 +103,22 @@ void Player::MoveLimit() {
 	worldTransform_.translation_.x = min(worldTransform_.translation_.x, +kLimitX);
 	worldTransform_.translation_.y = max(worldTransform_.translation_.y, -kLimitY);
 	worldTransform_.translation_.y = min(worldTransform_.translation_.y, +kLimitY);
+
+}
+
+void Player::Attack() {
+
+	if(input_->TriggerKey(DIK_SPACE)) {
+
+		///- すでに弾を生成していたら解放してから次の弾を生成する
+		if(bullet_.get() != nullptr) {
+			bullet_.release();
+		}
+
+		std::unique_ptr<PlayerBullet> newBullet = std::make_unique<PlayerBullet>();
+		newBullet->Init(Model::Create(), worldTransform_.translation_);
+
+		bullet_ = std::move(newBullet);
+	}
 
 }

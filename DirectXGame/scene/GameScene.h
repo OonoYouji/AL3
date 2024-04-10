@@ -15,7 +15,6 @@
 
 #include "entity/Player.h"
 
-
 /// <summary>
 /// ゲームシーン
 /// </summary>
