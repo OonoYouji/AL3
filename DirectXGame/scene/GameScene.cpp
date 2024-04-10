@@ -26,12 +26,15 @@ void GameScene::Initialize() {
 
 	viewProjection_.Initialize();
 
+	player_ = std::make_unique<Player>();
+	player_->Init(Model::Create(), TextureManager::Load("uvChecker.png"));
+
 
 }
 
 void GameScene::Update() {
 
-
+	player_->Update();
 }
 
 void GameScene::Draw() {
@@ -62,34 +65,9 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
+	player_->Draw(viewProjection_);
 
 
-	///- グリッド線の描画
-
-	//const float kGridHalfWidth = 20;	// 1つあたりの幅
-	//const uint32_t kSubdivision = 25;	// 分割数
-	//const float kGridEvery = (kGridHalfWidth * 2.0f) / static_cast<float>(kSubdivision); // 1つ分の長さ
-
-	//for(uint32_t xIndex = 0; xIndex <= kSubdivision; xIndex++) {
-	//	Vector3 start = { -kGridHalfWidth, 0.0f, (xIndex - kSubdivision / 2.0f) * kGridEvery };
-	//	Vector3 end = { kGridHalfWidth, 0.0f, (xIndex - kSubdivision / 2.0f) * kGridEvery };
-	//	//PrimitiveDrawer::GetInstance()->DrawLine3d(start, end, { 1.0f,0.0f,0.0f,1.0f });
-	//	if(xIndex == kSubdivision / 2) {
-	//		PrimitiveDrawer::GetInstance()->DrawLine3d(start, end, { 0.0f,0.0f,1.0f,1.0f });
-	//	} else {
-	//		PrimitiveDrawer::GetInstance()->DrawLine3d(start, end, { 0x20 / 255.0f, 0x20 / 255.0f, 0x20 / 255.0f,1.0f });
-	//	}
-	//}
-
-	//for(uint32_t zIndex = 0; zIndex <= kSubdivision; zIndex++) {
-	//	Vector3 start = { (zIndex - kSubdivision / 2.0f) * kGridEvery, 0.0f, -kGridHalfWidth };
-	//	Vector3 end = { (zIndex - kSubdivision / 2.0f) * kGridEvery, 0.0f, kGridHalfWidth };
-	//	if(zIndex == kSubdivision / 2) {
-	//		PrimitiveDrawer::GetInstance()->DrawLine3d(start, end, { 0.0f,0.0f,1.0f,1.0f });
-	//	} else {
-	//		PrimitiveDrawer::GetInstance()->DrawLine3d(start, end, { 0x20 / 255.0f, 0x20 / 255.0f, 0x20 / 255.0f,1.0f });
-	//	}
-	//}
 
 
 	// 3Dオブジェクト描画後処理

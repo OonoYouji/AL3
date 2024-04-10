@@ -13,6 +13,7 @@
 #include <DebugCamera.h>
 #include "ViewProjection.h"
 
+#include "entity/Player.h"
 
 
 /// <summary>
@@ -57,5 +58,6 @@ private: // メンバ変数
 
 	ViewProjection viewProjection_;
 
+	std::unique_ptr<Player> player_;
 
 };
