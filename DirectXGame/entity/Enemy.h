@@ -44,6 +44,9 @@ private: ///- メンバ変数
 	///- 状態
 	Phase phase_;
 
+	static void (Enemy::* spFuncTable[])();
+
+	///- メンバ関数
 	void UpdateApproach();
 	void UpdateLeave();
 

@@ -1,6 +1,11 @@
 #include "Enemy.h"
 
 
+///- static で宣言された変数の初期化
+void(Enemy::* Enemy::spFuncTable[])() = {
+	&Enemy::UpdateApproach,
+	&Enemy::UpdateLeave
+};
 
 
 Enemy::Enemy() {}
@@ -29,14 +34,8 @@ void Enemy::Update() {
 
 	//worldTransform_.translation_ += velocity_;
 
-	switch(phase_) {
-	case Phase::Approach: ///- 接近
-		UpdateApproach();
-		break;
-	case Phase::Leave: ///- 離脱
-		UpdateLeave();
-		break;
-	}
+	///- 関数ポインタに設定された関数の呼び出し
+	(this->*spFuncTable[static_cast<size_t>(phase_)])();
 
 	///- 行列の更新
 	worldTransform_.UpdateMatrix();
