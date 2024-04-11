@@ -4,7 +4,7 @@
 #include "Model.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
-
+#include "BaseEnemyState.h"
 
 
 ///- Enemyの状態
@@ -37,17 +37,18 @@ private: ///- メンバ変数
 	WorldTransform worldTransform_;
 
 	Vec3f velocity_;
-	Vec3f approachVelocity_;
-	Vec3f leaveVelocity_;
 	float speed_;
 
-	///- 状態
-	Phase phase_;
+	std::unique_ptr<BaseEnemyState> state_;
 
-	static void (Enemy::* spFuncTable[])();
 
-	///- メンバ関数
-	void UpdateApproach();
-	void UpdateLeave();
+public: ///- クラス外参照可
+
+	void Move(const Vec3f& velocity);
+
+	void ChangeState(BaseEnemyState* baseEnemyState);
+
+	const Vec3f& Position() const { return worldTransform_.translation_; }
+
 
 };

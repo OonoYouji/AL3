@@ -110,7 +110,10 @@
     <ClCompile Include="3d\WorldTransform.cpp" />
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="entity\BaseEnemyState.cpp" />
     <ClCompile Include="entity\Enemy.cpp" />
+    <ClCompile Include="entity\EnemyStateApproach.cpp" />
+    <ClCompile Include="entity\EnemyStateLeave.cpp" />
     <ClCompile Include="entity\Player.cpp" />
     <ClCompile Include="entity\PlayerBullet.cpp" />
     <ClCompile Include="main.cpp" />
@@ -141,7 +144,10 @@
     <ClInclude Include="base\StringUtility.h" />
     <ClInclude Include="base\TextureManager.h" />
     <ClInclude Include="base\WinApp.h" />
+    <ClInclude Include="entity\BaseEnemyState.h" />
     <ClInclude Include="entity\Enemy.h" />
+    <ClInclude Include="entity\EnemyStateApproach.h" />
+    <ClInclude Include="entity\EnemyStateLeave.h" />
     <ClInclude Include="entity\Player.h" />
     <ClInclude Include="entity\PlayerBullet.h" />
     <ClInclude Include="input\Input.h" />

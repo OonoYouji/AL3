@@ -1,12 +1,6 @@
 #include "Enemy.h"
 
-
-///- static で宣言された変数の初期化
-void(Enemy::* Enemy::spFuncTable[])() = {
-	&Enemy::UpdateApproach,
-	&Enemy::UpdateLeave
-};
-
+#include "EnemyStateApproach.h"
 
 Enemy::Enemy() {}
 Enemy::~Enemy() {}
@@ -24,18 +18,13 @@ void Enemy::Init(Model* model, const Vec3f& position, uint32_t textureHandle) {
 
 	speed_ = 0.5f;
 	velocity_ = { 0.0f,0.0f,-speed_ };
-	approachVelocity_ = { 0.0f,0.0f,-1.0f };
-	leaveVelocity_ = { 0.0f,0.0f,0.5f };
 
-	phase_ = Phase::Approach;
+	state_ = std::make_unique<EnemyStateApproach>();
 }
 
 void Enemy::Update() {
 
-	//worldTransform_.translation_ += velocity_;
-
-	///- 関数ポインタに設定された関数の呼び出し
-	(this->*spFuncTable[static_cast<size_t>(phase_)])();
+	state_->Update(this);
 
 	///- 行列の更新
 	worldTransform_.UpdateMatrix();
@@ -50,24 +39,10 @@ void Enemy::Draw(const ViewProjection& viewProjection) {
 
 
 
-/// -----------------------
-/// 接近時の更新処理
-/// -----------------------
-void Enemy::UpdateApproach() {
-	///- 移動
-	worldTransform_.translation_ += approachVelocity_;
-	///- 基底値になったら離脱
-	if(worldTransform_.translation_.z < 0.0f) {
-		phase_ = Phase::Leave;
-	}
+void Enemy::Move(const Vec3f& velocity) {
+	worldTransform_.translation_ += velocity;
 }
 
-
-
-/// -----------------------
-/// 離脱時の更新処理
-/// -----------------------
-void Enemy::UpdateLeave() {
-	///- 移動
-	worldTransform_.translation_ += leaveVelocity_;
+void Enemy::ChangeState(BaseEnemyState* baseEnemyState) {
+	state_.reset(baseEnemyState);
 }
