@@ -36,9 +36,6 @@ private: ///- メンバ変数
 	///- world座標
 	WorldTransform worldTransform_;
 
-	Vec3f velocity_;
-	float speed_;
-
 	std::unique_ptr<BaseEnemyState> state_;
 
 

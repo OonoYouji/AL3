@@ -16,8 +16,6 @@ void Enemy::Init(Model* model, const Vec3f& position, uint32_t textureHandle) {
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = position;
 
-	speed_ = 0.5f;
-	velocity_ = { 0.0f,0.0f,-speed_ };
 
 	ChangeState(std::make_unique<EnemyStateApproach>());
 
