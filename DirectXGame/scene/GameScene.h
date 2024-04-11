@@ -14,6 +14,7 @@
 #include "ViewProjection.h"
 
 #include "entity/Player.h"
+#include "entity/Enemy.h"
 
 /// <summary>
 /// ゲームシーン
@@ -64,5 +65,7 @@ private: // メンバ変数
 
 
 	std::unique_ptr<Player> player_;
+
+	std::unique_ptr<Enemy> enemy_;
 
 };

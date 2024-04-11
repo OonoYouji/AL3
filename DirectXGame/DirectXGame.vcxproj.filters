@@ -90,6 +90,9 @@
     <ClCompile Include="3d\WorldTransform.cpp">
       <Filter>ソース ファイル\3d</Filter>
     </ClCompile>
+    <ClCompile Include="entity\Enemy.cpp">
+      <Filter>ソース ファイル\entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -183,6 +186,9 @@
       <Filter>ヘッダー ファイル\entity</Filter>
     </ClInclude>
     <ClInclude Include="entity\PlayerBullet.h">
+      <Filter>ヘッダー ファイル\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\Enemy.h">
       <Filter>ヘッダー ファイル\entity</Filter>
     </ClInclude>
   </ItemGroup>

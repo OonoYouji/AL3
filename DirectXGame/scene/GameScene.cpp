@@ -24,17 +24,21 @@ void GameScene::Initialize() {
 	/// メンバ変数の初期化
 	/// -------------------------
 
+	///- カメラの初期化
 	debugCamera_ = std::make_unique<DebugCamera>(1280, 720);
 	isDebugCameraActive_ = false;
-
 	viewProjection_.Initialize();
-
-	player_ = std::make_unique<Player>();
-	player_->Init(Model::Create(), TextureManager::Load("uvChecker.png"));
 
 	///- 右上の軸表示
 	AxisIndicator::GetInstance()->SetVisible(true);
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
+
+	player_ = std::make_unique<Player>();
+	player_->Init(Model::Create(), TextureManager::Load("uvChecker.png"));
+
+	enemy_ = std::make_unique<Enemy>();
+	enemy_->Init(Model::Create(), { 0.0f,2.0f, 50.0f }, TextureManager::Load("sample.png"));
+
 
 }
 
@@ -71,8 +75,18 @@ void GameScene::Update() {
 
 #endif // _DEBUG
 
+	/// ------------------------------
+	/// ↓ 以降がゲームの更新処理
+	/// ------------------------------
+
 
 	player_->Update();
+
+
+	if(enemy_.get()) {
+		enemy_->Update();
+	}
+
 }
 
 void GameScene::Draw() {
@@ -105,6 +119,9 @@ void GameScene::Draw() {
 	/// </summary>
 	player_->Draw(viewProjection_);
 
+	if(enemy_.get()) {
+		enemy_->Draw(viewProjection_);
+	}
 
 
 
