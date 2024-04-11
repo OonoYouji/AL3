@@ -19,7 +19,8 @@ void Enemy::Init(Model* model, const Vec3f& position, uint32_t textureHandle) {
 	speed_ = 0.5f;
 	velocity_ = { 0.0f,0.0f,-speed_ };
 
-	state_ = std::make_unique<EnemyStateApproach>();
+	ChangeState(std::make_unique<EnemyStateApproach>());
+
 }
 
 void Enemy::Update() {
@@ -43,6 +44,6 @@ void Enemy::Move(const Vec3f& velocity) {
 	worldTransform_.translation_ += velocity;
 }
 
-void Enemy::ChangeState(BaseEnemyState* baseEnemyState) {
-	state_.reset(baseEnemyState);
+void Enemy::ChangeState(std::unique_ptr<BaseEnemyState> baseEnemyState) {
+	state_ = std::move(baseEnemyState);
 }

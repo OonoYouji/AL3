@@ -46,7 +46,7 @@ public: ///- クラス外参照可
 
 	void Move(const Vec3f& velocity);
 
-	void ChangeState(BaseEnemyState* baseEnemyState);
+	void ChangeState(std::unique_ptr<BaseEnemyState> baseEnemyState);
 
 	const Vec3f& Position() const { return worldTransform_.translation_; }
 

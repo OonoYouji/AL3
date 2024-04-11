@@ -16,6 +16,6 @@ void EnemyStateApproach::Update(Enemy* pEnemy) {
 	///- 移動
 	pEnemy->Move(velocity_);
 	if(pEnemy->Position().z < 0.0f) {
-		pEnemy->ChangeState(new EnemyStateLeave());
+		pEnemy->ChangeState(std::make_unique<EnemyStateLeave>());
 	}
 }
