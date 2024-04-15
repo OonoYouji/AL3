@@ -23,6 +23,9 @@ public:
 
 private: ///- メンバ変数
 
+	static const int kFireInterval_;
+
+
 	///- モデルと画像
 	std::unique_ptr<Model> model_;
 	uint32_t textureHandle_;
@@ -33,7 +36,7 @@ private: ///- メンバ変数
 	std::unique_ptr<BaseEnemyState> state_;
 
 	std::list<std::unique_ptr<EnemyBullet>> bullets_;
-	int32_t shotCT_;
+	int32_t fireCT_;
 	float bulletSpeed_;
 
 private: ///- メンバ関数
@@ -42,6 +45,11 @@ private: ///- メンバ関数
 	/// 弾を打つ
 	/// </summary>
 	void Fire();
+
+	/// <summary>
+	/// 接近フェーズの初期化処理
+	/// </summary>
+	void InitApproach();
 
 
 public: ///- クラス外参照可

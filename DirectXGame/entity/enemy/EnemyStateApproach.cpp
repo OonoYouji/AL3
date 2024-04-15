@@ -6,7 +6,7 @@
 
 
 EnemyStateApproach::EnemyStateApproach() {
-	velocity_ = { 0.0f,0.0f,-1.0f };
+	velocity_ = { 0.0f,0.0f,-0.5f };
 }
 EnemyStateApproach::~EnemyStateApproach() {}
 

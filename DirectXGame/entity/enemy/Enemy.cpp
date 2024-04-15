@@ -2,6 +2,13 @@
 
 #include "EnemyStateApproach.h"
 
+
+/// -------------------------------
+/// static変数の初期化
+/// -------------------------------
+const int Enemy::kFireInterval_ = 60;
+
+
 Enemy::Enemy() {}
 Enemy::~Enemy() {}
 
@@ -18,9 +25,10 @@ void Enemy::Init(Model* model, const Vec3f& position, uint32_t textureHandle) {
 
 	///- 行動パターンの設定
 	ChangeState(std::make_unique<EnemyStateApproach>());
+	InitApproach();
 
 	///- 弾の初期化
-	shotCT_ = 60;
+	fireCT_ = kFireInterval_;
 	bulletSpeed_ = 1.0f;
 
 }
@@ -62,9 +70,9 @@ void Enemy::Draw(const ViewProjection& viewProjection) {
 
 
 void Enemy::Fire() {
-	if(--shotCT_ <= 0) {
+	if(--fireCT_ <= 0) {
 		///- coolTimeのリセット
-		shotCT_ = 60;
+		fireCT_ = kFireInterval_;
 
 		///- 弾の発射
 		Vec3f velocity = { 0.0f,0.0f, -bulletSpeed_ };
@@ -73,6 +81,13 @@ void Enemy::Fire() {
 		newBullet->Init(Model::Create(), worldTransform_.translation_, velocity);
 		bullets_.push_back(std::move(newBullet));
 	}
+}
+
+
+
+void Enemy::InitApproach() {
+	fireCT_ = kFireInterval_;
+
 }
 
 

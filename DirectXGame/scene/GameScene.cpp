@@ -37,7 +37,7 @@ void GameScene::Initialize() {
 	player_->Init(Model::Create(), TextureManager::Load("uvChecker.png"));
 
 	enemy_ = std::make_unique<Enemy>();
-	enemy_->Init(Model::Create(), { 0.0f,2.0f, 50.0f }, TextureManager::Load("sample.png"));
+	enemy_->Init(Model::Create(), { 5.0f,2.0f, 50.0f }, TextureManager::Load("sample.png"));
 
 
 }
