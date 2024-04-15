@@ -117,6 +117,7 @@
     <ClCompile Include="entity\enemy\EnemyStateLeave.cpp" />
     <ClCompile Include="entity\Player.cpp" />
     <ClCompile Include="entity\PlayerBullet.cpp" />
+    <ClCompile Include="entity\TimedCall.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\Matrix4x4.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="entity\enemy\EnemyStateLeave.h" />
     <ClInclude Include="entity\Player.h" />
     <ClInclude Include="entity\PlayerBullet.h" />
+    <ClInclude Include="entity\TimedCall.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="math\Matrix4x4.h" />
     <ClInclude Include="math\Vector2.h" />

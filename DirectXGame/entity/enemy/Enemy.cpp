@@ -27,9 +27,13 @@ void Enemy::Init(Model* model, const Vec3f& position, uint32_t textureHandle) {
 	ChangeState(std::make_unique<EnemyStateApproach>());
 	InitApproach();
 
+
 	///- 弾の初期化
 	fireCT_ = kFireInterval_;
 	bulletSpeed_ = 1.0f;
+
+	///- 弾の発射を予約
+	FireAndReset();
 
 }
 
@@ -38,8 +42,19 @@ void Enemy::Update() {
 	///- Enemyの更新処理
 	state_->Update(this);
 
+	///- TimedCallの更新
+	for(auto& timedCall : timedCalls_) {
+		timedCall->Update();
+	}
+	timedCalls_.remove_if([](auto& timedCall) {
+		if(timedCall->IsFinished()) {
+			return true;
+		} else {
+			return false;
+		}
+	});
+
 	///- 弾の更新
-	Fire();
 	for(auto& bullet : bullets_) {
 		bullet->Update();
 	}
@@ -61,7 +76,7 @@ void Enemy::Draw(const ViewProjection& viewProjection) {
 	///- 描画
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
 
-	for(auto& bullet : bullets_){
+	for(auto& bullet : bullets_) {
 		bullet->Draw(viewProjection);
 	}
 
@@ -70,17 +85,17 @@ void Enemy::Draw(const ViewProjection& viewProjection) {
 
 
 void Enemy::Fire() {
-	if(--fireCT_ <= 0) {
+	/*if(--fireCT_ <= 0) {
 		///- coolTimeのリセット
-		fireCT_ = kFireInterval_;
+		fireCT_ = kFireInterval_;*/
 
 		///- 弾の発射
-		Vec3f velocity = { 0.0f,0.0f, -bulletSpeed_ };
+	Vec3f velocity = { 0.0f,0.0f, -bulletSpeed_ };
 
-		std::unique_ptr<EnemyBullet> newBullet = std::make_unique<EnemyBullet>();
-		newBullet->Init(Model::Create(), worldTransform_.translation_, velocity);
-		bullets_.push_back(std::move(newBullet));
-	}
+	std::unique_ptr<EnemyBullet> newBullet = std::make_unique<EnemyBullet>();
+	newBullet->Init(Model::Create(), worldTransform_.translation_, velocity);
+	bullets_.push_back(std::move(newBullet));
+	//}
 }
 
 
@@ -92,10 +107,23 @@ void Enemy::InitApproach() {
 
 
 
+void Enemy::FireAndReset() {
+	Fire();
+	timedCalls_.push_back(std::make_unique<TimedCall>(std::bind(&Enemy::FireAndReset, this), 60));
+}
+
+
+
 void Enemy::Move(const Vec3f& velocity) {
 	worldTransform_.translation_ += velocity;
 }
 
 void Enemy::ChangeState(std::unique_ptr<BaseEnemyState> baseEnemyState) {
 	state_ = std::move(baseEnemyState);
+}
+
+void Enemy::RemoveBullets() {
+	timedCalls_.remove_if([]([[maybe_unused]] auto& timedCall) {
+		return true;
+	});
 }

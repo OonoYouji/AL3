@@ -17,5 +17,6 @@ void EnemyStateApproach::Update(Enemy* pEnemy) {
 	pEnemy->Move(velocity_);
 	if(pEnemy->Position().z < 0.0f) {
 		pEnemy->ChangeState(std::make_unique<EnemyStateLeave>());
+		pEnemy->RemoveBullets();
 	}
 }

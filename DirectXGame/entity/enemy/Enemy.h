@@ -6,6 +6,7 @@
 #include "ViewProjection.h"
 #include "BaseEnemyState.h"
 #include "EnemyBullet.h"
+#include "TimedCall.h"
 
 
 /// -------------------------
@@ -39,6 +40,8 @@ private: ///- メンバ変数
 	int32_t fireCT_;
 	float bulletSpeed_;
 
+	std::list<std::unique_ptr<TimedCall>> timedCalls_;
+
 private: ///- メンバ関数
 
 	/// <summary>
@@ -51,6 +54,7 @@ private: ///- メンバ関数
 	/// </summary>
 	void InitApproach();
 
+	void FireAndReset();
 
 public: ///- クラス外参照可
 
@@ -60,5 +64,6 @@ public: ///- クラス外参照可
 
 	const Vec3f& Position() const { return worldTransform_.translation_; }
 
+	void RemoveBullets();
 
 };
