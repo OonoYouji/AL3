@@ -5,13 +5,7 @@
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 #include "BaseEnemyState.h"
-
-
-///- Enemyの状態
-enum class Phase : int32_t {
-	Approach,	//- 接近
-	Leave,		//- 離脱
-};
+#include "EnemyBullet.h"
 
 
 /// -------------------------
@@ -37,6 +31,17 @@ private: ///- メンバ変数
 	WorldTransform worldTransform_;
 
 	std::unique_ptr<BaseEnemyState> state_;
+
+	std::list<std::unique_ptr<EnemyBullet>> bullets_;
+	int32_t shotCT_;
+	float bulletSpeed_;
+
+private: ///- メンバ関数
+
+	/// <summary>
+	/// 弾を打つ
+	/// </summary>
+	void Fire();
 
 
 public: ///- クラス外参照可

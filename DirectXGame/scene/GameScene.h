@@ -13,8 +13,8 @@
 #include <DebugCamera.h>
 #include "ViewProjection.h"
 
-#include "entity/Player.h"
-#include "entity/Enemy.h"
+#include "Player.h"
+#include "Enemy.h"
 
 /// <summary>
 /// ゲームシーン

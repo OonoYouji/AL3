@@ -63,7 +63,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)2d;$(ProjectDir)3d;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)input;$(ProjectDir)scene;$(ProjectDir)math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)entity/enemy;$(ProjectDir)entity;$(ProjectDir)2d;$(ProjectDir)3d;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)input;$(ProjectDir)scene;$(ProjectDir)math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -110,10 +110,11 @@
     <ClCompile Include="3d\WorldTransform.cpp" />
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
-    <ClCompile Include="entity\BaseEnemyState.cpp" />
-    <ClCompile Include="entity\Enemy.cpp" />
-    <ClCompile Include="entity\EnemyStateApproach.cpp" />
-    <ClCompile Include="entity\EnemyStateLeave.cpp" />
+    <ClCompile Include="entity\enemy\BaseEnemyState.cpp" />
+    <ClCompile Include="entity\enemy\Enemy.cpp" />
+    <ClCompile Include="entity\enemy\EnemyBullet.cpp" />
+    <ClCompile Include="entity\enemy\EnemyStateApproach.cpp" />
+    <ClCompile Include="entity\enemy\EnemyStateLeave.cpp" />
     <ClCompile Include="entity\Player.cpp" />
     <ClCompile Include="entity\PlayerBullet.cpp" />
     <ClCompile Include="main.cpp" />
@@ -144,10 +145,11 @@
     <ClInclude Include="base\StringUtility.h" />
     <ClInclude Include="base\TextureManager.h" />
     <ClInclude Include="base\WinApp.h" />
-    <ClInclude Include="entity\BaseEnemyState.h" />
-    <ClInclude Include="entity\Enemy.h" />
-    <ClInclude Include="entity\EnemyStateApproach.h" />
-    <ClInclude Include="entity\EnemyStateLeave.h" />
+    <ClInclude Include="entity\enemy\BaseEnemyState.h" />
+    <ClInclude Include="entity\enemy\Enemy.h" />
+    <ClInclude Include="entity\enemy\EnemyBullet.h" />
+    <ClInclude Include="entity\enemy\EnemyStateApproach.h" />
+    <ClInclude Include="entity\enemy\EnemyStateLeave.h" />
     <ClInclude Include="entity\Player.h" />
     <ClInclude Include="entity\PlayerBullet.h" />
     <ClInclude Include="input\Input.h" />

@@ -61,6 +61,12 @@
     <Filter Include="ソース ファイル\3d">
       <UniqueIdentifier>{b9785434-dbc3-4d39-ace0-acfbbfc46b6b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\entity\enemy">
+      <UniqueIdentifier>{447c1a07-4528-40af-93ca-a956b0b913b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\entity\enemy">
+      <UniqueIdentifier>{f7dbc043-ac42-461e-9380-587cc49d98dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -90,17 +96,20 @@
     <ClCompile Include="3d\WorldTransform.cpp">
       <Filter>ソース ファイル\3d</Filter>
     </ClCompile>
-    <ClCompile Include="entity\Enemy.cpp">
-      <Filter>ソース ファイル\entity</Filter>
+    <ClCompile Include="entity\enemy\BaseEnemyState.cpp">
+      <Filter>ソース ファイル\entity\enemy</Filter>
     </ClCompile>
-    <ClCompile Include="entity\EnemyStateApproach.cpp">
-      <Filter>ソース ファイル\entity</Filter>
+    <ClCompile Include="entity\enemy\Enemy.cpp">
+      <Filter>ソース ファイル\entity\enemy</Filter>
     </ClCompile>
-    <ClCompile Include="entity\EnemyStateLeave.cpp">
-      <Filter>ソース ファイル\entity</Filter>
+    <ClCompile Include="entity\enemy\EnemyBullet.cpp">
+      <Filter>ソース ファイル\entity\enemy</Filter>
     </ClCompile>
-    <ClCompile Include="entity\BaseEnemyState.cpp">
-      <Filter>ソース ファイル\entity</Filter>
+    <ClCompile Include="entity\enemy\EnemyStateApproach.cpp">
+      <Filter>ソース ファイル\entity\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="entity\enemy\EnemyStateLeave.cpp">
+      <Filter>ソース ファイル\entity\enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,17 +206,20 @@
     <ClInclude Include="entity\PlayerBullet.h">
       <Filter>ヘッダー ファイル\entity</Filter>
     </ClInclude>
-    <ClInclude Include="entity\Enemy.h">
-      <Filter>ヘッダー ファイル\entity</Filter>
+    <ClInclude Include="entity\enemy\BaseEnemyState.h">
+      <Filter>ヘッダー ファイル\entity\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="entity\EnemyStateApproach.h">
-      <Filter>ヘッダー ファイル\entity</Filter>
+    <ClInclude Include="entity\enemy\Enemy.h">
+      <Filter>ヘッダー ファイル\entity\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="entity\EnemyStateLeave.h">
-      <Filter>ヘッダー ファイル\entity</Filter>
+    <ClInclude Include="entity\enemy\EnemyBullet.h">
+      <Filter>ヘッダー ファイル\entity\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="entity\BaseEnemyState.h">
-      <Filter>ヘッダー ファイル\entity</Filter>
+    <ClInclude Include="entity\enemy\EnemyStateApproach.h">
+      <Filter>ヘッダー ファイル\entity\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\enemy\EnemyStateLeave.h">
+      <Filter>ヘッダー ファイル\entity\enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
