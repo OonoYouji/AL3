@@ -12,7 +12,7 @@ void EnemyBullet::Init(Model* model, const Vec3f& position, const Vec3f& velocit
 	model_ = std::make_unique<Model>();
 	model_.reset(model);
 
-	textureHandle_ = TextureManager::Load("sample.png");
+	textureHandle_ = TextureManager::Load("white1x1.png");
 
 	velocity_ = velocity;
 
