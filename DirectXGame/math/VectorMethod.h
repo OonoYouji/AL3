@@ -20,4 +20,19 @@ namespace VectorMethod {
 	/// <returns>ベクトルの長さ</returns>
 	float Length(const Vec3f& v);
 
+	/// <summary>
+	/// Y軸の角度を計算
+	/// </summary>
+	/// <param name="v">方向ベクトル</param>
+	/// <returns>Y軸の角度</returns>
+	float YAxisTheta(const Vec3f& v);
+
+	/// <summary>
+	/// X軸の角度を計算
+	/// </summary>
+	/// <param name="v">方向ベクトル</param>
+	/// <returns>X軸の角度</returns>
+	float XAxisTheta(const Vec3f& v);
+
+
 }

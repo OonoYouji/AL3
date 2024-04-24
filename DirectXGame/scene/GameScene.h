@@ -68,4 +68,7 @@ private: // メンバ変数
 
 	std::unique_ptr<Enemy> enemy_;
 
+	bool isPause_ = true;
+
+
 };

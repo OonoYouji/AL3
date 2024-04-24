@@ -44,24 +44,32 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 #ifdef _DEBUG
-	///- Debugでしか動かない
-	if(input_->TriggerKey(DIK_TAB)) {
-		///- フラグを切り替え
-		if(isDebugCameraActive_) {
-			isDebugCameraActive_ = false;
-		} else {
-			isDebugCameraActive_ = true;
-		}
+
+	/// -------------------------------------------
+	/// ImGui Debug
+	/// -------------------------------------------
+
+	ImGui::Begin("GameScene");
+	
+	if(ImGui::Button("Reset Scene")) {
+		Initialize();
 	}
 
-	ImGui::Begin("main");
-	if(isDebugCameraActive_) {
-		ImGui::Text("isDebugCameraActive: True");
-	} else {
-		ImGui::Text("isDebugCameraActive: False");
-	}
+	ImGui::Checkbox("debugCamera isActive", &isDebugCameraActive_);
+
+	ImGui::Spacing();
+
+	ImGui::Checkbox("pause", &isPause_);
+
+
 	ImGui::End();
 
+
+
+	/// -------------------------------------------
+	/// DebugCamera Update
+	/// -------------------------------------------
+	
 	if(isDebugCameraActive_) {
 		debugCamera_->Update();
 		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
@@ -78,6 +86,8 @@ void GameScene::Update() {
 	/// ------------------------------
 	/// ↓ 以降がゲームの更新処理
 	/// ------------------------------
+
+	if(isPause_) { return; }
 
 
 	player_->Update();
