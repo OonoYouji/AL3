@@ -9,9 +9,6 @@
 #include "TimedCall.h"
 
 
-class Player;
-
-
 /// -------------------------
 /// 敵
 /// -------------------------
@@ -29,7 +26,6 @@ private: ///- メンバ変数
 
 	static const int kFireInterval_;
 
-	Player* pPlayer_ = nullptr;
 
 	///- モデルと画像
 	std::unique_ptr<Model> model_;
@@ -69,22 +65,5 @@ public: ///- クラス外参照可
 	const Vec3f& Position() const { return worldTransform_.translation_; }
 
 	void RemoveBullets();
-
-	void SetPlayer(Player* player) {
-		pPlayer_ = player;
-	}
-
-
-	/// <summary>
-	/// world座標でのPosition
-	/// </summary>
-	/// <returns></returns>
-	Vec3f GetWorldPosition() {
-		Vec3f worldPos{};
-		worldPos.x = worldTransform_.matWorld_.m[3][0];
-		worldPos.y = worldTransform_.matWorld_.m[3][1];
-		worldPos.z = worldTransform_.matWorld_.m[3][2];
-		return worldPos;
-	}
 
 };

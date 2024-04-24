@@ -1,11 +1,7 @@
 #include "Enemy.h"
 
-#include <cassert>
-
-#include "VectorMethod.h"
-
 #include "EnemyStateApproach.h"
-#include "Player.h"
+
 
 /// -------------------------------
 /// static変数の初期化
@@ -26,8 +22,6 @@ void Enemy::Init(Model* model, const Vec3f& position, uint32_t textureHandle) {
 
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = position;
-	worldTransform_.UpdateMatrix();
-
 
 	///- 行動パターンの設定
 	ChangeState(std::make_unique<EnemyStateApproach>());
@@ -91,19 +85,18 @@ void Enemy::Draw(const ViewProjection& viewProjection) {
 
 
 void Enemy::Fire() {
+	/*if(--fireCT_ <= 0) {
+		///- coolTimeのリセット
+		fireCT_ = kFireInterval_;*/
 
-	assert(pPlayer_);
-
-
-	///- 弾の発射
-	Vec3f velocity = pPlayer_->GetWorldPosition() - GetWorldPosition();
-	velocity = VectorMethod::Normalize(velocity) * bulletSpeed_;
+		///- 弾の発射
+	Vec3f velocity = { 0.0f,0.0f, -bulletSpeed_ };
 
 	std::unique_ptr<EnemyBullet> newBullet = std::make_unique<EnemyBullet>();
 	newBullet->Init(Model::Create(), worldTransform_.translation_, velocity);
 
 	bullets_.push_back(std::move(newBullet));
-
+	//}
 }
 
 
