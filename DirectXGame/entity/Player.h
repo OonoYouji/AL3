@@ -46,4 +46,20 @@ private:
 	///- 弾の発射
 	void Attack();
 
+public:
+
+
+	/// <summary>
+	/// world座標positionmのgetter
+	/// </summary>
+	/// <returns></returns>
+	Vec3f GetWorldPosition() {
+		Vec3f worldPos{};
+		worldPos.x = worldTransform_.matWorld_.m[3][0];
+		worldPos.y = worldTransform_.matWorld_.m[3][1];
+		worldPos.z = worldTransform_.matWorld_.m[3][2];
+		return worldPos;
+	}
+
+
 };

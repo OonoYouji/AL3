@@ -111,6 +111,12 @@
     <ClCompile Include="entity\Player.cpp">
       <Filter>ソース ファイル\entity</Filter>
     </ClCompile>
+    <ClCompile Include="entity\TimedCall.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="math\VectorMethod.cpp">
+      <Filter>ソース ファイル\math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -220,6 +226,12 @@
     </ClInclude>
     <ClInclude Include="entity\Player.h">
       <Filter>ヘッダー ファイル\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\TimedCall.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="math\VectorMethod.h">
+      <Filter>ヘッダー ファイル\entity\enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
