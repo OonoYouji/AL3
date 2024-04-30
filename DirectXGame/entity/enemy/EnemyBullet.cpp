@@ -21,7 +21,7 @@ void EnemyBullet::Init(Model* model, const Vec3f& position, const Vec3f& velocit
 
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = position;
-	worldTransform_.scale_ = { 0.5f, 0.5f, 3.0f };
+	worldTransform_.scale_ = { 0.5f, 0.5f, 0.5f };
 	worldTransform_.rotation_.y = VectorMethod::YAxisTheta(velocity_);
 	float xAxisLen = VectorMethod::Length({ velocity.x, 0.0f, velocity.z });
 	worldTransform_.rotation_.x = std::atan2(-velocity.y, xAxisLen);

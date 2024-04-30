@@ -8,6 +8,7 @@
 #include "EnemyBullet.h"
 #include "TimedCall.h"
 
+class Player;
 
 /// -------------------------
 /// 敵
@@ -42,6 +43,8 @@ private: ///- メンバ変数
 
 	std::list<std::unique_ptr<TimedCall>> timedCalls_;
 
+	Player* pPlayer_ = nullptr;
+
 private: ///- メンバ関数
 
 	/// <summary>
@@ -65,5 +68,27 @@ public: ///- クラス外参照可
 	const Vec3f& Position() const { return worldTransform_.translation_; }
 
 	void RemoveBullets();
+
+
+	/// <summary>
+	/// PlayerポインタのSetter
+	/// </summary>
+	/// <param name="player"></param>
+	void SetPlayer(Player* player) {
+		pPlayer_ = player;
+	}
+
+	/// <summary>
+	/// WorldPositionのGetter
+	/// </summary>
+	/// <returns></returns>
+	Vec3f GetWorldPosition() const {
+		Vec3f worldPosition;
+		worldPosition.x = worldTransform_.matWorld_.m[3][0];
+		worldPosition.y = worldTransform_.matWorld_.m[3][1];
+		worldPosition.z = worldTransform_.matWorld_.m[3][2];
+		return worldPosition;
+	}
+
 
 };
