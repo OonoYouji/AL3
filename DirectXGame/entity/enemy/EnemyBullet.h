@@ -5,6 +5,8 @@
 #include "WorldTransform.h"
 #include "Model.h"
 
+class Player;
+
 class EnemyBullet {
 public:
 
@@ -16,6 +18,8 @@ public:
 	void Draw(const ViewProjection& viewProjection);
 
 private:
+	
+	const float kSpeed_ = 1.0f;
 
 	std::unique_ptr<Model> model_;
 	uint32_t textureHandle_;
@@ -27,6 +31,8 @@ private:
 	uint32_t deathTimer_;
 	bool isDead_;
 
+	Player* pPlayer_ = nullptr;
+
 public:
 
 	
@@ -35,5 +41,18 @@ public:
 	/// --------------------------------
 
 	bool IsDead() const { return isDead_; }
+
+
+	void SetPlayer(Player* player) {
+		pPlayer_ = player;
+	}
+
+	Vec3f GetWorldPosition() {
+		Vec3f worldPos{};
+		worldPos.x = worldTransform_.matWorld_.m[3][0];
+		worldPos.y = worldTransform_.matWorld_.m[3][1];
+		worldPos.z = worldTransform_.matWorld_.m[3][2];
+		return worldPos;
+	}
 
 };

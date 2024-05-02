@@ -101,6 +101,7 @@ void Enemy::Fire() {
 
 	std::unique_ptr<EnemyBullet> newBullet = std::make_unique<EnemyBullet>();
 	newBullet->Init(Model::Create(), worldTransform_.translation_, velocity);
+	newBullet->SetPlayer(pPlayer_);
 
 	bullets_.push_back(std::move(newBullet));
 

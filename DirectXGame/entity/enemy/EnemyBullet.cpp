@@ -5,6 +5,9 @@
 #include <cmath>
 #include <iostream>
 
+#include "VectorMethod.h"
+#include "Player.h"
+
 EnemyBullet::EnemyBullet() {}
 EnemyBullet::~EnemyBullet() {}
 
@@ -37,6 +40,18 @@ void EnemyBullet::Init(Model* model, const Vec3f& position, const Vec3f& velocit
 
 
 void EnemyBullet::Update() {
+
+	Vec3f toPlayer = pPlayer_->GetWorldPosition() - GetWorldPosition();
+
+	toPlayer = VectorMethod::Normalize(toPlayer);
+	velocity_ = VectorMethod::Normalize(velocity_);
+
+	velocity_ = VectorMethod::Slerp(velocity_, toPlayer, 0.025f) * kSpeed_;
+	
+
+	worldTransform_.rotation_.y = VectorMethod::YAxisTheta(velocity_);
+	float xAxisLen = VectorMethod::Length({ velocity_.x, 0.0f, velocity_.z });
+	worldTransform_.rotation_.x = std::atan2(-velocity_.y, xAxisLen);
 
 	///- 座標更新
 	worldTransform_.translation_ += velocity_;

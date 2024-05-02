@@ -35,4 +35,33 @@ namespace VectorMethod {
 	float XAxisTheta(const Vec3f& v);
 
 
+	/// <summary>
+	/// 三次元ベクトルの線形補完
+	/// </summary>
+	/// <param name="v1"></param>
+	/// <param name="v2"></param>
+	/// <param name="t"></param>
+	/// <returns></returns>
+	Vec3f Lerp(const Vec3f& v1, const Vec3f& v2, float t);
+
+
+	/// <summary>
+	/// 三次元の球面線形補完
+	/// </summary>
+	/// <param name="v1"></param>
+	/// <param name="v2"></param>
+	/// <param name="t"></param>
+	/// <returns></returns>
+	Vec3f Slerp(const Vec3f& v1, const Vec3f& v2, float t);
+
+
+	/// <summary>
+	/// ベクトルの内積
+	/// </summary>
+	/// <param name="v1"></param>
+	/// <param name="v2"></param>
+	/// <returns></returns>
+	float Dot(const Vec3f& v1, const Vec3f& v2);
+
+
 }
