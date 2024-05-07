@@ -6,11 +6,13 @@
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 
+#include "Collider.h"
 
 /// ----------------------
 /// 自キャラの弾
 /// ----------------------
-class PlayerBullet {
+class PlayerBullet
+	: public Collider {
 public:
 
 	PlayerBullet();
@@ -21,8 +23,6 @@ public:
 	void Draw(const ViewProjection& viewProjection);
 
 private: ///- メンバ変数
-
-	const float kRadius_ = 3.0f;
 
 
 	std::unique_ptr<Model> model_;
@@ -51,7 +51,7 @@ public:
 	/// <summary>
 	/// 衝突を検出したら呼び出すコールバック関数
 	/// </summary>
-	void OnCollision();
+	void OnCollision() override;
 
 
 
@@ -65,7 +65,7 @@ public:
 	/// world座標positionmのgetter
 	/// </summary>
 	/// <returns></returns>
-	Vec3f GetWorldPosition() {
+	Vec3f GetWorldPosition() override {
 		Vec3f worldPos{};
 		worldPos.x = worldTransform_.matWorld_.m[3][0];
 		worldPos.y = worldTransform_.matWorld_.m[3][1];
@@ -74,7 +74,5 @@ public:
 	}
 
 	bool IsDead() const { return isDead_; }
-
-	float GetRadius() const { return kRadius_; }
 
 };

@@ -5,9 +5,12 @@
 #include "WorldTransform.h"
 #include "Model.h"
 
+#include "Collider.h"
+
 class Player;
 
-class EnemyBullet {
+class EnemyBullet
+	: public Collider {
 public:
 
 	EnemyBullet();
@@ -18,9 +21,8 @@ public:
 	void Draw(const ViewProjection& viewProjection);
 
 private:
-	
+
 	const float kSpeed_ = 1.0f;
-	const float kRadius_ = 3.0f;
 
 	std::unique_ptr<Model> model_;
 	uint32_t textureHandle_;
@@ -46,8 +48,8 @@ public:
 	/// <summary>
 	/// 衝突を検出したら呼び出すコールバック関数
 	/// </summary>
-	void OnCollision();
-	
+	void OnCollision() override;
+
 
 
 	/// -----------------------------------------------
@@ -62,15 +64,13 @@ public:
 		pPlayer_ = player;
 	}
 
-	Vec3f GetWorldPosition() {
+	Vec3f GetWorldPosition() override {
 		Vec3f worldPos{};
 		worldPos.x = worldTransform_.matWorld_.m[3][0];
 		worldPos.y = worldTransform_.matWorld_.m[3][1];
 		worldPos.z = worldTransform_.matWorld_.m[3][2];
 		return worldPos;
 	}
-
-	float GetRadius() const { return kRadius_; }
 
 
 };

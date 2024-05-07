@@ -8,6 +8,7 @@
 #include "EnemyBullet.h"
 #include "TimedCall.h"
 
+#include "Collider.h"
 
 class Player;
 
@@ -15,7 +16,8 @@ class Player;
 /// -------------------------
 /// 敵
 /// -------------------------
-class Enemy {
+class Enemy
+	: public Collider {
 public:
 
 	Enemy();
@@ -62,13 +64,13 @@ private: ///- メンバ関数
 	void FireAndReset();
 
 public: ///- クラス外参照可
-	
-	
+
+
 	/// -----------------------------------------------
 	/// ↓ Public Member Method
 	/// -----------------------------------------------
 
-	
+
 	void Move(const Vec3f& velocity);
 
 	void ChangeState(std::unique_ptr<BaseEnemyState> baseEnemyState);
@@ -80,7 +82,7 @@ public: ///- クラス外参照可
 	/// <summary>
 	/// 衝突を検出したら呼び出すコールバック関数
 	/// </summary>
-	void OnCollision();
+	void OnCollision() override;
 
 
 
@@ -97,7 +99,7 @@ public: ///- クラス外参照可
 	/// world座標でのPosition
 	/// </summary>
 	/// <returns></returns>
-	Vec3f GetWorldPosition() {
+	Vec3f GetWorldPosition() override {
 		Vec3f worldPos{};
 		worldPos.x = worldTransform_.matWorld_.m[3][0];
 		worldPos.y = worldTransform_.matWorld_.m[3][1];
@@ -112,15 +114,6 @@ public: ///- クラス外参照可
 	/// <returns></returns>
 	const std::list<std::unique_ptr<EnemyBullet>>& GetBullets() const {
 		return bullets_;
-	}
-
-
-	/// <summary>
-	/// 半径の取得
-	/// </summary>
-	/// <returns></returns>
-	float GetRadius() const {
-		return kRadius_;
 	}
 
 };

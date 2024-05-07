@@ -9,8 +9,10 @@
 #include "Input.h"
 
 #include "PlayerBullet.h"
+#include "Collider.h"
 
-class Player {
+class Player
+	: public Collider {
 public:
 
 	Player();
@@ -21,8 +23,6 @@ public:
 	void Draw(const ViewProjection& viewProjection);
 
 private:
-
-	const float kRadius_ = 1.0f;
 
 	Input* input_;
 
@@ -60,7 +60,7 @@ public:
 	/// <summary>
 	/// 衝突を検出したら呼び出すコールバック関数
 	/// </summary>
-	void OnCollision();
+	void OnCollision() override;
 
 
 
@@ -75,7 +75,7 @@ public:
 	/// world座標positionmのgetter
 	/// </summary>
 	/// <returns></returns>
-	Vec3f GetWorldPosition() {
+	Vec3f GetWorldPosition() override {
 		Vec3f worldPos{};
 		worldPos.x = worldTransform_.matWorld_.m[3][0];
 		worldPos.y = worldTransform_.matWorld_.m[3][1];
@@ -93,12 +93,5 @@ public:
 	}
 
 
-	/// <summary>
-	/// 半径の取得
-	/// </summary>
-	/// <returns></returns>
-	float GetRadius() const {
-		return kRadius_;
-	}
 
 };

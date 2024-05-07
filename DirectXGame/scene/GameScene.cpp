@@ -161,44 +161,25 @@ void GameScene::Draw() {
 
 void GameScene::CheckAllCollision() {
 
-	Vector3 posA, posB;
 
 	const std::list<std::unique_ptr<PlayerBullet>>& playerBullets = player_->GetBullets();
 	const std::list<std::unique_ptr<EnemyBullet>>& enemyBullets = enemy_->GetBullets();
 
 #pragma region 自キャラと敵弾の当たり判定
-	posA = player_->GetWorldPosition();
-	float playerRadius = player_->GetRadius();
 
 	///- 自キャラと敵弾すべての当たり判定
 	for(auto& enemyBullet : enemyBullets) {
-		///- 敵弾の座標
-		posB = enemyBullet->GetWorldPosition();
-
-		float length = VectorMethod::Length(posB - posA);
-		if(length < playerRadius + enemyBullet->GetRadius()) {
-			///- 衝突時のコールバック関数を呼び出す
-			player_->OnCollision();
-			enemyBullet->OnCollision();
-		}
+		
+		CheckCollisionPair(player_.get(), enemyBullet.get());
 
 	}
 #pragma endregion
 
 #pragma region 自弾と敵キャラの当たり判定
-	posA = enemy_->GetWorldPosition();
-	float enemyRadius = enemy_->GetRadius();
 
 	for(auto& playerBullet : playerBullets) {
-		posB = playerBullet->GetWorldPosition();
-
-		float length = VectorMethod::Length(posB - posA);
-		if(length < enemyRadius + playerBullet->GetRadius()) {
-			///- 衝突時のコールバック関数を呼び出す
-			enemy_->OnCollision();
-			playerBullet->OnCollision();
-		}
 		
+		CheckCollisionPair(enemy_.get(), playerBullet.get());
 	}
 
 #pragma endregion
@@ -206,25 +187,29 @@ void GameScene::CheckAllCollision() {
 #pragma region 自弾と敵弾の当たり判定
 
 	for(auto& playerBullet : playerBullets) {
-		posA = playerBullet->GetWorldPosition();
 		
 		for(auto& enemyBullet : enemyBullets) {
-			posB = enemyBullet->GetWorldPosition();
-
-			float length = VectorMethod::Length(posB - posA);
-			float radius = playerBullet->GetRadius() + enemyBullet->GetRadius();
-
-			///- 衝突判定
-			if(length < radius) {
-
-				playerBullet->OnCollision();
-				enemyBullet->OnCollision();
-
-			}
+			 
+			CheckCollisionPair(playerBullet.get(), enemyBullet.get());
 
 		}
 	}
 
 #pragma endregion
+
+}
+
+void GameScene::CheckCollisionPair(Collider* colliderA, Collider* colliderB) {
+	Vec3f posA = colliderA->GetWorldPosition();
+	Vec3f posB = colliderB->GetWorldPosition();
+	float radius = colliderA->GetRadius() + colliderB->GetRadius();
+
+	///- 衝突判定を取る
+	if(VectorMethod::Length(posB - posA) < radius) {
+
+		colliderA->OnCollision();
+		colliderB->OnCollision();
+
+	}
 
 }

@@ -67,6 +67,12 @@
     <Filter Include="ヘッダー ファイル\entity\enemy">
       <UniqueIdentifier>{f7dbc043-ac42-461e-9380-587cc49d98dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\collider">
+      <UniqueIdentifier>{573e7b75-35a7-4968-8cce-9de4296578c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\collider">
+      <UniqueIdentifier>{133ebadf-671f-47e5-b2e0-c49109347316}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -116,6 +122,9 @@
     </ClCompile>
     <ClCompile Include="math\VectorMethod.cpp">
       <Filter>ソース ファイル\math</Filter>
+    </ClCompile>
+    <ClCompile Include="collider\Collider.cpp">
+      <Filter>ソース ファイル\collider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="math\VectorMethod.h">
       <Filter>ヘッダー ファイル\entity\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="collider\Collider.h">
+      <Filter>ヘッダー ファイル\collider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
