@@ -16,6 +16,8 @@
 #include "Player.h"
 #include "Enemy.h"
 
+#include "CollisionManager.h"
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -68,6 +70,8 @@ private: // メンバ変数
 
 	std::unique_ptr<Enemy> enemy_;
 
+	std::unique_ptr<CollisionManager> collisionManager_;
+
 	bool isPause_ = true;
 
 
@@ -76,11 +80,6 @@ private: // メンバ変数
 	/// </summary>
 	void CheckAllCollision();
 
-	/// <summary>
-	/// ColliderA,Bの衝突判定をとる
-	/// </summary>
-	/// <param name="colliderA"></param>
-	/// <param name="colliderB"></param>
-	void CheckCollisionPair(Collider* colliderA, Collider* colliderB);
+	void SetColliderAll();
 
 };

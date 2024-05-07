@@ -67,10 +67,10 @@
     <Filter Include="ヘッダー ファイル\entity\enemy">
       <UniqueIdentifier>{f7dbc043-ac42-461e-9380-587cc49d98dc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\collider">
+    <Filter Include="ソース ファイル\collision">
       <UniqueIdentifier>{573e7b75-35a7-4968-8cce-9de4296578c3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\collider">
+    <Filter Include="ヘッダー ファイル\collision">
       <UniqueIdentifier>{133ebadf-671f-47e5-b2e0-c49109347316}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -123,8 +123,11 @@
     <ClCompile Include="math\VectorMethod.cpp">
       <Filter>ソース ファイル\math</Filter>
     </ClCompile>
-    <ClCompile Include="collider\Collider.cpp">
-      <Filter>ソース ファイル\collider</Filter>
+    <ClCompile Include="collision\Collider.cpp">
+      <Filter>ソース ファイル\collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collision\CollisionManager.cpp">
+      <Filter>ソース ファイル\collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -242,11 +245,14 @@
     <ClInclude Include="math\VectorMethod.h">
       <Filter>ヘッダー ファイル\entity\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="collider\Collider.h">
-      <Filter>ヘッダー ファイル\collider</Filter>
+    <ClInclude Include="collision\Collider.h">
+      <Filter>ヘッダー ファイル\collision</Filter>
     </ClInclude>
-    <ClInclude Include="collider\CollisionConfig.h">
-      <Filter>ヘッダー ファイル\collider</Filter>
+    <ClInclude Include="collision\CollisionConfig.h">
+      <Filter>ヘッダー ファイル\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collision\CollisionManager.h">
+      <Filter>ヘッダー ファイル\collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
