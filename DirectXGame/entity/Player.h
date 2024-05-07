@@ -22,6 +22,8 @@ public:
 
 private:
 
+	const float kRadius_ = 1.0f;
+
 	Input* input_;
 
 	std::unique_ptr<Model> model_;
@@ -49,6 +51,26 @@ private:
 public:
 
 
+
+	/// -----------------------------------------------
+	/// ↓ Public Member Method
+	/// -----------------------------------------------
+
+
+	/// <summary>
+	/// 衝突を検出したら呼び出すコールバック関数
+	/// </summary>
+	void OnCollision();
+
+
+
+
+
+	/// -----------------------------------------------
+	/// ↓ Getter
+	/// -----------------------------------------------
+
+
 	/// <summary>
 	/// world座標positionmのgetter
 	/// </summary>
@@ -61,5 +83,22 @@ public:
 		return worldPos;
 	}
 
+
+	/// <summary>
+	/// プレイヤーの弾
+	/// </summary>
+	/// <returns></returns>
+	const std::list<std::unique_ptr<PlayerBullet>>& GetBullets() const {
+		return bullets_;
+	}
+
+
+	/// <summary>
+	/// 半径の取得
+	/// </summary>
+	/// <returns></returns>
+	float GetRadius() const {
+		return kRadius_;
+	}
 
 };

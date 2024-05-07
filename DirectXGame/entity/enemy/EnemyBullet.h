@@ -20,6 +20,7 @@ public:
 private:
 	
 	const float kSpeed_ = 1.0f;
+	const float kRadius_ = 3.0f;
 
 	std::unique_ptr<Model> model_;
 	uint32_t textureHandle_;
@@ -35,10 +36,24 @@ private:
 
 public:
 
+
+
+	/// -----------------------------------------------
+	/// ↓ Public Member Method
+	/// -----------------------------------------------
+
+
+	/// <summary>
+	/// 衝突を検出したら呼び出すコールバック関数
+	/// </summary>
+	void OnCollision();
 	
-	/// --------------------------------
-	/// getter
-	/// --------------------------------
+
+
+	/// -----------------------------------------------
+	/// ↓ Getter
+	/// -----------------------------------------------
+
 
 	bool IsDead() const { return isDead_; }
 
@@ -54,5 +69,8 @@ public:
 		worldPos.z = worldTransform_.matWorld_.m[3][2];
 		return worldPos;
 	}
+
+	float GetRadius() const { return kRadius_; }
+
 
 };

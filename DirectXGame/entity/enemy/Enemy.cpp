@@ -136,3 +136,5 @@ void Enemy::RemoveBullets() {
 		return true;
 	});
 }
+
+void Enemy::OnCollision() {}

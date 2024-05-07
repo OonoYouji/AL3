@@ -22,6 +22,9 @@ public:
 
 private: ///- メンバ変数
 
+	const float kRadius_ = 3.0f;
+
+
 	std::unique_ptr<Model> model_;
 	uint32_t textureHandle_;
 
@@ -38,8 +41,40 @@ public:
 	///- 共通の寿命
 	static const int32_t kLifeTime = 60 * 5;
 
-	///- メンバ関数
+
+
+	/// -----------------------------------------------
+	/// ↓ Public Member Method
+	/// -----------------------------------------------
+
+
+	/// <summary>
+	/// 衝突を検出したら呼び出すコールバック関数
+	/// </summary>
+	void OnCollision();
+
+
+
+
+	/// -----------------------------------------------
+	/// ↓ Getter
+	/// -----------------------------------------------
+
+
+	/// <summary>
+	/// world座標positionmのgetter
+	/// </summary>
+	/// <returns></returns>
+	Vec3f GetWorldPosition() {
+		Vec3f worldPos{};
+		worldPos.x = worldTransform_.matWorld_.m[3][0];
+		worldPos.y = worldTransform_.matWorld_.m[3][1];
+		worldPos.z = worldTransform_.matWorld_.m[3][2];
+		return worldPos;
+	}
 
 	bool IsDead() const { return isDead_; }
+
+	float GetRadius() const { return kRadius_; }
 
 };

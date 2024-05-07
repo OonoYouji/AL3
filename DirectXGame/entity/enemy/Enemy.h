@@ -28,6 +28,7 @@ public:
 private: ///- メンバ変数
 
 	static const int kFireInterval_;
+	const float kRadius_ = 1.0f;
 
 	Player* pPlayer_ = nullptr;
 
@@ -61,7 +62,13 @@ private: ///- メンバ関数
 	void FireAndReset();
 
 public: ///- クラス外参照可
+	
+	
+	/// -----------------------------------------------
+	/// ↓ Public Member Method
+	/// -----------------------------------------------
 
+	
 	void Move(const Vec3f& velocity);
 
 	void ChangeState(std::unique_ptr<BaseEnemyState> baseEnemyState);
@@ -69,6 +76,17 @@ public: ///- クラス外参照可
 	const Vec3f& Position() const { return worldTransform_.translation_; }
 
 	void RemoveBullets();
+
+	/// <summary>
+	/// 衝突を検出したら呼び出すコールバック関数
+	/// </summary>
+	void OnCollision();
+
+
+
+	/// -----------------------------------------------
+	/// ↓ Getter
+	/// -----------------------------------------------
 
 	void SetPlayer(Player* player) {
 		pPlayer_ = player;
@@ -85,6 +103,24 @@ public: ///- クラス外参照可
 		worldPos.y = worldTransform_.matWorld_.m[3][1];
 		worldPos.z = worldTransform_.matWorld_.m[3][2];
 		return worldPos;
+	}
+
+
+	/// <summary>
+	/// エネミーの弾
+	/// </summary>
+	/// <returns></returns>
+	const std::list<std::unique_ptr<EnemyBullet>>& GetBullets() const {
+		return bullets_;
+	}
+
+
+	/// <summary>
+	/// 半径の取得
+	/// </summary>
+	/// <returns></returns>
+	float GetRadius() const {
+		return kRadius_;
 	}
 
 };

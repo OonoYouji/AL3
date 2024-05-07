@@ -71,4 +71,9 @@ private: // メンバ変数
 	bool isPause_ = true;
 
 
+	/// <summary>
+	/// 衝突判定と応答
+	/// </summary>
+	void CheckAllCollision();
+
 };
