@@ -6,6 +6,8 @@
 
 #include "EnemyStateApproach.h"
 #include "Player.h"
+#include "CollisionConfig.h"
+
 
 /// -------------------------------
 /// static変数の初期化
@@ -40,6 +42,11 @@ void Enemy::Init(Model* model, const Vec3f& position, uint32_t textureHandle) {
 
 	///- 弾の発射を予約
 	FireAndReset();
+
+
+	SetCollisionAttribute(kCollisionAttributeEnemy);
+	SetCollisionMask(kCollisionAttributePlayer);
+
 
 }
 

@@ -7,6 +7,7 @@
 
 #include "VectorMethod.h"
 #include "Player.h"
+#include "CollisionConfig.h"
 
 EnemyBullet::EnemyBullet() {}
 EnemyBullet::~EnemyBullet() {}
@@ -34,6 +35,11 @@ void EnemyBullet::Init(Model* model, const Vec3f& position, const Vec3f& velocit
 
 	deathTimer_ = 60 * 5;
 	isDead_ = false;
+
+
+	SetCollisionAttribute(kCollisionAttributeEnemy);
+	SetCollisionMask(kCollisionAttributePlayer);
+
 
 }
 

@@ -4,6 +4,9 @@
 #include "TextureManager.h"
 #include "ImGuiManager.h"
 
+#include "CollisionConfig.h"
+
+
 Player::Player() {}
 Player::~Player() {}
 
@@ -24,6 +27,9 @@ void Player::Init(Model* model, uint32_t textureHandle) {
 	speed_ = 0.2f;
 
 	bulletSpeed_ = 1.0f;
+
+	SetCollisionAttribute(kCollisionAttributePlayer);
+	SetCollisionMask(kCollisionAttributeEnemy);
 
 }
 

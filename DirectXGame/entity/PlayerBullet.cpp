@@ -3,6 +3,7 @@
 #include "TextureManager.h"
 #include "assert.h"
 
+#include "CollisionConfig.h"
 
 PlayerBullet::PlayerBullet() {}
 PlayerBullet::~PlayerBullet() {}
@@ -27,6 +28,12 @@ void PlayerBullet::Init(Model* model, const Vec3f& position, const Vec3f& veloci
 	///- 寿命
 	deathTimer_ = kLifeTime;
 	isDead_ = false;
+
+
+
+	SetCollisionAttribute(kCollisionAttributePlayer);
+	SetCollisionMask(kCollisionAttributeEnemy);
+
 
 }
 

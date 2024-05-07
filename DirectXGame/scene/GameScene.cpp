@@ -165,41 +165,49 @@ void GameScene::CheckAllCollision() {
 	const std::list<std::unique_ptr<PlayerBullet>>& playerBullets = player_->GetBullets();
 	const std::list<std::unique_ptr<EnemyBullet>>& enemyBullets = enemy_->GetBullets();
 
-#pragma region 自キャラと敵弾の当たり判定
+	std::list<Collider*> colliders;
+	colliders.push_back(player_.get());
+	colliders.push_back(enemy_.get());
 
-	///- 自キャラと敵弾すべての当たり判定
+	for(auto& playerBullet : playerBullets) {
+		colliders.push_back(playerBullet.get());
+	}
+
 	for(auto& enemyBullet : enemyBullets) {
-		
-		CheckCollisionPair(player_.get(), enemyBullet.get());
-
-	}
-#pragma endregion
-
-#pragma region 自弾と敵キャラの当たり判定
-
-	for(auto& playerBullet : playerBullets) {
-		
-		CheckCollisionPair(enemy_.get(), playerBullet.get());
+		colliders.push_back(enemyBullet.get());
 	}
 
-#pragma endregion
 
-#pragma region 自弾と敵弾の当たり判定
+	auto itrA = colliders.begin();
+	for(; itrA != colliders.end(); ++itrA) {
 
-	for(auto& playerBullet : playerBullets) {
-		
-		for(auto& enemyBullet : enemyBullets) {
-			 
-			CheckCollisionPair(playerBullet.get(), enemyBullet.get());
+		Collider* colliderA = *itrA;
+
+		auto itrB = itrA;
+		itrB++;
+
+		for(; itrB != colliders.end(); ++itrB) {
+			Collider* colliderB = *itrB;
+
+			///- ペアとの当たり判定
+			CheckCollisionPair(colliderA, colliderB);
 
 		}
+
 	}
 
-#pragma endregion
+
 
 }
 
 void GameScene::CheckCollisionPair(Collider* colliderA, Collider* colliderB) {
+
+	///- 衝突フィルタリング
+	if((colliderA->GetCollisionAttribute() & colliderB->GetCollisionMask()) == 0
+	   || (colliderB->GetCollisionAttribute() & colliderA->GetCollisionMask()) == 0) {
+		return;
+	}
+
 	Vec3f posA = colliderA->GetWorldPosition();
 	Vec3f posB = colliderB->GetWorldPosition();
 	float radius = colliderA->GetRadius() + colliderB->GetRadius();
