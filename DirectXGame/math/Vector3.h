@@ -9,6 +9,8 @@ struct Vector3 final {
 	float z;
 
 
+	Vector3 operator- () const;
+
 	Vector3 operator+ (const Vector3& other) const;
 	Vector3 operator- (const Vector3& other) const;
 	Vector3 operator/ (const Vector3& other) const;
@@ -31,6 +33,10 @@ struct Vector3 final {
 
 
 
+
+inline Vector3 Vector3::operator-() const {
+	return (*this) * -1.0f;
+}
 
 inline Vector3 Vector3::operator+(const Vector3& other) const {
 	return Vector3(

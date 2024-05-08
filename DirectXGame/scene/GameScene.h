@@ -17,6 +17,7 @@
 #include "Enemy.h"
 #include "Skydome.h"
 #include "RailCamera.h"
+#include "RailSpline3D.h"
 
 #include "CollisionManager.h"
 
@@ -72,6 +73,7 @@ private: // メンバ変数
 	std::unique_ptr<Enemy> enemy_;
 	std::unique_ptr<Skydome> skydome_;
 	std::unique_ptr<RailCamera> railCamera_;
+	std::unique_ptr<RailSpline3D> railSpline3D_;
 
 	std::unique_ptr<CollisionManager> collisionManager_;
 

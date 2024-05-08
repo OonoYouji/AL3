@@ -38,6 +38,9 @@ void GameScene::Initialize() {
 	AxisIndicator::GetInstance()->SetVisible(true);
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 
+	PrimitiveDrawer::GetInstance()->Initialize();
+	PrimitiveDrawer::GetInstance()->SetViewProjection(&viewProjection_);
+
 	///- Player Initialize
 	player_ = std::make_unique<Player>();
 	Vec3f playerPosition = Vec3f(0.0f, 0.0f, 30.0f);
@@ -49,10 +52,13 @@ void GameScene::Initialize() {
 	enemy_->SetPlayer(player_.get());
 	enemy_->Init(Model::Create(), { 5.0f,2.0f, 50.0f }, TextureManager::Load("sample.png"));
 
-
 	///- Skydome Initialize
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Init();
+
+	///- RailSpline3D
+	railSpline3D_ = std::make_unique<RailSpline3D>();
+	railSpline3D_->Init();
 
 
 
@@ -169,6 +175,9 @@ void GameScene::Draw() {
 	}
 
 	skydome_->Draw(viewProjection_);
+
+
+	railSpline3D_->Draw(viewProjection_);
 
 
 	// 3Dオブジェクト描画後処理

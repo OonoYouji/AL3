@@ -124,6 +124,7 @@
     <ClCompile Include="math\Matrix4x4.cpp" />
     <ClCompile Include="math\VectorMethod.cpp" />
     <ClCompile Include="object\RailCamera.cpp" />
+    <ClCompile Include="object\RailSpline3D.cpp" />
     <ClCompile Include="object\Skydome.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
   </ItemGroup>
@@ -169,6 +170,7 @@
     <ClInclude Include="math\Vector4.h" />
     <ClInclude Include="math\VectorMethod.h" />
     <ClInclude Include="object\RailCamera.h" />
+    <ClInclude Include="object\RailSpline3D.h" />
     <ClInclude Include="object\Skydome.h" />
     <ClInclude Include="scene\GameScene.h" />
   </ItemGroup>
