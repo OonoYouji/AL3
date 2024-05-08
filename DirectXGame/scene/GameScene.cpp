@@ -40,6 +40,8 @@ void GameScene::Initialize() {
 	enemy_->SetPlayer(player_.get());
 	enemy_->Init(Model::Create(), { 5.0f,2.0f, 50.0f }, TextureManager::Load("sample.png"));
 
+	skydome_ = std::make_unique<Skydome>();
+	skydome_->Init();
 
 	collisionManager_ = std::make_unique<CollisionManager>();
 
@@ -95,10 +97,11 @@ void GameScene::Update() {
 
 	player_->Update();
 
-
 	if(enemy_.get()) {
 		enemy_->Update();
 	}
+
+	skydome_->Init();
 
 	///- 衝突判定を取る
 	CheckAllCollision();
@@ -139,6 +142,7 @@ void GameScene::Draw() {
 		enemy_->Draw(viewProjection_);
 	}
 
+	skydome_->Draw(viewProjection_);
 
 
 	// 3Dオブジェクト描画後処理
