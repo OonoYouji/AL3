@@ -12,7 +12,7 @@ Player::~Player() {}
 
 
 
-void Player::Init(Model* model, uint32_t textureHandle) {
+void Player::Init(Model* model, uint32_t textureHandle, const Vec3f& position) {
 	assert(model);
 
 	input_ = Input::GetInstance();
@@ -21,6 +21,7 @@ void Player::Init(Model* model, uint32_t textureHandle) {
 	model_.reset(model);
 
 	worldTransform_.Initialize();
+	worldTransform_.translation_ = position;
 	textureHandle_ = textureHandle;
 
 	move_ = { 0.0f,0.0f,0.0f };
@@ -133,7 +134,7 @@ void Player::Attack() {
 		velocity = Mat4::TransformNormal(velocity, worldTransform_.matWorld_);
 
 		std::unique_ptr<PlayerBullet> newBullet = std::make_unique<PlayerBullet>();
-		newBullet->Init(Model::Create(), worldTransform_.translation_, velocity);
+		newBullet->Init(Model::Create(), GetWorldPosition(), velocity);
 
 		bullets_.push_back(std::move(newBullet));
 	}

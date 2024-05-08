@@ -18,7 +18,7 @@ public:
 	Player();
 	~Player();
 
-	void Init(Model* model, uint32_t textureHandle);
+	void Init(Model* model, uint32_t textureHandle, const Vec3f& position);
 	void Update();
 	void Draw(const ViewProjection& viewProjection);
 
@@ -67,7 +67,7 @@ public:
 
 
 	/// -----------------------------------------------
-	/// ↓ Getter
+	/// ↓ Getter Setter
 	/// -----------------------------------------------
 
 
@@ -92,6 +92,14 @@ public:
 		return bullets_;
 	}
 
+
+	/// <summary>
+	/// 親のworldTransform
+	/// </summary>
+	/// <param name="parent"></param>
+	void SetParent(const WorldTransform* parent) {
+		worldTransform_.parent_ = parent;
+	}
 
 
 };

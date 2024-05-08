@@ -29,21 +29,36 @@ void GameScene::Initialize() {
 	isDebugCameraActive_ = false;
 	viewProjection_.Initialize();
 
+	///- RailCamera Initialize
+	railCamera_ = std::make_unique<RailCamera>();
+	railCamera_->Init(Vec3f(0.0f, 0.0f, -30.0f), Vec3f(0.0f, 0.0f, 0.0f));
+
+
 	///- 右上の軸表示
 	AxisIndicator::GetInstance()->SetVisible(true);
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 
+	///- Player Initialize
 	player_ = std::make_unique<Player>();
-	player_->Init(Model::Create(), TextureManager::Load("uvChecker.png"));
+	Vec3f playerPosition = Vec3f(0.0f, 0.0f, 30.0f);
+	player_->Init(Model::Create(), TextureManager::Load("uvChecker.png"), playerPosition);
+	player_->SetParent(&railCamera_->GetWorldTransform());
 
+	///- Enemy Initialize
 	enemy_ = std::make_unique<Enemy>();
 	enemy_->SetPlayer(player_.get());
 	enemy_->Init(Model::Create(), { 5.0f,2.0f, 50.0f }, TextureManager::Load("sample.png"));
 
+
+	///- Skydome Initialize
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Init();
 
+
+
+	///- CollisionManager Initialize
 	collisionManager_ = std::make_unique<CollisionManager>();
+	collisionManager_->Init();
 
 }
 
@@ -81,9 +96,6 @@ void GameScene::Update() {
 		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
 		///- 行列の転送
 		viewProjection_.TransferMatrix();
-	} else {
-		///- 行列の更新と転送
-		viewProjection_.UpdateMatrix();
 	}
 
 #endif // _DEBUG
@@ -92,7 +104,20 @@ void GameScene::Update() {
 	/// ↓ 以降がゲームの更新処理
 	/// ------------------------------
 
+
 	if(isPause_) { return; }
+
+
+	///- カメラをレールカメラに切り替える
+	if(!isDebugCameraActive_) {
+		railCamera_->Update();
+		viewProjection_.matView = railCamera_->GetViewProjection().matView;
+		viewProjection_.matProjection = railCamera_->GetViewProjection().matProjection;
+		///- 行列の転送
+		viewProjection_.TransferMatrix();
+	}
+
+
 
 
 	player_->Update();
@@ -101,7 +126,8 @@ void GameScene::Update() {
 		enemy_->Update();
 	}
 
-	skydome_->Init();
+	skydome_->Update();
+
 
 	///- 衝突判定を取る
 	CheckAllCollision();

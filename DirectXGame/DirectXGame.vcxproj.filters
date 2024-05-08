@@ -138,6 +138,9 @@
     <ClCompile Include="object\Skydome.cpp">
       <Filter>ソース ファイル\object</Filter>
     </ClCompile>
+    <ClCompile Include="object\RailCamera.cpp">
+      <Filter>ソース ファイル\object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -264,6 +267,9 @@
       <Filter>ヘッダー ファイル\collision</Filter>
     </ClInclude>
     <ClInclude Include="object\Skydome.h">
+      <Filter>ヘッダー ファイル\object</Filter>
+    </ClInclude>
+    <ClInclude Include="object\RailCamera.h">
       <Filter>ヘッダー ファイル\object</Filter>
     </ClInclude>
   </ItemGroup>
