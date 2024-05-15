@@ -47,7 +47,7 @@ void RailSpline3D::Update() {
 
 
 
-void RailSpline3D::Draw([[maybe_unused]]const ViewProjection& viewProjection) {
+void RailSpline3D::Draw() {
 
 	for(uint32_t index = 0; index < pointsDrawing_.size() - 1; index++) {
 		PrimitiveDrawer::GetInstance()->DrawLine3d(pointsDrawing_[index], pointsDrawing_[index + 1], Vector4(1.0f, 0.0f, 0.0f, 1.0f));

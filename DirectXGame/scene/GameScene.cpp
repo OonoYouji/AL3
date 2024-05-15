@@ -26,7 +26,6 @@ void GameScene::Initialize() {
 
 	///- カメラの初期化
 	debugCamera_ = std::make_unique<DebugCamera>(1280, 720);
-	isDebugCameraActive_ = false;
 	viewProjection_.Initialize();
 
 	///- RailCamera Initialize
@@ -43,7 +42,7 @@ void GameScene::Initialize() {
 
 	///- Player Initialize
 	player_ = std::make_unique<Player>();
-	Vec3f playerPosition = Vec3f(0.0f, 0.0f, 30.0f);
+	Vec3f playerPosition = Vec3f(0.0f, 0.0f, 10.0f);
 	player_->Init(Model::Create(), TextureManager::Load("uvChecker.png"), playerPosition);
 	player_->SetParent(&railCamera_->GetWorldTransform());
 
@@ -56,15 +55,19 @@ void GameScene::Initialize() {
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Init();
 
-	///- RailSpline3D
-	railSpline3D_ = std::make_unique<RailSpline3D>();
-	railSpline3D_->Init();
-
 
 
 	///- CollisionManager Initialize
 	collisionManager_ = std::make_unique<CollisionManager>();
 	collisionManager_->Init();
+
+
+
+
+	Matrix4x4 a = Mat4::MakeAffine({ 1.0f,1.0f,1.0f }, { 0.123134f,0.165496f,0.94621f }, player_->GetWorldPosition());
+	Matrix4x4 inv = Mat4::MakeInverse(a);
+	Matrix4x4 iden = a * inv;
+	Matrix4x4 iden2 = inv * a;
 
 }
 
@@ -84,13 +87,19 @@ void GameScene::Update() {
 	ImGui::Checkbox("debugCamera isActive", &isDebugCameraActive_);
 
 	ImGui::Spacing();
+	ImGui::Separator();
+	ImGui::Spacing();
 
 	ImGui::Checkbox("pause", &isPause_);
+	isUpdateOneFrame_ = false;
+	if(ImGui::Button("UpdateOneFrame")) {
+		isUpdateOneFrame_ = true;
+	}
 
 
 	ImGui::End();
 
-
+	railCamera_->DebugDraw();
 
 	/// -------------------------------------------
 	/// DebugCamera Update
@@ -111,12 +120,13 @@ void GameScene::Update() {
 	/// ------------------------------
 
 
-	if(isPause_) { return; }
+	///- trueのときは更新が止まる
+	if(isPause_ && !isUpdateOneFrame_) { return; }
 
 
 	///- カメラをレールカメラに切り替える
+	railCamera_->Update();
 	if(!isDebugCameraActive_) {
-		railCamera_->Update();
 		viewProjection_.matView = railCamera_->GetViewProjection().matView;
 		viewProjection_.matProjection = railCamera_->GetViewProjection().matProjection;
 		///- 行列の転送
@@ -168,16 +178,20 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
+
+
 	player_->Draw(viewProjection_);
 
 	if(enemy_.get()) {
 		enemy_->Draw(viewProjection_);
 	}
 
+	///- 天球の描画
 	skydome_->Draw(viewProjection_);
 
+	///- 曲線の描画
+	railCamera_->Draw(viewProjection_);
 
-	railSpline3D_->Draw(viewProjection_);
 
 
 	// 3Dオブジェクト描画後処理

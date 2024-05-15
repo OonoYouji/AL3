@@ -11,6 +11,7 @@ struct Matrix4x4 final {
 
 	Matrix4x4 operator* (const Matrix4x4& other) const;
 	Matrix4x4& operator*= (const Matrix4x4& other);
+	Matrix4x4& operator= (const Matrix4x4& other);
 };
 
 /// <summary>
@@ -37,6 +38,6 @@ namespace Mat4 {
 	Matrix4x4 MakeTranspose(const Matrix4x4& m);
 
 	Vec3f TransformNormal(const Vec3f& v, const Matrix4x4& matrix);
-
+	Vec3f Transform(const Vec3f& v, const Matrix4x4& m);
 }
 

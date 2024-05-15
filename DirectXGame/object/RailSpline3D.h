@@ -17,7 +17,7 @@ public:
 
 	void Init();
 	void Update();
-	void Draw(const ViewProjection& viewProjection);
+	void Draw();
 
 private:
 

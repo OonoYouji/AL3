@@ -63,7 +63,7 @@ private: // メンバ変数
 
 
 	std::unique_ptr<DebugCamera> debugCamera_;
-	bool isDebugCameraActive_;
+	bool isDebugCameraActive_ = false;
 
 	ViewProjection viewProjection_;
 
@@ -73,12 +73,11 @@ private: // メンバ変数
 	std::unique_ptr<Enemy> enemy_;
 	std::unique_ptr<Skydome> skydome_;
 	std::unique_ptr<RailCamera> railCamera_;
-	std::unique_ptr<RailSpline3D> railSpline3D_;
 
 	std::unique_ptr<CollisionManager> collisionManager_;
 
 	bool isPause_ = true;
-
+	bool isUpdateOneFrame_ = false;
 
 	/// <summary>
 	/// 衝突判定と応答
