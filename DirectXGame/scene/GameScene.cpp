@@ -16,75 +16,79 @@ GameScene::~GameScene() {
 
 void GameScene::Initialize() {
 
+	///// ↓ GET INSTANCE
+	///// -----------------------------------------
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
+	///// -----------------------------------------
 
 
-	/// -------------------------
-	/// メンバ変数の初期化
-	/// -------------------------
+	///// ↓ KAMATA ENGINE 
+	///// -----------------------------------------
+	AxisIndicator::GetInstance()->SetVisible(true);
+	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 
-	///- カメラの初期化
+	PrimitiveDrawer::GetInstance()->Initialize();
+	PrimitiveDrawer::GetInstance()->SetViewProjection(&viewProjection_);
+	///// -----------------------------------------
+
+
+	///// ↓ TEXTURE
+	///// -----------------------------------------
+	playerTexture_ = TextureManager::Load("uvChecker.png");
+	player3dReticleTexture_ = TextureManager::Load("Images/3dReticle.png");
+	enemyTexture_ = TextureManager::Load("sample.png");
+	///// -----------------------------------------
+
+
+	///// ↓ CAMERA
+	///// -----------------------------------------
 	debugCamera_ = std::make_unique<DebugCamera>(1280, 720);
 	viewProjection_.Initialize();
 
 	///- RailCamera Initialize
 	railCamera_ = std::make_unique<RailCamera>();
 	railCamera_->Init(Vec3f(0.0f, 0.0f, -30.0f), Vec3f(0.0f, 0.0f, 0.0f));
+	///// -----------------------------------------
 
 
-	///- 右上の軸表示
-	AxisIndicator::GetInstance()->SetVisible(true);
-	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
-
-	PrimitiveDrawer::GetInstance()->Initialize();
-	PrimitiveDrawer::GetInstance()->SetViewProjection(&viewProjection_);
-
-	///- Player Initialize
+	///// ↓ PLAYER
+	///// -----------------------------------------
 	player_ = std::make_unique<Player>();
 	Vec3f playerPosition = Vec3f(0.0f, 0.0f, 10.0f);
-	player_->Init(Model::Create(), TextureManager::Load("uvChecker.png"), playerPosition);
+	player_->Init(Model::Create(), playerTexture_, playerPosition, player3dReticleTexture_);
 	player_->SetParent(&railCamera_->GetWorldTransform());
+	///// ----------------------------------------- 
 
-	///- Enemy Initialize
-	/*std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>();
-	enemy->SetPlayer(player_.get());
-	enemy->SetGameScene(this);
-	enemy->Init(Model::Create(), { 5.0f,2.0f, 50.0f }, TextureManager::Load("sample.png"));
-	enemies_.push_back(std::move(enemy));
-*/
 
-	//EnemySpawnAndReset();
+	///// ↓ ENEMY
+	///// -----------------------------------------
 	LoadEnemyPopData();
+	///// -----------------------------------------
 
-	///- Skydome Initialize
+
+	///// ↓ SKYDOME
+	///// -----------------------------------------
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Init();
+	///// -----------------------------------------
 
 
-
-	///- CollisionManager Initialize
+	///// ↓ COLLISION MANAGER
+	///// -----------------------------------------
 	collisionManager_ = std::make_unique<CollisionManager>();
 	collisionManager_->Init();
+	///// -----------------------------------------
 
-
-
-
-	Matrix4x4 a = Mat4::MakeAffine({ 1.0f,1.0f,1.0f }, { 0.123134f,0.165496f,0.94621f }, player_->GetWorldPosition());
-	Matrix4x4 inv = Mat4::MakeInverse(a);
-	Matrix4x4 iden = a * inv;
-	Matrix4x4 iden2 = inv * a;
 
 }
 
 void GameScene::Update() {
 #ifdef _DEBUG
 
-	/// -------------------------------------------
-	/// ImGui Debug
-	/// -------------------------------------------
-
+	///// ↓ IMGUI DEBUG
+	///// -----------------------------------------
 	ImGui::Begin("GameScene");
 
 	if(ImGui::Button("Reset Scene")) {
@@ -103,15 +107,13 @@ void GameScene::Update() {
 		isUpdateOneFrame_ = true;
 	}
 
-
 	ImGui::End();
+	///// -----------------------------------------
 
+
+	///// ↓ DEBUG CAMERA 
+	///// -----------------------------------------
 	railCamera_->DebugDraw();
-
-	/// -------------------------------------------
-	/// DebugCamera Update
-	/// -------------------------------------------
-
 	if(isDebugCameraActive_) {
 		debugCamera_->Update();
 		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
@@ -119,6 +121,7 @@ void GameScene::Update() {
 		///- 行列の転送
 		viewProjection_.TransferMatrix();
 	}
+	///// -----------------------------------------
 
 #endif // _DEBUG
 
@@ -131,6 +134,8 @@ void GameScene::Update() {
 	if(isPause_ && !isUpdateOneFrame_) { return; }
 
 
+	///// ↓ 3DRAIL CAMERA
+	///// -----------------------------------------
 	///- カメラをレールカメラに切り替える
 	railCamera_->Update();
 	if(!isDebugCameraActive_) {
@@ -139,13 +144,18 @@ void GameScene::Update() {
 		///- 行列の転送
 		viewProjection_.TransferMatrix();
 	}
+	///// ----------------------------------------- 
 
 
 
+	///// ↓ PLAYER
+	///// -----------------------------------------
+	player_->Update(viewProjection_);
+	///// -----------------------------------------
 
-	player_->Update();
 
-
+	///// ↓ ENEMY
+	///// -----------------------------------------
 	if(!enemies_.empty()) {
 		for(auto& enemy : enemies_) {
 			enemy->Update();
@@ -160,8 +170,13 @@ void GameScene::Update() {
 		}
 	});
 
+	///- 敵の出現
+	UpdateEnemyPopCommands();
+	///// -----------------------------------------
 
-	///- 弾の更新
+
+	///// ↓ ENEMY BULLET
+	///// -----------------------------------------
 	for(auto& bullet : enemyBullets_) {
 		bullet->Update();
 	}
@@ -173,29 +188,19 @@ void GameScene::Update() {
 			return false;
 		}
 	});
-
-	///- 敵の出現
-	UpdateEnemyPopCommands();
-	/*if(!enemySpawnTimedCall_.empty()) {
-		for(auto& timedCall : enemySpawnTimedCall_) {
-			timedCall->Update();
-		}
-	}
-
-	enemySpawnTimedCall_.remove_if([](auto& timedCall) {
-		if(timedCall->IsFinished()) {
-			return true;
-		} else {
-			return false;
-		}
-	});*/
+	///// -----------------------------------------
 
 
+	///// ↓ SKYDOME
+	///// -----------------------------------------
 	skydome_->Update();
+	///// -----------------------------------------
 
 
-	///- 衝突判定を取る
+	///// ↓ COLLISION
+	///// -----------------------------------------
 	CheckAllCollision();
+	///// -----------------------------------------
 
 }
 
@@ -229,11 +234,14 @@ void GameScene::Draw() {
 	/// </summary>
 
 
+	///// ↓ PLAYER
+	///// -----------------------------------------
 	player_->Draw(viewProjection_);
+	///// -----------------------------------------
 
 
-	/// ------------------------------------
-	/// ↓ 敵の描画処理
+	///// ↓ ENEMY 
+	///// -----------------------------------------
 	if(!enemies_.empty()) {
 		for(auto& enemy : enemies_) {
 			enemy->Draw(viewProjection_);
@@ -245,15 +253,19 @@ void GameScene::Draw() {
 			bullet->Draw(viewProjection_);
 		}
 	}
-	/// ------------------------------------
+	///// -----------------------------------------
 
 
-
-	///- 天球の描画
+	///// ↓ SKYDOME
+	///// -----------------------------------------
 	skydome_->Draw(viewProjection_);
+	///// -----------------------------------------
 
-	///- 曲線の描画
+
+	///// ↓ 3DRAIL CAMERA
+	///// -----------------------------------------
 	railCamera_->Draw(viewProjection_);
+	///// -----------------------------------------
 
 
 
@@ -268,6 +280,13 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
+
+
+	///// ↓ PLAYER
+	///// -----------------------------------------
+	player_->DrawUI();
+	///// -----------------------------------------
+
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -340,7 +359,7 @@ void GameScene::EnemySpawn(const Vec3f& position) {
 	std::unique_ptr<Enemy> newEnemy = std::make_unique<Enemy>();
 	newEnemy->SetPlayer(player_.get());
 	newEnemy->SetGameScene(this);
-	newEnemy->Init(Model::Create(), position, TextureManager::Load("sample.png"));
+	newEnemy->Init(Model::Create(), position, enemyTexture_);
 	enemies_.push_back(std::move(newEnemy));
 }
 
@@ -368,7 +387,7 @@ void GameScene::UpdateEnemyPopCommands() {
 		}
 		return;
 	}
-		 
+
 	std::string line;
 	while(getline(enemyPopCommands_, line)) {
 
@@ -403,7 +422,7 @@ void GameScene::UpdateEnemyPopCommands() {
 		} else if(word.find("WAIT") == 0) {
 
 			getline(line_stream, word, ',');
-			
+
 			///- 待ち時間
 			int32_t waitTime = atoi(word.c_str());
 

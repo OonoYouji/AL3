@@ -3,29 +3,42 @@
 #include <assert.h>
 #include "TextureManager.h"
 #include "ImGuiManager.h"
+#include "WinApp.h"
 
 #include "CollisionConfig.h"
-
+#include "VectorMethod.h"
+#include "Vector4.h"
 
 Player::Player() {}
 Player::~Player() {}
 
 
 
-void Player::Init(Model* model, uint32_t textureHandle, const Vec3f& position) {
+void Player::Init(Model* model, uint32_t playerTextureHandle, const Vec3f& position, uint32_t reticleTextureHandle) {
 	assert(model);
 
 	input_ = Input::GetInstance();
 
-	model_ = std::make_unique<Model>();
+	///// ↓ PLAYER
+	///// -----------------------------------------
 	model_.reset(model);
 
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = position;
-	textureHandle_ = textureHandle;
+	textureHandle_ = playerTextureHandle;
 
 	move_ = { 0.0f,0.0f,0.0f };
 	speed_ = 0.2f;
+	///// -----------------------------------------
+
+
+	///// ↓ 3DRETICLE
+	///// -----------------------------------------
+	worldTransform3DReticle_.Initialize();
+
+	sprite2dReticle_.reset(Sprite::Create(reticleTextureHandle, Vec2f(620.0f, 360.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vec2f(0.5f, 0.5f)));
+	///// -----------------------------------------
+
 
 	bulletSpeed_ = 1.0f;
 
@@ -34,13 +47,14 @@ void Player::Init(Model* model, uint32_t textureHandle, const Vec3f& position) {
 
 }
 
-void Player::Update() {
+void Player::Update(const ViewProjection& viewProjection) {
 
 	ImGui();
 
+	///// ↓ MOVING
+	///// -----------------------------------------
 	///- 移動量のリセット
 	move_ = { 0.0f,0.0f,0.0f };
-
 	///- 左右移動
 	if(input_->PushKey(DIK_LEFT)) {
 		move_.x -= speed_;
@@ -65,7 +79,16 @@ void Player::Update() {
 		worldTransform_.rotation_.y -= 0.02f;
 	}
 
-	///- 弾の更新
+	///- 座標更新
+	worldTransform_.translation_ += move_;
+	///- 移動制限
+	MoveLimit();
+	///// -----------------------------------------
+
+
+
+	///// ↓ BULLET
+	///// -----------------------------------------
 	Attack();
 	for(auto& bullet : bullets_) {
 		bullet->Update();
@@ -80,24 +103,60 @@ void Player::Update() {
 			return false;
 		}
 	});
+	///// -----------------------------------------
 
-	///- 座標更新
-	worldTransform_.translation_ += move_;
 
-	///- 移動制限
-	MoveLimit();
+
+	///// ↓ 3DRETICLE
+	///// -----------------------------------------
+	const float kDistancePlayerToReticle = 50.0f;
+
+	worldTransform_.UpdateMatrix(false);
+	///- reticleのベクトル計算
+	Vec3f offset = { 0.0f, 0.0f, 1.0f };
+	offset = Mat4::TransformNormal(offset, worldTransform_.matWorld_);
+	offset = VectorMethod::Normalize(offset) * kDistancePlayerToReticle;
+
+	worldTransform3DReticle_.translation_ = GetWorldPosition() + offset;
+	worldTransform3DReticle_.rotation_ = worldTransform_.rotation_;
+	worldTransform3DReticle_.UpdateMatrix();
+
+	Vec3f positionRaticle = Get3DReticleWorldPosition();
+	Matrix4x4 matViewport = Mat4::MakeViewport(0, 0, WinApp::kWindowWidth, WinApp::kWindowHeight, 0.0f, 1.0f);
+	Matrix4x4 matVPV = viewProjection.matView * viewProjection.matProjection * matViewport;
+
+	///- World -> Screen
+	positionRaticle = Mat4::Transform(positionRaticle, matVPV);
+	sprite2dReticle_->SetPosition(Vec2f(positionRaticle.x, positionRaticle.y));
+	///// -----------------------------------------
+
 
 	worldTransform_.UpdateMatrix();
 }
 
 void Player::Draw(const ViewProjection& viewProjection) {
 
+	///// ↓ PLAYER
+	///// -----------------------------------------
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
+	///// -----------------------------------------
 
-	///- 弾の描画
+
+	///// ↓ BULLET
+	///// -----------------------------------------
 	for(auto& bullet : bullets_) {
 		bullet->Draw(viewProjection);
 	}
+	///// -----------------------------------------
+
+}
+
+void Player::DrawUI() {
+
+	///// ↓ 3DRETICLE
+	///// -----------------------------------------
+	sprite2dReticle_->Draw();
+	///// -----------------------------------------   
 
 }
 
@@ -129,9 +188,8 @@ void Player::Attack() {
 
 	if(input_->TriggerKey(DIK_SPACE)) {
 
-		Vec3f velocity = { 0.0f,0.0f,bulletSpeed_ };
-
-		velocity = Mat4::TransformNormal(velocity, worldTransform_.matWorld_);
+		Vec3f velocity = Get3DReticleWorldPosition() - GetWorldPosition();
+		velocity = VectorMethod::Normalize(velocity) * bulletSpeed_;
 
 		std::unique_ptr<PlayerBullet> newBullet = std::make_unique<PlayerBullet>();
 		newBullet->Init(Model::Create(), GetWorldPosition(), velocity);

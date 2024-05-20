@@ -39,5 +39,8 @@ namespace Mat4 {
 
 	Vec3f TransformNormal(const Vec3f& v, const Matrix4x4& matrix);
 	Vec3f Transform(const Vec3f& v, const Matrix4x4& m);
+
+	Matrix4x4 MakeViewport(float top, float left, float width, float height, float minD, float maxD);
+
 }
 

@@ -364,3 +364,12 @@ Vec3f Mat4::Transform(const Vec3f& v, const Matrix4x4& m) {
 
 	return result;
 }
+
+Matrix4x4 Mat4::MakeViewport(float top, float left, float width, float height, float minD, float maxD) {
+	return Matrix4x4{
+		width / 2.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, -(height / 2.0f), 0.0f, 0.0f,
+		0.0f, 0.0f, maxD - minD, 0.0f,
+		left + (width / 2.0f), top + (height / 2.0f), minD, 1.0f
+	};
+}

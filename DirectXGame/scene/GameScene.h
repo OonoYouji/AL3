@@ -84,7 +84,9 @@ private: // メンバ変数
 
 	std::unique_ptr<CollisionManager> collisionManager_;
 
-
+	uint32_t playerTexture_;
+	uint32_t player3dReticleTexture_;
+	uint32_t enemyTexture_;
 
 	bool isPause_ = true;
 	bool isUpdateOneFrame_ = false;

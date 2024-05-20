@@ -6,6 +6,7 @@
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 #include "Model.h"
+#include "Sprite.h"
 #include "Input.h"
 
 #include "PlayerBullet.h"
@@ -18,9 +19,11 @@ public:
 	Player();
 	~Player();
 
-	void Init(Model* model, uint32_t textureHandle, const Vec3f& position);
-	void Update();
+	void Init(Model* model, uint32_t playerTextureHandle, const Vec3f& position, uint32_t reticleTextureHandle);
+	void Update(const ViewProjection& viewProjection);
 	void Draw(const ViewProjection& viewProjection);
+
+	void DrawUI();
 
 private:
 
@@ -37,7 +40,10 @@ private:
 	std::list<std::unique_ptr<PlayerBullet>> bullets_;
 	float bulletSpeed_;
 
-	///- メンバ関数
+	///- 3Dレティクル
+	WorldTransform worldTransform3DReticle_;
+	std::unique_ptr<Sprite> sprite2dReticle_;
+
 
 	///- ImGuiでの編集
 	void ImGui();
@@ -83,6 +89,13 @@ public:
 		return worldPos;
 	}
 
+	Vec3f Get3DReticleWorldPosition() const {
+		return Vec3f(
+			worldTransform3DReticle_.matWorld_.m[3][0],
+			worldTransform3DReticle_.matWorld_.m[3][1],
+			worldTransform3DReticle_.matWorld_.m[3][2]
+		);
+	}
 
 	/// <summary>
 	/// プレイヤーの弾
