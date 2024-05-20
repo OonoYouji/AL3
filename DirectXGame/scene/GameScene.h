@@ -1,5 +1,10 @@
 #pragma once
 
+#include <cmath>
+#include <memory>
+#include <list>
+#include <sstream>
+
 #include "Audio.h"
 #include "DirectXCommon.h"
 #include "Input.h"
@@ -7,9 +12,6 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-
-#include <cmath>
-#include <memory>
 #include <DebugCamera.h>
 #include "ViewProjection.h"
 
@@ -18,7 +20,6 @@
 #include "Skydome.h"
 #include "RailCamera.h"
 #include "RailSpline3D.h"
-
 #include "CollisionManager.h"
 
 /// <summary>
@@ -70,11 +71,20 @@ private: // メンバ変数
 
 
 	std::unique_ptr<Player> player_;
-	std::unique_ptr<Enemy> enemy_;
+	
+	std::list<std::unique_ptr<Enemy>> enemies_;
+	std::list<std::unique_ptr<EnemyBullet>> enemyBullets_;
+	std::list<std::unique_ptr<TimedCall>> enemySpawnTimedCall_;
+	std::stringstream enemyPopCommands_;
+	bool isWaitEnemySpawn_ = false;
+	int32_t waitTime_ = 0;
+
 	std::unique_ptr<Skydome> skydome_;
 	std::unique_ptr<RailCamera> railCamera_;
 
 	std::unique_ptr<CollisionManager> collisionManager_;
+
+
 
 	bool isPause_ = true;
 	bool isUpdateOneFrame_ = false;
@@ -85,5 +95,30 @@ private: // メンバ変数
 	void CheckAllCollision();
 
 	void SetColliderAll();
+
+	///- 敵の発生
+	void EnemySpawn();
+	void EnemySpawnAndReset();
+
+	void EnemySpawn(const Vec3f& position);
+
+	/// <summary>
+	/// 敵発生データの読み込み
+	/// </summary>
+	void LoadEnemyPopData();
+
+	/// <summary>
+	/// 
+	/// </summary>
+	void UpdateEnemyPopCommands();
+
+
+public:
+
+	/// <summary>
+	/// 敵弾を追加する
+	/// </summary>
+	void  AddEnemyBullet(EnemyBullet* enemyBullet);
+
 
 };

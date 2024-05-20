@@ -1,17 +1,18 @@
 #pragma once
 
 #include <memory>
+
 #include "Model.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
+
 #include "BaseEnemyState.h"
 #include "EnemyBullet.h"
 #include "TimedCall.h"
-
 #include "Collider.h"
 
 class Player;
-
+class GameScene;
 
 /// -------------------------
 /// 敵
@@ -29,25 +30,22 @@ public:
 
 private: ///- メンバ変数
 
-	static const int kFireInterval_;
 	const float kRadius_ = 1.0f;
 
 	Player* pPlayer_ = nullptr;
+	GameScene* pGameScene_ = nullptr;
 
-	///- モデルと画像
+	WorldTransform worldTransform_;
 	std::unique_ptr<Model> model_;
 	uint32_t textureHandle_;
 
-	///- world座標
-	WorldTransform worldTransform_;
-
 	std::unique_ptr<BaseEnemyState> state_;
 
-	std::list<std::unique_ptr<EnemyBullet>> bullets_;
-	int32_t fireCT_;
 	float bulletSpeed_;
-
 	std::list<std::unique_ptr<TimedCall>> timedCalls_;
+
+	bool isDead_ = false;
+
 
 private: ///- メンバ関数
 
@@ -108,12 +106,19 @@ public: ///- クラス外参照可
 	}
 
 
-	/// <summary>
+	void SetGameScene(GameScene* gameScene) {
+		pGameScene_ = gameScene;
+	}
+
+
+	bool IsDead() const { return isDead_; }
+
+	/*/// <summary>
 	/// エネミーの弾
 	/// </summary>
 	/// <returns></returns>
 	const std::list<std::unique_ptr<EnemyBullet>>& GetBullets() const {
 		return bullets_;
-	}
+	}*/
 
 };

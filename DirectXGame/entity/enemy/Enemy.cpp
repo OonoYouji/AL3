@@ -2,17 +2,13 @@
 
 #include <cassert>
 
-#include "VectorMethod.h"
+#include <GameScene.h>
 
+#include "VectorMethod.h"
 #include "EnemyStateApproach.h"
 #include "Player.h"
 #include "CollisionConfig.h"
 
-
-/// -------------------------------
-/// static変数の初期化
-/// -------------------------------
-const int Enemy::kFireInterval_ = 60;
 
 
 Enemy::Enemy() {}
@@ -37,7 +33,6 @@ void Enemy::Init(Model* model, const Vec3f& position, uint32_t textureHandle) {
 
 
 	///- 弾の初期化
-	fireCT_ = kFireInterval_;
 	bulletSpeed_ = 1.0f;
 
 	///- 弾の発射を予約
@@ -67,7 +62,7 @@ void Enemy::Update() {
 		}
 	});
 
-	///- 弾の更新
+	/*///- 弾の更新
 	for(auto& bullet : bullets_) {
 		bullet->Update();
 	}
@@ -78,7 +73,7 @@ void Enemy::Update() {
 		} else {
 			return false;
 		}
-	});
+	});*/
 
 	///- 行列の更新
 	worldTransform_.UpdateMatrix();
@@ -89,9 +84,9 @@ void Enemy::Draw(const ViewProjection& viewProjection) {
 	///- 描画
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
 
-	for(auto& bullet : bullets_) {
+	/*for(auto& bullet : bullets_) {
 		bullet->Draw(viewProjection);
-	}
+	}*/
 
 }
 
@@ -106,18 +101,18 @@ void Enemy::Fire() {
 	Vec3f velocity = pPlayer_->GetWorldPosition() - GetWorldPosition();
 	velocity = VectorMethod::Normalize(velocity) * bulletSpeed_;
 
-	std::unique_ptr<EnemyBullet> newBullet = std::make_unique<EnemyBullet>();
+	EnemyBullet* newBullet = new EnemyBullet();
 	newBullet->Init(Model::Create(), worldTransform_.translation_, velocity);
 	newBullet->SetPlayer(pPlayer_);
-
-	bullets_.push_back(std::move(newBullet));
+	
+	pGameScene_->AddEnemyBullet(newBullet);
+	//bullets_.push_back(std::move(newBullet));
 
 }
 
 
 
 void Enemy::InitApproach() {
-	fireCT_ = kFireInterval_;
 
 }
 
@@ -144,4 +139,6 @@ void Enemy::RemoveBullets() {
 	});
 }
 
-void Enemy::OnCollision() {}
+void Enemy::OnCollision() {
+	isDead_ = true;
+}
