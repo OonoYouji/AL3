@@ -1,6 +1,7 @@
 #include "Player.h"
 
 #include <assert.h>
+#include <algorithm>
 #include "TextureManager.h"
 #include "ImGuiManager.h"
 #include "WinApp.h"
@@ -36,7 +37,9 @@ void Player::Init(Model* model, uint32_t playerTextureHandle, const Vec3f& posit
 	///// -----------------------------------------
 	worldTransform3DReticle_.Initialize();
 
-	sprite2dReticle_.reset(Sprite::Create(reticleTextureHandle, Vec2f(620.0f, 360.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vec2f(0.5f, 0.5f)));
+	reticleScreenPosition_ = Vec2f(640.0f, 360.0f);
+	lockOnPosition_ = Vec3f(640.0f, 360.0f, 0.0f);
+	sprite2dReticle_.reset(Sprite::Create(reticleTextureHandle, reticleScreenPosition_, Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vec2f(0.5f, 0.5f)));
 	///// -----------------------------------------
 
 
@@ -121,13 +124,34 @@ void Player::Update(const ViewProjection& viewProjection) {
 	worldTransform3DReticle_.rotation_ = worldTransform_.rotation_;
 	worldTransform3DReticle_.UpdateMatrix();
 
-	Vec3f positionRaticle = Get3DReticleWorldPosition();
+	reticlePosition_ = Get3DReticleWorldPosition();
 	Matrix4x4 matViewport = Mat4::MakeViewport(0, 0, WinApp::kWindowWidth, WinApp::kWindowHeight, 0.0f, 1.0f);
 	Matrix4x4 matVPV = viewProjection.matView * viewProjection.matProjection * matViewport;
 
 	///- World -> Screen
-	positionRaticle = Mat4::Transform(positionRaticle, matVPV);
-	sprite2dReticle_->SetPosition(Vec2f(positionRaticle.x, positionRaticle.y));
+	Vec3f positionRaticle = Mat4::Transform(reticlePosition_, matVPV);
+	reticleScreenPosition_ = Vec2f(positionRaticle.x, positionRaticle.y);
+
+	///- ロックオンしているとき
+	if(isLockOn_) {
+		lerpTime_ = 0.0f;
+
+		positionRaticle = Mat4::Transform(lockOnPosition_, matVPV);
+
+		sprite2dReticle_->SetColor(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+		sprite2dReticle_->SetPosition(Vec2f(positionRaticle.x, positionRaticle.y));
+	} else {
+
+		lerpTime_ += 1.0f / 16.0f;
+		lerpTime_ = std::clamp(lerpTime_, 0.0f, 1.0f);
+
+		positionRaticle = Mat4::Transform(lockOnPosition_, matVPV);
+		Vec2f position = VectorMethod::Lerp(Vec2f(positionRaticle.x, positionRaticle.y), reticleScreenPosition_, lerpTime_);
+
+		sprite2dReticle_->SetColor(Vector4(0.75f, 0.75f, 0.75f, 1.0f));
+		sprite2dReticle_->SetPosition(position);
+	}
+
 	///// -----------------------------------------
 
 
@@ -188,7 +212,12 @@ void Player::Attack() {
 
 	if(input_->TriggerKey(DIK_SPACE)) {
 
-		Vec3f velocity = Get3DReticleWorldPosition() - GetWorldPosition();
+		Vec3f velocity{};
+		if(isLockOn_) {
+			velocity = lockOnPosition_ - GetWorldPosition();
+		} else {
+			velocity = Get3DReticleWorldPosition() - GetWorldPosition();
+		}
 		velocity = VectorMethod::Normalize(velocity) * bulletSpeed_;
 
 		std::unique_ptr<PlayerBullet> newBullet = std::make_unique<PlayerBullet>();

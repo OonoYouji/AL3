@@ -60,3 +60,14 @@ Vec3f VectorMethod::Slerp(const Vec3f& v1, const Vec3f& v2, float t) {
 float VectorMethod::Dot(const Vec3f& v1, const Vec3f& v2) {
 	return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
 }
+
+float VectorMethod::Length(const Vec2f& v) {
+	return std::sqrt(v.x * v.x + v.y * v.y);
+}
+
+Vec2f VectorMethod::Lerp(const Vec2f& v1, const Vec2f& v2, float t) {
+	return Vec2f(
+		std::lerp(v1.x, v2.x, t),
+		std::lerp(v1.y, v2.y, t)
+	);
+}

@@ -43,7 +43,11 @@ private:
 	///- 3Dレティクル
 	WorldTransform worldTransform3DReticle_;
 	std::unique_ptr<Sprite> sprite2dReticle_;
-
+	Vec2f reticleScreenPosition_;
+	Vec3f reticlePosition_;
+	bool isLockOn_ = false;
+	Vec3f lockOnPosition_;
+	float lerpTime_ = 0.0f;
 
 	///- ImGuiでの編集
 	void ImGui();
@@ -97,6 +101,11 @@ public:
 		);
 	}
 
+
+	const Vec2f Get3DReticleScreenPosition() const {
+		return reticleScreenPosition_;
+	}
+
 	/// <summary>
 	/// プレイヤーの弾
 	/// </summary>
@@ -114,5 +123,13 @@ public:
 		worldTransform_.parent_ = parent;
 	}
 
+
+	void SetIsLockOn(bool isLockOn) {
+		isLockOn_ = isLockOn;
+	}
+
+	void SetLockOnPosition(const Vec3f& position) {
+		lockOnPosition_ = position;
+	}
 
 };

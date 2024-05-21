@@ -2,6 +2,8 @@
 
 
 #include "Vector3.h"
+#include "Vector2.h"
+
 
 namespace VectorMethod {
 
@@ -63,5 +65,16 @@ namespace VectorMethod {
 	/// <returns></returns>
 	float Dot(const Vec3f& v1, const Vec3f& v2);
 
+
+	float Length(const Vec2f& v);
+
+	/// <summary>
+	/// 線形補完
+	/// </summary>
+	/// <param name="v1">start</param>
+	/// <param name="v2">end</param>
+	/// <param name="t"></param>
+	/// <returns></returns>
+	Vec2f Lerp(const Vec2f& v1, const Vec2f& v2, float t);
 
 }

@@ -137,7 +137,7 @@ void GameScene::Update() {
 	///// ↓ 3DRAIL CAMERA
 	///// -----------------------------------------
 	///- カメラをレールカメラに切り替える
-	railCamera_->Update();
+	//railCamera_->Update();
 	if(!isDebugCameraActive_) {
 		viewProjection_.matView = railCamera_->GetViewProjection().matView;
 		viewProjection_.matProjection = railCamera_->GetViewProjection().matProjection;
@@ -151,6 +151,7 @@ void GameScene::Update() {
 	///// ↓ PLAYER
 	///// -----------------------------------------
 	player_->Update(viewProjection_);
+	SingleLockOn();
 	///// -----------------------------------------
 
 
@@ -437,5 +438,32 @@ void GameScene::UpdateEnemyPopCommands() {
 
 
 	}
+
+}
+
+void GameScene::SingleLockOn() {
+
+	player_->SetIsLockOn(false);
+
+	///- World -> Screen 変換行列
+	Matrix4x4 matViewport = Mat4::MakeViewport(0, 0, WinApp::kWindowWidth, WinApp::kWindowHeight, 0.0f, 1.0f);
+	Matrix4x4 matVPV = viewProjection_.matView * viewProjection_.matProjection * matViewport;
+
+	for(auto& enemy : enemies_) {
+
+		///- World -> Screen
+		Vec3f position = enemy->GetWorldPosition();
+		Vec3f enemyPos = Mat4::Transform(position, matVPV);
+		Vec3f reticlePos = Mat4::Transform(player_->Get3DReticleWorldPosition(), matVPV);
+
+		///- ロックオンする条件
+		float len = VectorMethod::Length(Vec2f(enemyPos.x, enemyPos.y) - Vec2f(reticlePos.x, reticlePos.y));
+		if(len < 30.0f) {
+			player_->SetIsLockOn(true);
+			player_->SetLockOnPosition(position);
+		}
+	}
+
+
 
 }
