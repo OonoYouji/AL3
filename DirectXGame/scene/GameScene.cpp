@@ -153,7 +153,7 @@ void GameScene::Update() {
 	///// ↓ PLAYER
 	///// -----------------------------------------
 	player_->Update(viewProjection_);
-	SingleLockOn();
+	MultiLockOn();
 	///// -----------------------------------------
 
 
@@ -161,10 +161,15 @@ void GameScene::Update() {
 	///// -----------------------------------------
 	if(!enemies_.empty()) {
 		for(auto& enemy : enemies_) {
-			enemy->Update();
+			enemy->Update(viewProjection_);
 		}
 	}
 	//- 消滅フラグが立った敵から消す
+	for(auto& enemy : enemies_) {
+		if(enemy->IsDead()) {
+			player_->EraseEnemy(enemy.get());
+		}
+	}
 	enemies_.remove_if([](auto& enemy) {
 		if(enemy->IsDead()) {
 			return true;
@@ -285,10 +290,20 @@ void GameScene::Draw() {
 	/// </summary>
 
 
-	///// ↓ PLAYER
+	///// ↓ PLAYER UI
 	///// -----------------------------------------
 	player_->DrawUI();
 	///// -----------------------------------------
+
+
+
+	///// ↓ ENEMY UI
+	///// -----------------------------------------
+	for(auto& enemy : enemies_) {
+		enemy->DrawUI();
+	}
+	///// -----------------------------------------
+
 
 
 	// スプライト描画後処理
@@ -347,7 +362,7 @@ void GameScene::EnemySpawn() {
 	std::unique_ptr<Enemy> newEnemy = std::make_unique<Enemy>();
 	newEnemy->SetPlayer(player_.get());
 	newEnemy->SetGameScene(this);
-	newEnemy->Init(Model::Create(), Vec3f(0.0f, 0.0f, 30.0f), TextureManager::Load("sample.png"));
+	newEnemy->Init(Model::Create(), Vec3f(0.0f, 0.0f, 30.0f), enemyTexture_, player3dReticleTexture_);
 	enemies_.push_back(std::move(newEnemy));
 }
 
@@ -362,7 +377,7 @@ void GameScene::EnemySpawn(const Vec3f& position) {
 	std::unique_ptr<Enemy> newEnemy = std::make_unique<Enemy>();
 	newEnemy->SetPlayer(player_.get());
 	newEnemy->SetGameScene(this);
-	newEnemy->Init(Model::Create(), position, enemyTexture_);
+	newEnemy->Init(Model::Create(), position, enemyTexture_, player3dReticleTexture_);
 	enemies_.push_back(std::move(newEnemy));
 }
 
@@ -443,29 +458,22 @@ void GameScene::UpdateEnemyPopCommands() {
 
 }
 
-void GameScene::SingleLockOn() {
+void GameScene::MultiLockOn() {
 
-	player_->SetIsLockOn(false);
-
-	///- World -> Screen 変換行列
-	Matrix4x4 matViewport = Mat4::MakeViewport(0, 0, WinApp::kWindowWidth, WinApp::kWindowHeight, 0.0f, 1.0f);
+	Matrix4x4 matViewport = Mat4::MakeViewport(0.0f, 0.0f, WinApp::kWindowWidth, WinApp::kWindowHeight, 0.0f, 1.0f);
 	Matrix4x4 matVPV = viewProjection_.matView * viewProjection_.matProjection * matViewport;
 
 	for(auto& enemy : enemies_) {
 
-		///- World -> Screen
-		Vec3f position = enemy->GetWorldPosition();
-		Vec3f enemyPos = Mat4::Transform(position, matVPV);
-		Vec3f reticlePos = Mat4::Transform(player_->Get3DReticleWorldPosition(), matVPV);
+		Vec3f enemyPosition = Mat4::Transform(enemy->GetWorldPosition(), matVPV);
+		Vec2f enemyScreenPosition = Vec2f(enemyPosition.x, enemyPosition.y);
 
-		///- ロックオンする条件
-		float len = VectorMethod::Length(Vec2f(enemyPos.x, enemyPos.y) - Vec2f(reticlePos.x, reticlePos.y));
-		if(len < 30.0f) {
-			player_->SetIsLockOn(true);
-			player_->SetLockOnPosition(position);
+		float length = VectorMethod::Length(enemyScreenPosition - player_->Get3DReticleScreenPosition());
+		if(length < 30.0f) {
+			enemy->SetIsLocked(true);
+			player_->PushBackEnemy(enemy.get());
 		}
+
 	}
-
-
 
 }

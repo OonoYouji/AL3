@@ -61,7 +61,7 @@ public:
 	/// world座標系の座標取得
 	/// </summary>
 	/// <returns></returns>
-	virtual Vec3f GetWorldPosition() = 0;
+	virtual Vec3f GetWorldPosition() const = 0;
 
 private:
 

@@ -9,6 +9,7 @@
 #include "CollisionConfig.h"
 #include "VectorMethod.h"
 #include "Vector4.h"
+#include "Enemy.h"
 
 Player::Player() {}
 Player::~Player() {}
@@ -38,7 +39,6 @@ void Player::Init(Model* model, uint32_t playerTextureHandle, const Vec3f& posit
 	worldTransform3DReticle_.Initialize();
 
 	reticleScreenPosition_ = Vec2f(640.0f, 360.0f);
-	lockOnPosition_ = Vec3f(640.0f, 360.0f, 0.0f);
 	sprite2dReticle_.reset(Sprite::Create(reticleTextureHandle, reticleScreenPosition_, Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vec2f(0.5f, 0.5f)));
 	///// -----------------------------------------
 
@@ -124,33 +124,15 @@ void Player::Update(const ViewProjection& viewProjection) {
 	worldTransform3DReticle_.rotation_ = worldTransform_.rotation_;
 	worldTransform3DReticle_.UpdateMatrix();
 
-	reticlePosition_ = Get3DReticleWorldPosition();
+	Vec3f positionRaticle = Get3DReticleWorldPosition();
 	Matrix4x4 matViewport = Mat4::MakeViewport(0, 0, WinApp::kWindowWidth, WinApp::kWindowHeight, 0.0f, 1.0f);
 	Matrix4x4 matVPV = viewProjection.matView * viewProjection.matProjection * matViewport;
 
 	///- World -> Screen
-	Vec3f positionRaticle = Mat4::Transform(reticlePosition_, matVPV);
+	positionRaticle = Mat4::Transform(positionRaticle, matVPV);
 	reticleScreenPosition_ = Vec2f(positionRaticle.x, positionRaticle.y);
-
-	///- ロックオンしているとき
-	if(isLockOn_) {
-		lerpTime_ = 0.0f;
-
-		positionRaticle = Mat4::Transform(lockOnPosition_, matVPV);
-
-		sprite2dReticle_->SetColor(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
-		sprite2dReticle_->SetPosition(Vec2f(positionRaticle.x, positionRaticle.y));
-	} else {
-
-		lerpTime_ += 1.0f / 16.0f;
-		lerpTime_ = std::clamp(lerpTime_, 0.0f, 1.0f);
-
-		positionRaticle = Mat4::Transform(lockOnPosition_, matVPV);
-		Vec2f position = VectorMethod::Lerp(Vec2f(positionRaticle.x, positionRaticle.y), reticleScreenPosition_, lerpTime_);
-
-		sprite2dReticle_->SetColor(Vector4(0.75f, 0.75f, 0.75f, 1.0f));
-		sprite2dReticle_->SetPosition(position);
-	}
+	sprite2dReticle_->SetColor(Vector4(0.75f, 0.75f, 0.75f, 1.0f));
+	sprite2dReticle_->SetPosition(reticleScreenPosition_);
 
 	///// -----------------------------------------
 
@@ -190,6 +172,7 @@ void Player::ImGui() {
 	ImGui::Begin("player");
 
 	ImGui::DragFloat3("transform", &worldTransform_.translation_.x);
+	ImGui::Text("pEnemyNum : %d", pEnemies_.size());
 
 	ImGui::End();
 
@@ -212,18 +195,36 @@ void Player::Attack() {
 
 	if(input_->TriggerKey(DIK_SPACE)) {
 
-		Vec3f velocity{};
-		if(isLockOn_) {
-			velocity = lockOnPosition_ - GetWorldPosition();
-		} else {
+		if(pEnemies_.empty()) {
+
+			Vec3f velocity{};
 			velocity = Get3DReticleWorldPosition() - GetWorldPosition();
+			velocity = VectorMethod::Normalize(velocity) * bulletSpeed_;
+
+			std::unique_ptr<PlayerBullet> newBullet = std::make_unique<PlayerBullet>();
+			newBullet->Init(Model::Create(), GetWorldPosition(), velocity);
+
+			bullets_.push_back(std::move(newBullet));
+		} else {
+
+			Vec3f velocity{};
+			for(auto& pEnemy : pEnemies_) {
+				velocity = pEnemy->GetWorldPosition() - GetWorldPosition();
+				velocity = VectorMethod::Normalize(velocity) * (bulletSpeed_ * 2.0f);
+
+				std::unique_ptr<PlayerBullet> newBullet = std::make_unique<PlayerBullet>();
+				newBullet->Init(Model::Create(), GetWorldPosition(), velocity);
+				
+				bullets_.push_back(std::move(newBullet));
+				pEnemy->SetIsLocked(false);
+
+			}
+
+			///- 発射したらEnemyへのポインタを削除
+			pEnemies_.clear();
 		}
-		velocity = VectorMethod::Normalize(velocity) * bulletSpeed_;
 
-		std::unique_ptr<PlayerBullet> newBullet = std::make_unique<PlayerBullet>();
-		newBullet->Init(Model::Create(), GetWorldPosition(), velocity);
 
-		bullets_.push_back(std::move(newBullet));
 	}
 
 }

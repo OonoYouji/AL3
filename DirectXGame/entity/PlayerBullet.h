@@ -65,7 +65,7 @@ public:
 	/// world座標positionmのgetter
 	/// </summary>
 	/// <returns></returns>
-	Vec3f GetWorldPosition() override {
+	Vec3f GetWorldPosition() const override {
 		Vec3f worldPos{};
 		worldPos.x = worldTransform_.matWorld_.m[3][0];
 		worldPos.y = worldTransform_.matWorld_.m[3][1];

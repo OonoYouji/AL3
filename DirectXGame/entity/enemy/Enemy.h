@@ -10,6 +10,7 @@
 #include "EnemyBullet.h"
 #include "TimedCall.h"
 #include "Collider.h"
+#include "Sprite.h"
 
 class Player;
 class GameScene;
@@ -24,9 +25,10 @@ public:
 	Enemy();
 	~Enemy();
 
-	void Init(Model* model, const Vec3f& position, uint32_t textureHandle);
-	void Update();
+	void Init(Model* model, const Vec3f& position, uint32_t textureHandle, uint32_t reticleTextureHandle);
+	void Update(const ViewProjection& viewProjection);
 	void Draw(const ViewProjection& viewProjection);
+	void DrawUI();
 
 private: ///- メンバ変数
 
@@ -46,6 +48,8 @@ private: ///- メンバ変数
 
 	bool isDead_ = false;
 
+	bool isLocked_ = false;
+	std::unique_ptr<Sprite> lockedSprite_;
 
 private: ///- メンバ関数
 
@@ -53,11 +57,6 @@ private: ///- メンバ関数
 	/// 弾を打つ
 	/// </summary>
 	void Fire();
-
-	/// <summary>
-	/// 接近フェーズの初期化処理
-	/// </summary>
-	void InitApproach();
 
 	void FireAndReset();
 
@@ -85,7 +84,7 @@ public: ///- クラス外参照可
 
 
 	/// -----------------------------------------------
-	/// ↓ Getter
+	/// ↓ GETTER SETTER
 	/// -----------------------------------------------
 
 	void SetPlayer(Player* player) {
@@ -97,7 +96,7 @@ public: ///- クラス外参照可
 	/// world座標でのPosition
 	/// </summary>
 	/// <returns></returns>
-	Vec3f GetWorldPosition() override {
+	Vec3f GetWorldPosition() const override {
 		Vec3f worldPos{};
 		worldPos.x = worldTransform_.matWorld_.m[3][0];
 		worldPos.y = worldTransform_.matWorld_.m[3][1];
@@ -113,12 +112,9 @@ public: ///- クラス外参照可
 
 	bool IsDead() const { return isDead_; }
 
-	/*/// <summary>
-	/// エネミーの弾
-	/// </summary>
-	/// <returns></returns>
-	const std::list<std::unique_ptr<EnemyBullet>>& GetBullets() const {
-		return bullets_;
-	}*/
+	
+	void SetIsLocked(bool isLocked) {
+		isLocked_ = isLocked;
+	}
 
 };

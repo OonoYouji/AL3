@@ -3,6 +3,7 @@
 #include <cmath>
 #include <memory>
 #include <list>
+
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 #include "Model.h"
@@ -11,6 +12,8 @@
 
 #include "PlayerBullet.h"
 #include "Collider.h"
+
+class Enemy;
 
 class Player
 	: public Collider {
@@ -44,10 +47,7 @@ private:
 	WorldTransform worldTransform3DReticle_;
 	std::unique_ptr<Sprite> sprite2dReticle_;
 	Vec2f reticleScreenPosition_;
-	Vec3f reticlePosition_;
-	bool isLockOn_ = false;
-	Vec3f lockOnPosition_;
-	float lerpTime_ = 0.0f;
+	std::list< Enemy*> pEnemies_;
 
 	///- ImGuiでの編集
 	void ImGui();
@@ -85,7 +85,7 @@ public:
 	/// world座標positionmのgetter
 	/// </summary>
 	/// <returns></returns>
-	Vec3f GetWorldPosition() override {
+	Vec3f GetWorldPosition() const override {
 		Vec3f worldPos{};
 		worldPos.x = worldTransform_.matWorld_.m[3][0];
 		worldPos.y = worldTransform_.matWorld_.m[3][1];
@@ -124,12 +124,17 @@ public:
 	}
 
 
-	void SetIsLockOn(bool isLockOn) {
-		isLockOn_ = isLockOn;
+	void PushBackEnemy(Enemy* enemy) {
+		pEnemies_.push_back(enemy);
+		pEnemies_.sort();
+		pEnemies_.unique(); //- 重複した要素を削除する
 	}
 
-	void SetLockOnPosition(const Vec3f& position) {
-		lockOnPosition_ = position;
+	void EraseEnemy(Enemy* enemy) {
+		auto itr = std::find(pEnemies_.begin(), pEnemies_.end(), enemy);
+		if(itr != pEnemies_.end()) {
+			pEnemies_.erase(itr);
+		}
 	}
 
 };

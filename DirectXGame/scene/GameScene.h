@@ -115,7 +115,8 @@ private: // メンバ変数
 	void UpdateEnemyPopCommands();
 
 
-	void SingleLockOn();
+	void MultiLockOn();
+
 
 public:
 
