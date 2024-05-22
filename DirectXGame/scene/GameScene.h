@@ -16,6 +16,9 @@
 #include <ViewProjection.h>
 
 
+class Player;
+
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -55,6 +58,12 @@ private: // メンバ変数
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
+
+	ViewProjection viewProjection_;
+
+	uint32_t playerTexture_;
+
+	std::unique_ptr<Player> player_;
 
 
 public:

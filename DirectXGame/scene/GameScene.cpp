@@ -8,6 +8,9 @@
 #include <AxisIndicator.h>
 
 #include "VectorMethod.h"
+#include "Player.h"
+
+
 
 GameScene::GameScene() {}
 GameScene::~GameScene() {
@@ -23,12 +26,23 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	///// -----------------------------------------
 
+	viewProjection_.Initialize();
+	
+
+	playerTexture_ = TextureManager::Load("uvChecker.png");
+
+	player_ = std::make_unique<Player>();
+	player_->Initialize(Model::Create(), playerTexture_);
 
 	
 }
 
 void GameScene::Update() {
 
+	viewProjection_.UpdateMatrix();
+	viewProjection_.TransferMatrix();
+
+	player_->Update();
 
 }
 
@@ -62,7 +76,8 @@ void GameScene::Draw() {
 	/// </summary>
 
 
-	
+	player_->Draw(viewProjection_);
+
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
