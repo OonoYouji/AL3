@@ -41,7 +41,6 @@ void Player::Init(Model* model, uint32_t playerTextureHandle, const Vec3f& posit
 	reticleScreenPosition_ = Vec2f(640.0f, 360.0f);
 	sprite2dReticle_.reset(Sprite::Create(reticleTextureHandle, reticleScreenPosition_, Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vec2f(0.5f, 0.5f)));
 
-	reticleScreenPosition_ = Vec2f(0.0f, 0.0f);
 	nearPosition_ = Vec3f(0.0f, 0.0f, 0.0f);
 	farPosition_ = Vec3f(0.0f, 0.0f, 0.0f);
 	mouseDirection_ = Vec3f(0.0f, 0.0f, 0.0f);

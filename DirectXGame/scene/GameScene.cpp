@@ -139,7 +139,7 @@ void GameScene::Update() {
 	///// ↓ 3DRAIL CAMERA
 	///// -----------------------------------------
 	///- カメラをレールカメラに切り替える
-	//railCamera_->Update();
+	railCamera_->Update();
 	if(!isDebugCameraActive_) {
 		viewProjection_.matView = railCamera_->GetViewProjection().matView;
 		viewProjection_.matProjection = railCamera_->GetViewProjection().matProjection;
