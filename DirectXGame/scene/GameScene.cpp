@@ -56,7 +56,7 @@ void GameScene::Initialize() {
 	///// ↓ PLAYER
 	///// -----------------------------------------
 	player_ = std::make_unique<Player>();
-	Vec3f playerPosition = Vec3f(0.0f, 0.0f, 10.0f);
+	Vec3f playerPosition = Vec3f(0.0f, 0.0f, 0.0f);
 	player_->Init(Model::Create(), playerTexture_, playerPosition, player3dReticleTexture_);
 	player_->SetParent(&railCamera_->GetWorldTransform());
 	///// ----------------------------------------- 

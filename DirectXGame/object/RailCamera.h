@@ -42,7 +42,7 @@ private:
 	Vec3f currentForward_;
 
 	WorldTransform pointTransforms_[6];
-
+	Vec3f rotation_;
 
 	/// <summary>
 	/// CatmullRomスプライン曲線上の座標をえる

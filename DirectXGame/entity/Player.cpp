@@ -163,12 +163,7 @@ void Player::MoveLimit() {
 
 void Player::Attack() {
 
-	XINPUT_STATE joyState;
-	if(!input_->GetJoystickState(0, joyState)) {
-		return;
-	}
-
-	if(joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) {
+	if(input_->PushKey(DIK_SPACE)) {
 		if(pEnemies_.empty()) {
 
 			Vec3f velocity{};
@@ -235,17 +230,17 @@ void Player::ReticleUpdate(const ViewProjection& viewProjection) {
 
 void Player::Move() {
 	///- 移動量のリセット
-	const float kCharacterSpeed = 0.25f;
+	//const float kCharacterSpeed = 0.25f;
 	move_ = { 0.0f,0.0f,0.0f };
 
 	///// -----------------------------------------
 	///// ↓ MOVING
 	///// -----------------------------------------
-	XINPUT_STATE joyState;
-	if(input_->GetJoystickState(0, joyState)) {
-		move_.x += static_cast<float>(joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed);
-		move_.y += static_cast<float>(joyState.Gamepad.sThumbLY / SHRT_MAX * kCharacterSpeed);
-	}
+	//XINPUT_STATE joyState;
+	//if(input_->GetJoystickState(0, joyState)) {
+	//	move_.x += static_cast<float>(joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed);
+	//	move_.y += static_cast<float>(joyState.Gamepad.sThumbLY / SHRT_MAX * kCharacterSpeed);
+	//}
 
 	///- 座標更新
 	worldTransform_.translation_ += move_;

@@ -8,6 +8,7 @@
 
 #include <ImGuiManager.h>
 #include <PrimitiveDrawer.h>
+#include <Input.h>
 
 #include <VectorMethod.h>
 #include <Matrix4x4.h>
@@ -30,25 +31,7 @@ void RailCamera::Init(const Vec3f& worldPosition, const Vec3f& radian) {
 
 	///- ViewProjection Initialize
 	viewProjection_.Initialize();
-	viewProjection_.translation_ = { 0.0f,0.0f,-10.0f };
-
-	/*controlPoints_ = {
-		{0.0f, 0.0f, 0.0f},
-		{10.0f, 10.0f, 0.0f},
-		{10.0f, 15.0f, 0.0f},
-		{20.0f, 15.0f, 0.0f},
-		{20.0f, 0.0f, 0.0f},
-		{30.0f, 0.0f, 0.0f}
-	};*/
-
-	/*controlPoints_ = {
-		{  0.0f,  0.0f,  0.0f },
-		{ 10.0f, 10.0f, 10.0f },
-		{ 10.0f, 15.0f, 10.0f },
-		{ 20.0f, 15.0f, 20.0f },
-		{ 20.0f,  0.0f, 20.0f },
-		{ 30.0f,  0.0f, 30.0f }
-	};*/
+	viewProjection_.translation_ = { 0.0f,0.0f,0.0f };
 
 	controlPoints_ = {
 		{  0.0f,  0.0f,  0.0f },
@@ -84,6 +67,7 @@ void RailCamera::Init(const Vec3f& worldPosition, const Vec3f& radian) {
 	model_.reset(Model::Create());
 #endif // _DEBUG
 
+	rotation_ = Vec3f(0.0f, 0.0f, 0.0f);
 
 }
 
@@ -138,6 +122,16 @@ void RailCamera::Update() {
 	worldTransform_.rotation_.y = VectorMethod::YAxisTheta(currentForward_);
 	float xAxisLen = VectorMethod::Length({ currentForward_.x, 0.0f, currentForward_.z });
 	worldTransform_.rotation_.x = std::atan2(-currentForward_.y, xAxisLen);
+
+
+	Vec2f mouseVelocity = Vec2f(
+		static_cast<float>(Input::GetInstance()->GetMouseMove().lX),
+		static_cast<float>(Input::GetInstance()->GetMouseMove().lY)
+	);
+	rotation_.x += mouseVelocity.y / 512.0f;
+	rotation_.y += mouseVelocity.x / 512.0f;
+
+	worldTransform_.rotation_ += rotation_;
 
 	///- 行列の計算
 	worldTransform_.UpdateMatrix();

@@ -22,6 +22,7 @@ void PlayerBullet::Init(Model* model, const Vec3f& position, const Vec3f& veloci
 	///- 座標
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = position;
+	worldTransform_.scale_ = Vec3f(1.0f, 1.0f, 1.0f) / 10.0f;
 
 	velocity_ = velocity;
 
