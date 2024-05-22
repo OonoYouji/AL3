@@ -5,22 +5,16 @@
 #include <list>
 #include <sstream>
 
-#include "Audio.h"
-#include "DirectXCommon.h"
-#include "Input.h"
-#include "Model.h"
-#include "Sprite.h"
-#include "ViewProjection.h"
-#include "WorldTransform.h"
+#include <Audio.h>
+#include <DirectXCommon.h>
+#include <Input.h>
+#include <Model.h>
+#include <Sprite.h>
+#include <ViewProjection.h>
+#include <WorldTransform.h>
 #include <DebugCamera.h>
-#include "ViewProjection.h"
+#include <ViewProjection.h>
 
-#include "Player.h"
-#include "Enemy.h"
-#include "Skydome.h"
-#include "RailCamera.h"
-#include "RailSpline3D.h"
-#include "CollisionManager.h"
 
 /// <summary>
 /// ゲームシーン
