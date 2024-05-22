@@ -17,6 +17,12 @@
 GameScene::GameScene() {}
 GameScene::~GameScene() {
 
+	player_.reset();
+	skydome_.reset();
+	ground_.reset();
+	followCamera_.reset();
+	debugCamera_.reset();
+
 }
 
 void GameScene::Initialize() {
@@ -58,7 +64,7 @@ void GameScene::Initialize() {
 
 
 	player_ = std::make_unique<Player>();
-	player_->Initialize(Model::CreateFromOBJ("player"));
+	player_->Initialize();
 	player_->SetViewProjection(&followCamera_->GetViewProjection());
 
 	followCamera_->SetTarget(&player_->GetWorldTransform());
@@ -171,6 +177,8 @@ void GameScene::ImGui() {
 	}
 
 	ImGui::End();
+
+	player_->ImGui();
 
 #endif // _DEBUG
 }
