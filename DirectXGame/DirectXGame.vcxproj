@@ -112,20 +112,9 @@
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="collision\Collider.cpp" />
     <ClCompile Include="collision\CollisionManager.cpp" />
-    <ClCompile Include="entity\enemy\BaseEnemyState.cpp" />
-    <ClCompile Include="entity\enemy\Enemy.cpp" />
-    <ClCompile Include="entity\enemy\EnemyBullet.cpp" />
-    <ClCompile Include="entity\enemy\EnemyStateApproach.cpp" />
-    <ClCompile Include="entity\enemy\EnemyStateLeave.cpp" />
-    <ClCompile Include="entity\Player.cpp" />
-    <ClCompile Include="entity\PlayerBullet.cpp" />
-    <ClCompile Include="entity\TimedCall.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\Matrix4x4.cpp" />
     <ClCompile Include="math\VectorMethod.cpp" />
-    <ClCompile Include="object\RailCamera.cpp" />
-    <ClCompile Include="object\RailSpline3D.cpp" />
-    <ClCompile Include="object\Skydome.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -155,23 +144,11 @@
     <ClInclude Include="collision\Collider.h" />
     <ClInclude Include="collision\CollisionConfig.h" />
     <ClInclude Include="collision\CollisionManager.h" />
-    <ClInclude Include="entity\enemy\BaseEnemyState.h" />
-    <ClInclude Include="entity\enemy\Enemy.h" />
-    <ClInclude Include="entity\enemy\EnemyBullet.h" />
-    <ClInclude Include="entity\enemy\EnemyStateApproach.h" />
-    <ClInclude Include="entity\enemy\EnemyStateLeave.h" />
-    <ClInclude Include="entity\Player.h" />
-    <ClInclude Include="entity\PlayerBullet.h" />
-    <ClInclude Include="entity\TimedCall.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="math\Matrix4x4.h" />
     <ClInclude Include="math\Vector2.h" />
     <ClInclude Include="math\Vector3.h" />
     <ClInclude Include="math\Vector4.h" />
-    <ClInclude Include="math\VectorMethod.h" />
-    <ClInclude Include="object\RailCamera.h" />
-    <ClInclude Include="object\RailSpline3D.h" />
-    <ClInclude Include="object\Skydome.h" />
     <ClInclude Include="scene\GameScene.h" />
   </ItemGroup>
   <ItemGroup>

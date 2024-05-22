@@ -63,67 +63,7 @@ private: // メンバ変数
 	/// </summary>
 
 
-	std::unique_ptr<DebugCamera> debugCamera_;
-	bool isDebugCameraActive_ = false;
-
-	ViewProjection viewProjection_;
-
-
-
-	std::unique_ptr<Player> player_;
-	
-	std::list<std::unique_ptr<Enemy>> enemies_;
-	std::list<std::unique_ptr<EnemyBullet>> enemyBullets_;
-	std::list<std::unique_ptr<TimedCall>> enemySpawnTimedCall_;
-	std::stringstream enemyPopCommands_;
-	bool isWaitEnemySpawn_ = false;
-	int32_t waitTime_ = 0;
-
-	std::unique_ptr<Skydome> skydome_;
-	std::unique_ptr<RailCamera> railCamera_;
-
-	std::unique_ptr<CollisionManager> collisionManager_;
-
-	uint32_t playerTexture_;
-	uint32_t player3dReticleTexture_;
-	uint32_t enemyTexture_;
-
-	bool isPause_ = true;
-	bool isUpdateOneFrame_ = false;
-
-	/// <summary>
-	/// 衝突判定と応答
-	/// </summary>
-	void CheckAllCollision();
-
-	void SetColliderAll();
-
-	///- 敵の発生
-	void EnemySpawn();
-	void EnemySpawnAndReset();
-
-	void EnemySpawn(const Vec3f& position);
-
-	/// <summary>
-	/// 敵発生データの読み込み
-	/// </summary>
-	void LoadEnemyPopData();
-
-	/// <summary>
-	/// 
-	/// </summary>
-	void UpdateEnemyPopCommands();
-
-
-	void MultiLockOn();
-
-
 public:
-
-	/// <summary>
-	/// 敵弾を追加する
-	/// </summary>
-	void  AddEnemyBullet(EnemyBullet* enemyBullet);
 
 
 };
