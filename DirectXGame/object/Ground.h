@@ -6,18 +6,19 @@
 #include <ViewProjection.h>
 #include <Model.h>
 
-
 /// <summary>
-/// 天球
+/// 地面
 /// </summary>
-class Skydome {
+class Ground {
 public:
 
-	Skydome();
-	~Skydome();
+	Ground();
+	~Ground();
 
 	void Initialize();
+
 	void Update();
+
 	void Draw(const ViewProjection& viewProjection);
 
 private:

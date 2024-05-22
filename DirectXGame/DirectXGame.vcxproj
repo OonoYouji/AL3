@@ -116,6 +116,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\Matrix4x4.cpp" />
     <ClCompile Include="math\VectorMethod.cpp" />
+    <ClCompile Include="object\Ground.cpp" />
     <ClCompile Include="object\Skydome.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
   </ItemGroup>
@@ -152,6 +153,7 @@
     <ClInclude Include="math\Vector2.h" />
     <ClInclude Include="math\Vector3.h" />
     <ClInclude Include="math\Vector4.h" />
+    <ClInclude Include="object\Ground.h" />
     <ClInclude Include="object\Skydome.h" />
     <ClInclude Include="scene\GameScene.h" />
   </ItemGroup>

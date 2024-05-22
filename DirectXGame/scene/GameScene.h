@@ -18,7 +18,7 @@
 
 class Player;
 class Skydome;
-
+class Ground;
 
 /// <summary>
 /// ゲームシーン
@@ -68,6 +68,7 @@ private: // メンバ変数
 
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Skydome> skydome_;
+	std::unique_ptr<Ground> ground_;
 
 
 	void ImGui();

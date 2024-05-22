@@ -10,7 +10,7 @@
 #include "VectorMethod.h"
 #include "Player.h"
 #include "Skydome.h"
-
+#include "Ground.h"
 
 
 GameScene::GameScene() {}
@@ -53,14 +53,18 @@ void GameScene::Initialize() {
 
 
 
-	playerTexture_ = TextureManager::Load("uvChecker.png");
 
 	player_ = std::make_unique<Player>();
-	player_->Initialize(Model::Create(), playerTexture_);
+	player_->Initialize(Model::CreateFromOBJ("player"));
 
 
 	skydome_ = std::make_unique<Skydome>();
-	skydome_->Initialize(Model::CreateFromOBJ("skydome"));
+	skydome_->Initialize();
+
+	
+	ground_ = std::make_unique<Ground>();
+	ground_->Initialize();
+
 
 
 }
@@ -73,6 +77,9 @@ void GameScene::Update() {
 
 
 	player_->Update();
+
+	skydome_->Update();
+	ground_->Update();
 
 }
 
@@ -107,7 +114,10 @@ void GameScene::Draw() {
 
 	player_->Draw(viewProjection_);
 
+
 	skydome_->Draw(viewProjection_);
+	ground_->Draw(viewProjection_);
+
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

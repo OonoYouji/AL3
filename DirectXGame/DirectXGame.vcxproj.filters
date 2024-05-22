@@ -61,12 +61,6 @@
     <Filter Include="ソース ファイル\3d">
       <UniqueIdentifier>{b9785434-dbc3-4d39-ace0-acfbbfc46b6b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\entity\enemy">
-      <UniqueIdentifier>{447c1a07-4528-40af-93ca-a956b0b913b9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\entity\enemy">
-      <UniqueIdentifier>{f7dbc043-ac42-461e-9380-587cc49d98dc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\collision">
       <UniqueIdentifier>{573e7b75-35a7-4968-8cce-9de4296578c3}</UniqueIdentifier>
     </Filter>
@@ -78,6 +72,12 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\object">
       <UniqueIdentifier>{4468a6e0-4bd6-43d6-ba6f-807d1ce228d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\entity\player">
+      <UniqueIdentifier>{447c1a07-4528-40af-93ca-a956b0b913b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\entity\player">
+      <UniqueIdentifier>{f7dbc043-ac42-461e-9380-587cc49d98dc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -102,30 +102,6 @@
     <ClCompile Include="3d\WorldTransform.cpp">
       <Filter>ソース ファイル\3d</Filter>
     </ClCompile>
-    <ClCompile Include="entity\enemy\BaseEnemyState.cpp">
-      <Filter>ソース ファイル\entity\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="entity\enemy\Enemy.cpp">
-      <Filter>ソース ファイル\entity\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="entity\enemy\EnemyBullet.cpp">
-      <Filter>ソース ファイル\entity\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="entity\enemy\EnemyStateApproach.cpp">
-      <Filter>ソース ファイル\entity\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="entity\enemy\EnemyStateLeave.cpp">
-      <Filter>ソース ファイル\entity\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="entity\PlayerBullet.cpp">
-      <Filter>ソース ファイル\entity</Filter>
-    </ClCompile>
-    <ClCompile Include="entity\Player.cpp">
-      <Filter>ソース ファイル\entity</Filter>
-    </ClCompile>
-    <ClCompile Include="entity\TimedCall.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="math\VectorMethod.cpp">
       <Filter>ソース ファイル\math</Filter>
     </ClCompile>
@@ -138,10 +114,10 @@
     <ClCompile Include="object\Skydome.cpp">
       <Filter>ソース ファイル\object</Filter>
     </ClCompile>
-    <ClCompile Include="object\RailCamera.cpp">
-      <Filter>ソース ファイル\object</Filter>
+    <ClCompile Include="entity\player\Player.cpp">
+      <Filter>ソース ファイル\entity\player</Filter>
     </ClCompile>
-    <ClCompile Include="object\RailSpline3D.cpp">
+    <ClCompile Include="object\Ground.cpp">
       <Filter>ソース ファイル\object</Filter>
     </ClCompile>
   </ItemGroup>
@@ -233,33 +209,6 @@
     <ClInclude Include="3d\ObjectColor.h">
       <Filter>ヘッダー ファイル\3d</Filter>
     </ClInclude>
-    <ClInclude Include="entity\enemy\BaseEnemyState.h">
-      <Filter>ヘッダー ファイル\entity\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="entity\enemy\Enemy.h">
-      <Filter>ヘッダー ファイル\entity\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="entity\enemy\EnemyBullet.h">
-      <Filter>ヘッダー ファイル\entity\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="entity\enemy\EnemyStateApproach.h">
-      <Filter>ヘッダー ファイル\entity\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="entity\enemy\EnemyStateLeave.h">
-      <Filter>ヘッダー ファイル\entity\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="entity\PlayerBullet.h">
-      <Filter>ヘッダー ファイル\entity</Filter>
-    </ClInclude>
-    <ClInclude Include="entity\Player.h">
-      <Filter>ヘッダー ファイル\entity</Filter>
-    </ClInclude>
-    <ClInclude Include="entity\TimedCall.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="math\VectorMethod.h">
-      <Filter>ヘッダー ファイル\entity\enemy</Filter>
-    </ClInclude>
     <ClInclude Include="collision\Collider.h">
       <Filter>ヘッダー ファイル\collision</Filter>
     </ClInclude>
@@ -272,10 +221,10 @@
     <ClInclude Include="object\Skydome.h">
       <Filter>ヘッダー ファイル\object</Filter>
     </ClInclude>
-    <ClInclude Include="object\RailCamera.h">
-      <Filter>ヘッダー ファイル\object</Filter>
+    <ClInclude Include="entity\player\Player.h">
+      <Filter>ヘッダー ファイル\entity\player</Filter>
     </ClInclude>
-    <ClInclude Include="object\RailSpline3D.h">
+    <ClInclude Include="object\Ground.h">
       <Filter>ヘッダー ファイル\object</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,13 +5,11 @@ Player::~Player() {}
 
 
 
-void Player::Initialize(Model* model, uint32_t textureHandle) {
+void Player::Initialize(Model* model) {
 
 	worldTransform_.Initialize();
 	worldTransform_.UpdateMatrix();
 	model_.reset(model);
-	textureHandle_ = textureHandle;
-
 }
 
 void Player::Update() {
@@ -20,6 +18,6 @@ void Player::Update() {
 
 void Player::Draw(const ViewProjection& viewProjection) {
 
-	model_->Draw(worldTransform_, viewProjection, textureHandle_);
+	model_->Draw(worldTransform_, viewProjection);
 
 }

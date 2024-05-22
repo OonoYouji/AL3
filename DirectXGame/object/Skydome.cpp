@@ -7,14 +7,19 @@ Skydome::~Skydome() {}
 
 
 
-void Skydome::Initialize(Model* model) {
+void Skydome::Initialize() {
 
 	worldTransform_.Initialize();
 	worldTransform_.scale_ *= 100.0f;
 	worldTransform_.UpdateMatrix();
 
-	model_.reset(model);
+	model_.reset(Model::CreateFromOBJ("skydome"));
 
+}
+
+void Skydome::Update() {
+
+	worldTransform_.UpdateMatrix();
 }
 
 
