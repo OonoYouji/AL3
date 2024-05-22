@@ -40,6 +40,11 @@ void Player::Init(Model* model, uint32_t playerTextureHandle, const Vec3f& posit
 
 	reticleScreenPosition_ = Vec2f(640.0f, 360.0f);
 	sprite2dReticle_.reset(Sprite::Create(reticleTextureHandle, reticleScreenPosition_, Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vec2f(0.5f, 0.5f)));
+
+	reticleScreenPosition_ = Vec2f(0.0f, 0.0f);
+	nearPosition_ = Vec3f(0.0f, 0.0f, 0.0f);
+	farPosition_ = Vec3f(0.0f, 0.0f, 0.0f);
+	mouseDirection_ = Vec3f(0.0f, 0.0f, 0.0f);
 	///// -----------------------------------------
 
 
@@ -54,42 +59,14 @@ void Player::Update(const ViewProjection& viewProjection) {
 
 	ImGui();
 
+	///// -----------------------------------------
 	///// ↓ MOVING
 	///// -----------------------------------------
-	///- 移動量のリセット
-	move_ = { 0.0f,0.0f,0.0f };
-	///- 左右移動
-	if(input_->PushKey(DIK_LEFT)) {
-		move_.x -= speed_;
-	}
-	if(input_->PushKey(DIK_RIGHT)) {
-		move_.x += speed_;
-	}
+	Move();
 
-	///- 上下移動
-	if(input_->PushKey(DIK_UP)) {
-		move_.y += speed_;
-	}
-	if(input_->PushKey(DIK_DOWN)) {
-		move_.y -= speed_;
-	}
 
-	///- 左右回転
-	if(input_->PushKey(DIK_A)) {
-		worldTransform_.rotation_.y += 0.02f;
-	}
-	if(input_->PushKey(DIK_D)) {
-		worldTransform_.rotation_.y -= 0.02f;
-	}
 
-	///- 座標更新
-	worldTransform_.translation_ += move_;
-	///- 移動制限
-	MoveLimit();
 	///// -----------------------------------------
-
-
-
 	///// ↓ BULLET
 	///// -----------------------------------------
 	Attack();
@@ -106,35 +83,13 @@ void Player::Update(const ViewProjection& viewProjection) {
 			return false;
 		}
 	});
+
+
+
 	///// -----------------------------------------
-
-
-
 	///// ↓ 3DRETICLE
 	///// -----------------------------------------
-	const float kDistancePlayerToReticle = 50.0f;
-
-	worldTransform_.UpdateMatrix(false);
-	///- reticleのベクトル計算
-	Vec3f offset = { 0.0f, 0.0f, 1.0f };
-	offset = Mat4::TransformNormal(offset, worldTransform_.matWorld_);
-	offset = VectorMethod::Normalize(offset) * kDistancePlayerToReticle;
-
-	worldTransform3DReticle_.translation_ = GetWorldPosition() + offset;
-	worldTransform3DReticle_.rotation_ = worldTransform_.rotation_;
-	worldTransform3DReticle_.UpdateMatrix();
-
-	Vec3f positionRaticle = Get3DReticleWorldPosition();
-	Matrix4x4 matViewport = Mat4::MakeViewport(0, 0, WinApp::kWindowWidth, WinApp::kWindowHeight, 0.0f, 1.0f);
-	Matrix4x4 matVPV = viewProjection.matView * viewProjection.matProjection * matViewport;
-
-	///- World -> Screen
-	positionRaticle = Mat4::Transform(positionRaticle, matVPV);
-	reticleScreenPosition_ = Vec2f(positionRaticle.x, positionRaticle.y);
-	sprite2dReticle_->SetColor(Vector4(0.75f, 0.75f, 0.75f, 1.0f));
-	sprite2dReticle_->SetPosition(reticleScreenPosition_);
-
-	///// -----------------------------------------
+	ReticleUpdate(viewProjection);
 
 
 	worldTransform_.UpdateMatrix();
@@ -174,6 +129,22 @@ void Player::ImGui() {
 	ImGui::DragFloat3("transform", &worldTransform_.translation_.x);
 	ImGui::Text("pEnemyNum : %d", pEnemies_.size());
 
+	ImGui::Separator();
+
+	if(ImGui::TreeNodeEx("Reticle", ImGuiTreeNodeFlags_DefaultOpen)) {
+
+		ImGui::DragFloat2("ScreenPosition", &reticleScreenPosition_.x, 0.0f);
+
+		ImGui::DragFloat3("NearPosition", &nearPosition_.x, 0.0f);
+		ImGui::DragFloat3("FarPosition", &farPosition_.x, 0.0f);
+
+		ImGui::DragFloat3("Direction", &mouseDirection_.x, 0.0f);
+
+		ImGui::DragFloat3("ReticlePosition", &worldTransform3DReticle_.translation_.x, 0.0f);
+
+		ImGui::TreePop();
+	}
+
 	ImGui::End();
 
 #endif // _DEBUG
@@ -193,8 +164,12 @@ void Player::MoveLimit() {
 
 void Player::Attack() {
 
-	if(input_->TriggerKey(DIK_SPACE)) {
+	XINPUT_STATE joyState;
+	if(!input_->GetJoystickState(0, joyState)) {
+		return;
+	}
 
+	if(joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) {
 		if(pEnemies_.empty()) {
 
 			Vec3f velocity{};
@@ -214,7 +189,7 @@ void Player::Attack() {
 
 				std::unique_ptr<PlayerBullet> newBullet = std::make_unique<PlayerBullet>();
 				newBullet->Init(Model::Create(), GetWorldPosition(), velocity);
-				
+
 				bullets_.push_back(std::move(newBullet));
 				pEnemy->SetIsLocked(false);
 
@@ -222,11 +197,62 @@ void Player::Attack() {
 
 			///- 発射したらEnemyへのポインタを削除
 			pEnemies_.clear();
-		}
 
+		}
 
 	}
 
+
+
+
 }
+
+void Player::ReticleUpdate(const ViewProjection& viewProjection) {
+
+	const float kDistancePlayerToReticle = 50.0f;
+
+	///// -----------------------------------------
+	///// ↓ RETICLE MOVING
+	///// -----------------------------------------
+	XINPUT_STATE joyState;
+	if(input_->GetJoystickState(0, joyState)) {
+		reticleScreenPosition_.x += static_cast<float>(joyState.Gamepad.sThumbRX / SHRT_MAX * 12.0f);
+		reticleScreenPosition_.y -= static_cast<float>(joyState.Gamepad.sThumbRY / SHRT_MAX * 12.0f);
+		sprite2dReticle_->SetPosition(reticleScreenPosition_);
+	}
+
+	Matrix4x4 matViewport = Mat4::MakeViewport(0, 0, WinApp::kWindowWidth, WinApp::kWindowHeight, 0.0f, 1.0f);
+	Matrix4x4 matVPV = viewProjection.matView * viewProjection.matProjection * matViewport;
+	Matrix4x4 matInverseVPV = Mat4::MakeInverse(matVPV);
+
+	nearPosition_ = Mat4::Transform(Vec3f(reticleScreenPosition_.x, reticleScreenPosition_.y, 0.0f), matInverseVPV);
+	farPosition_ = Mat4::Transform(Vec3f(reticleScreenPosition_.x, reticleScreenPosition_.y, 1.0f), matInverseVPV);
+	mouseDirection_ = VectorMethod::Normalize(farPosition_ - nearPosition_);
+
+	worldTransform3DReticle_.translation_ = nearPosition_ + (mouseDirection_ * kDistancePlayerToReticle);
+	worldTransform3DReticle_.UpdateMatrix();
+
+}
+
+void Player::Move() {
+	///- 移動量のリセット
+	const float kCharacterSpeed = 0.25f;
+	move_ = { 0.0f,0.0f,0.0f };
+
+	///// -----------------------------------------
+	///// ↓ MOVING
+	///// -----------------------------------------
+	XINPUT_STATE joyState;
+	if(input_->GetJoystickState(0, joyState)) {
+		move_.x += static_cast<float>(joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed);
+		move_.y += static_cast<float>(joyState.Gamepad.sThumbLY / SHRT_MAX * kCharacterSpeed);
+	}
+
+	///- 座標更新
+	worldTransform_.translation_ += move_;
+	///- 移動制限
+	MoveLimit();
+}
+
 
 void Player::OnCollision() {}

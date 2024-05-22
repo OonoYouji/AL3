@@ -47,6 +47,10 @@ private:
 	WorldTransform worldTransform3DReticle_;
 	std::unique_ptr<Sprite> sprite2dReticle_;
 	Vec2f reticleScreenPosition_;
+	Vec3f nearPosition_;
+	Vec3f farPosition_;
+	Vec3f mouseDirection_;
+
 	std::list< Enemy*> pEnemies_;
 
 	///- ImGuiでの編集
@@ -57,6 +61,12 @@ private:
 
 	///- 弾の発射
 	void Attack();
+
+	///- レティクルの更新
+	void ReticleUpdate(const ViewProjection& viewProjection);
+
+	///- 自機の移動
+	void Move();
 
 public:
 
