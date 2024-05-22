@@ -6,6 +6,8 @@
 #include <WorldTransform.h>
 #include <ViewProjection.h>
 #include <Model.h>
+#include <Input.h>
+
 
 /// <summary>
 /// プレイヤー
@@ -22,7 +24,14 @@ public:
 
 private:
 
+	Input* input_ = nullptr;
+
 	WorldTransform worldTransform_;
 	std::unique_ptr<Model> model_;
+
+	const float kMovingSpeed_ = 0.3f;
+	Vec3f move_;
+
+	void Move();
 
 };

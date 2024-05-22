@@ -120,6 +120,9 @@
     <ClCompile Include="object\Ground.cpp">
       <Filter>ソース ファイル\object</Filter>
     </ClCompile>
+    <ClCompile Include="object\FollowCamera.cpp">
+      <Filter>ソース ファイル\object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -225,6 +228,9 @@
       <Filter>ヘッダー ファイル\entity\player</Filter>
     </ClInclude>
     <ClInclude Include="object\Ground.h">
+      <Filter>ヘッダー ファイル\object</Filter>
+    </ClInclude>
+    <ClInclude Include="object\FollowCamera.h">
       <Filter>ヘッダー ファイル\object</Filter>
     </ClInclude>
   </ItemGroup>
