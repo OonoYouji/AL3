@@ -1,7 +1,7 @@
 #include "Player.h"
 
 #include "VectorMethod.h"
-
+#include "MyMath.h"
 
 Player::Player() {}
 Player::~Player() {}
@@ -45,11 +45,19 @@ void Player::Move() {
 		return;
 	}
 
+	const float kThreshold = 0.7f;
+
 	move_ = {
-		static_cast<float>(joyState.Gamepad.sThumbLX),
+		static_cast<float>(joyState.Gamepad.sThumbLX / SHRT_MAX),
 		0.0f,
-		static_cast<float>(joyState.Gamepad.sThumbLY)
+		static_cast<float>(joyState.Gamepad.sThumbLY / SHRT_MAX)
 	};
+
+	///- 閾値を超えたら次の処理に進む
+	if(VectorMethod::Length(move_) <= kThreshold) {
+		return;
+	}
+
 
 	move_ = VectorMethod::Normalize(move_) * kMovingSpeed_;
 	move_ = Mat4::Transform(move_, Mat4::MakeRotate(viewProjection_->rotation_));
@@ -63,7 +71,8 @@ void Player::Move() {
 void Player::Rotate() {
 
 	if(move_ != Vec3f(0.0f, 0.0f, 0.0f)) {
-		worldTransform_.rotation_.y = VectorMethod::YAxisTheta(move_);
+		float targetRotate = VectorMethod::YAxisTheta(move_);
+		worldTransform_.rotation_.y = LerpShortAngle(worldTransform_.rotation_.y, targetRotate, 0.05f);
 	}
 
 }
