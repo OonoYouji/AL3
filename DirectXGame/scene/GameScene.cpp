@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "Skydome.h"
 #include "Ground.h"
+#include "FollowCamera.h"
 
 
 GameScene::GameScene() {}
@@ -33,6 +34,8 @@ void GameScene::Initialize() {
 	///// -----------------------------------------
 	viewProjection_.Initialize();
 	debugCamera_ = std::make_unique<DebugCamera>(1280, 720);
+	followCamera_ = std::make_unique<FollowCamera>();
+	followCamera_->Initialize();
 	///// -----------------------------------------
 
 
@@ -56,6 +59,9 @@ void GameScene::Initialize() {
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize(Model::CreateFromOBJ("player"));
+	player_->SetViewProjection(&followCamera_->GetViewProjection());
+
+	followCamera_->SetTarget(&player_->GetWorldTransform());
 
 
 	skydome_ = std::make_unique<Skydome>();
@@ -73,6 +79,16 @@ void GameScene::Update() {
 
 	ImGui();
 
+
+	///// -----------------------------------
+	///// 追従カメラ 更新
+	///// -----------------------------------
+	followCamera_->Update();
+	viewProjection_.matView = followCamera_->GetViewProjection().matView;
+	viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
+	viewProjection_.TransferMatrix();
+
+	
 	DebugCameraUpdate();
 
 
@@ -167,7 +183,7 @@ void GameScene::DebugCameraUpdate() {
 		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
 		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
 		viewProjection_.TransferMatrix();
-	}
+	} 
 
 #endif // _DEBUG
 }

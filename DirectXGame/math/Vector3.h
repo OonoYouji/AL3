@@ -28,6 +28,8 @@ struct Vector3 final {
 	Vector3& operator/= (float value);
 	Vector3& operator*= (float value);
 
+	bool operator!= (const Vector3& other);
+
 };
 
 
@@ -119,6 +121,12 @@ inline Vector3& Vector3::operator*=(float value) {
 	this->y *= value;
 	this->z *= value;
 	return *this;
+}
+
+inline bool Vector3::operator!=(const Vector3& other) {
+	return this->x != other.x 
+		|| this->y != other.y 
+		|| this->z != other.z;
 }
 
 
