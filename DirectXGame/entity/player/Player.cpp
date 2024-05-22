@@ -99,8 +99,6 @@ void Player::UpdateFloatingGimmick() {
 	partsWorldTransforms_["rightArm"].rotation_.x = std::sin(floatingParameter_) * amplitude_ / 8.0f;
 	partsWorldTransforms_["rightArm"].rotation_.y = -std::sin(floatingParameter_) * amplitude_ / 2.0f;
 
-
-
 }
 
 
