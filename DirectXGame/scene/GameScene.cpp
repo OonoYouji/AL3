@@ -64,6 +64,8 @@ void GameScene::Initialize() {
 
 	///// ↓ ENEMY
 	///// -----------------------------------------
+	enemies_.clear();
+	enemyBullets_.clear();
 	LoadEnemyPopData();
 	///// -----------------------------------------
 
