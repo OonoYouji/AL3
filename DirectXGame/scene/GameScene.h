@@ -17,6 +17,7 @@
 
 
 class Player;
+class Skydome;
 
 
 /// <summary>
@@ -60,13 +61,22 @@ private: // メンバ変数
 	/// </summary>
 
 	ViewProjection viewProjection_;
+	std::unique_ptr<DebugCamera> debugCamera_;
+	bool isDebugCameraActive_ = false;
 
 	uint32_t playerTexture_;
 
 	std::unique_ptr<Player> player_;
+	std::unique_ptr<Skydome> skydome_;
 
+
+	void ImGui();
+
+	void DebugCameraUpdate();
 
 public:
+
+
 
 
 };

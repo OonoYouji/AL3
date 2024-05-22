@@ -8,6 +8,7 @@ Player::~Player() {}
 void Player::Initialize(Model* model, uint32_t textureHandle) {
 
 	worldTransform_.Initialize();
+	worldTransform_.UpdateMatrix();
 	model_.reset(model);
 	textureHandle_ = textureHandle;
 

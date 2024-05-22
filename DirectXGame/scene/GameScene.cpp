@@ -9,6 +9,7 @@
 
 #include "VectorMethod.h"
 #include "Player.h"
+#include "Skydome.h"
 
 
 
@@ -26,21 +27,50 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	///// -----------------------------------------
 
+
+
+	///// ↓ CAMERA
+	///// -----------------------------------------
 	viewProjection_.Initialize();
-	
+	debugCamera_ = std::make_unique<DebugCamera>(1280, 720);
+	///// -----------------------------------------
+
+
+
+	///// ↓ KAMATA ENGINE
+	///// -----------------------------------------
+	PrimitiveDrawer::GetInstance()->Initialize();
+	PrimitiveDrawer::GetInstance()->SetViewProjection(&viewProjection_);
+
+	AxisIndicator::GetInstance()->Initialize();
+	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
+	AxisIndicator::GetInstance()->SetVisible(true);
+	///// -----------------------------------------
+
+
+
+
+
+
 
 	playerTexture_ = TextureManager::Load("uvChecker.png");
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize(Model::Create(), playerTexture_);
 
-	
+
+	skydome_ = std::make_unique<Skydome>();
+	skydome_->Initialize(Model::CreateFromOBJ("skydome"));
+
+
 }
 
 void GameScene::Update() {
 
-	viewProjection_.UpdateMatrix();
-	viewProjection_.TransferMatrix();
+	ImGui();
+
+	DebugCameraUpdate();
+
 
 	player_->Update();
 
@@ -75,9 +105,9 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 
-
 	player_->Draw(viewProjection_);
 
+	skydome_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
@@ -100,4 +130,35 @@ void GameScene::Draw() {
 #pragma endregion
 }
 
+
+
+void GameScene::ImGui() {
+#ifdef _DEBUG
+
+	ImGui::Begin("main");
+
+	if(ImGui::TreeNodeEx("DebugCamera", ImGuiTreeNodeFlags_DefaultOpen)) {
+
+		ImGui::Checkbox("IsActive", &isDebugCameraActive_);
+
+		ImGui::TreePop();
+	}
+
+	ImGui::End();
+
+#endif // _DEBUG
+}
+
+void GameScene::DebugCameraUpdate() {
+#ifdef _DEBUG
+
+	if(isDebugCameraActive_) {
+		debugCamera_->Update();
+		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
+		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
+		viewProjection_.TransferMatrix();
+	}
+
+#endif // _DEBUG
+}
 
