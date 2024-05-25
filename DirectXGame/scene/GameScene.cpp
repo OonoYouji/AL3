@@ -64,6 +64,7 @@ void GameScene::Initialize() {
 	models_["playerBody"].reset(Model::CreateFromOBJ("playerBody"));
 	models_["playerLeftArm"].reset(Model::CreateFromOBJ("playerLeftArm"));
 	models_["playerRightArm"].reset(Model::CreateFromOBJ("playerRightArm"));
+	models_["hammer"].reset(Model::CreateFromOBJ("hammer"));
 
 	models_["enemyBody"].reset(Model::CreateFromOBJ("enemyBody"));
 	models_["enemyLeg"].reset(Model::CreateFromOBJ("enemyLeg"));
@@ -73,6 +74,7 @@ void GameScene::Initialize() {
 	playerModels["playerBody"] = models_["playerBody"].get();
 	playerModels["playerLeftArm"] = models_["playerLeftArm"].get();
 	playerModels["playerRightArm"] = models_["playerRightArm"].get();
+	playerModels["hammer"] = models_["hammer"].get();
 
 	std::map<std::string, Model*> enemyModels;
 	enemyModels["enemyBody"] = models_["enemyBody"].get();

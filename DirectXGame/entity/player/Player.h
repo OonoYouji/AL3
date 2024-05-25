@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <optional>
 
 #include <WorldTransform.h>
 #include <ViewProjection.h>
@@ -13,6 +14,10 @@
 
 #include "BaseCharacter.h"
 
+enum class Behavior {
+	kRoot,		//- 通常
+	kAttack,	//- 攻撃中
+};
 
 /// <summary>
 /// プレイヤー
@@ -49,6 +54,10 @@ private:
 	uint16_t period_ = 180;
 	float amplitude_ = 0.4f;
 
+	Behavior behavior_ = Behavior::kRoot;
+	std::optional<Behavior> behaviorRequest_ = std::nullopt;
+	float attackAnimationTime_;
+
 	/// <summary>
 	/// 浮遊ギミックの初期化
 	/// </summary>
@@ -57,10 +66,16 @@ private:
 	void UpdateFloatingGimmick();
 
 	void Move();
+	void MoveKeyboard();
 
 	void Rotate();
 
 
+	void BehaviorRootInitialize();
+	void BehaviorRootUpdate();
+
+	void BehaviorAttackInitialize();
+	void BehaviorAttackUpdate();
 
 public:
 

@@ -30,10 +30,32 @@ void Player::Initialize(const std::map<std::string, Model*>& models) {
 
 void Player::Update() {
 
-	Move();
-	Rotate();
+
 
 	UpdateFloatingGimmick();
+
+	switch(behavior_) {
+	case Behavior::kRoot:
+		BehaviorRootUpdate();
+		break;
+	case Behavior::kAttack:
+		BehaviorAttackUpdate();
+		break;
+	}
+
+	if(behaviorRequest_) {
+		behavior_ = behaviorRequest_.value();
+		switch(behavior_) {
+		case Behavior::kRoot:	///- 通常ヘイビアの初期化
+			BehaviorRootInitialize();
+			break;
+		case Behavior::kAttack: ///- 攻撃ヘイビアの初期化
+			BehaviorAttackInitialize();
+			break;
+		}
+		behaviorRequest_ = std::nullopt;
+	}
+
 
 	BaseCharacter::Update();
 	for(auto& parts : partsWorldTransforms_) {
@@ -54,10 +76,9 @@ void Player::Draw(const ViewProjection& viewProjection) {
 
 void Player::InitializeFloatingGimmck() {
 
-	partsWorldTransforms_["playerHead"].Initialize();
-	partsWorldTransforms_["playerBody"].Initialize();
-	partsWorldTransforms_["playerLeftArm"].Initialize();
-	partsWorldTransforms_["playerRightArm"].Initialize();
+	for(auto& model : models_) {
+		partsWorldTransforms_[model.first].Initialize();
+	}
 
 	partsWorldTransforms_["playerBody"].parent_ = &worldTransform_;
 	for(auto& parts : partsWorldTransforms_) {
@@ -70,6 +91,8 @@ void Player::InitializeFloatingGimmck() {
 	floatingParameter_ = 0.0f;
 	period_ = 180;
 	amplitude_ = 0.4f;
+
+	attackAnimationTime_ = 0.0f;
 
 }
 
@@ -98,6 +121,7 @@ void Player::Move() {
 
 	XINPUT_STATE joyState;
 	if(!input_->GetJoystickState(0, joyState)) {
+		MoveKeyboard();
 		return;
 	}
 
@@ -114,7 +138,6 @@ void Player::Move() {
 		return;
 	}
 
-
 	move_ = VectorMethod::Normalize(move_) * kMovingSpeed_;
 	move_ = Mat4::Transform(move_, Mat4::MakeRotate(viewProjection_->rotation_));
 
@@ -123,12 +146,57 @@ void Player::Move() {
 }
 
 
+void Player::MoveKeyboard() {
+
+	///- 移動
+	move_ = { 0.0f, 0.0f, 0.0f };
+	move_.x = static_cast<float>(input_->PushKey(DIK_D) - input_->PushKey(DIK_A));
+	move_.z = static_cast<float>(input_->PushKey(DIK_W) - input_->PushKey(DIK_S));
+	move_ = VectorMethod::Normalize(move_) * kMovingSpeed_;
+	move_ = Mat4::Transform(move_, Mat4::MakeRotate(viewProjection_->rotation_));
+	worldTransform_.translation_ += move_;
+
+	///- 攻撃
+	if(input_->PushKey(DIK_SPACE)) {
+		behaviorRequest_ = Behavior::kAttack;
+	}
+
+}
+
 
 void Player::Rotate() {
 
 	if(move_ != Vec3f(0.0f, 0.0f, 0.0f)) {
 		float targetRotate = VectorMethod::YAxisTheta(move_);
 		worldTransform_.rotation_.y = LerpShortAngle(worldTransform_.rotation_.y, targetRotate, 0.05f);
+	}
+
+}
+
+
+void Player::BehaviorRootInitialize() {
+
+}
+
+
+void Player::BehaviorRootUpdate() {
+	Move();
+	Rotate();
+}
+
+
+void Player::BehaviorAttackInitialize() {
+	attackAnimationTime_ = 0.0f;
+}
+
+
+void Player::BehaviorAttackUpdate() {
+	attackAnimationTime_ += 0.25f;
+
+	partsWorldTransforms_["hammer"].rotation_.x = std::sin(attackAnimationTime_) * 0.5f + 0.75f;
+
+	if(attackAnimationTime_ >= 5.0f) {
+		behaviorRequest_ = Behavior::kRoot;
 	}
 
 }
