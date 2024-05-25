@@ -30,13 +30,14 @@ void Enemy::Initialize(const std::map<std::string, Model*>& models) {
 
 	velocity_ = { 0.0f, 0.0f, 0.0f };
 
-
+	aimationTime_ = 0.0f;
 
 }
 
 void Enemy::Update() {
 
 	Move();
+	Animation();
 
 	BaseCharacter::Update();
 	for(auto& worldTransform : partsWorldTransforms_) {
@@ -68,5 +69,19 @@ void Enemy::Move() {
 	worldTransform_.rotation_.x = std::atan2(-velocity_.y, xAxisLen);
 
 	worldTransform_.translation_ += velocity_;
+
+}
+
+
+void Enemy::Animation() {
+	aimationTime_ += 0.25f;
+
+	partsWorldTransforms_["enemyBody"].translation_.y = std::sin(aimationTime_) * 0.5f;
+
+	partsWorldTransforms_["enemyLeftLeg"].rotation_.x = std::sin(aimationTime_) * 0.5f;
+	partsWorldTransforms_["enemyLeftLeg"].translation_.z = std::cos(aimationTime_) * 0.5f;
+
+	partsWorldTransforms_["enemyRightLeg"].rotation_.x = std::sin(aimationTime_) * 0.5f;
+	partsWorldTransforms_["enemyRightLeg"].translation_.z = std::cos(aimationTime_) * 0.5f;
 
 }

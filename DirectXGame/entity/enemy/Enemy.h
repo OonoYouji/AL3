@@ -24,10 +24,12 @@ private:
 	std::map<std::string, WorldTransform> partsWorldTransforms_;
 
 	Vec3f velocity_;
-	const float kSpeed_ = 1.0f;
+	const float kSpeed_ = 0.5f;
 
-
+	float aimationTime_;
 
 	void Move();
+
+	void Animation();
 
 };
