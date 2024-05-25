@@ -57,14 +57,27 @@ void GameScene::Initialize() {
 	///// -----------------------------------------
 
 
+	///// ↓ CHARACTER MODELS
+	///// -----------------------------------------
+	models_["playerHead"].reset(Model::CreateFromOBJ("playerHead"));
+	models_["playerBody"].reset(Model::CreateFromOBJ("playerBody"));
+	models_["playerLeftArm"].reset(Model::CreateFromOBJ("playerLeftArm"));
+	models_["playerRightArm"].reset(Model::CreateFromOBJ("playerRightArm"));
 
+	std::map<std::string, Model*> playerModels;
+	playerModels["playerHead"] = models_["playerHead"].get();
+	playerModels["playerBody"] = models_["playerBody"].get();
+	playerModels["playerLeftArm"] = models_["playerLeftArm"].get();
+	playerModels["playerRightArm"] = models_["playerRightArm"].get();
+
+	///// -----------------------------------------
 
 
 
 
 
 	player_ = std::make_unique<Player>();
-	player_->Initialize();
+	player_->Initialize(playerModels);
 	player_->SetViewProjection(&followCamera_->GetViewProjection());
 
 	followCamera_->SetTarget(&player_->GetWorldTransform());

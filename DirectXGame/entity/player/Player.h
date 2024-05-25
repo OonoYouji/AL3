@@ -4,23 +4,27 @@
 #include <cmath>
 #include <map>
 #include <string>
+#include <vector>
 
 #include <WorldTransform.h>
 #include <ViewProjection.h>
 #include <Model.h>
 #include <Input.h>
 
+#include "BaseCharacter.h"
+
 
 /// <summary>
 /// プレイヤー
 /// </summary>
-class Player {
+class Player
+	: public BaseCharacter {
 public:
 
 	Player();
 	~Player();
 
-	void Initialize();
+	void Initialize(const std::map<std::string, Model*>& models) override;
 	void Update();
 	void Draw(const ViewProjection& viewProjection);
 
@@ -36,9 +40,6 @@ private:
 	Input* input_ = nullptr;
 	const ViewProjection* viewProjection_ = nullptr;
 
-
-	WorldTransform worldTransform_;
-	std::map<std::string, std::unique_ptr<Model>> models_;
 	std::map<std::string, WorldTransform> partsWorldTransforms_;
 
 	const float kMovingSpeed_ = 0.3f;

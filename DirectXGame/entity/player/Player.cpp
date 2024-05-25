@@ -15,20 +15,18 @@ Player::~Player() {}
 
 
 
-void Player::Initialize() {
+void Player::Initialize(const std::map<std::string, Model*>& models) {
+	BaseCharacter::Initialize(models);
 
 	input_ = Input::GetInstance();
 
-	worldTransform_.Initialize();
 	worldTransform_.UpdateMatrix();
 
 	InitializeFloatingGimmck();
 
-
 	move_ = { 0.0f, 0.0f, 0.0f };
 
 }
-
 
 void Player::Update() {
 
@@ -37,8 +35,7 @@ void Player::Update() {
 
 	UpdateFloatingGimmick();
 
-	worldTransform_.UpdateMatrix();
-
+	BaseCharacter::Update();
 	for(auto& parts : partsWorldTransforms_) {
 		parts.second.UpdateMatrix();
 	}
@@ -57,20 +54,15 @@ void Player::Draw(const ViewProjection& viewProjection) {
 
 void Player::InitializeFloatingGimmck() {
 
-	models_["head"].reset(Model::CreateFromOBJ("playerHead"));
-	models_["body"].reset(Model::CreateFromOBJ("playerBody"));
-	models_["leftArm"].reset(Model::CreateFromOBJ("playerLeftArm"));
-	models_["rightArm"].reset(Model::CreateFromOBJ("playerRightArm"));
+	partsWorldTransforms_["playerHead"].Initialize();
+	partsWorldTransforms_["playerBody"].Initialize();
+	partsWorldTransforms_["playerLeftArm"].Initialize();
+	partsWorldTransforms_["playerRightArm"].Initialize();
 
-	partsWorldTransforms_["head"].Initialize();
-	partsWorldTransforms_["body"].Initialize();
-	partsWorldTransforms_["leftArm"].Initialize();
-	partsWorldTransforms_["rightArm"].Initialize();
-
-	partsWorldTransforms_["body"].parent_ = &worldTransform_;
+	partsWorldTransforms_["playerBody"].parent_ = &worldTransform_;
 	for(auto& parts : partsWorldTransforms_) {
-		if(parts.first != "body") {
-			parts.second.parent_ = &partsWorldTransforms_["body"];
+		if(parts.first != "playerBody") {
+			parts.second.parent_ = &partsWorldTransforms_["playerBody"];
 		}
 	}
 
@@ -89,15 +81,15 @@ void Player::UpdateFloatingGimmick() {
 	floatingParameter_ += kStep;
 	floatingParameter_ = std::fmod(floatingParameter_, 2.0f * std::numbers::pi_v<float>);
 
-	partsWorldTransforms_["head"].rotation_.y = std::sin(std::pow(floatingParameter_, 2.0f)) * amplitude_;
+	partsWorldTransforms_["playerHead"].rotation_.y = std::sin(std::pow(floatingParameter_, 2.0f)) * amplitude_;
 
-	partsWorldTransforms_["body"].translation_.y = std::sin(floatingParameter_) * amplitude_;
+	partsWorldTransforms_["playerBody"].translation_.y = std::sin(floatingParameter_) * amplitude_;
 
-	partsWorldTransforms_["leftArm"].rotation_.x = std::sin(floatingParameter_) * amplitude_ / 8.0f;
-	partsWorldTransforms_["leftArm"].rotation_.y = std::sin(floatingParameter_) * amplitude_ / 2.0f;
+	partsWorldTransforms_["playerLeftArm"].rotation_.x = std::sin(floatingParameter_) * amplitude_ / 8.0f;
+	partsWorldTransforms_["playerLeftArm"].rotation_.y = std::sin(floatingParameter_) * amplitude_ / 2.0f;
 
-	partsWorldTransforms_["rightArm"].rotation_.x = std::sin(floatingParameter_) * amplitude_ / 8.0f;
-	partsWorldTransforms_["rightArm"].rotation_.y = -std::sin(floatingParameter_) * amplitude_ / 2.0f;
+	partsWorldTransforms_["playerRightArm"].rotation_.x = std::sin(floatingParameter_) * amplitude_ / 8.0f;
+	partsWorldTransforms_["playerRightArm"].rotation_.y = -std::sin(floatingParameter_) * amplitude_ / 2.0f;
 
 }
 
@@ -149,10 +141,10 @@ void Player::ImGui() {
 
 	if(ImGui::TreeNodeEx("Parts", ImGuiTreeNodeFlags_DefaultOpen)) {
 
-		ImGui::DragFloat3("Head Translate", &partsWorldTransforms_["head"].translation_.x, 0.05f);
-		ImGui::DragFloat3("Body Translate", &partsWorldTransforms_["body"].translation_.x, 0.05f);
-		ImGui::DragFloat3("LeftArm Translate", &partsWorldTransforms_["leftArm"].translation_.x, 0.05f);
-		ImGui::DragFloat3("RightArm Translate", &partsWorldTransforms_["rightArm"].translation_.x, 0.05f);
+		ImGui::DragFloat3("Head Translate", &partsWorldTransforms_["playerHead"].translation_.x, 0.05f);
+		ImGui::DragFloat3("Body Translate", &partsWorldTransforms_["playerBody"].translation_.x, 0.05f);
+		ImGui::DragFloat3("LeftArm Translate", &partsWorldTransforms_["playerLeftArm"].translation_.x, 0.05f);
+		ImGui::DragFloat3("RightArm Translate", &partsWorldTransforms_["playerRightArm"].translation_.x, 0.05f);
 
 		ImGui::TreePop();
 	}

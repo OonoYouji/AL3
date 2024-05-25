@@ -112,6 +112,7 @@
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="collision\Collider.cpp" />
     <ClCompile Include="collision\CollisionManager.cpp" />
+    <ClCompile Include="entity\BaseCharacter.cpp" />
     <ClCompile Include="entity\player\Player.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\Matrix4x4.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="collision\Collider.h" />
     <ClInclude Include="collision\CollisionConfig.h" />
     <ClInclude Include="collision\CollisionManager.h" />
+    <ClInclude Include="entity\BaseCharacter.h" />
     <ClInclude Include="entity\player\Player.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="math\Matrix4x4.h" />

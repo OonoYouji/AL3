@@ -126,6 +126,9 @@
     <ClCompile Include="math\MyMath.cpp">
       <Filter>ソース ファイル\math</Filter>
     </ClCompile>
+    <ClCompile Include="entity\BaseCharacter.cpp">
+      <Filter>ソース ファイル\entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -238,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="math\MyMath.h">
       <Filter>ヘッダー ファイル\math</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\BaseCharacter.h">
+      <Filter>ヘッダー ファイル\entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

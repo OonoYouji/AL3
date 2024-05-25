@@ -1,6 +1,8 @@
 #pragma once
 
 #include <cmath>
+#include <map>
+#include <string>
 #include <memory>
 #include <list>
 #include <sstream>
@@ -61,6 +63,8 @@ private: // メンバ変数
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
+
+	std::map<std::string, std::unique_ptr<Model>> models_;
 
 	ViewProjection viewProjection_;
 	std::unique_ptr<DebugCamera> debugCamera_;
