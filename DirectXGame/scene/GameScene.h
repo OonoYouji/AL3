@@ -22,7 +22,7 @@ class Player;
 class Skydome;
 class Ground;
 class FollowCamera;
-
+class Enemy;
 
 /// <summary>
 /// ゲームシーン
@@ -73,6 +73,8 @@ private: // メンバ変数
 	uint32_t playerTexture_;
 
 	std::unique_ptr<Player> player_;
+	std::unique_ptr<Enemy> enemy_;
+
 	std::unique_ptr<Skydome> skydome_;
 	std::unique_ptr<Ground> ground_;
 	std::unique_ptr<FollowCamera> followCamera_;

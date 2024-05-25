@@ -9,6 +9,7 @@
 
 #include "VectorMethod.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Skydome.h"
 #include "Ground.h"
 #include "FollowCamera.h"
@@ -64,12 +65,19 @@ void GameScene::Initialize() {
 	models_["playerLeftArm"].reset(Model::CreateFromOBJ("playerLeftArm"));
 	models_["playerRightArm"].reset(Model::CreateFromOBJ("playerRightArm"));
 
+	models_["enemyBody"].reset(Model::CreateFromOBJ("enemyBody"));
+	models_["enemyLeg"].reset(Model::CreateFromOBJ("enemyLeg"));
+
 	std::map<std::string, Model*> playerModels;
 	playerModels["playerHead"] = models_["playerHead"].get();
 	playerModels["playerBody"] = models_["playerBody"].get();
 	playerModels["playerLeftArm"] = models_["playerLeftArm"].get();
 	playerModels["playerRightArm"] = models_["playerRightArm"].get();
 
+	std::map<std::string, Model*> enemyModels;
+	enemyModels["enemyBody"] = models_["enemyBody"].get();
+	enemyModels["enemyLeftLeg"] = models_["enemyLeg"].get();
+	enemyModels["enemyRightLeg"] = models_["enemyLeg"].get();
 	///// -----------------------------------------
 
 
@@ -80,13 +88,17 @@ void GameScene::Initialize() {
 	player_->Initialize(playerModels);
 	player_->SetViewProjection(&followCamera_->GetViewProjection());
 
+	enemy_ = std::make_unique<Enemy>();
+	enemy_->Initialize(enemyModels);
+
+
 	followCamera_->SetTarget(&player_->GetWorldTransform());
 
 
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize();
 
-	
+
 	ground_ = std::make_unique<Ground>();
 	ground_->Initialize();
 
@@ -107,11 +119,13 @@ void GameScene::Update() {
 	viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
 	viewProjection_.TransferMatrix();
 
-	
+
 	DebugCameraUpdate();
 
 
 	player_->Update();
+
+	enemy_->Update();
 
 	skydome_->Update();
 	ground_->Update();
@@ -148,6 +162,8 @@ void GameScene::Draw() {
 	/// </summary>
 
 	player_->Draw(viewProjection_);
+
+	enemy_->Draw(viewProjection_);
 
 
 	skydome_->Draw(viewProjection_);
@@ -204,7 +220,7 @@ void GameScene::DebugCameraUpdate() {
 		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
 		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
 		viewProjection_.TransferMatrix();
-	} 
+	}
 
 #endif // _DEBUG
 }
