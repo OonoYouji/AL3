@@ -13,10 +13,12 @@
 #include <Input.h>
 
 #include "BaseCharacter.h"
+#include "BasePlayerState.h"
 
 enum class Behavior {
 	kRoot,		//- 通常
 	kAttack,	//- 攻撃中
+	kDash,		//- ダッシュ中
 };
 
 /// <summary>
@@ -47,9 +49,6 @@ private:
 
 	std::map<std::string, WorldTransform> partsWorldTransforms_;
 
-	const float kMovingSpeed_ = 0.3f;
-	Vec3f move_;
-
 	float floatingParameter_ = 0.0f;
 	uint16_t period_ = 180;
 	float amplitude_ = 0.4f;
@@ -58,6 +57,8 @@ private:
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
 	float attackAnimationTime_;
 
+	std::unique_ptr<BasePlayerState> state_;
+
 	/// <summary>
 	/// 浮遊ギミックの初期化
 	/// </summary>
@@ -65,26 +66,42 @@ private:
 
 	void UpdateFloatingGimmick();
 
-	void Move();
-	void MoveKeyboard();
-
-	void Rotate();
-
-
-	void BehaviorRootInitialize();
-	void BehaviorRootUpdate();
-
 	void BehaviorAttackInitialize();
 	void BehaviorAttackUpdate();
 
 public:
 
+	/// <summary>
+	/// 引数の分だけ移動する
+	/// </summary>
+	/// <param name="velocity">移動量</param>
+	void Move(const Vec3f& velocity);
+
+	void SetRotateY(float rotateY);
+
+	/// <summary>
+	/// rotateXのSetter 本体に設定するときはtagはplayer
+	/// </summary>
+	/// <param name="rotate"></param>
+	/// <param name="tag"></param>
+	void SetRotateX(float rotate, const std::string& tag = "player");
+
+
+
 	const WorldTransform& GetWorldTransform() const {
 		return worldTransform_;
 	}
 
+
 	void SetViewProjection(const ViewProjection* viewProjection) {
 		viewProjection_ = viewProjection;
 	}
+
+	const ViewProjection& GetViewProjectionPtr() const {
+		return *viewProjection_;
+	}
+
+
+	void SetState(BasePlayerState* state);
 
 };

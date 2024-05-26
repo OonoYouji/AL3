@@ -138,6 +138,18 @@
     <ClCompile Include="entity\enemy\Enemy.cpp">
       <Filter>ソース ファイル\entity\enemy</Filter>
     </ClCompile>
+    <ClCompile Include="entity\player\BasePlayerState.cpp">
+      <Filter>ソース ファイル\entity\player</Filter>
+    </ClCompile>
+    <ClCompile Include="entity\player\PlayerStateAttack.cpp">
+      <Filter>ソース ファイル\entity\player</Filter>
+    </ClCompile>
+    <ClCompile Include="entity\player\PlayerStateDash.cpp">
+      <Filter>ソース ファイル\entity\player</Filter>
+    </ClCompile>
+    <ClCompile Include="entity\player\PlayerStateRoot.cpp">
+      <Filter>ソース ファイル\entity\player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -256,6 +268,18 @@
     </ClInclude>
     <ClInclude Include="entity\enemy\Enemy.h">
       <Filter>ヘッダー ファイル\entity\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\player\BasePlayerState.h">
+      <Filter>ヘッダー ファイル\entity\player</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\player\PlayerStateAttack.h">
+      <Filter>ヘッダー ファイル\entity\player</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\player\PlayerStateDash.h">
+      <Filter>ヘッダー ファイル\entity\player</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\player\PlayerStateRoot.h">
+      <Filter>ヘッダー ファイル\entity\player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

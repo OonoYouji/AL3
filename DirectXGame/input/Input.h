@@ -10,6 +10,7 @@
 #define DIRECTINPUT_VERSION 0x0800 // DirectInputのバージョン指定
 #include <dinput.h>
 
+
 /// <summary>
 /// 入力
 /// </summary>
@@ -182,3 +183,5 @@ private: // メンバ変数
 	HWND hwnd_;
 	Vector2 mousePosition_;
 };
+
+

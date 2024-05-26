@@ -26,8 +26,14 @@ private:
 	const WorldTransform* target_;
 	const float kRotateSpeed_ = 0.05f;
 
+	float destinationAngleY_;
+	Vec3f interTarget_ = {};
+
 	void Rotate();
 
+	void Reset();
+
+	Vec3f Offset() const;
 
 public:
 
@@ -38,6 +44,7 @@ public:
 
 	void SetTarget(const WorldTransform* target) {
 		target_ = target;
+		Reset();
 	}
 
 };

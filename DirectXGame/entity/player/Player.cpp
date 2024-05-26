@@ -8,11 +8,13 @@
 #include "VectorMethod.h"
 #include "MyMath.h"
 
+#include "PlayerStateRoot.h"
+#include "PlayerStateAttack.h"
+#include "PlayerStateDash.h"
 
 
 Player::Player() {}
 Player::~Player() {}
-
 
 
 void Player::Initialize(const std::map<std::string, Model*>& models) {
@@ -24,38 +26,15 @@ void Player::Initialize(const std::map<std::string, Model*>& models) {
 
 	InitializeFloatingGimmck();
 
-	move_ = { 0.0f, 0.0f, 0.0f };
+	state_ = std::make_unique<PlayerStateRoot>();
 
 }
 
 void Player::Update() {
 
-
+	state_->Update(this);
 
 	UpdateFloatingGimmick();
-
-	switch(behavior_) {
-	case Behavior::kRoot:
-		BehaviorRootUpdate();
-		break;
-	case Behavior::kAttack:
-		BehaviorAttackUpdate();
-		break;
-	}
-
-	if(behaviorRequest_) {
-		behavior_ = behaviorRequest_.value();
-		switch(behavior_) {
-		case Behavior::kRoot:	///- 通常ヘイビアの初期化
-			BehaviorRootInitialize();
-			break;
-		case Behavior::kAttack: ///- 攻撃ヘイビアの初期化
-			BehaviorAttackInitialize();
-			break;
-		}
-		behaviorRequest_ = std::nullopt;
-	}
-
 
 	BaseCharacter::Update();
 	for(auto& parts : partsWorldTransforms_) {
@@ -117,74 +96,6 @@ void Player::UpdateFloatingGimmick() {
 }
 
 
-void Player::Move() {
-
-	XINPUT_STATE joyState;
-	if(!input_->GetJoystickState(0, joyState)) {
-		MoveKeyboard();
-		return;
-	}
-
-	const float kThreshold = 0.7f;
-
-	move_ = {
-		static_cast<float>(joyState.Gamepad.sThumbLX / SHRT_MAX),
-		0.0f,
-		static_cast<float>(joyState.Gamepad.sThumbLY / SHRT_MAX)
-	};
-
-	///- 閾値を超えたら次の処理に進む
-	if(VectorMethod::Length(move_) <= kThreshold) {
-		return;
-	}
-
-	move_ = VectorMethod::Normalize(move_) * kMovingSpeed_;
-	move_ = Mat4::Transform(move_, Mat4::MakeRotate(viewProjection_->rotation_));
-
-	worldTransform_.translation_ += move_;
-
-}
-
-
-void Player::MoveKeyboard() {
-
-	///- 移動
-	move_ = { 0.0f, 0.0f, 0.0f };
-	move_.x = static_cast<float>(input_->PushKey(DIK_D) - input_->PushKey(DIK_A));
-	move_.z = static_cast<float>(input_->PushKey(DIK_W) - input_->PushKey(DIK_S));
-	move_ = VectorMethod::Normalize(move_) * kMovingSpeed_;
-	move_ = Mat4::Transform(move_, Mat4::MakeRotate(viewProjection_->rotation_));
-	worldTransform_.translation_ += move_;
-
-	///- 攻撃
-	if(input_->PushKey(DIK_SPACE)) {
-		behaviorRequest_ = Behavior::kAttack;
-	}
-
-}
-
-
-void Player::Rotate() {
-
-	if(move_ != Vec3f(0.0f, 0.0f, 0.0f)) {
-		float targetRotate = VectorMethod::YAxisTheta(move_);
-		worldTransform_.rotation_.y = LerpShortAngle(worldTransform_.rotation_.y, targetRotate, 0.05f);
-	}
-
-}
-
-
-void Player::BehaviorRootInitialize() {
-
-}
-
-
-void Player::BehaviorRootUpdate() {
-	Move();
-	Rotate();
-}
-
-
 void Player::BehaviorAttackInitialize() {
 	attackAnimationTime_ = 0.0f;
 }
@@ -199,6 +110,29 @@ void Player::BehaviorAttackUpdate() {
 		behaviorRequest_ = Behavior::kRoot;
 	}
 
+}
+
+
+void Player::Move(const Vec3f& velocity) {
+	worldTransform_.translation_ += velocity;
+}
+
+void Player::SetRotateY(float rotateY) {
+	worldTransform_.rotation_.y = rotateY;
+}
+
+
+void Player::SetRotateX(float rotate, const std::string& tag) {
+	if(tag == "player") {
+		worldTransform_.rotation_.x = rotate;
+		return;
+	}
+	partsWorldTransforms_[tag].rotation_.x = rotate;
+}
+
+
+void Player::SetState(BasePlayerState* state) {
+	state_.reset(state);
 }
 
 

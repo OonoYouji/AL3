@@ -114,7 +114,11 @@
     <ClCompile Include="collision\CollisionManager.cpp" />
     <ClCompile Include="entity\BaseCharacter.cpp" />
     <ClCompile Include="entity\enemy\Enemy.cpp" />
+    <ClCompile Include="entity\player\BasePlayerState.cpp" />
     <ClCompile Include="entity\player\Player.cpp" />
+    <ClCompile Include="entity\player\PlayerStateAttack.cpp" />
+    <ClCompile Include="entity\player\PlayerStateDash.cpp" />
+    <ClCompile Include="entity\player\PlayerStateRoot.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\Matrix4x4.cpp" />
     <ClCompile Include="math\MyMath.cpp" />
@@ -153,7 +157,11 @@
     <ClInclude Include="collision\CollisionManager.h" />
     <ClInclude Include="entity\BaseCharacter.h" />
     <ClInclude Include="entity\enemy\Enemy.h" />
+    <ClInclude Include="entity\player\BasePlayerState.h" />
     <ClInclude Include="entity\player\Player.h" />
+    <ClInclude Include="entity\player\PlayerStateAttack.h" />
+    <ClInclude Include="entity\player\PlayerStateDash.h" />
+    <ClInclude Include="entity\player\PlayerStateRoot.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="math\Matrix4x4.h" />
     <ClInclude Include="math\MyMath.h" />
