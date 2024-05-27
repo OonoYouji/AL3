@@ -65,13 +65,39 @@ public:
 	void SetValue(const std::string& groupName, const std::string& key, const Vec3f& value);
 
 	/// <summary>
+	/// 項目の追加 int32_t
+	/// </summary>
+	void AddItem(const std::string& groupName, const std::string& key, const int32_t value);
+
+	/// <summary>
+	/// 項目の追加 float
+	/// </summary>
+	void AddItem(const std::string& groupName, const std::string& key, const float value);
+
+	/// <summary>
+	/// 項目の追加 Vector3
+	/// </summary>
+	void AddItem(const std::string& groupName, const std::string& key, const Vec3f value);
+
+	/// <summary>
 	/// ファイルに書き出し
 	/// </summary>
 	void SaveFile(const std::string& groupName);
 
+	/// <summary>
+	/// ファイル読み込み
+	/// </summary>
+	void LoadFiles();
+
+	/// <summary>
+	/// グループの読み込み
+	/// </summary>
+	/// <param name="groupName"></param>
+	void LoadFile(const std::string& groupName);
+
 private:
 
-	const std::string kDirectoryPath_ = "Resources/GlobalVariables/";
+	const std::string kDirectoryPath_ = "./Resources/GlobalVariables/";
 
 	std::map<std::string, Group> datas_;
 

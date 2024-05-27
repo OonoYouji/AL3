@@ -23,7 +23,7 @@ void Player::Initialize(const std::map<std::string, Model*>& models) {
 	const char* groupName = "Player";
 	GlobalVariables* globalVariable = GlobalVariables::GetInstance();
 	globalVariable->CreateGroup(groupName);
-	globalVariable->SetValue(groupName, "Test", 90);
+	globalVariable->AddItem(groupName, "Test", 90);
 
 	BaseCharacter::Initialize(models);
 
