@@ -1,10 +1,15 @@
 #pragma once
 
+#include <json.hpp>
+
 #include <variant>
 #include <string>
 #include <map>
 
 #include "Vector3.h"
+
+
+using json = nlohmann::json;
 
 /// <summary>
 /// 項目
@@ -59,7 +64,14 @@ public:
 	/// </summary>
 	void SetValue(const std::string& groupName, const std::string& key, const Vec3f& value);
 
+	/// <summary>
+	/// ファイルに書き出し
+	/// </summary>
+	void SaveFile(const std::string& groupName);
+
 private:
+
+	const std::string kDirectoryPath_ = "Resources/GlobalVariables/";
 
 	std::map<std::string, Group> datas_;
 
