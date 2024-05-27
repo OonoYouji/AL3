@@ -63,7 +63,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)object;$(ProjectDir)collision;$(ProjectDir)entity/enemy;$(ProjectDir)entity/player;$(ProjectDir)entity;$(ProjectDir)2d;$(ProjectDir)3d;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)input;$(ProjectDir)scene;$(ProjectDir)math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external;$(ProjectDir)object;$(ProjectDir)collision;$(ProjectDir)entity/enemy;$(ProjectDir)entity/player;$(ProjectDir)entity;$(ProjectDir)2d;$(ProjectDir)3d;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)input;$(ProjectDir)scene;$(ProjectDir)math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -119,6 +119,7 @@
     <ClCompile Include="entity\player\PlayerStateAttack.cpp" />
     <ClCompile Include="entity\player\PlayerStateDash.cpp" />
     <ClCompile Include="entity\player\PlayerStateRoot.cpp" />
+    <ClCompile Include="external\GlobalVariables.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\Matrix4x4.cpp" />
     <ClCompile Include="math\MyMath.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="entity\player\PlayerStateAttack.h" />
     <ClInclude Include="entity\player\PlayerStateDash.h" />
     <ClInclude Include="entity\player\PlayerStateRoot.h" />
+    <ClInclude Include="external\GlobalVariables.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="math\Matrix4x4.h" />
     <ClInclude Include="math\MyMath.h" />

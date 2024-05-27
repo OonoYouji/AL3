@@ -8,6 +8,7 @@
 #include "VectorMethod.h"
 #include "MyMath.h"
 
+#include "GlobalVariables.h"
 #include "PlayerStateRoot.h"
 #include "PlayerStateAttack.h"
 #include "PlayerStateDash.h"
@@ -18,6 +19,12 @@ Player::~Player() {}
 
 
 void Player::Initialize(const std::map<std::string, Model*>& models) {
+
+	const char* groupName = "Player";
+	GlobalVariables* globalVariable = GlobalVariables::GetInstance();
+	globalVariable->CreateGroup(groupName);
+	globalVariable->SetValue(groupName, "Test", 90);
+
 	BaseCharacter::Initialize(models);
 
 	input_ = Input::GetInstance();

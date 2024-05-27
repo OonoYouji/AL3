@@ -85,6 +85,12 @@
     <Filter Include="ヘッダー ファイル\entity\enemy">
       <UniqueIdentifier>{c2fa8925-12c8-4c15-9ec9-80f4750c48cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\external">
+      <UniqueIdentifier>{b02fd7b0-7ae0-45cb-b7b7-3aa4c545624f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\external">
+      <UniqueIdentifier>{0c5f4557-e206-43d6-8a58-9e846efd0e7a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -149,6 +155,9 @@
     </ClCompile>
     <ClCompile Include="entity\player\PlayerStateRoot.cpp">
       <Filter>ソース ファイル\entity\player</Filter>
+    </ClCompile>
+    <ClCompile Include="external\GlobalVariables.cpp">
+      <Filter>ソース ファイル\external</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -280,6 +289,9 @@
     </ClInclude>
     <ClInclude Include="entity\player\PlayerStateRoot.h">
       <Filter>ヘッダー ファイル\entity\player</Filter>
+    </ClInclude>
+    <ClInclude Include="external\GlobalVariables.h">
+      <Filter>ヘッダー ファイル\external</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
