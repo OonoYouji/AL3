@@ -20,11 +20,7 @@ Player::~Player() {}
 
 void Player::Initialize(const std::map<std::string, Model*>& models) {
 
-	const char* groupName = "Player";
-	GlobalVariables* globalVariable = GlobalVariables::GetInstance();
-	globalVariable->CreateGroup(groupName);
-	globalVariable->AddItem(groupName, "Test", 90);
-
+	
 	BaseCharacter::Initialize(models);
 
 	input_ = Input::GetInstance();
@@ -35,9 +31,21 @@ void Player::Initialize(const std::map<std::string, Model*>& models) {
 
 	state_ = std::make_unique<PlayerStateRoot>();
 
+
+	const char* groupName = "Player";
+	GlobalVariables* globalVariable = GlobalVariables::GetInstance();
+	globalVariable->CreateGroup(groupName);
+	globalVariable->AddItem(groupName, "Head Translation", partsWorldTransforms_["playerHead"].translation_);
+	globalVariable->AddItem(groupName, "ArmL Translation", partsWorldTransforms_["playerLeftArm"].translation_);
+	globalVariable->AddItem(groupName, "ArmR Translation", partsWorldTransforms_["playerRightArm"].translation_);
+	globalVariable->AddItem(groupName, "floatingAmplitude", amplitude_);
+
+
 }
 
 void Player::Update() {
+
+	ApplyGlobalVariables();
 
 	state_->Update(this);
 
@@ -103,19 +111,14 @@ void Player::UpdateFloatingGimmick() {
 }
 
 
-void Player::BehaviorAttackInitialize() {
-	attackAnimationTime_ = 0.0f;
-}
+void Player::ApplyGlobalVariables() {
 
-
-void Player::BehaviorAttackUpdate() {
-	attackAnimationTime_ += 0.25f;
-
-	partsWorldTransforms_["hammer"].rotation_.x = std::sin(attackAnimationTime_) * 0.5f + 0.75f;
-
-	if(attackAnimationTime_ >= 5.0f) {
-		behaviorRequest_ = Behavior::kRoot;
-	}
+	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
+	const char* groupName = "Player";
+	partsWorldTransforms_["playerHead"].translation_ = globalVariables->GetVector3Value(groupName, "Head Translation");
+	partsWorldTransforms_["playerLeftArm"].translation_ = globalVariables->GetVector3Value(groupName, "ArmL Translation");
+	partsWorldTransforms_["playerRightArm"].translation_ = globalVariables->GetVector3Value(groupName, "ArmR Translation");
+	amplitude_ = globalVariables->GetFloatValue(groupName, "floatingAmplitude");
 
 }
 

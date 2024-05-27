@@ -66,8 +66,10 @@ private:
 
 	void UpdateFloatingGimmick();
 
-	void BehaviorAttackInitialize();
-	void BehaviorAttackUpdate();
+	/// <summary>
+	/// 調整項目の適用
+	/// </summary>
+	void ApplyGlobalVariables();
 
 public:
 

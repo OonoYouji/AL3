@@ -14,16 +14,12 @@ using json = nlohmann::json;
 /// <summary>
 /// 項目
 /// </summary>
-struct Item {
-	std::variant<int32_t, float, Vec3f> value;
-};
+using Item = std::variant<int32_t, float, Vec3f>;
 
 /// <summary>
 /// グループ
 /// </summary>
-struct Group {
-	std::map<std::string, Item> items;
-};
+using Group = std::map<std::string, Item>;
 
 
 /// <summary>
@@ -43,12 +39,16 @@ public:
 	/// </summary>
 	void Update();
 
+	
+	
 	/// <summary>
 	/// グループの生成
 	/// </summary>
 	/// <param name="groupName"></param>
 	void CreateGroup(const std::string& groupName);
 
+	
+	
 	/// <summary>
 	/// 値のセット int32_t
 	/// </summary>
@@ -64,21 +64,42 @@ public:
 	/// </summary>
 	void SetValue(const std::string& groupName, const std::string& key, const Vec3f& value);
 
+	
+	
 	/// <summary>
 	/// 項目の追加 int32_t
 	/// </summary>
-	void AddItem(const std::string& groupName, const std::string& key, const int32_t value);
+	void AddItem(const std::string& groupName, const std::string& key, int32_t value);
 
 	/// <summary>
 	/// 項目の追加 float
 	/// </summary>
-	void AddItem(const std::string& groupName, const std::string& key, const float value);
+	void AddItem(const std::string& groupName, const std::string& key, float value);
 
 	/// <summary>
 	/// 項目の追加 Vector3
 	/// </summary>
-	void AddItem(const std::string& groupName, const std::string& key, const Vec3f value);
+	void AddItem(const std::string& groupName, const std::string& key, const Vec3f& value);
+	
 
+
+	/// <summary>
+	/// int32_t型の値を取得
+	/// </summary>
+	int32_t GetIntValue(const std::string& groupName, const std::string& key) const;
+
+	/// <summary>
+	/// float型の値を取得
+	/// </summary>
+	float GetFloatValue(const std::string& groupName, const std::string& key) const;
+
+	/// <summary>
+	/// Vector3型の値を所得
+	/// </summary>
+	Vec3f GetVector3Value(const std::string& groupName, const std::string& key) const;
+
+	
+	
 	/// <summary>
 	/// ファイルに書き出し
 	/// </summary>
