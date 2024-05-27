@@ -140,6 +140,14 @@ void Player::SetRotateX(float rotate, const std::string& tag) {
 	partsWorldTransforms_[tag].rotation_.x = rotate;
 }
 
+void Player::SetTranslationY(float y, const std::string& tag) {
+	if(tag == "player") {
+		worldTransform_.translation_.y = y;
+		return;
+	}
+	partsWorldTransforms_[tag].translation_.y = y;
+}
+
 
 void Player::SetState(BasePlayerState* state) {
 	state_.reset(state);

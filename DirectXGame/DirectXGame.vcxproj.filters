@@ -159,6 +159,9 @@
     <ClCompile Include="external\GlobalVariables.cpp">
       <Filter>ソース ファイル\external</Filter>
     </ClCompile>
+    <ClCompile Include="entity\player\PlayerStateJump.cpp">
+      <Filter>ソース ファイル\entity\player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -292,6 +295,9 @@
     </ClInclude>
     <ClInclude Include="external\GlobalVariables.h">
       <Filter>ヘッダー ファイル\external</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\player\PlayerStateJump.h">
+      <Filter>ヘッダー ファイル\entity\player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -59,6 +59,8 @@ private:
 
 	std::unique_ptr<BasePlayerState> state_;
 
+	Vec3f velocity_;
+
 	/// <summary>
 	/// 浮遊ギミックの初期化
 	/// </summary>
@@ -88,7 +90,7 @@ public:
 	/// <param name="tag"></param>
 	void SetRotateX(float rotate, const std::string& tag = "player");
 
-
+	void SetTranslationY(float y, const std::string& tag = "player");
 
 	const WorldTransform& GetWorldTransform() const {
 		return worldTransform_;
@@ -105,5 +107,9 @@ public:
 
 
 	void SetState(BasePlayerState* state);
+
+
+	const Vec3f& GetVelocity() const { return velocity_; }
+	void SetVelocity(const Vec3f& velocity) { velocity_ = velocity; }
 
 };

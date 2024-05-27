@@ -118,6 +118,7 @@
     <ClCompile Include="entity\player\Player.cpp" />
     <ClCompile Include="entity\player\PlayerStateAttack.cpp" />
     <ClCompile Include="entity\player\PlayerStateDash.cpp" />
+    <ClCompile Include="entity\player\PlayerStateJump.cpp" />
     <ClCompile Include="entity\player\PlayerStateRoot.cpp" />
     <ClCompile Include="external\GlobalVariables.cpp" />
     <ClCompile Include="main.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="entity\player\Player.h" />
     <ClInclude Include="entity\player\PlayerStateAttack.h" />
     <ClInclude Include="entity\player\PlayerStateDash.h" />
+    <ClInclude Include="entity\player\PlayerStateJump.h" />
     <ClInclude Include="entity\player\PlayerStateRoot.h" />
     <ClInclude Include="external\GlobalVariables.h" />
     <ClInclude Include="input\Input.h" />

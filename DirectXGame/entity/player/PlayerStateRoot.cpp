@@ -9,11 +9,12 @@
 #include "Player.h"
 #include "PlayerStateAttack.h"
 #include "PlayerStateDash.h"
+#include "PlayerStateJump.h"
 
 
 PlayerStateRoot::PlayerStateRoot() {
 	input_ = Input::GetInstance();
-	move_ = { 0.0f, 0.0f, 0.0f };
+	velocity_ = { 0.0f, 0.0f, 0.0f };
 }
 PlayerStateRoot::~PlayerStateRoot() {}
 
@@ -36,21 +37,21 @@ void PlayerStateRoot::Move(Player* player) {
 
 	const float kThreshold = 0.7f;
 
-	move_ = {
+	velocity_ = {
 		static_cast<float>(joyState.Gamepad.sThumbLX / SHRT_MAX),
 		0.0f,
 		static_cast<float>(joyState.Gamepad.sThumbLY / SHRT_MAX)
 	};
 
 	///- 閾値を超えたら次の処理に進む
-	if(VectorMethod::Length(move_) <= kThreshold) {
+	if(VectorMethod::Length(velocity_) <= kThreshold) {
 		return;
 	}
 
-	move_ = VectorMethod::Normalize(move_) * kMovingSpeed_;
-	move_ = Mat4::Transform(move_, Mat4::MakeRotate(player->GetViewProjectionPtr().rotation_));
+	velocity_ = VectorMethod::Normalize(velocity_) * kMovingSpeed_;
+	velocity_ = Mat4::Transform(velocity_, Mat4::MakeRotate(player->GetViewProjectionPtr().rotation_));
 
-	player->Move(move_);
+	player->Move(velocity_);
 
 
 	///-TODO- "他のstateに移行するための入力処理を作成"
@@ -59,29 +60,36 @@ void PlayerStateRoot::Move(Player* player) {
 
 void PlayerStateRoot::MoveKeyboard(Player* player) {
 	///- 移動
-	move_ = { 0.0f, 0.0f, 0.0f };
-	move_.x = static_cast<float>(input_->PushKey(DIK_D) - input_->PushKey(DIK_A));
-	move_.z = static_cast<float>(input_->PushKey(DIK_W) - input_->PushKey(DIK_S));
-	move_ = VectorMethod::Normalize(move_) * kMovingSpeed_;
-	move_ = Mat4::Transform(move_, Mat4::MakeRotate(player->GetViewProjectionPtr().rotation_));
-	player->Move(move_);
+	velocity_ = { 0.0f, 0.0f, 0.0f };
+	velocity_.x = static_cast<float>(input_->PushKey(DIK_D) - input_->PushKey(DIK_A));
+	velocity_.z = static_cast<float>(input_->PushKey(DIK_W) - input_->PushKey(DIK_S));
+	velocity_ = VectorMethod::Normalize(velocity_) * kMovingSpeed_;
+	velocity_ = Mat4::Transform(velocity_, Mat4::MakeRotate(player->GetViewProjectionPtr().rotation_));
+	player->Move(velocity_);
 
 
-	///- ダッシュ || アタック
+	///- ダッシュ || アタック || ジャンプ
 	if(input_->TriggerKey(DIK_LSHIFT)) {
 		Rotate(player, 1.0f);
 		player->SetState(new PlayerStateDash);
 
-	} else if(input_->PushKey(DIK_SPACE)) {
-
+	} else if(input_->IsPressMouse(0)) {
 		player->SetState(new PlayerStateAttack);
+
+	} else if(input_->PushKey(DIK_SPACE)) {
+		player->SetVelocity(velocity_);
+		player->SetTranslationY(0.0f);
+		player->SetRotateX(0.0f, "playerLeftArm");
+		player->SetRotateX(0.0f, "playerRightArm");
+		player->SetState(new PlayerStateJump);
+
 	}
 
 }
 
 void PlayerStateRoot::Rotate(Player* player, float t) {
-	if(move_ != Vec3f(0.0f, 0.0f, 0.0f)) {
-		float targetRotate = VectorMethod::YAxisTheta(move_);
+	if(velocity_ != Vec3f(0.0f, 0.0f, 0.0f)) {
+		float targetRotate = VectorMethod::YAxisTheta(velocity_);
 		player->SetRotateY(LerpShortAngle(player->GetWorldTransform().rotation_.y, targetRotate, t));
 	}
 

@@ -1,29 +1,27 @@
 #pragma once
 
-#include <cmath>
-
 #include "BasePlayerState.h"
 
 #include "Vector3.h"
 
 /// <summary>
-/// Playerのダッシュ用クラス
+/// Playerのジャンプ用クラス
 /// </summary>
-class PlayerStateDash
+class PlayerStateJump
 	: public BasePlayerState {
 public:
 
-	PlayerStateDash();
-	~PlayerStateDash();
+	PlayerStateJump();
+	~PlayerStateJump();
 
 	void Update(Player* player) override;
 
 private:
 
-	float dashSpeed_ = 0.0f;
+	float jumpFirstSpeed_ = 0.0f;
+	Vec3f velocity_;
 
-	uint32_t dashParameter_;
-	Vec3f move_;
+	float grabityAcceleration_ ;
 
 	void ApplyGlobalVariables();
 

@@ -21,7 +21,7 @@ private:
 	Input* input_ = nullptr;
 
 	const float kMovingSpeed_ = 0.3f;
-	Vec3f move_;
+	Vec3f velocity_;
 
 	void Move(Player* player);
 	void MoveKeyboard(Player* player);

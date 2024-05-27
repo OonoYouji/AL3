@@ -38,17 +38,17 @@ void GlobalVariables::Update() {
 			///- int32_t型を持っていたら行う処理
 			if(std::holds_alternative<int32_t>(item)) {
 				int32_t* ptr = std::get_if<int32_t>(&item);
-				ImGui::SliderInt(itemName.c_str(), ptr, -100, 100);
+				ImGui::DragInt(itemName.c_str(), ptr, 1);
 
 				///- float型の処理
 			} else if(std::holds_alternative<float>(item)) {
 				float* ptr = std::get_if<float>(&item);
-				ImGui::SliderFloat(itemName.c_str(), ptr, -100.0f, 100.0f);
+				ImGui::DragFloat(itemName.c_str(), ptr, 0.1f);
 
 				///- Vector3型の処理
 			} else if(std::holds_alternative<Vec3f>(item)) {
 				Vec3f* ptr = std::get_if<Vec3f>(&item);
-				ImGui::SliderFloat3(itemName.c_str(), reinterpret_cast<float*>(ptr), -10.0f, 10.0f);
+				ImGui::DragFloat3(itemName.c_str(), reinterpret_cast<float*>(ptr), 0.1f);
 
 			}
 
