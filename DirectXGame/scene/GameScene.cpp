@@ -13,6 +13,7 @@
 #include "Skydome.h"
 #include "Ground.h"
 #include "FollowCamera.h"
+#include "LockOn.h"
 
 
 GameScene::GameScene() {}
@@ -89,12 +90,13 @@ void GameScene::Initialize() {
 	player_ = std::make_unique<Player>();
 	player_->Initialize(playerModels);
 	player_->SetViewProjection(&followCamera_->GetViewProjection());
-
-	enemy_ = std::make_unique<Enemy>();
-	enemy_->Initialize(enemyModels);
-
-
 	followCamera_->SetTarget(&player_->GetWorldTransform());
+
+
+	enemies_.push_back(std::make_unique<Enemy>());
+	for(auto& enemy : enemies_) {
+		enemy->Initialize(enemyModels);
+	}
 
 
 	skydome_ = std::make_unique<Skydome>();
@@ -103,6 +105,10 @@ void GameScene::Initialize() {
 
 	ground_ = std::make_unique<Ground>();
 	ground_->Initialize();
+
+
+	lockOn_ = std::make_unique<LockOn>();
+	lockOn_->Initialize();
 
 
 
@@ -127,7 +133,10 @@ void GameScene::Update() {
 
 	player_->Update();
 
-	enemy_->Update();
+	
+	for(auto& enemy : enemies_) {
+		enemy->Update();
+	}
 
 	skydome_->Update();
 	ground_->Update();
@@ -165,7 +174,9 @@ void GameScene::Draw() {
 
 	player_->Draw(viewProjection_);
 
-	enemy_->Draw(viewProjection_);
+	for(auto& enemy : enemies_) {
+		enemy->Draw(viewProjection_);
+	}
 
 
 	skydome_->Draw(viewProjection_);
@@ -185,6 +196,7 @@ void GameScene::Draw() {
 	/// </summary>
 
 
+	lockOn_->Draw();
 
 
 	// スプライト描画後処理

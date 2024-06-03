@@ -127,6 +127,7 @@
     <ClCompile Include="math\VectorMethod.cpp" />
     <ClCompile Include="object\FollowCamera.cpp" />
     <ClCompile Include="object\Ground.cpp" />
+    <ClCompile Include="object\LockOn.cpp" />
     <ClCompile Include="object\Skydome.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
   </ItemGroup>
@@ -174,6 +175,7 @@
     <ClInclude Include="math\Vector4.h" />
     <ClInclude Include="object\FollowCamera.h" />
     <ClInclude Include="object\Ground.h" />
+    <ClInclude Include="object\LockOn.h" />
     <ClInclude Include="object\Skydome.h" />
     <ClInclude Include="scene\GameScene.h" />
   </ItemGroup>

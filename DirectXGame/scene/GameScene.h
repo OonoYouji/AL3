@@ -19,10 +19,12 @@
 
 
 class Player;
+class Enemy;
+
 class Skydome;
 class Ground;
 class FollowCamera;
-class Enemy;
+class LockOn;
 
 /// <summary>
 /// ゲームシーン
@@ -73,12 +75,12 @@ private: // メンバ変数
 	uint32_t playerTexture_;
 
 	std::unique_ptr<Player> player_;
-	std::unique_ptr<Enemy> enemy_;
+	std::list<std::unique_ptr<Enemy>> enemies_;
 
 	std::unique_ptr<Skydome> skydome_;
 	std::unique_ptr<Ground> ground_;
 	std::unique_ptr<FollowCamera> followCamera_;
-
+	std::unique_ptr<LockOn> lockOn_;
 
 	void ImGui();
 
@@ -87,6 +89,6 @@ private: // メンバ変数
 public:
 
 
-	
+
 
 };
