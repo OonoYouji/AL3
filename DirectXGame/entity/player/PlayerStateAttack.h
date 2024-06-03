@@ -7,14 +7,18 @@
 
 #include "BasePlayerState.h"
 
+enum ComboPhase {
+	kAnticipation,	//- 振りかぶり時間
+	kChargeTime,	//- ための時間
+	kSwing,			//- 攻撃振りの時間
+	kRecovery		//- 硬直時間
+};
+
 /// <summary>
 /// 攻撃用定数
 /// </summary>
 struct ConstAttack {
-	uint32_t anticipationTime;	//- 振りかぶり時間
-	uint32_t chargeTime;		//- ための時間
-	uint32_t swingTime;			//- 攻撃振りの時間
-	uint32_t recoveryTime;		//- 硬直時間
+	std::array<uint32_t, 4> attackTimes;
 	float anticipationSpeed;	//- 振りかぶりの移動速さ
 	float chargeSpeed;			//- ための移動速さ
 	float swingSpeed;			//- 攻撃振りの移動速さ
@@ -39,7 +43,7 @@ private:
 
 	uint32_t attackParameter_;
 	int32_t comboIndex_ = 0;
-	int32_t inComboPhase_ = 0;
+	ComboPhase inComboPhase_;
 	bool comboNext_ = false;
 	ConstAttack attackParams_;
 

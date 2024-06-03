@@ -23,10 +23,8 @@ PlayerStateAttack::PlayerStateAttack() {
 	input_ = Input::GetInstance();
 	attackParameter_ = 0;
 	comboIndex_ = 0;
-	inComboPhase_ = 0;
+	inComboPhase_ = ComboPhase::kAnticipation;
 	attackParams_ = kConstAttacks_[comboIndex_];
-	/*pPlayer_->SetRotateX(0.5f);
-	pPlayer_->SetRotateZ(0.5f);*/
 }
 PlayerStateAttack::~PlayerStateAttack() {}
 
@@ -59,7 +57,7 @@ void PlayerStateAttack::Update() {
 	}
 
 	///- コンボ切り替えまたは攻撃終了
-	uint32_t totalTime = kConstAttack.anticipationTime + kConstAttack.chargeTime + kConstAttack.swingTime + kConstAttack.recoveryTime;
+	uint32_t totalTime = kConstAttack.attackTimes[kAnticipation] + kConstAttack.attackTimes[kChargeTime] + kConstAttack.attackTimes[kSwing] + kConstAttack.attackTimes[kRecovery];
 	if(++attackParameter_ >= totalTime) {
 
 		///- コンボ先があれば
@@ -69,7 +67,7 @@ void PlayerStateAttack::Update() {
 			///- 各種パラメータを初期化
 			comboIndex_++;
 			attackParameter_ = 0;
-			inComboPhase_ = 0;
+			inComboPhase_ = ComboPhase::kAnticipation;
 			attackParams_ = kConstAttacks_[comboIndex_];
 
 			///- 切り替わりの瞬間のみ向きの修正可能
@@ -140,24 +138,24 @@ void PlayerStateAttack::Update() {
 /// --------------------------------------------------------
 void PlayerStateAttack::AttackAction0() {
 	switch(inComboPhase_) {
-	case 0: ///- 振りかぶり
-		if(attackParams_.anticipationTime-- <= 0) {
-			inComboPhase_++;
+	case ComboPhase::kAnticipation: ///- 振りかぶり
+		if(attackParams_.attackTimes[inComboPhase_]-- <= 0) {
+			inComboPhase_ = kChargeTime;
 			break;
 		}
 
 		break;
-	case 1: ///- 攻撃前硬直
-		if(attackParams_.chargeTime-- <= 0) {
-			inComboPhase_++;
+	case ComboPhase::kChargeTime: ///- 攻撃前硬直
+		if(attackParams_.attackTimes[inComboPhase_]-- <= 0) {
+			inComboPhase_= kSwing;
 			break;
 		}
 
 
 		break;
-	case 2: ///- 攻撃振り
-		if(attackParams_.swingTime-- <= 0) {
-			inComboPhase_++;
+	case ComboPhase::kSwing: ///- 攻撃振り
+		if(attackParams_.attackTimes[inComboPhase_]-- <= 0) {
+			inComboPhase_ = kRecovery;
 			break;
 		}
 
@@ -167,9 +165,9 @@ void PlayerStateAttack::AttackAction0() {
 		);
 
 		break;
-	case 3: ///- 硬直
-		if(attackParams_.recoveryTime-- <= 0) {
-			inComboPhase_++;
+	case ComboPhase::kRecovery: ///- 硬直
+		if(attackParams_.attackTimes[inComboPhase_]-- <= 0) {
+			//inComboPhase_++;
 			break;
 		}
 
@@ -185,9 +183,9 @@ void PlayerStateAttack::AttackAction0() {
 void PlayerStateAttack::AttackAction1() {
 
 	switch(inComboPhase_) {
-	case 0: ///- 振りかぶり 
-		if(attackParams_.anticipationTime-- <= 0) {
-			inComboPhase_++;
+	case ComboPhase::kAnticipation: ///- 振りかぶり
+		if(attackParams_.attackTimes[inComboPhase_]-- <= 0) {
+			inComboPhase_ = kChargeTime;
 			break;
 		}
 
@@ -198,18 +196,18 @@ void PlayerStateAttack::AttackAction1() {
 
 
 		break;
-	case 1: ///- 攻撃前硬直
-		if(attackParams_.chargeTime-- <= 0) {
-			inComboPhase_++;
+	case ComboPhase::kChargeTime: ///- 攻撃前硬直
+		if(attackParams_.attackTimes[inComboPhase_]-- <= 0) {
+			inComboPhase_ = kSwing;
 			break;
 		}
 
 
 
 		break;
-	case 2: ///- 攻撃振り
-		if(attackParams_.swingTime-- <= 0) {
-			inComboPhase_++;
+	case ComboPhase::kSwing: ///- 攻撃振り
+		if(attackParams_.attackTimes[inComboPhase_]-- <= 0) {
+			inComboPhase_ = kRecovery;
 			break;
 		}
 
@@ -219,9 +217,9 @@ void PlayerStateAttack::AttackAction1() {
 		);
 
 		break;
-	case 3: ///- 硬直
-		if(attackParams_.recoveryTime-- <= 0) {
-			inComboPhase_++;
+	case ComboPhase::kRecovery: ///- 硬直
+		if(attackParams_.attackTimes[inComboPhase_]-- <= 0) {
+			//inComboPhase_++;
 			break;
 		}
 
@@ -240,9 +238,9 @@ void PlayerStateAttack::AttackAction1() {
 void PlayerStateAttack::AttackAction2() {
 
 	switch(inComboPhase_) {
-	case 0: ///- 振りかぶり
-		if(attackParams_.anticipationTime-- <= 0) {
-			inComboPhase_++;
+	case ComboPhase::kAnticipation: ///- 振りかぶり
+		if(attackParams_.attackTimes[inComboPhase_]-- <= 0) {
+			inComboPhase_ = kChargeTime;
 			break;
 		}
 
@@ -252,16 +250,16 @@ void PlayerStateAttack::AttackAction2() {
 		);
 
 		break;
-	case 1: ///- 攻撃前硬直
-		if(attackParams_.chargeTime-- <= 0) {
-			inComboPhase_++;
+	case ComboPhase::kChargeTime: ///- 攻撃前硬直
+		if(attackParams_.attackTimes[inComboPhase_]-- <= 0) {
+			inComboPhase_ = kSwing;
 			break;
 		}
 
 		break;
-	case 2: ///- 攻撃振り
-		if(attackParams_.swingTime-- <= 0) {
-			inComboPhase_++;
+	case ComboPhase::kSwing: ///- 攻撃振り
+		if(attackParams_.attackTimes[inComboPhase_]-- <= 0) {
+			inComboPhase_ = kRecovery;
 			break;
 		}
 
@@ -275,9 +273,9 @@ void PlayerStateAttack::AttackAction2() {
 		);
 
 		break;
-	case 3: ///- 硬直
-		if(attackParams_.recoveryTime-- <= 0) {
-			inComboPhase_++;
+	case ComboPhase::kRecovery: ///- 硬直
+		if(attackParams_.attackTimes[inComboPhase_]-- <= 0) {
+			//inComboPhase_++;
 			break;
 		}
 
