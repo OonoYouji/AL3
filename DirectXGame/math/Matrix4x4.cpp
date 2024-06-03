@@ -87,6 +87,7 @@ Matrix4x4 Mat4::MakeRotate(const Vec3f& rotate) {
 	Matrix4x4 y = MakeRotateY(rotate.y);
 	Matrix4x4 z = MakeRotateZ(rotate.z);
 	return x * y * z;
+	//return z * y * x;
 }
 
 Matrix4x4 Mat4::MakeTranslate(const Vec3f& translate) {

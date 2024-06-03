@@ -31,6 +31,8 @@ private:
 
 	void Rotate();
 
+	void RotateKeyboard();
+
 	void Reset();
 
 	Vec3f Offset() const;

@@ -37,6 +37,7 @@ void FollowCamera::Rotate() {
 
 	XINPUT_STATE joyState;
 	if(!input_->GetJoystickState(0, joyState)) {
+		RotateKeyboard();
 		return;
 	}
 
@@ -56,8 +57,22 @@ void FollowCamera::Reset() {
 
 }
 
+
+void FollowCamera::RotateKeyboard() {
+	Vec2f mouseVelocity = {
+		static_cast<float>(input_->GetMouseMove().lX),
+		static_cast<float>(input_->GetMouseMove().lY)
+	};
+
+	viewProjection_.rotation_.y += mouseVelocity.x / 384.0f;
+	viewProjection_.rotation_.x += mouseVelocity.y / 384.0f;
+
+
+}
+
+
 Vec3f FollowCamera::Offset() const {
-	Vec3f offset = { 0.0f, 2.0f, -10.0f };
+	Vec3f offset = { 0.0f, 2.0f, -15.0f };
 	Matrix4x4 matRotate = Mat4::MakeRotate(viewProjection_.rotation_);
 	offset = Mat4::TransformNormal(offset, matRotate);
 	return offset;

@@ -81,14 +81,14 @@ public:
 	/// <param name="velocity">移動量</param>
 	void Move(const Vec3f& velocity);
 
-	void SetRotateY(float rotateY);
-
 	/// <summary>
 	/// rotateXのSetter 本体に設定するときはtagはplayer
 	/// </summary>
 	/// <param name="rotate"></param>
 	/// <param name="tag"></param>
 	void SetRotateX(float rotate, const std::string& tag = "player");
+	void SetRotateY(float rotate, const std::string& tag = "player");
+	void SetRotateZ(float rotate, const std::string& tag = "player");
 
 	void SetTranslationY(float y, const std::string& tag = "player");
 
@@ -96,6 +96,9 @@ public:
 		return worldTransform_;
 	}
 
+	const WorldTransform& GetPartsWorldTransform(const std::string& tag) const {
+		return partsWorldTransforms_.at(tag);
+	}
 
 	void SetViewProjection(const ViewProjection* viewProjection) {
 		viewProjection_ = viewProjection;
@@ -111,5 +114,7 @@ public:
 
 	const Vec3f& GetVelocity() const { return velocity_; }
 	void SetVelocity(const Vec3f& velocity) { velocity_ = velocity; }
+
+
 
 };

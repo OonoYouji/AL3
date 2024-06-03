@@ -11,6 +11,14 @@ public:
 
 	virtual ~BasePlayerState() = default;
 
-	virtual void Update(Player* player) = 0;
+	virtual void Update() = 0;
+
+	void SetPlayer(Player* player) {
+		pPlayer_ = player;
+	}
+
+protected:
+
+	Player* pPlayer_ = nullptr;
 
 };

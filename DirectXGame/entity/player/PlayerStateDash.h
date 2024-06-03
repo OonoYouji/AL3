@@ -16,7 +16,7 @@ public:
 	PlayerStateDash();
 	~PlayerStateDash();
 
-	void Update(Player* player) override;
+	void Update() override;
 
 private:
 

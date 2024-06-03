@@ -14,7 +14,7 @@ public:
 	PlayerStateRoot();
 	~PlayerStateRoot();
 
-	void Update(Player* player) override;
+	void Update() override;
 
 private:
 
@@ -23,9 +23,13 @@ private:
 	const float kMovingSpeed_ = 0.3f;
 	Vec3f velocity_;
 
-	void Move(Player* player);
-	void MoveKeyboard(Player* player);
+	bool isNextStateAttack_ = false;
+	bool isNextStateJump_ = false;
+	bool isNextStateDash_ = false;
 
-	void Rotate(Player* player, float t);
+	void Move();
+	void MoveKeyboard();
+
+	void Rotate(float t);
 
 };

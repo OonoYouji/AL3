@@ -30,7 +30,7 @@ void Player::Initialize(const std::map<std::string, Model*>& models) {
 	InitializeFloatingGimmck();
 
 	state_ = std::make_unique<PlayerStateRoot>();
-
+	state_->SetPlayer(this);
 
 	const char* groupName = "Player";
 	GlobalVariables* globalVariable = GlobalVariables::GetInstance();
@@ -47,7 +47,7 @@ void Player::Update() {
 
 	ApplyGlobalVariables();
 
-	state_->Update(this);
+	state_->Update();
 
 	UpdateFloatingGimmick();
 
@@ -127,10 +127,6 @@ void Player::Move(const Vec3f& velocity) {
 	worldTransform_.translation_ += velocity;
 }
 
-void Player::SetRotateY(float rotateY) {
-	worldTransform_.rotation_.y = rotateY;
-}
-
 
 void Player::SetRotateX(float rotate, const std::string& tag) {
 	if(tag == "player") {
@@ -138,6 +134,22 @@ void Player::SetRotateX(float rotate, const std::string& tag) {
 		return;
 	}
 	partsWorldTransforms_[tag].rotation_.x = rotate;
+}
+
+void Player::SetRotateY(float rotate, const std::string& tag) {
+	if(tag == "player") {
+		worldTransform_.rotation_.y = rotate;
+		return;
+	}
+	partsWorldTransforms_[tag].rotation_.y = rotate;
+}
+
+void Player::SetRotateZ(float rotate, const std::string& tag) {
+	if(tag == "player") {
+		worldTransform_.rotation_.z = rotate;
+		return;
+	}
+	partsWorldTransforms_[tag].rotation_.z = rotate;
 }
 
 void Player::SetTranslationY(float y, const std::string& tag) {
@@ -151,6 +163,7 @@ void Player::SetTranslationY(float y, const std::string& tag) {
 
 void Player::SetState(BasePlayerState* state) {
 	state_.reset(state);
+	state_->SetPlayer(this);
 }
 
 
@@ -186,6 +199,8 @@ void Player::ImGui() {
 
 
 
+
+	
 	ImGui::End();
 #endif // _DEBUG
 }

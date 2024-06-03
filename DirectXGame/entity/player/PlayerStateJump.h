@@ -14,7 +14,7 @@ public:
 	PlayerStateJump();
 	~PlayerStateJump();
 
-	void Update(Player* player) override;
+	void Update() override;
 
 private:
 

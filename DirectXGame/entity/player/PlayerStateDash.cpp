@@ -22,19 +22,19 @@ PlayerStateDash::~PlayerStateDash() {}
 
 
 
-void PlayerStateDash::Update(Player* player) {
+void PlayerStateDash::Update() {
 	ApplyGlobalVariables();
 
 	move_ = { 0.0f, 0.0f, 1.0f };
 	move_ = VectorMethod::Normalize(move_) * dashSpeed_;
-	move_ = Mat4::Transform(move_, Mat4::MakeRotate(player->GetWorldTransform().rotation_));
+	move_ = Mat4::Transform(move_, Mat4::MakeRotate(pPlayer_->GetWorldTransform().rotation_));
 	
-	player->Move(move_);
+	pPlayer_->Move(move_);
 
 	const uint32_t dashTime = 5;
 
 	if(++dashParameter_ >= dashTime) {
-		player->SetState(new PlayerStateRoot);
+		pPlayer_->SetState(new PlayerStateRoot);
 	}
 
 }

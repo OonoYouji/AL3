@@ -87,6 +87,6 @@ private: // メンバ変数
 public:
 
 
-
+	
 
 };

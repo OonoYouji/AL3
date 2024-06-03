@@ -28,7 +28,7 @@ struct Vector3 final {
 	Vector3& operator/= (float value);
 	Vector3& operator*= (float value);
 
-	bool operator!= (const Vector3& other);
+	bool operator!= (const Vector3& other) const;
 
 };
 
@@ -123,7 +123,7 @@ inline Vector3& Vector3::operator*=(float value) {
 	return *this;
 }
 
-inline bool Vector3::operator!=(const Vector3& other) {
+inline bool Vector3::operator!=(const Vector3& other) const {
 	return this->x != other.x 
 		|| this->y != other.y 
 		|| this->z != other.z;

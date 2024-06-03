@@ -25,18 +25,18 @@ PlayerStateJump::~PlayerStateJump() {}
 
 
 
-void PlayerStateJump::Update(Player* player) {
+void PlayerStateJump::Update() {
 	ApplyGlobalVariables();
 
 	Vec3f accelerationVector = { 0.0f, -grabityAcceleration_ , 0.0f };
 	velocity_ += accelerationVector;
-	velocity_.x = player->GetVelocity().x;
-	velocity_.z = player->GetVelocity().z;
-	player->Move(velocity_);
+	velocity_.x = pPlayer_->GetVelocity().x;
+	velocity_.z = pPlayer_->GetVelocity().z;
+	pPlayer_->Move(velocity_);
 
-	if(player->GetWorldTransform().translation_.y <= 0.0f) {
-		player->SetTranslationY(0.0f);
-		player->SetState(new PlayerStateRoot);
+	if(pPlayer_->GetWorldTransform().translation_.y <= 0.0f) {
+		pPlayer_->SetTranslationY(0.0f);
+		pPlayer_->SetState(new PlayerStateRoot);
 	}
 
 }
