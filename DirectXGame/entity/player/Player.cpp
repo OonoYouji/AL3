@@ -164,6 +164,7 @@ void Player::SetTranslationY(float y, const std::string& tag) {
 void Player::SetState(BasePlayerState* state) {
 	state_.reset(state);
 	state_->SetPlayer(this);
+	//state_->Update();
 }
 
 

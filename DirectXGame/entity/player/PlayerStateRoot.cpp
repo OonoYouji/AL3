@@ -29,14 +29,19 @@ void PlayerStateRoot::Update() {
 	Rotate(0.05f);
 
 	if(isNextStateDash_) {
+
 		Rotate(1.0f);
 		pPlayer_->SetState(new PlayerStateDash);
+
 	} else if(isNextStateAttack_) {
-		pPlayer_->SetRotateX(1.0f, "hammer");
-		pPlayer_->SetRotateY(0.0f, "hammer");
-		//pPlayer_->SetRotateZ(-1.0f, "hammer");
+
+		pPlayer_->SetRotateX(0.0f, "hammer");
+		pPlayer_->SetRotateY(-0.2f, "hammer");
+		pPlayer_->SetRotateZ(-1.2f, "hammer");
 		pPlayer_->SetState(new PlayerStateAttack);
+
 	} else if(isNextStateJump_) {
+
 		pPlayer_->SetVelocity(velocity_);
 		pPlayer_->SetTranslationY(0.0f);
 		pPlayer_->SetRotateX(0.0f, "playerLeftArm");
@@ -56,6 +61,7 @@ void PlayerStateRoot::Move() {
 
 	const float kThreshold = 0.7f;
 
+	///- 入力の受付
 	velocity_ = {
 		static_cast<float>(joyState.Gamepad.sThumbLX / SHRT_MAX),
 		0.0f,
@@ -64,9 +70,11 @@ void PlayerStateRoot::Move() {
 
 	///- 閾値を超えたら
 	if(VectorMethod::Length(velocity_) > kThreshold) {
+		///- 移動量の計算
 		velocity_ = VectorMethod::Normalize(velocity_) * kMovingSpeed_;
-		velocity_ = Mat4::Transform(velocity_, Mat4::MakeRotate(pPlayer_->GetViewProjectionPtr().rotation_));
+		velocity_ = Mat4::Transform(velocity_, Mat4::MakeRotate(Vec3f(0.0f, pPlayer_->GetViewProjectionPtr().rotation_.y, 0.0f)));
 
+		///- Translateへの加算
 		pPlayer_->Move(velocity_);
 	}
 
@@ -86,10 +94,15 @@ void PlayerStateRoot::Move() {
 void PlayerStateRoot::MoveKeyboard() {
 	///- 移動
 	velocity_ = { 0.0f, 0.0f, 0.0f };
+	///- 入力の受付
 	velocity_.x = static_cast<float>(input_->PushKey(DIK_D) - input_->PushKey(DIK_A));
 	velocity_.z = static_cast<float>(input_->PushKey(DIK_W) - input_->PushKey(DIK_S));
+
+	///- 移動量の計算
 	velocity_ = VectorMethod::Normalize(velocity_) * kMovingSpeed_;
 	velocity_ = Mat4::Transform(velocity_, Mat4::MakeRotate(Vec3f(0.0f, pPlayer_->GetViewProjectionPtr().rotation_.y, 0.0f)));
+
+	///- Translateへの加算
 	pPlayer_->Move(velocity_);
 	pPlayer_->SetVelocity(velocity_);
 

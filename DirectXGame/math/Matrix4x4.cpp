@@ -8,15 +8,9 @@ Matrix4x4 Matrix4x4::operator*(const Matrix4x4& other) const {
 	Matrix4x4 result{};
 	for(uint32_t r = 0; r < 4; r++) {
 		for(uint32_t c = 0; c < 4; c++) {
-
 			for(uint32_t i = 0; i < 4; ++i) {
 				result.m[r][c] += this->m[r][i] * other.m[i][c];
 			}
-			/*result.m[r][c] =
-				this->m[r][0] * other.m[0][c]
-				+ this->m[r][1] * other.m[1][c]
-				+ this->m[r][2] * other.m[2][c]
-				+ this->m[r][3] * other.m[3][c];*/
 		}
 	}
 	return result;
@@ -86,8 +80,8 @@ Matrix4x4 Mat4::MakeRotate(const Vec3f& rotate) {
 	Matrix4x4 x = MakeRotateX(rotate.x);
 	Matrix4x4 y = MakeRotateY(rotate.y);
 	Matrix4x4 z = MakeRotateZ(rotate.z);
-	return x * y * z;
-	//return z * y * x;
+	//return x * y * z;
+	return z * y * x;
 }
 
 Matrix4x4 Mat4::MakeTranslate(const Vec3f& translate) {
@@ -106,38 +100,6 @@ Matrix4x4 Mat4::MakeAffine(const Vec3f& scale, const Vec3f& rotate, const Vec3f&
 	//return (T * (R * S));
 	return (S * R) * T;
 }
-//
-//Matrix4x4 Mat4::MakeInverse(const Matrix4x4& m) {
-//	Matrix4x4 matrix = m;
-//	Matrix4x4 result = MakeIdentity();
-//
-//	for(int i = 0; i < 4; ++i) {
-//		// ピボットが0の場合、行の入れ替えを行う
-//		if(matrix.m[i][i] == 0.0f) {
-//			return MakeIdentity(); // 単位行列を返す (逆行列が存在しない)
-//		}
-//
-//		// ピボットの値を1にする
-//		float pivot_inverse = 1.0f / matrix.m[i][i];
-//		for(int j = 0; j < 4; ++j) {
-//			matrix.m[i][j] *= pivot_inverse;
-//			result.m[i][j] *= pivot_inverse;
-//		}
-//
-//		// 掃き出し法を用いて、他の行を変換
-//		for(int k = 0; k < 4; ++k) {
-//			if(k != i) {
-//				float factor = -matrix.m[k][i];
-//				for(int j = 0; j < 4; ++j) {
-//					matrix.m[k][j] += factor * matrix.m[i][j];
-//					result.m[k][j] += factor * result.m[i][j];
-//				}
-//			}
-//		}
-//	}
-//
-//	return result;
-//}
 
 
 Matrix4x4 Mat4::MakeInverse(const Matrix4x4& m) {

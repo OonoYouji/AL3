@@ -65,14 +65,14 @@ void FollowCamera::RotateKeyboard() {
 	};
 
 	viewProjection_.rotation_.y += mouseVelocity.x / 384.0f;
-	viewProjection_.rotation_.x += mouseVelocity.y / 384.0f;
+	//viewProjection_.rotation_.x += mouseVelocity.y / 384.0f;
 
 
 }
 
 
 Vec3f FollowCamera::Offset() const {
-	Vec3f offset = { 0.0f, 2.0f, -15.0f };
+	Vec3f offset = { 0.0f, 7.5f, -20.0f };
 	Matrix4x4 matRotate = Mat4::MakeRotate(viewProjection_.rotation_);
 	offset = Mat4::TransformNormal(offset, matRotate);
 	return offset;

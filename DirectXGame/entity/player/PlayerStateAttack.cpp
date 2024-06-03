@@ -13,8 +13,8 @@
 const std::array<ConstAttack, PlayerStateAttack::kComboNum_> PlayerStateAttack::kConstAttacks_ = {
 	{
 		{0, 0, 20, 0, 0.0f, 0.0f, 0.15f},
-		{15, 10, 15, 0, 0.2f, 0.0f, 0.0f},
-		{15, 10, 15, 30, 0.2f, 0.0f, 0.0f},
+		{15, 10, 15, 10, 0.1f, 0.1f, 0.15f},
+		{15, 10, 15, 30, 0.2f, 0.0f, 0.5f},
 	}
 };
 
@@ -35,21 +35,27 @@ void PlayerStateAttack::Update() {
 
 	//attackAnimationTime_ += 0.25f;
 
+	///- 現在のコンボの値を設定
 	const ConstAttack& kConstAttack = kConstAttacks_[comboIndex_];
-	//uint32_t anticipationTime = kConstAttack.anticipationTime;
-
 
 	XINPUT_STATE joyStatePre;
 	XINPUT_STATE joyState;
 
 	///- コンボ継続判定
-	if(comboIndex_ < kConstAttacks_.size()) {
+	if(comboIndex_ < kConstAttacks_.size() - 1) {
+
+		if(input_->IsTriggerMouse(0)) {
+			comboNext_ = true;
+		}
+
+		///- GamePadの入力を取得
 		if(input_->GetJoystickState(0, joyState) && input_->GetJoystickStatePrevious(0, joyStatePre)) {
-			if((joyState.Gamepad.wButtons & XINPUT_GAMEPAD_X && !(joyStatePre.Gamepad.wButtons & XINPUT_GAMEPAD_X)
-				|| input_->IsTriggerMouse(0))) {
+			if(joyState.Gamepad.wButtons & XINPUT_GAMEPAD_X && !(joyStatePre.Gamepad.wButtons & XINPUT_GAMEPAD_X)) {
 				comboNext_ = true;
 			}
+
 		}
+
 	}
 
 	///- コンボ切り替えまたは攻撃終了
@@ -74,38 +80,53 @@ void PlayerStateAttack::Update() {
 
 			///- 各パーツの角度を初期化
 			switch(comboIndex_) {
+			case 0:
+
+				break;
 			case 1: ///- 上から振り下ろし
-				pPlayer_->SetRotateX(0.0f, "hammer");
+
+				pPlayer_->SetRotateX(1.0f, "hammer");
+				pPlayer_->SetRotateY(0.0f, "hammer");
+				pPlayer_->SetRotateZ(0.0f, "hammer");
 				break;
 			case 2: ///- 右からホームラン
-				pPlayer_->SetRotateZ(-0.5f, "hammer");
+
+				pPlayer_->SetRotateX(0.0f, "hammer");
+				pPlayer_->SetRotateY(0.0f, "hammer");
+				pPlayer_->SetRotateZ(1.2f, "hammer");
 				break;
 			}
 
 
 		} else {
 
+			pPlayer_->SetRotateX(0.0f, "hammer");
+			pPlayer_->SetRotateY(0.0f, "hammer");
+			pPlayer_->SetRotateZ(0.0f, "hammer");
 			///- コンボできないので終了
 			pPlayer_->SetState(new PlayerStateRoot());
 
 		}
-	}
+	} else {
 
 
-	attackParameter_++;
-	switch(comboIndex_) {
-	case 0: ///- 右から半時計回り
 
-		AttackAction0();
-		break;
-	case 1: ///- 上から振り下ろし
+		//attackParameter_++;
+		switch(comboIndex_) {
+		case 0: ///- 右から半時計回り
 
-		AttackAction1();
-		break;
-	case 2: ///- 右からホームラン
+			AttackAction0();
+			break;
+		case 1: ///- 上から振り下ろし
 
-		AttackAction2();
-		break;
+			AttackAction1();
+			break;
+		case 2: ///- 右からホームラン
+
+			AttackAction2();
+			break;
+		}
+
 	}
 
 
@@ -120,7 +141,6 @@ void PlayerStateAttack::Update() {
 void PlayerStateAttack::AttackAction0() {
 	switch(inComboPhase_) {
 	case 0: ///- 振りかぶり
-
 		if(attackParams_.anticipationTime-- <= 0) {
 			inComboPhase_++;
 			break;
@@ -128,7 +148,6 @@ void PlayerStateAttack::AttackAction0() {
 
 		break;
 	case 1: ///- 攻撃前硬直
-
 		if(attackParams_.chargeTime-- <= 0) {
 			inComboPhase_++;
 			break;
@@ -137,20 +156,18 @@ void PlayerStateAttack::AttackAction0() {
 
 		break;
 	case 2: ///- 攻撃振り
-
 		if(attackParams_.swingTime-- <= 0) {
 			inComboPhase_++;
 			break;
 		}
 
 		pPlayer_->SetRotateY(
-			pPlayer_->GetPartsWorldTransform("hammer").rotation_.y + attackParams_.swingSpeed,
+			pPlayer_->GetPartsWorldTransform("hammer").rotation_.y - attackParams_.swingSpeed,
 			"hammer"
 		);
 
 		break;
 	case 3: ///- 硬直
-
 		if(attackParams_.recoveryTime-- <= 0) {
 			inComboPhase_++;
 			break;
@@ -168,14 +185,48 @@ void PlayerStateAttack::AttackAction0() {
 void PlayerStateAttack::AttackAction1() {
 
 	switch(inComboPhase_) {
-	case 0: ///- 振りかぶり
-		//pPlayer_->SetRotateY(, "hammer");
+	case 0: ///- 振りかぶり 
+		if(attackParams_.anticipationTime-- <= 0) {
+			inComboPhase_++;
+			break;
+		}
+
+		pPlayer_->SetRotateX(
+			pPlayer_->GetPartsWorldTransform("hammer").rotation_.x - attackParams_.anticipationSpeed,
+			"hammer"
+		);
+
+
 		break;
 	case 1: ///- 攻撃前硬直
+		if(attackParams_.chargeTime-- <= 0) {
+			inComboPhase_++;
+			break;
+		}
+
+
+
 		break;
 	case 2: ///- 攻撃振り
+		if(attackParams_.swingTime-- <= 0) {
+			inComboPhase_++;
+			break;
+		}
+
+		pPlayer_->SetRotateX(
+			pPlayer_->GetPartsWorldTransform("hammer").rotation_.x + attackParams_.swingSpeed,
+			"hammer"
+		);
+
 		break;
 	case 3: ///- 硬直
+		if(attackParams_.recoveryTime-- <= 0) {
+			inComboPhase_++;
+			break;
+		}
+
+
+
 		break;
 	}
 
@@ -190,13 +241,46 @@ void PlayerStateAttack::AttackAction2() {
 
 	switch(inComboPhase_) {
 	case 0: ///- 振りかぶり
-		//pPlayer_->SetRotateY(, "hammer");
+		if(attackParams_.anticipationTime-- <= 0) {
+			inComboPhase_++;
+			break;
+		}
+
+		pPlayer_->SetRotateY(
+			pPlayer_->GetPartsWorldTransform("hammer").rotation_.y + attackParams_.anticipationSpeed,
+			"hammer"
+		);
+
 		break;
 	case 1: ///- 攻撃前硬直
+		if(attackParams_.chargeTime-- <= 0) {
+			inComboPhase_++;
+			break;
+		}
+
 		break;
 	case 2: ///- 攻撃振り
+		if(attackParams_.swingTime-- <= 0) {
+			inComboPhase_++;
+			break;
+		}
+
+		pPlayer_->SetRotateY(
+			pPlayer_->GetWorldTransform().rotation_.y - attackParams_.swingSpeed
+		);
+
+		pPlayer_->SetRotateY(
+			pPlayer_->GetPartsWorldTransform("hammer").rotation_.y - attackParams_.swingSpeed,
+			"hammer"
+		);
+
 		break;
 	case 3: ///- 硬直
+		if(attackParams_.recoveryTime-- <= 0) {
+			inComboPhase_++;
+			break;
+		}
+
 		break;
 	}
 
