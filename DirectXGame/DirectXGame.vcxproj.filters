@@ -305,6 +305,9 @@
     <ClInclude Include="object\LockOn.h">
       <Filter>ヘッダー ファイル\object</Filter>
     </ClInclude>
+    <ClInclude Include="math\VectorMethod.h">
+      <Filter>ヘッダー ファイル\math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\SpritePS.hlsl">

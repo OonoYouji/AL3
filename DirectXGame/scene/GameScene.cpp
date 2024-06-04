@@ -132,11 +132,12 @@ void GameScene::Update() {
 
 
 	player_->Update();
-
 	
 	for(auto& enemy : enemies_) {
 		enemy->Update();
 	}
+
+	lockOn_->Update(enemies_, viewProjection_);
 
 	skydome_->Update();
 	ground_->Update();
@@ -174,7 +175,7 @@ void GameScene::Draw() {
 
 	player_->Draw(viewProjection_);
 
-	for(auto& enemy : enemies_) {
+	for(const auto& enemy : enemies_) {
 		enemy->Draw(viewProjection_);
 	}
 

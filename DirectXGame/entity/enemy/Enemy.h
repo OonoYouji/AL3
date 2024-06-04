@@ -19,6 +19,19 @@ public:
 	void Update() override;
 	void Draw(const ViewProjection& viewProjection) override;
 
+
+	/// <summary>
+	/// World座標でのpositionを取得
+	/// </summary>
+	Vec3f GetWorldPosition() const {
+		return Vec3f{
+			worldTransform_.matWorld_.m[3][0],
+			worldTransform_.matWorld_.m[3][1],
+			worldTransform_.matWorld_.m[3][2]
+		};
+	}
+
+
 private:
 
 	std::map<std::string, WorldTransform> partsWorldTransforms_;
