@@ -22,7 +22,6 @@
 /// </summary>
 class Player
 	: public BaseCharacter {
-	friend class BasePlayerState;
 public:
 
 	Player();
