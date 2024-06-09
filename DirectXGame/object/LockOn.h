@@ -28,6 +28,23 @@ public:
 
 	void Draw();
 
+public:
+
+	/// <summary>
+	/// ロックオンされているターゲット(Enemy)を返す
+	/// </summary>
+	const Enemy* GetTarget() const {
+		return target_;
+	}
+
+	/// <summary>
+	/// Tagrgetが存在するのかどうか
+	/// </summary>
+	/// <returns></returns>
+	bool ExistTarget() const {
+		return target_ ? true : false;
+	}
+
 private: ///- METHODS
 
 	/// <summary>

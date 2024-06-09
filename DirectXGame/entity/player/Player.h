@@ -15,17 +15,14 @@
 #include "BaseCharacter.h"
 #include "BasePlayerState.h"
 
-enum class Behavior {
-	kRoot,		//- 通常
-	kAttack,	//- 攻撃中
-	kDash,		//- ダッシュ中
-};
+
 
 /// <summary>
 /// プレイヤー
 /// </summary>
 class Player
 	: public BaseCharacter {
+	friend class BasePlayerState;
 public:
 
 	Player();
@@ -35,45 +32,12 @@ public:
 	void Update();
 	void Draw(const ViewProjection& viewProjection);
 
+public:
 
 	/// <summary>
 	/// ImGui Debug
 	/// </summary>
 	void ImGui();
-
-
-private:
-
-	Input* input_ = nullptr;
-	const ViewProjection* viewProjection_ = nullptr;
-
-	std::map<std::string, WorldTransform> partsWorldTransforms_;
-
-	float floatingParameter_ = 0.0f;
-	uint16_t period_ = 180;
-	float amplitude_ = 0.4f;
-
-	Behavior behavior_ = Behavior::kRoot;
-	std::optional<Behavior> behaviorRequest_ = std::nullopt;
-	float attackAnimationTime_;
-
-	std::unique_ptr<BasePlayerState> state_;
-
-	Vec3f velocity_;
-
-	/// <summary>
-	/// 浮遊ギミックの初期化
-	/// </summary>
-	void InitializeFloatingGimmck();
-
-	void UpdateFloatingGimmick();
-
-	/// <summary>
-	/// 調整項目の適用
-	/// </summary>
-	void ApplyGlobalVariables();
-
-public:
 
 	/// <summary>
 	/// 引数の分だけ移動する
@@ -92,29 +56,140 @@ public:
 
 	void SetTranslationY(float y, const std::string& tag = "player");
 
-	const WorldTransform& GetWorldTransform() const {
-		return worldTransform_;
-	}
+	/// <summary>
+	/// matWorldのTranslateの値を取る
+	/// </summary>
+	/// <returns></returns>
+	Vec3f GetWorldPosition() const;
 
-	const WorldTransform& GetPartsWorldTransform(const std::string& tag) const {
-		return partsWorldTransforms_.at(tag);
-	}
+	/// <summary>
+	/// 本体のWorldTransformのGetter
+	/// </summary>
+	const WorldTransform& GetWorldTransform() const;
 
-	void SetViewProjection(const ViewProjection* viewProjection) {
-		viewProjection_ = viewProjection;
-	}
-
-	const ViewProjection& GetViewProjectionPtr() const {
-		return *viewProjection_;
-	}
+	/// <summary>
+	/// 各パーツのWorldTransformのGetter
+	/// </summary>
+	/// <param name="tag">パーツの名前</param>
+	const WorldTransform& GetPartsWorldTransform(const std::string& tag) const;
 
 
+
+	/// <summary>
+	/// ViewProjectionへのPointのSetter
+	/// </summary>
+	void SetViewProjectionPtr(const ViewProjection* viewProjection);
+
+	/// <summary>
+	/// ViewProjectionへのPointのGetter
+	/// </summary>
+	const ViewProjection& GetViewProjectionPtr() const;
+
+	
+
+	/// <summary>
+	/// StateのSetter
+	/// </summary>
 	void SetState(BasePlayerState* state);
 
 
-	const Vec3f& GetVelocity() const { return velocity_; }
-	void SetVelocity(const Vec3f& velocity) { velocity_ = velocity; }
+
+	/// <summary>
+	/// 移動速度のSetter
+	/// </summary>
+	void SetVelocity(const Vec3f& velocity);
+
+	/// <summary>
+	/// 移動速度のGetter
+	/// </summary>
+	const Vec3f& GetVelocity() const;
 
 
+
+	/// <summary>
+	/// ロックオンされているかのフラグのSetter
+	/// </summary>
+	void SetIsLockOned(bool isLockOned);
+
+	/// <summary>
+	/// ロックオンされているかのGetter
+	/// </summary>
+	bool GetIsLockOned() const;
+
+
+
+private: ///- METHODS
+
+
+	/// <summary>
+	/// 浮遊ギミックの初期化
+	/// </summary>
+	void InitializeFloatingGimmck();
+
+	void UpdateFloatingGimmick();
+
+	/// <summary>
+	/// 調整項目の適用
+	/// </summary>
+	void ApplyGlobalVariables();
+
+
+private: ///- OBJECTS
+
+	Input* input_ = nullptr;
+	const ViewProjection* viewProjection_ = nullptr;
+
+	std::map<std::string, WorldTransform> partsWorldTransforms_;
+
+	float floatingParameter_ = 0.0f;
+	uint16_t period_ = 180;
+	float amplitude_ = 0.4f;
+
+	std::unique_ptr<BasePlayerState> state_;
+
+	Vec3f velocity_;
+
+	bool isLockOned_ = false;
 
 };
+
+
+inline Vec3f Player::GetWorldPosition() const {
+	return Vec3f{
+		worldTransform_.matWorld_.m[3][0],
+		worldTransform_.matWorld_.m[3][1],
+		worldTransform_.matWorld_.m[3][2]
+	};
+}
+
+inline const WorldTransform& Player::GetWorldTransform() const {
+	return worldTransform_;
+}
+
+inline const WorldTransform& Player::GetPartsWorldTransform(const std::string& tag) const {
+	return partsWorldTransforms_.at(tag);
+}
+
+inline void Player::SetViewProjectionPtr(const ViewProjection* viewProjection) {
+	viewProjection_ = viewProjection;
+}
+
+inline const ViewProjection& Player::GetViewProjectionPtr() const {
+	return *viewProjection_;
+}
+
+inline const Vec3f& Player::GetVelocity() const {
+	return velocity_;
+}
+
+inline void Player::SetVelocity(const Vec3f& velocity) {
+	velocity_ = velocity;
+}
+
+inline void Player::SetIsLockOned(bool isLockOned) {
+	isLockOned_ = isLockOned;
+}
+
+inline bool Player::GetIsLockOned() const {
+	return isLockOned_;
+}

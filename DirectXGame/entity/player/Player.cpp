@@ -7,7 +7,7 @@
 
 #include "VectorMethod.h"
 #include "MyMath.h"
-
+#include "LockOn.h"
 #include "GlobalVariables.h"
 #include "PlayerStateRoot.h"
 #include "PlayerStateAttack.h"
@@ -20,7 +20,7 @@ Player::~Player() {}
 
 void Player::Initialize(const std::map<std::string, Model*>& models) {
 
-	
+
 	BaseCharacter::Initialize(models);
 
 	input_ = Input::GetInstance();
@@ -85,8 +85,6 @@ void Player::InitializeFloatingGimmck() {
 	floatingParameter_ = 0.0f;
 	period_ = 180;
 	amplitude_ = 0.4f;
-
-	attackAnimationTime_ = 0.0f;
 
 }
 
@@ -160,13 +158,11 @@ void Player::SetTranslationY(float y, const std::string& tag) {
 	partsWorldTransforms_[tag].translation_.y = y;
 }
 
-
 void Player::SetState(BasePlayerState* state) {
 	state_.reset(state);
 	state_->SetPlayer(this);
 	//state_->Update();
 }
-
 
 void Player::ImGui() {
 #ifdef _DEBUG
@@ -201,7 +197,7 @@ void Player::ImGui() {
 
 
 
-	
+
 	ImGui::End();
 #endif // _DEBUG
 }

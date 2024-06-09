@@ -89,8 +89,9 @@ void GameScene::Initialize() {
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize(playerModels);
-	player_->SetViewProjection(&followCamera_->GetViewProjection());
+	player_->SetViewProjectionPtr(&followCamera_->GetViewProjection());
 	followCamera_->SetTarget(&player_->GetWorldTransform());
+	followCamera_->SetPlayer(player_.get());
 
 
 	enemies_.push_back(std::make_unique<Enemy>());
@@ -109,8 +110,7 @@ void GameScene::Initialize() {
 
 	lockOn_ = std::make_unique<LockOn>();
 	lockOn_->Initialize();
-
-
+	followCamera_->SetLockOn(lockOn_.get());
 
 }
 
@@ -132,7 +132,7 @@ void GameScene::Update() {
 
 
 	player_->Update();
-	
+
 	for(auto& enemy : enemies_) {
 		enemy->Update();
 	}

@@ -76,12 +76,18 @@ Matrix4x4 Mat4::MakeRotateZ(float theta) {
 	};
 }
 
-Matrix4x4 Mat4::MakeRotate(const Vec3f& rotate) {
+Matrix4x4 Mat4::MakeRotate(const Vec3f& rotate, RotateOrder order) {
 	Matrix4x4 x = MakeRotateX(rotate.x);
 	Matrix4x4 y = MakeRotateY(rotate.y);
 	Matrix4x4 z = MakeRotateZ(rotate.z);
-	//return x * y * z;
-	return z * y * x;
+	switch(order) {
+	case Mat4::ZYX:
+		return z * y * x;
+	case Mat4::XYZ:
+		return x * y * z;
+	}
+
+	return z * x * y; ///- デフォルトで入っているorder用
 }
 
 Matrix4x4 Mat4::MakeTranslate(const Vec3f& translate) {

@@ -49,7 +49,7 @@ void LockOn::Update(const std::list<std::unique_ptr<Enemy>>& enemies, const View
 	} else {
 
 		///- ターゲットの探索処理
-		if(input_->PushKey(DIK_T)) {
+		if(input_->TriggerKey(DIK_T)) {
 			Search(enemies, viewProjection);
 		}
 

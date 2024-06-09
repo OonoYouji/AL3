@@ -10,6 +10,7 @@
 #include "PlayerStateAttack.h"
 #include "PlayerStateDash.h"
 #include "PlayerStateJump.h"
+#include "LockOn.h"
 
 
 PlayerStateRoot::PlayerStateRoot() {
@@ -41,7 +42,7 @@ void PlayerStateRoot::Update() {
 		pPlayer_->SetState(new PlayerStateAttack);
 
 	} else if(isNextStateJump_) {
-
+		
 		pPlayer_->SetVelocity(velocity_);
 		pPlayer_->SetTranslationY(0.0f);
 		pPlayer_->SetRotateX(0.0f, "playerLeftArm");
@@ -51,12 +52,12 @@ void PlayerStateRoot::Update() {
 
 }
 
-void PlayerStateRoot::Move() {
+bool PlayerStateRoot::Move() {
 
 	XINPUT_STATE joyState;
 	if(!input_->GetJoystickState(0, joyState)) {
-		MoveKeyboard();
-		return;
+		if(MoveKeyboard()) { return true; } ///- 移動した
+		return false; //- 移動していない
 	}
 
 	const float kThreshold = 0.7f;
@@ -88,10 +89,13 @@ void PlayerStateRoot::Move() {
 		isNextStateJump_ = true;
 	}
 
-
+	if(velocity_ != Vec3f(0.0f, 0.0f, 0.0f)) {
+		return true; //- 移動した
+	}
+	return false; //- 移動していない
 }
 
-void PlayerStateRoot::MoveKeyboard() {
+bool PlayerStateRoot::MoveKeyboard() {
 	///- 移動
 	velocity_ = { 0.0f, 0.0f, 0.0f };
 	///- 入力の受付
@@ -115,6 +119,12 @@ void PlayerStateRoot::MoveKeyboard() {
 	} else if(input_->PushKey(DIK_SPACE)) {
 		isNextStateJump_ = true;
 	}
+
+
+	if(velocity_ != Vec3f(0.0f, 0.0f, 0.0f)) {
+		return true; //- 移動した
+	}
+	return false; //- 移動していない
 
 }
 

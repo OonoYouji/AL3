@@ -27,8 +27,8 @@ private:
 	bool isNextStateJump_ = false;
 	bool isNextStateDash_ = false;
 
-	void Move();
-	void MoveKeyboard();
+	bool Move();
+	bool MoveKeyboard();
 
 	void Rotate(float t);
 

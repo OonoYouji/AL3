@@ -1,6 +1,10 @@
 #include <FollowCamera.h>
 
+#include <ImGuiManager.h>
+
 #include "VectorMethod.h"
+#include "LockOn.h"
+#include "Player.h"
 
 
 FollowCamera::FollowCamera() {}
@@ -13,19 +17,35 @@ void FollowCamera::Initialize() {
 
 	viewProjection_.Initialize();
 
+	offset_ = { 0.0f, 7.5f, -20.0f };
+
 }
 
 
 void FollowCamera::Update() {
 
+	///- ロックオンしているか
+	if(IsLockOn()) {
 
-	if(target_) {
-
-		///- 追従座標の補完
+		///- カメラをロックオン対象に向ける処理
+		LockOnedTargetToRotate();
 		interTarget_ = VectorMethod::Lerp(interTarget_, target_->translation_, 0.3f);
-
-		Rotate();
 		viewProjection_.translation_ = interTarget_ + Offset();
+
+		///- プレイヤーの向いている方向を変える
+		pPlayer_->SetRotateY(viewProjection_.rotation_.y);
+
+	} else {
+
+		///- 入力によって角度を変える処理
+
+		if(target_) {
+
+			///- 追従座標の補完
+			Rotate();
+			interTarget_ = VectorMethod::Lerp(interTarget_, target_->translation_, 0.3f);
+			viewProjection_.translation_ = interTarget_ + Offset();
+		}
 	}
 
 
@@ -42,6 +62,7 @@ void FollowCamera::Rotate() {
 	}
 
 	viewProjection_.rotation_.y += static_cast<float>(joyState.Gamepad.sThumbRX / SHRT_MAX) * kRotateSpeed_;
+	viewProjection_.rotation_.x += static_cast<float>(joyState.Gamepad.sThumbRY / SHRT_MAX) * kRotateSpeed_;
 
 }
 
@@ -65,17 +86,32 @@ void FollowCamera::RotateKeyboard() {
 	};
 
 	viewProjection_.rotation_.y += mouseVelocity.x / 384.0f;
-	//viewProjection_.rotation_.x += mouseVelocity.y / 384.0f;
-
+	viewProjection_.rotation_.x += mouseVelocity.y / 384.0f;
 
 }
 
 
 Vec3f FollowCamera::Offset() const {
-	Vec3f offset = { 0.0f, 7.5f, -20.0f };
-	Matrix4x4 matRotate = Mat4::MakeRotate(viewProjection_.rotation_);
-	offset = Mat4::TransformNormal(offset, matRotate);
+	Matrix4x4 matRotate = Mat4::MakeRotate(viewProjection_.rotation_, Mat4::XYZ);
+	Vec3f offset = Mat4::TransformNormal(offset_, matRotate);
 	return offset;
+}
+
+
+void FollowCamera::LockOnedTargetToRotate() {
+
+	Vec3f lockOnPosition = pLockOn_->GetTarget()->GetWorldPosition();
+	Vec3f diff = lockOnPosition - target_->translation_;
+
+	viewProjection_.rotation_.y = VectorMethod::YAxisTheta(diff);
+	float xAxisLen = VectorMethod::Length({ diff.x, 0.0f, diff.z });
+	viewProjection_.rotation_.x = std::atan2(-diff.y, xAxisLen);
+
+}
+
+
+bool FollowCamera::IsLockOn() {
+	return pLockOn_ && pLockOn_->ExistTarget();
 }
 
 

@@ -19,6 +19,12 @@ struct Matrix4x4 final {
 /// </summary>
 namespace Mat4 {
 
+	enum RotateOrder {
+		XYZ,
+		ZYX,
+		ZXY,
+	};
+
 	Matrix4x4 MakeIdentity();
 
 	Matrix4x4 MakeScale(const Vec3f& scale);
@@ -27,7 +33,7 @@ namespace Mat4 {
 	Matrix4x4 MakeRotateY(float theta);
 	Matrix4x4 MakeRotateZ(float theta);
 
-	Matrix4x4 MakeRotate(const Vec3f& rotate);
+	Matrix4x4 MakeRotate(const Vec3f& rotate, RotateOrder order = ZXY);
 
 	Matrix4x4 MakeTranslate(const Vec3f& translate);
 
