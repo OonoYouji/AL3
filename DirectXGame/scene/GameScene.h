@@ -26,6 +26,8 @@ class Ground;
 class FollowCamera;
 class LockOn;
 
+class CollisionManager;
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -57,6 +59,16 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+private:
+
+	void ImGui();
+
+	void DebugCameraUpdate();
+
+
+	void CheckAllCollisions();
+
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -67,6 +79,8 @@ private: // メンバ変数
 	/// </summary>
 
 	std::map<std::string, std::unique_ptr<Model>> models_;
+
+	std::unique_ptr<CollisionManager> collisionManager_;
 
 	ViewProjection viewProjection_;
 	std::unique_ptr<DebugCamera> debugCamera_;
@@ -81,10 +95,6 @@ private: // メンバ変数
 	std::unique_ptr<Ground> ground_;
 	std::unique_ptr<FollowCamera> followCamera_;
 	std::unique_ptr<LockOn> lockOn_;
-
-	void ImGui();
-
-	void DebugCameraUpdate();
 
 public:
 

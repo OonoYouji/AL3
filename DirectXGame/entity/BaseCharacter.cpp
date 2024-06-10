@@ -22,3 +22,6 @@ Vec3f BaseCharacter::GetCenterPosition() const {
 		worldTransform_.matWorld_.m[3][2]
 	);
 }
+
+void BaseCharacter::OnCollision() {
+}

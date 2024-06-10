@@ -14,18 +14,29 @@ public:
 
 	void CheckCollisionAll();
 
-	void ListClear();
+	void AddCollider(Collider* newCollider);
 
-	void PushBackCollider(Collider* newCollider) {
-		colliders_.push_back(newCollider);
-	}
 
-private:
+	/// <summary>
+	/// listの消去
+	/// </summary>
+	void Reset();
 
+private: 
+
+	/// <summary>
+	/// 引数のColliderの衝突判定と応答
+	/// </summary>
+	void CheckCollisionPair(Collider* a, Collider* b);
+
+private: ///- OBJECTS
 
 	std::list<Collider*> colliders_;
 
-
-	void CheckCollisionPair(Collider* a, Collider* b);
-
 };
+
+
+
+inline void CollisionManager::AddCollider(Collider* newCollider) {
+	colliders_.push_back(newCollider);
+}

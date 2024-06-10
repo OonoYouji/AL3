@@ -23,13 +23,13 @@ public:
 	/// <summary>
 	/// World座標でのpositionを取得
 	/// </summary>
-	Vec3f GetWorldPosition() const {
-		return Vec3f{
-			worldTransform_.matWorld_.m[3][0],
-			worldTransform_.matWorld_.m[3][1],
-			worldTransform_.matWorld_.m[3][2]
-		};
-	}
+	Vec3f GetWorldPosition() const;
+
+
+	/// <summary>
+	/// 衝突時に呼び出す
+	/// </summary>
+	void OnCollision() override;
 
 
 private:
@@ -46,3 +46,13 @@ private:
 	void Animation();
 
 };
+
+
+
+inline Vec3f Enemy::GetWorldPosition() const {
+	return Vec3f{
+		worldTransform_.matWorld_.m[3][0],
+		worldTransform_.matWorld_.m[3][1],
+		worldTransform_.matWorld_.m[3][2]
+	};
+}

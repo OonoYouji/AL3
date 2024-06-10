@@ -12,6 +12,7 @@
 #include "PlayerStateRoot.h"
 #include "PlayerStateAttack.h"
 #include "PlayerStateDash.h"
+#include "PlayerStateJump.h"
 
 #include "FollowCamera.h"
 
@@ -218,4 +219,8 @@ void Player::ImGui() {
 
 	ImGui::End();
 #endif // _DEBUG
+}
+
+void Player::OnCollision() {
+	SetState(new PlayerStateJump);
 }

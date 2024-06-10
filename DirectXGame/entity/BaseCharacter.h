@@ -39,4 +39,9 @@ public:
 	/// <returns></returns>
 	Vec3f GetCenterPosition() const override;
 
+	/// <summary>
+	/// 衝突時に呼び出す
+	/// </summary>
+	void OnCollision() override;
+
 };

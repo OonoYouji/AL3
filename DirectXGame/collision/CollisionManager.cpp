@@ -34,28 +34,28 @@ void CollisionManager::CheckCollisionAll() {
 
 }
 
-void CollisionManager::ListClear() {
+
+void CollisionManager::Reset() {
 	colliders_.clear();
 }
 
+
 void CollisionManager::CheckCollisionPair(Collider* a, Collider* b) {
 
-	///- 衝突フィルタリング
-	if((a->GetCollisionAttribute() & b->GetCollisionMask()) == 0
-	   || (b->GetCollisionAttribute() & a->GetCollisionMask()) == 0) {
-		return;
-	}
+	Vec3f posA = a->GetCenterPosition();
+	Vec3f posB = b->GetCenterPosition();
 
-	Vec3f posA = a->GetWorldPosition();
-	Vec3f posB = b->GetWorldPosition();
+	///- 二点の差分を計算
+	Vec3f diff = posB - posA;
+
+	float distance = VectorMethod::Length(diff);
 	float radius = a->GetRadius() + b->GetRadius();
 
-	///- 衝突判定を取る
-	if(VectorMethod::Length(posB - posA) < radius) {
-
+	///- 球の衝突判定
+	if(radius > distance) {
 		a->OnCollision();
 		b->OnCollision();
-
 	}
+	
 
 }

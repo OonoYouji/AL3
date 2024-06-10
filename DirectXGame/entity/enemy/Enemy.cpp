@@ -54,6 +54,8 @@ void Enemy::Draw(const ViewProjection& viewProjection) {
 
 }
 
+
+
 void Enemy::Move() {
 
 	velocity_.x = 0.05f;
@@ -69,6 +71,11 @@ void Enemy::Move() {
 	worldTransform_.rotation_.x = std::atan2(-velocity_.y, xAxisLen);
 
 	worldTransform_.translation_ += velocity_;
+
+}
+
+
+void Enemy::OnCollision() {
 
 }
 

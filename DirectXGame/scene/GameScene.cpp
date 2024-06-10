@@ -14,6 +14,7 @@
 #include "Ground.h"
 #include "FollowCamera.h"
 #include "LockOn.h"
+#include "CollisionManager.h"
 
 
 GameScene::GameScene() {}
@@ -44,6 +45,13 @@ void GameScene::Initialize() {
 	debugCamera_ = std::make_unique<DebugCamera>(1280, 720);
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Initialize();
+	///// -----------------------------------------
+
+
+	
+	///// ↓ COLLISION MANAGER
+	///// -----------------------------------------
+	collisionManager_.reset(new CollisionManager());
 	///// -----------------------------------------
 
 
@@ -84,7 +92,7 @@ void GameScene::Initialize() {
 	///// -----------------------------------------
 
 
-
+	
 
 
 	player_ = std::make_unique<Player>();
@@ -142,6 +150,10 @@ void GameScene::Update() {
 
 	skydome_->Update();
 	ground_->Update();
+
+
+	///- 衝突判定
+	CheckAllCollisions();
 
 }
 
@@ -239,5 +251,19 @@ void GameScene::DebugCameraUpdate() {
 	}
 
 #endif // _DEBUG
+}
+
+void GameScene::CheckAllCollisions() {
+	
+	collisionManager_->Reset();
+
+	collisionManager_->AddCollider(player_.get());
+
+	for(const auto& enemy : enemies_) {
+		collisionManager_->AddCollider(enemy.get());
+	}
+
+	collisionManager_->CheckCollisionAll();
+
 }
 
