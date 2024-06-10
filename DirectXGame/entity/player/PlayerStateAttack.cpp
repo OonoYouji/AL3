@@ -4,11 +4,16 @@
 
 #include <ImGuiManager.h>
 
+#include "Vector3.h"
+#include "VectorMethod.h"
+#include "GlobalVariables.h"
+
+#include "FollowCamera.h" 
 #include "Player.h"
 #include "PlayerStateRoot.h"
 
-#include "Vector3.h"
-#include "VectorMethod.h"
+
+
 
 const std::array<ConstAttack, PlayerStateAttack::kComboNum_> PlayerStateAttack::kConstAttacks_ = {
 	{
@@ -25,13 +30,24 @@ PlayerStateAttack::PlayerStateAttack() {
 	comboIndex_ = 0;
 	inComboPhase_ = ComboPhase::kAnticipation;
 	attackParams_ = kConstAttacks_[comboIndex_];
+
+	speed_ = 0.5f;
+	threshold_ = 0.2f;
+
+	GlobalVariables* gv = GlobalVariables::GetInstance();
+	const char* groupName = "PlayerStateAttack";
+	gv->CreateGroup(groupName);
+	gv->AddItem(groupName, "Speed", speed_);
+	gv->AddItem(groupName, "Threshold", threshold_);
+
 }
 PlayerStateAttack::~PlayerStateAttack() {}
 
 
 void PlayerStateAttack::Update() {
 
-	//attackAnimationTime_ += 0.25f;
+	///- Jsonに保存した値を変数に代入する
+	ApplyGlobalVariaBles();
 
 	///- 現在のコンボの値を設定
 	const ConstAttack& kConstAttack = kConstAttacks_[comboIndex_];
@@ -41,6 +57,30 @@ void PlayerStateAttack::Update() {
 
 	///- コンボ継続判定
 	if(comboIndex_ < kConstAttacks_.size() - 1) {
+
+		if(pPlayer_->GetIsLockOn()) {
+
+			float distance = VectorMethod::Length(pPlayer_->GetFollowCameraPtr()->GetDistance2Target());
+			threshold_ = 0.2f;
+
+			///- ターゲットへの距離が閾値を超えていれば
+			if(distance > threshold_) {
+
+
+				///- めり込み防止
+				if(speed_ > distance - threshold_) {
+					speed_ = distance - threshold_;
+				}
+
+				
+				Vec3f offset = Vec3f(0.0f, 0.0f, speed_);
+				Vec3f velocity = Mat4::TransformNormal(offset, pPlayer_->GetWorldTransform().matWorld_);
+
+				pPlayer_->Move(velocity);
+
+			}
+		}
+
 
 		if(input_->IsTriggerMouse(0)) {
 			comboNext_ = true;
@@ -147,7 +187,7 @@ void PlayerStateAttack::AttackAction0() {
 		break;
 	case ComboPhase::kChargeTime: ///- 攻撃前硬直
 		if(attackParams_.attackTimes[inComboPhase_]-- <= 0) {
-			inComboPhase_= kSwing;
+			inComboPhase_ = kSwing;
 			break;
 		}
 
@@ -282,4 +322,14 @@ void PlayerStateAttack::AttackAction2() {
 		break;
 	}
 
+}
+
+
+
+void PlayerStateAttack::ApplyGlobalVariaBles() {
+	GlobalVariables* gv = GlobalVariables::GetInstance();
+	const char* groupName = "PlayerStateAttack";
+	gv->CreateGroup(groupName);
+	speed_ = gv->GetFloatValue(groupName, "Speed");
+	threshold_ = gv->GetFloatValue(groupName, "Threshold");
 }

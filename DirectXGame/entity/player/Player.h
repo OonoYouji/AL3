@@ -15,6 +15,7 @@
 #include "BaseCharacter.h"
 #include "BasePlayerState.h"
 
+class FollowCamera;
 
 
 /// <summary>
@@ -108,13 +109,26 @@ public:
 	/// <summary>
 	/// ロックオンされているかのフラグのSetter
 	/// </summary>
-	void SetIsLockOned(bool isLockOned);
+	void SetIsLockOn(bool isLockOned);
 
 	/// <summary>
 	/// ロックオンされているかのGetter
 	/// </summary>
-	bool GetIsLockOned() const;
+	bool GetIsLockOn() const;
 
+
+
+	/// <summary>
+	/// FollowCameraへのPointerのSetter
+	/// </summary>
+	/// <param name="followCamera"></param>
+	void SetFollowCameraPtr(FollowCamera* followCamera);
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns></returns>
+	const FollowCamera* GetFollowCameraPtr() const;
 
 
 private: ///- METHODS
@@ -137,6 +151,7 @@ private: ///- OBJECTS
 
 	Input* input_ = nullptr;
 	const ViewProjection* viewProjection_ = nullptr;
+	FollowCamera* pFollowCamera_ = nullptr;
 
 	std::map<std::string, WorldTransform> partsWorldTransforms_;
 
@@ -148,9 +163,11 @@ private: ///- OBJECTS
 
 	Vec3f velocity_;
 
-	bool isLockOned_ = false;
+	bool isLockOn_ = false;
 
 };
+
+
 
 
 inline Vec3f Player::GetWorldPosition() const {
@@ -185,10 +202,18 @@ inline void Player::SetVelocity(const Vec3f& velocity) {
 	velocity_ = velocity;
 }
 
-inline void Player::SetIsLockOned(bool isLockOned) {
-	isLockOned_ = isLockOned;
+inline void Player::SetIsLockOn(bool isLockOned) {
+	isLockOn_ = isLockOned;
 }
 
-inline bool Player::GetIsLockOned() const {
-	return isLockOned_;
+inline bool Player::GetIsLockOn() const {
+	return isLockOn_;
+}
+
+inline void Player::SetFollowCameraPtr(FollowCamera* followCamera) {
+	pFollowCamera_ = followCamera;
+}
+
+inline const FollowCamera* Player::GetFollowCameraPtr() const {
+	return pFollowCamera_;
 }

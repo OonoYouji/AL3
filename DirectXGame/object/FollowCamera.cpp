@@ -32,9 +32,6 @@ void FollowCamera::Update() {
 		interTarget_ = VectorMethod::Lerp(interTarget_, target_->translation_, 0.3f);
 		viewProjection_.translation_ = interTarget_ + Offset();
 
-		///- プレイヤーの向いている方向を変える
-		pPlayer_->SetRotateY(viewProjection_.rotation_.y);
-
 	} else {
 
 		///- 入力によって角度を変える処理
@@ -101,11 +98,12 @@ Vec3f FollowCamera::Offset() const {
 void FollowCamera::LockOnedTargetToRotate() {
 
 	Vec3f lockOnPosition = pLockOn_->GetTarget()->GetWorldPosition();
-	Vec3f diff = lockOnPosition - target_->translation_;
+	distance2Target_ = lockOnPosition - target_->translation_;
 
-	viewProjection_.rotation_.y = VectorMethod::YAxisTheta(diff);
-	float xAxisLen = VectorMethod::Length({ diff.x, 0.0f, diff.z });
-	viewProjection_.rotation_.x = std::atan2(-diff.y, xAxisLen);
+	viewProjection_.rotation_.y = VectorMethod::YAxisTheta(distance2Target_);
+	float xAxisLen = VectorMethod::Length({ distance2Target_.x, 0.0f, distance2Target_.z });
+	viewProjection_.rotation_.x = std::atan2(-distance2Target_.y, xAxisLen);
+	
 
 }
 

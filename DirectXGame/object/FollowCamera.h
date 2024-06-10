@@ -34,9 +34,17 @@ public:
 		pLockOn_ = lockOn;
 	}
 
-	void SetPlayer(Player* player) {
-		pPlayer_ = player;
-	}
+	/// <summary>
+	/// ロックオン中かどうかを取得
+	/// </summary>
+	bool IsLockOn();
+
+
+	/// <summary>
+	/// ターゲットへの差分ベクトル
+	/// </summary>
+	/// <returns></returns>
+	const Vec3f& GetDistance2Target() const;
 
 private: ///- METHODS
 
@@ -65,16 +73,10 @@ private: ///- METHODS
 	/// </summary>
 	void LockOnedTargetToRotate();
 
-	/// <summary>
-	/// ロックオン中かどうかを取得
-	/// </summary>
-	bool IsLockOn();
-
 private: ///- OBJECTS
 
 	Input* input_ = nullptr;
 	LockOn* pLockOn_ = nullptr;
-	Player* pPlayer_ = nullptr;
 
 	ViewProjection viewProjection_;
 
@@ -85,4 +87,13 @@ private: ///- OBJECTS
 	Vec3f interTarget_ = {};
 	Vec3f offset_;
 
+	Vec3f distance2Target_;
+
 };
+
+
+
+
+inline const Vec3f& FollowCamera::GetDistance2Target() const {
+	return distance2Target_;
+}

@@ -50,9 +50,15 @@ private:
 	static const int kComboNum_ = 3;
 	static const std::array<ConstAttack, kComboNum_> kConstAttacks_;
 
+	float speed_;
+	float threshold_;
+
 
 	void AttackAction0();
 	void AttackAction1();
 	void AttackAction2();
+
+
+	void ApplyGlobalVariaBles();
 
 };

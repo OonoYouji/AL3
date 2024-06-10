@@ -13,6 +13,8 @@
 #include "PlayerStateAttack.h"
 #include "PlayerStateDash.h"
 
+#include "FollowCamera.h"
+
 
 Player::Player() {}
 Player::~Player() {}
@@ -45,12 +47,28 @@ void Player::Initialize(const std::map<std::string, Model*>& models) {
 
 void Player::Update() {
 
+	///- Json管理の当たりを変数に入れる
 	ApplyGlobalVariables();
+
+	///- ↓↓↓ 実質の更新処理
 
 	state_->Update();
 
+
+	isLockOn_ = pFollowCamera_->IsLockOn();
+	if(isLockOn_) {
+
+		
+
+		///- 向いている方向を修正
+		worldTransform_.rotation_.y = pFollowCamera_->GetViewProjection().rotation_.y;
+
+	}
+
+	///- 各パーツのアニメーション
 	UpdateFloatingGimmick();
 
+	///- 行列更新
 	BaseCharacter::Update();
 	for(auto& parts : partsWorldTransforms_) {
 		parts.second.UpdateMatrix();

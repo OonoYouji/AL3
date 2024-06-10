@@ -90,8 +90,9 @@ void GameScene::Initialize() {
 	player_ = std::make_unique<Player>();
 	player_->Initialize(playerModels);
 	player_->SetViewProjectionPtr(&followCamera_->GetViewProjection());
+	player_->SetFollowCameraPtr(followCamera_.get());
+
 	followCamera_->SetTarget(&player_->GetWorldTransform());
-	followCamera_->SetPlayer(player_.get());
 
 
 	enemies_.push_back(std::make_unique<Enemy>());
