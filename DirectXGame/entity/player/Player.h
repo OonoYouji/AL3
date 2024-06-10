@@ -130,6 +130,11 @@ public:
 	/// <returns></returns>
 	const FollowCamera* GetFollowCameraPtr() const;
 
+	/// <summary>
+	/// 当たり判定の中心
+	/// </summary>
+	/// <returns></returns>
+	Vec3f GetCenterPosition() const override;
 
 private: ///- METHODS
 
@@ -216,4 +221,10 @@ inline void Player::SetFollowCameraPtr(FollowCamera* followCamera) {
 
 inline const FollowCamera* Player::GetFollowCameraPtr() const {
 	return pFollowCamera_;
+}
+
+inline Vec3f Player::GetCenterPosition() const {
+	Vec3f offset = { 0.0f, 1.5f, 0.0f };
+	Vec3f worldPosition = Mat4::Transform(offset, worldTransform_.matWorld_);
+	return worldPosition ;
 }

@@ -14,3 +14,11 @@ void BaseCharacter::Draw(const ViewProjection& viewProjection) {
 		model.second->Draw(worldTransform_, viewProjection);
 	}
 }
+
+Vec3f BaseCharacter::GetCenterPosition() const {
+	return Vec3f(
+		worldTransform_.matWorld_.m[3][0],
+		worldTransform_.matWorld_.m[3][1],
+		worldTransform_.matWorld_.m[3][2]
+	);
+}

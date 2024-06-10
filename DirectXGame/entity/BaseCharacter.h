@@ -6,11 +6,12 @@
 #include <ViewProjection.h>
 #include <Model.h>
 
+#include "Collider.h"
 
 /// <summary>
 /// キャラクターの基底クラス
 /// </summary>
-class BaseCharacter {
+class BaseCharacter : public Collider {
 public:
 
 	virtual void Initialize(const std::map<std::string, Model*>& models);
@@ -30,5 +31,12 @@ public:
 	const WorldTransform& GetWorldTransform() const {
 		return worldTransform_;
 	}
+
+
+	/// <summary>
+	/// 当たり判定の中心を得る
+	/// </summary>
+	/// <returns></returns>
+	Vec3f GetCenterPosition() const override;
 
 };
