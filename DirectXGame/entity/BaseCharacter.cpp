@@ -3,6 +3,7 @@
 void BaseCharacter::Initialize(const std::map<std::string, Model*>& models) {
 	models_ = models;
 	worldTransform_.Initialize();
+	Collider::Initialize();
 }
 
 void BaseCharacter::Update() {

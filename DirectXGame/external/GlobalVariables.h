@@ -14,7 +14,7 @@ using json = nlohmann::json;
 /// <summary>
 /// 項目
 /// </summary>
-using Item = std::variant<int32_t, float, Vec3f>;
+using Item = std::variant<int32_t, float, Vec3f, bool>;
 
 /// <summary>
 /// グループ
@@ -64,6 +64,11 @@ public:
 	/// </summary>
 	void SetValue(const std::string& groupName, const std::string& key, const Vec3f& value);
 
+	/// <summary>
+	/// 値のセット bool
+	/// </summary>
+	void SetValue(const std::string& groupName, const std::string& key, bool value);
+
 	
 	
 	/// <summary>
@@ -81,6 +86,11 @@ public:
 	/// </summary>
 	void AddItem(const std::string& groupName, const std::string& key, const Vec3f& value);
 	
+	/// <summary>
+	/// 項目の追加 bool
+	/// </summary>
+	void AddItem(const std::string& groupName, const std::string& key, bool value);
+	
 
 
 	/// <summary>
@@ -97,6 +107,11 @@ public:
 	/// Vector3型の値を所得
 	/// </summary>
 	Vec3f GetVector3Value(const std::string& groupName, const std::string& key) const;
+
+	/// <summary>
+	/// bool型の値を所得
+	/// </summary>
+	bool GetBoolValue(const std::string& groupName, const std::string& key) const;
 
 	
 	

@@ -3,13 +3,29 @@
 #include "Collider.h"
 #include "VectorMethod.h"
 
+#include <Model.h>
+#include "GlobalVariables.h"
+
 
 CollisionManager::CollisionManager() {}
 CollisionManager::~CollisionManager() {}
 
-void CollisionManager::Init() {
 
+void CollisionManager::Initialize() {
 
+	model_.reset(Model::CreateFromOBJ("ico"));
+
+	GlobalVariables* gv = GlobalVariables::GetInstance();
+	const char* groupName = "Collider";
+	gv->AddItem(groupName, "IsDraw", isDraw_);
+
+}
+
+void CollisionManager::Draw(const ViewProjection& viewProjection) {
+	if(!isDraw_) { return; }
+	for(auto& collider : colliders_) {
+		collider->Draw(model_.get(), viewProjection);
+	}
 }
 
 void CollisionManager::CheckCollisionAll() {
@@ -39,6 +55,14 @@ void CollisionManager::Reset() {
 	colliders_.clear();
 }
 
+void CollisionManager::UpdateWorldTransform() {
+	ApplyGlobalVariables();
+
+	for(auto& collider : colliders_) {
+		collider->UpdateWorldTransform();
+	}
+}
+
 
 void CollisionManager::CheckCollisionPair(Collider* a, Collider* b) {
 
@@ -58,4 +82,10 @@ void CollisionManager::CheckCollisionPair(Collider* a, Collider* b) {
 	}
 	
 
+}
+
+void CollisionManager::ApplyGlobalVariables() {
+	GlobalVariables* gv = GlobalVariables::GetInstance();
+	const char* groupName = "Collider";
+	isDraw_ = gv->GetBoolValue(groupName, "IsDraw");
 }

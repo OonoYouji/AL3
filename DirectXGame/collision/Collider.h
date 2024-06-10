@@ -2,11 +2,26 @@
 
 #include "Vector3.h"
 #include <cmath>
+#include <Model.h>
+#include <WorldTransform.h>
+#include <ViewProjection.h>
 
 class Collider {
 public:
 
 	virtual ~Collider();
+
+
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	void Initialize();
+
+	
+	/// <summary>
+	/// デバッグ用当たり判定用ico球の描画
+	/// </summary>
+	void Draw(Model* model, const ViewProjection& viewProjection);
 
 
 	/// <summary>
@@ -32,10 +47,20 @@ public:
 	/// <returns></returns>
 	virtual Vec3f GetCenterPosition() const = 0;
 
+
+	/// <summary>
+	/// WorlTransformの行列を更新
+	/// </summary>
+	void UpdateWorldTransform();
+
+	
+
 private:
 
 	///- 半径
 	float radius_ = 1.5f;
+
+	WorldTransform worldTransform_;
 
 };
 
@@ -47,3 +72,4 @@ inline float Collider::GetRadius() const {
 inline void Collider::SetRadius(float radius) {
 	radius_ = radius;
 }
+

@@ -52,6 +52,7 @@ void GameScene::Initialize() {
 	///// ↓ COLLISION MANAGER
 	///// -----------------------------------------
 	collisionManager_.reset(new CollisionManager());
+	collisionManager_->Initialize();
 	///// -----------------------------------------
 
 
@@ -153,6 +154,7 @@ void GameScene::Update() {
 
 
 	///- 衝突判定
+	collisionManager_->UpdateWorldTransform();
 	CheckAllCollisions();
 
 }
@@ -195,6 +197,9 @@ void GameScene::Draw() {
 
 	skydome_->Draw(viewProjection_);
 	ground_->Draw(viewProjection_);
+
+
+	collisionManager_->Draw(viewProjection_);
 
 
 	// 3Dオブジェクト描画後処理
