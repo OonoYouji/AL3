@@ -149,6 +149,12 @@ public:
 	/// <returns></returns>
 	Collider* GetHammerCollider() const;
 
+	/// <summary>
+	/// ハンマーへのPointerを取得する
+	/// </summary>
+	/// <returns></returns>
+	Hammer* GetHammer() const;
+
 private: ///- METHODS
 
 
@@ -185,7 +191,6 @@ private: ///- OBJECTS
 	bool isLockOn_ = false;
 
 };
-
 
 
 
@@ -247,5 +252,9 @@ inline Vec3f Player::GetCenterPosition() const {
 }
 
 inline Collider* Player::GetHammerCollider() const {
+	return hammer_.get();
+}
+
+inline Hammer* Player::GetHammer() const {
 	return hammer_.get();
 }

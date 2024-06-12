@@ -4,8 +4,8 @@
 #include <WorldTransform.h>
 #include <ViewProjection.h>
 
-#include <Collider.h>
-
+#include "Collider.h"
+#include "CollisionRecord.h"
 
 /// <summary>
 /// Playerの武器
@@ -71,10 +71,16 @@ public:
 	/// <returns></returns>
 	Vec3f GetCenterPosition() const override;
 
+	/// <summary>
+	/// 衝突ログのクリア
+	/// </summary>
+	void ClearCollisionRecord();
+
 private: ///- OBJECTS
 
 	Model* pModel_;
 	WorldTransform worldTransform_;
+	CollisionRecord collisionRecord_;
 
 };
 
@@ -105,3 +111,4 @@ inline Vec3f Hammer::GetCenterPosition() const {
 	Vec3f offset = { 0.0f, 10.0f, 0.0f };
 	return Mat4::Transform(offset, matWorld);
 }
+

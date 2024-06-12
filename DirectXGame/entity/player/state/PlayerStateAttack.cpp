@@ -123,12 +123,14 @@ void PlayerStateAttack::Update() {
 				break;
 			case 1: ///- 上から振り下ろし
 
+				pPlayer_->GetHammer()->ClearCollisionRecord();
 				pPlayer_->SetRotateX(1.0f, "hammer");
 				pPlayer_->SetRotateY(0.0f, "hammer");
 				pPlayer_->SetRotateZ(0.0f, "hammer");
 				break;
 			case 2: ///- 右からホームラン
 
+				pPlayer_->GetHammer()->ClearCollisionRecord();
 				pPlayer_->SetRotateX(0.0f, "hammer");
 				pPlayer_->SetRotateY(0.0f, "hammer");
 				pPlayer_->SetRotateZ(1.2f, "hammer");

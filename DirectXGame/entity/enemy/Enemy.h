@@ -1,11 +1,15 @@
 #pragma once 
 
 #include <memory>
+#include <list>
+
+#include <Vector3.h>
+
+#include <Model.h>
 
 #include <BaseCharacter.h>
 #include "BaseEnemyState.h"
-
-#include <Vector3.h>
+#include "HitEffect.h"
 
 
 /// <summary>
@@ -58,19 +62,47 @@ public:
 	/// <param name="newState"></param>
 	void SetState(BaseEnemyState* newState);
 
+	/// <summary>
+	/// シリアルナンバーの取得
+	/// </summary>
+	/// <returns></returns>
+	uint32_t GetSerialNo() const;
+
+	/// <summary>
+	/// HitEffectの追加
+	/// </summary>
+	/// <param name="hitEffect"></param>
+	void AddHitEffect(std::unique_ptr<HitEffect> hitEffect);
+
+	/// <summary>
+	/// HitEffect用モデルの取得
+	/// </summary>
+	/// <returns></returns>
+	Model* GetHitEffectModel() const;
 
 private:
 
+	/// <summary>
+	/// 各パーツの初期化
+	/// </summary>
+	void PartsInitialize();
+	
 	void Animation();
 
 
 private:
+
+	static uint32_t nextSerialNo_;
+	uint32_t serialNo_;
 
 	std::map<std::string, WorldTransform> partsWorldTransforms_;
 	std::unique_ptr<ObjectColor> objectColor_;
 	std::unique_ptr<BaseEnemyState> state_;
 
 	float aimationTime_;
+
+	std::list<std::unique_ptr<HitEffect>> hitEffects_;
+	std::unique_ptr<Model> hitEffectModel_;
 
 };
 
@@ -86,4 +118,12 @@ inline Vec3f Enemy::GetWorldPosition() const {
 
 inline void Enemy::SetColor(const Vector4& color) {
 	objectColor_->SetColor(color);
+}
+
+inline uint32_t Enemy::GetSerialNo() const {
+	return serialNo_;
+}
+
+inline Model* Enemy::GetHitEffectModel() const {
+	return hitEffectModel_.get();
 }

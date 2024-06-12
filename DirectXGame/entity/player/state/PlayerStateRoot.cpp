@@ -36,6 +36,8 @@ void PlayerStateRoot::Update() {
 
 	} else if(isNextStateAttack_) {
 
+		pPlayer_->GetHammer()->ClearCollisionRecord();
+
 		pPlayer_->SetRotateX(0.0f, "hammer");
 		pPlayer_->SetRotateY(-0.2f, "hammer");
 		pPlayer_->SetRotateZ(-1.2f, "hammer");

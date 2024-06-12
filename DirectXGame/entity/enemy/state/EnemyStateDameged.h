@@ -26,3 +26,4 @@ private:
 	Vec4f color_;
 
 };
+

@@ -112,6 +112,7 @@
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="collision\Collider.cpp" />
     <ClCompile Include="collision\CollisionManager.cpp" />
+    <ClCompile Include="collision\CollisionRecord.cpp" />
     <ClCompile Include="entity\BaseCharacter.cpp" />
     <ClCompile Include="entity\enemy\Enemy.cpp" />
     <ClCompile Include="entity\enemy\state\BaseEnemyState.cpp" />
@@ -131,6 +132,7 @@
     <ClCompile Include="math\VectorMethod.cpp" />
     <ClCompile Include="object\FollowCamera.cpp" />
     <ClCompile Include="object\Ground.cpp" />
+    <ClCompile Include="object\HitEffect.cpp" />
     <ClCompile Include="object\LockOn.cpp" />
     <ClCompile Include="object\Skydome.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
@@ -160,8 +162,8 @@
     <ClInclude Include="base\TextureManager.h" />
     <ClInclude Include="base\WinApp.h" />
     <ClInclude Include="collision\Collider.h" />
-    <ClInclude Include="collision\CollisionConfig.h" />
     <ClInclude Include="collision\CollisionManager.h" />
+    <ClInclude Include="collision\CollisionRecord.h" />
     <ClInclude Include="entity\BaseCharacter.h" />
     <ClInclude Include="entity\enemy\Enemy.h" />
     <ClInclude Include="entity\enemy\state\BaseEnemyState.h" />
@@ -184,6 +186,7 @@
     <ClInclude Include="math\VectorMethod.h" />
     <ClInclude Include="object\FollowCamera.h" />
     <ClInclude Include="object\Ground.h" />
+    <ClInclude Include="object\HitEffect.h" />
     <ClInclude Include="object\LockOn.h" />
     <ClInclude Include="object\Skydome.h" />
     <ClInclude Include="scene\GameScene.h" />
