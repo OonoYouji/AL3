@@ -24,5 +24,5 @@ Vec3f BaseCharacter::GetCenterPosition() const {
 	);
 }
 
-void BaseCharacter::OnCollision() {
+void BaseCharacter::OnCollision([[maybe_unused]] Collider* other) {
 }

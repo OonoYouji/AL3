@@ -63,7 +63,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)external;$(ProjectDir)object;$(ProjectDir)collision;$(ProjectDir)entity/enemy;$(ProjectDir)entity/player;$(ProjectDir)entity;$(ProjectDir)2d;$(ProjectDir)3d;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)input;$(ProjectDir)scene;$(ProjectDir)math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external;$(ProjectDir)object;$(ProjectDir)collision;$(ProjectDir)entity/enemy/state;$(ProjectDir)entity/enemy;$(ProjectDir)entity/player/hammer;$(ProjectDir)entity/player/state;$(ProjectDir)entity/player;$(ProjectDir)entity;$(ProjectDir)2d;$(ProjectDir)3d;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)input;$(ProjectDir)scene;$(ProjectDir)math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -114,12 +114,16 @@
     <ClCompile Include="collision\CollisionManager.cpp" />
     <ClCompile Include="entity\BaseCharacter.cpp" />
     <ClCompile Include="entity\enemy\Enemy.cpp" />
-    <ClCompile Include="entity\player\BasePlayerState.cpp" />
+    <ClCompile Include="entity\enemy\state\BaseEnemyState.cpp" />
+    <ClCompile Include="entity\enemy\state\EnemyStateDameged.cpp" />
+    <ClCompile Include="entity\enemy\state\EnemyStateRoot.cpp" />
+    <ClCompile Include="entity\player\hammer\Hammer.cpp" />
     <ClCompile Include="entity\player\Player.cpp" />
-    <ClCompile Include="entity\player\PlayerStateAttack.cpp" />
-    <ClCompile Include="entity\player\PlayerStateDash.cpp" />
-    <ClCompile Include="entity\player\PlayerStateJump.cpp" />
-    <ClCompile Include="entity\player\PlayerStateRoot.cpp" />
+    <ClCompile Include="entity\player\state\BasePlayerState.cpp" />
+    <ClCompile Include="entity\player\state\PlayerStateAttack.cpp" />
+    <ClCompile Include="entity\player\state\PlayerStateDash.cpp" />
+    <ClCompile Include="entity\player\state\PlayerStateJump.cpp" />
+    <ClCompile Include="entity\player\state\PlayerStateRoot.cpp" />
     <ClCompile Include="external\GlobalVariables.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\Matrix4x4.cpp" />
@@ -160,12 +164,16 @@
     <ClInclude Include="collision\CollisionManager.h" />
     <ClInclude Include="entity\BaseCharacter.h" />
     <ClInclude Include="entity\enemy\Enemy.h" />
-    <ClInclude Include="entity\player\BasePlayerState.h" />
+    <ClInclude Include="entity\enemy\state\BaseEnemyState.h" />
+    <ClInclude Include="entity\enemy\state\EnemyStateDameged.h" />
+    <ClInclude Include="entity\enemy\state\EnemyStateRoot.h" />
+    <ClInclude Include="entity\player\hammer\Hammer.h" />
     <ClInclude Include="entity\player\Player.h" />
-    <ClInclude Include="entity\player\PlayerStateAttack.h" />
-    <ClInclude Include="entity\player\PlayerStateDash.h" />
-    <ClInclude Include="entity\player\PlayerStateJump.h" />
-    <ClInclude Include="entity\player\PlayerStateRoot.h" />
+    <ClInclude Include="entity\player\state\BasePlayerState.h" />
+    <ClInclude Include="entity\player\state\PlayerStateAttack.h" />
+    <ClInclude Include="entity\player\state\PlayerStateDash.h" />
+    <ClInclude Include="entity\player\state\PlayerStateJump.h" />
+    <ClInclude Include="entity\player\state\PlayerStateRoot.h" />
     <ClInclude Include="external\GlobalVariables.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="math\Matrix4x4.h" />

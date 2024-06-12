@@ -39,7 +39,7 @@ public:
 	/// <summary>
 	/// 衝突時に呼び出す関数
 	/// </summary>
-	virtual void OnCollision() = 0;
+	virtual void OnCollision([[maybe_unused]]Collider* other) = 0;
 
 	/// <summary>
 	/// world座標系の座標取得
@@ -54,6 +54,18 @@ public:
 	void UpdateWorldTransform();
 
 	
+	/// <summary>
+	/// Collider判別用タグのSetter
+	/// </summary>
+	/// <param name="tag"></param>
+	void SetTag(const std::string& tag);
+
+	/// <summary>
+	/// COllider判別用タグのGetter
+	/// </summary>
+	/// <returns></returns>
+	const std::string& GetTag() const;
+
 
 private:
 
@@ -62,7 +74,10 @@ private:
 
 	WorldTransform worldTransform_;
 
+	std::string tag_;
+
 };
+
 
 
 inline float Collider::GetRadius() const {
@@ -73,3 +88,10 @@ inline void Collider::SetRadius(float radius) {
 	radius_ = radius;
 }
 
+inline void Collider::SetTag(const std::string& tag) {
+	tag_ = tag;
+}
+
+inline const std::string& Collider::GetTag() const {
+	return tag_;
+}

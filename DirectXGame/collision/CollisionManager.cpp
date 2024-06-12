@@ -77,8 +77,8 @@ void CollisionManager::CheckCollisionPair(Collider* a, Collider* b) {
 
 	///- 球の衝突判定
 	if(radius > distance) {
-		a->OnCollision();
-		b->OnCollision();
+		a->OnCollision(b);
+		b->OnCollision(a);
 	}
 	
 

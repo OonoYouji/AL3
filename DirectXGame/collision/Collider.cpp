@@ -15,6 +15,7 @@ void Collider::Draw(Model* model, const ViewProjection& viewProjection) {
 
 
 void Collider::UpdateWorldTransform() {
+	worldTransform_.scale_ = { radius_,radius_ ,radius_ };
 	worldTransform_.translation_ = GetCenterPosition();
 	worldTransform_.UpdateMatrix();
 }

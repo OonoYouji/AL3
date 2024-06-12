@@ -14,9 +14,9 @@
 
 #include "BaseCharacter.h"
 #include "BasePlayerState.h"
+#include "Hammer.h"
 
 class FollowCamera;
-
 
 /// <summary>
 /// プレイヤー
@@ -140,7 +140,14 @@ public:
 	/// <summary>
 	/// 衝突時に呼び出す
 	/// </summary>
-	void OnCollision() override;
+	void OnCollision([[maybe_unused]] Collider* other) override;
+
+
+	/// <summary>
+	/// HammerのColliderのGetter
+	/// </summary>
+	/// <returns></returns>
+	Collider* GetHammerCollider() const;
 
 private: ///- METHODS
 
@@ -164,6 +171,7 @@ private: ///- OBJECTS
 	const ViewProjection* viewProjection_ = nullptr;
 	FollowCamera* pFollowCamera_ = nullptr;
 
+	std::unique_ptr<Hammer> hammer_;
 	std::map<std::string, WorldTransform> partsWorldTransforms_;
 
 	float floatingParameter_ = 0.0f;
@@ -194,6 +202,9 @@ inline const WorldTransform& Player::GetWorldTransform() const {
 }
 
 inline const WorldTransform& Player::GetPartsWorldTransform(const std::string& tag) const {
+	if(tag == "hammer") {
+		return hammer_->GetWorldTransform();
+	}
 	return partsWorldTransforms_.at(tag);
 }
 
@@ -233,4 +244,8 @@ inline Vec3f Player::GetCenterPosition() const {
 	Vec3f offset = { 0.0f, 1.5f, 0.0f };
 	Vec3f worldPosition = Mat4::Transform(offset, worldTransform_.matWorld_);
 	return worldPosition ;
+}
+
+inline Collider* Player::GetHammerCollider() const {
+	return hammer_.get();
 }

@@ -263,6 +263,7 @@ void GameScene::CheckAllCollisions() {
 	collisionManager_->Reset();
 
 	collisionManager_->AddCollider(player_.get());
+	collisionManager_->AddCollider(player_->GetHammerCollider());
 
 	for(const auto& enemy : enemies_) {
 		collisionManager_->AddCollider(enemy.get());

@@ -71,3 +71,12 @@ Vec2f VectorMethod::Lerp(const Vec2f& v1, const Vec2f& v2, float t) {
 		std::lerp(v1.y, v2.y, t)
 	);
 }
+
+Vec4f VectorMethod::Lerp(const Vec4f& v1, const Vec4f& v2, float t) {
+	return Vec4f(
+		std::lerp(v1.x, v2.x, t),
+		std::lerp(v1.y, v2.y, t),
+		std::lerp(v1.z, v2.z, t),
+		std::lerp(v1.w, v2.w, t)
+	);
+}

@@ -4,6 +4,7 @@
 
 #include "VectorMethod.h"
 
+#include "EnemyStateRoot.h"
 
 Enemy::Enemy() {}
 Enemy::~Enemy() {}
@@ -11,6 +12,9 @@ Enemy::~Enemy() {}
 
 void Enemy::Initialize(const std::map<std::string, Model*>& models) {
 	BaseCharacter::Initialize(models);
+	Collider::SetTag("Enemy");
+
+	SetState(new EnemyStateRoot(this));
 
 	worldTransform_.translation_.y = 1.0f;
 
@@ -27,8 +31,8 @@ void Enemy::Initialize(const std::map<std::string, Model*>& models) {
 		}
 	}
 
-
-	velocity_ = { 0.0f, 0.0f, 0.0f };
+	objectColor_.reset(new ObjectColor());
+	objectColor_->Initialize();
 
 	aimationTime_ = 0.0f;
 
@@ -36,49 +40,44 @@ void Enemy::Initialize(const std::map<std::string, Model*>& models) {
 
 void Enemy::Update() {
 
-	Move();
+	state_->Update();
+
 	Animation();
 
 	BaseCharacter::Update();
 	for(auto& worldTransform : partsWorldTransforms_) {
 		worldTransform.second.UpdateMatrix();
 	}
+	objectColor_->TransferMatrix();
 
 }
 
 void Enemy::Draw(const ViewProjection& viewProjection) {
 
 	for(auto& model : models_) {
-		model.second->Draw(partsWorldTransforms_[model.first], viewProjection);
+		model.second->Draw(partsWorldTransforms_[model.first], viewProjection, objectColor_.get());
 	}
 
 }
 
 
 
-void Enemy::Move() {
+void Enemy::Moving(const Vec3f& velocity) {
+	worldTransform_.translation_ += velocity;
+}
 
-	velocity_.x = 0.05f;
-	velocity_.z = 1.0f;
+void Enemy::SetRotation(const Vec3f& rotate) {
+	worldTransform_.rotation_ = rotate;
+}
 
-	velocity_ = VectorMethod::Normalize(velocity_);
-	velocity_ = Mat4::Transform(velocity_, Mat4::MakeRotate(worldTransform_.rotation_));
-	velocity_ *= kSpeed_;
-
-	///- 移動方向から向きを計算
-	worldTransform_.rotation_.y = VectorMethod::YAxisTheta(velocity_);
-	float xAxisLen = VectorMethod::Length(Vec3f(velocity_.x, 0.0f, velocity_.z));
-	worldTransform_.rotation_.x = std::atan2(-velocity_.y, xAxisLen);
-
-	worldTransform_.translation_ += velocity_;
+void Enemy::OnCollision([[maybe_unused]] Collider* other) {
 
 }
 
 
-void Enemy::OnCollision() {
-
+void Enemy::SetState(BaseEnemyState* newState) {
+	state_.reset(newState);
 }
-
 
 void Enemy::Animation() {
 	aimationTime_ += 0.25f;

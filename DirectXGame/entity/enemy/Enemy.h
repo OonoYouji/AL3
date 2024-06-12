@@ -1,6 +1,9 @@
 #pragma once 
 
+#include <memory>
+
 #include <BaseCharacter.h>
+#include "BaseEnemyState.h"
 
 #include <Vector3.h>
 
@@ -29,21 +32,45 @@ public:
 	/// <summary>
 	/// 衝突時に呼び出す
 	/// </summary>
-	void OnCollision() override;
+	void OnCollision([[maybe_unused]] Collider* other) override;
+
+	/// <summary>
+	/// オブジェクトの色のSetter
+	/// </summary>
+	/// <param name="color"></param>
+	void SetColor(const Vector4& color);
+
+	/// <summary>
+	/// 引数分だけ移動する
+	/// </summary>
+	/// <param name="velocity"></param>
+	void Moving(const Vec3f& velocity);
+
+	/// <summary>
+	/// RotationのSetter
+	/// </summary>
+	/// <param name="rotate"></param>
+	void SetRotation(const Vec3f& rotate);
+
+	/// <summary>
+	/// 新しいStaeteのSetter
+	/// </summary>
+	/// <param name="newState"></param>
+	void SetState(BaseEnemyState* newState);
+
+
+private:
+
+	void Animation();
 
 
 private:
 
 	std::map<std::string, WorldTransform> partsWorldTransforms_;
-
-	Vec3f velocity_;
-	const float kSpeed_ = 0.5f;
+	std::unique_ptr<ObjectColor> objectColor_;
+	std::unique_ptr<BaseEnemyState> state_;
 
 	float aimationTime_;
-
-	void Move();
-
-	void Animation();
 
 };
 
@@ -55,4 +82,8 @@ inline Vec3f Enemy::GetWorldPosition() const {
 		worldTransform_.matWorld_.m[3][1],
 		worldTransform_.matWorld_.m[3][2]
 	};
+}
+
+inline void Enemy::SetColor(const Vector4& color) {
+	objectColor_->SetColor(color);
 }

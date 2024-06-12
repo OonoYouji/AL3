@@ -15,6 +15,7 @@
 #include "PlayerStateJump.h"
 
 #include "FollowCamera.h"
+#include "Hammer.h"
 
 
 Player::Player() {}
@@ -23,14 +24,20 @@ Player::~Player() {}
 
 void Player::Initialize(const std::map<std::string, Model*>& models) {
 
+	///- Hammerの初期化
+	hammer_ = std::make_unique<Hammer>();
+	hammer_->Initialize(models.at("hammer"));
 
 	BaseCharacter::Initialize(models);
+	Collider::SetTag("Player");
 
 	input_ = Input::GetInstance();
 
 	worldTransform_.UpdateMatrix();
 
 	InitializeFloatingGimmck();
+
+
 
 	state_ = std::make_unique<PlayerStateRoot>();
 	state_->SetPlayer(this);
@@ -52,22 +59,19 @@ void Player::Update() {
 	ApplyGlobalVariables();
 
 	///- ↓↓↓ 実質の更新処理
-
 	state_->Update();
-
 
 	isLockOn_ = pFollowCamera_->IsLockOn();
 	if(isLockOn_) {
-
-		
-
 		///- 向いている方向を修正
 		worldTransform_.rotation_.y = pFollowCamera_->GetViewProjection().rotation_.y;
-
 	}
 
 	///- 各パーツのアニメーション
 	UpdateFloatingGimmick();
+
+	///- 武器の更新
+	hammer_->Update();
 
 	///- 行列更新
 	BaseCharacter::Update();
@@ -81,8 +85,11 @@ void Player::Update() {
 void Player::Draw(const ViewProjection& viewProjection) {
 
 	for(auto& model : models_) {
+		if(model.first == "hammer") { continue; }
 		model.second->Draw(partsWorldTransforms_[model.first], viewProjection);
 	}
+
+	hammer_->Draw(viewProjection);
 
 }
 
@@ -90,6 +97,7 @@ void Player::Draw(const ViewProjection& viewProjection) {
 void Player::InitializeFloatingGimmck() {
 
 	for(auto& model : models_) {
+		if(model.first == "hammer") { continue; }
 		partsWorldTransforms_[model.first].Initialize();
 	}
 
@@ -100,6 +108,8 @@ void Player::InitializeFloatingGimmck() {
 		}
 	}
 
+
+	hammer_->SetParent(&partsWorldTransforms_.at("playerBody"));
 
 	floatingParameter_ = 0.0f;
 	period_ = 180;
@@ -149,6 +159,10 @@ void Player::SetRotateX(float rotate, const std::string& tag) {
 	if(tag == "player") {
 		worldTransform_.rotation_.x = rotate;
 		return;
+	} else if(tag == "hammer") {
+		Vec3f rotation = hammer_->GetRotation();
+		hammer_->SetRotation({ rotate, rotation.y, rotation.z });
+		return;
 	}
 	partsWorldTransforms_[tag].rotation_.x = rotate;
 }
@@ -157,6 +171,10 @@ void Player::SetRotateY(float rotate, const std::string& tag) {
 	if(tag == "player") {
 		worldTransform_.rotation_.y = rotate;
 		return;
+	} else if(tag == "hammer") {
+		Vec3f rotation = hammer_->GetRotation();
+		hammer_->SetRotation({ rotation.x, rotate, rotation.z });
+		return;
 	}
 	partsWorldTransforms_[tag].rotation_.y = rotate;
 }
@@ -164,6 +182,10 @@ void Player::SetRotateY(float rotate, const std::string& tag) {
 void Player::SetRotateZ(float rotate, const std::string& tag) {
 	if(tag == "player") {
 		worldTransform_.rotation_.z = rotate;
+		return;
+	} else if(tag == "hammer") {
+		Vec3f rotation = hammer_->GetRotation();
+		hammer_->SetRotation({ rotation.x, rotation.y, rotate });
 		return;
 	}
 	partsWorldTransforms_[tag].rotation_.z = rotate;
@@ -221,6 +243,11 @@ void Player::ImGui() {
 #endif // _DEBUG
 }
 
-void Player::OnCollision() {
-	SetState(new PlayerStateJump);
+void Player::OnCollision([[maybe_unused]] Collider* other) {
+	if(other->GetTag() == "Enemy") {
+		SetRotateX(0.0f, "hammer");
+		SetRotateY(0.0f, "hammer");
+		SetRotateZ(0.0f, "hammer");
+		SetState(new PlayerStateJump);
+	}
 }

@@ -91,6 +91,24 @@
     <Filter Include="ヘッダー ファイル\external">
       <UniqueIdentifier>{0c5f4557-e206-43d6-8a58-9e846efd0e7a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\entity\player\state">
+      <UniqueIdentifier>{e5f74186-3ab1-4688-a0ba-1b04ad57248d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\entity\player\state">
+      <UniqueIdentifier>{f74d260a-8e3c-4069-941a-ed561dd65df7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\entity\player\hammer">
+      <UniqueIdentifier>{22146c05-65a1-47a4-a2c7-d32e3c9df247}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\entity\player\hammer">
+      <UniqueIdentifier>{7d24d44d-a6f6-402c-a5bf-10f45aaf477b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\entity\enemy\state">
+      <UniqueIdentifier>{284c7c08-1a45-4568-991d-df769db029d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\entity\enemy\state">
+      <UniqueIdentifier>{1c0746c1-c354-42a0-8c95-a103a9840f5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -138,32 +156,44 @@
     <ClCompile Include="math\MyMath.cpp">
       <Filter>ソース ファイル\math</Filter>
     </ClCompile>
-    <ClCompile Include="entity\BaseCharacter.cpp">
-      <Filter>ソース ファイル\entity</Filter>
-    </ClCompile>
     <ClCompile Include="entity\enemy\Enemy.cpp">
       <Filter>ソース ファイル\entity\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="entity\player\BasePlayerState.cpp">
-      <Filter>ソース ファイル\entity\player</Filter>
-    </ClCompile>
-    <ClCompile Include="entity\player\PlayerStateAttack.cpp">
-      <Filter>ソース ファイル\entity\player</Filter>
-    </ClCompile>
-    <ClCompile Include="entity\player\PlayerStateDash.cpp">
-      <Filter>ソース ファイル\entity\player</Filter>
-    </ClCompile>
-    <ClCompile Include="entity\player\PlayerStateRoot.cpp">
-      <Filter>ソース ファイル\entity\player</Filter>
     </ClCompile>
     <ClCompile Include="external\GlobalVariables.cpp">
       <Filter>ソース ファイル\external</Filter>
     </ClCompile>
-    <ClCompile Include="entity\player\PlayerStateJump.cpp">
-      <Filter>ソース ファイル\entity\player</Filter>
-    </ClCompile>
     <ClCompile Include="object\LockOn.cpp">
       <Filter>ソース ファイル\object</Filter>
+    </ClCompile>
+    <ClCompile Include="entity\player\state\BasePlayerState.cpp">
+      <Filter>ソース ファイル\entity\player\state</Filter>
+    </ClCompile>
+    <ClCompile Include="entity\player\state\PlayerStateAttack.cpp">
+      <Filter>ソース ファイル\entity\player\state</Filter>
+    </ClCompile>
+    <ClCompile Include="entity\player\state\PlayerStateDash.cpp">
+      <Filter>ソース ファイル\entity\player\state</Filter>
+    </ClCompile>
+    <ClCompile Include="entity\player\state\PlayerStateJump.cpp">
+      <Filter>ソース ファイル\entity\player\state</Filter>
+    </ClCompile>
+    <ClCompile Include="entity\player\state\PlayerStateRoot.cpp">
+      <Filter>ソース ファイル\entity\player\state</Filter>
+    </ClCompile>
+    <ClCompile Include="entity\player\hammer\Hammer.cpp">
+      <Filter>ソース ファイル\entity\player\hammer</Filter>
+    </ClCompile>
+    <ClCompile Include="entity\enemy\state\BaseEnemyState.cpp">
+      <Filter>ソース ファイル\entity\enemy\state</Filter>
+    </ClCompile>
+    <ClCompile Include="entity\enemy\state\EnemyStateDameged.cpp">
+      <Filter>ソース ファイル\entity\enemy\state</Filter>
+    </ClCompile>
+    <ClCompile Include="entity\enemy\state\EnemyStateRoot.cpp">
+      <Filter>ソース ファイル\entity\enemy\state</Filter>
+    </ClCompile>
+    <ClCompile Include="entity\BaseCharacter.cpp">
+      <Filter>ソース ファイル\entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -284,29 +314,41 @@
     <ClInclude Include="entity\enemy\Enemy.h">
       <Filter>ヘッダー ファイル\entity\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="entity\player\BasePlayerState.h">
-      <Filter>ヘッダー ファイル\entity\player</Filter>
-    </ClInclude>
-    <ClInclude Include="entity\player\PlayerStateAttack.h">
-      <Filter>ヘッダー ファイル\entity\player</Filter>
-    </ClInclude>
-    <ClInclude Include="entity\player\PlayerStateDash.h">
-      <Filter>ヘッダー ファイル\entity\player</Filter>
-    </ClInclude>
-    <ClInclude Include="entity\player\PlayerStateRoot.h">
-      <Filter>ヘッダー ファイル\entity\player</Filter>
-    </ClInclude>
     <ClInclude Include="external\GlobalVariables.h">
       <Filter>ヘッダー ファイル\external</Filter>
-    </ClInclude>
-    <ClInclude Include="entity\player\PlayerStateJump.h">
-      <Filter>ヘッダー ファイル\entity\player</Filter>
     </ClInclude>
     <ClInclude Include="object\LockOn.h">
       <Filter>ヘッダー ファイル\object</Filter>
     </ClInclude>
     <ClInclude Include="math\VectorMethod.h">
       <Filter>ヘッダー ファイル\math</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\player\state\BasePlayerState.h">
+      <Filter>ヘッダー ファイル\entity\player\state</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\player\state\PlayerStateAttack.h">
+      <Filter>ヘッダー ファイル\entity\player\state</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\player\state\PlayerStateDash.h">
+      <Filter>ヘッダー ファイル\entity\player\state</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\player\state\PlayerStateJump.h">
+      <Filter>ヘッダー ファイル\entity\player\state</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\player\state\PlayerStateRoot.h">
+      <Filter>ヘッダー ファイル\entity\player\state</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\player\hammer\Hammer.h">
+      <Filter>ヘッダー ファイル\entity\player\hammer</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\enemy\state\BaseEnemyState.h">
+      <Filter>ヘッダー ファイル\entity\enemy\state</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\enemy\state\EnemyStateDameged.h">
+      <Filter>ヘッダー ファイル\entity\enemy\state</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\enemy\state\EnemyStateRoot.h">
+      <Filter>ヘッダー ファイル\entity\enemy\state</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

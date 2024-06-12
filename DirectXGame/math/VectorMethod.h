@@ -1,6 +1,7 @@
 #pragma once
 
 
+#include "Vector4.h"
 #include "Vector3.h"
 #include "Vector2.h"
 
@@ -76,5 +77,8 @@ namespace VectorMethod {
 	/// <param name="t"></param>
 	/// <returns></returns>
 	Vec2f Lerp(const Vec2f& v1, const Vec2f& v2, float t);
+
+
+	Vec4f Lerp(const Vec4f& v1, const Vec4f& v2, float t);
 
 }
