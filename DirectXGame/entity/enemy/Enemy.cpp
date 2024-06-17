@@ -36,6 +36,8 @@ void Enemy::Initialize(const std::map<std::string, Model*>& models) {
 
 	aimationTime_ = 0.0f;
 
+	hitEffectModel_.reset(Model::CreateSphere());
+
 }
 
 void Enemy::Update() {
@@ -124,5 +126,5 @@ void Enemy::Animation() {
 
 
 void Enemy::AddHitEffect(std::unique_ptr<HitEffect>  hitEffect) {
-	hitEffects_.push_back(hitEffect);
+	hitEffects_.push_back(std::move(hitEffect));
 }

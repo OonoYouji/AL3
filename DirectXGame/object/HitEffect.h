@@ -44,6 +44,12 @@ public:
 	void SetCenterPosition(const Vec3f& centerPosition);
 
 	/// <summary>
+	/// pModelのSetter
+	/// </summary>
+	/// <param name="model">モデルへのポインタ</param>
+	void SetModelPtr(Model* model);
+
+	/// <summary>
 	/// エフェクトが終了したか
 	/// </summary>
 	/// <returns></returns>
@@ -68,6 +74,10 @@ inline void HitEffect::SetRadius(float radius) {
 
 inline void HitEffect::SetCenterPosition(const Vec3f& centerPosition) {
 	worldTransform_.translation_ = centerPosition;
+}
+
+inline void HitEffect::SetModelPtr(Model* model) {
+	pModel_ = model;
 }
 
 

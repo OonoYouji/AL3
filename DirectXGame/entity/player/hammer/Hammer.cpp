@@ -42,8 +42,10 @@ void Hammer::OnCollision([[maybe_unused]] Collider* other) {
 		collisionRecord_.AddLog(serialNo);
 
 		std::unique_ptr<HitEffect> newHitEffect = std::make_unique<HitEffect>();
+		newHitEffect->SetModelPtr(enemy->GetHitEffectModel());
 		newHitEffect->Initialize(enemy->GetHitEffectModel(), enemy->GetWorldPosition());
-		enemy->AddHitEffect(std::make_unique<HitEffect>());
+
+		enemy->AddHitEffect(std::move(newHitEffect));
 
 		enemy->SetState(new EnemyStateDameged(enemy));
 	}

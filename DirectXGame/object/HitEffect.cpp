@@ -13,10 +13,11 @@ void HitEffect::Initialize(Model* model, const Vec3f& position) {
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = position;
 
+	objectColor_ = std::make_unique<ObjectColor>();
 	objectColor_->Initialize();
-	objectColor_->SetColor({ 0.5f, 0.0f, 0.0f, 0.5f });
+	objectColor_->SetColor({ 1.0f, 0.0f, 0.0f, 1.0f });
 
-	radius_ = 0.5f;
+	radius_ = 1.0f;
 	actionTime_ = 30;
 
 }
@@ -24,7 +25,9 @@ void HitEffect::Initialize(Model* model, const Vec3f& position) {
 void HitEffect::Update() {
 
 	if(--actionTime_ > 0) {
-		radius_ += 1.0f / 30.0f;
+		radius_ += 1.0f / 10.0f;
+		float alpha = std::lerp(0.8f, 1.0f, actionTime_ / 30.0f);
+		objectColor_->SetColor(Vec4f(1.0f, 0.0f, 0.0f, alpha));
 	}
 
 	///- スケールを半径の大きさに 
@@ -32,6 +35,7 @@ void HitEffect::Update() {
 
 	///- 行列の更新
 	worldTransform_.UpdateMatrix();
+	objectColor_->TransferMatrix();
 
 }
 
