@@ -52,25 +52,6 @@ private: // メンバ変数
 	/// ゲームシーン用
 	/// </summary>
 
-
-	///- テクスチャの読み込み
-	uint32_t textureHandle_ = 0;
-	Sprite* sprite_ = nullptr;
-	Vector2 position_;
-
-	///- モデル
-	Model* model_ = nullptr;
-	WorldTransform worldTransform_;
-	ViewProjection viewProjection_;
-
-	///- オーディオとキーボード入力
-	uint32_t soundDataHandle_ = 0;
-	uint32_t voiceHandle_ = 0;
-
-	///- デバッグテキスト
-	float inputFloat3_[3] = { 0.0f,0.0f,0.0f };
-
-	///- デバッグカメラ
-	DebugCamera* debugCamera_ = nullptr;
+	
 
 };

@@ -34,6 +34,12 @@ public:
 	/// </summary>
 	void Draw();
 
+	/// <summary>
+	/// GameObjectの追加
+	/// </summary>
+	/// <param name="object"></param>
+	void AddGameObject(GameObject* object);
+
 private:
 
 	std::list<std::unique_ptr<GameObject>> objects_;

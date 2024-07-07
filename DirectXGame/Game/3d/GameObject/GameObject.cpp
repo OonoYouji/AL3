@@ -4,7 +4,7 @@
 #include <GameObjectManager.h>
 
 GameObject::GameObject() {
-
+	GameObjectManager::GetInstance()->AddGameObject(this);
 }
 
 void GameObject::UpdateMatrix() {
