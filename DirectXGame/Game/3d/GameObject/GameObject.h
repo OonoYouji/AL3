@@ -21,6 +21,8 @@ public:
 
 	void UpdateMatrix();
 
+	const Mat4& GetMatTransform() const;
+
 private:
 
 	WorldTransform worldTransform_;
