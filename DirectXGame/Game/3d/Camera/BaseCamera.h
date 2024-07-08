@@ -3,13 +3,15 @@
 #include <ViewProjection.h>
 #include <WorldTransform.h>
 
+#include <GameObject.h>
 
 /// <summary>
 /// カメラの基底クラス
 /// </summary>
-class BaseCamera {
+class BaseCamera : public GameObject {
 public:
 
+	BaseCamera();
 	virtual ~BaseCamera() = default;
 
 	virtual void Initialize() = 0;
@@ -17,9 +19,10 @@ public:
 
 	const ViewProjection& GetViewProjection() const;
 
+	void UpdateViewProjection();
+
 protected:
 
 	ViewProjection viewProjection_;
-	WorldTransform worldTransform_;
 
 };

@@ -8,6 +8,7 @@
 #include "WinApp.h"
 
 #include "SceneManager.h"
+#include "MainCamera.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -61,6 +62,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	SceneManager* sceneManager = SceneManager::GetInstance();
 	sceneManager->Initialize();
 
+	MainCamera* mainCamra = MainCamera::GetInstance();
+	mainCamra->Initialize();
 
 	// メインループ
 	while (true) {
@@ -74,6 +77,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		// 入力関連の毎フレーム処理
 		input->Update();
 		// ゲームシーンの毎フレーム処理
+		mainCamra->Update();
 		sceneManager->Update();
 		// 軸表示の更新
 		axisIndicator->Update();
@@ -83,6 +87,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		// 描画開始
 		dxCommon->PreDraw();
 		// ゲームシーンの描画
+		mainCamra->Draw();
 		sceneManager->Draw();
 		// 軸表示の描画
 		axisIndicator->Draw();

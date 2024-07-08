@@ -15,6 +15,7 @@ MainCamera* MainCamera::GetInstance() {
 /// ===================================================
 void MainCamera::Initialize() {
 
+	
 
 }
 
@@ -23,7 +24,7 @@ void MainCamera::Initialize() {
 /// 更新
 /// ===================================================
 void MainCamera::Update() {
-
+	
 
 }
 
@@ -41,7 +42,7 @@ void MainCamera::Draw() {
 /// カメラのセット
 /// ===================================================
 void MainCamera::SetCamera(BaseCamera* camera) {
-	camera_.reset(camera);
+	camera_ = camera;
 }
 
 

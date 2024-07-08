@@ -122,14 +122,20 @@ public:
 	/// <param name="filePath"></param>
 	void LoadFile(const std::string& key, const std::string& filePath);
 
+	/// <summary>
+	/// srtのグループを作る
+	/// </summary>
+	void CreateWorldTransformGruop();
+
 #pragma endregion
 
 	void ImGuiDebug();
 
-private:
 
+private:
 	std::string tag_;	//- グループごとの名前 : Enemyなど
 	std::string name_;	//- オブジェクトごとに違う名前 : Enemy1, Enemy2など
+protected:
 
 	WorldTransform worldTransform_;
 

@@ -20,6 +20,7 @@ using json = nlohmann::json;
 /// ===================================================
 GameObject::GameObject() {
 	GameObjectManager::GetInstance()->AddGameObject(this);
+	CreateWorldTransformGruop();
 }
 
 
@@ -458,9 +459,17 @@ void GameObject::LoadFile(const std::string& key, const std::string& filePath) {
 }
 
 
+/// ===================================================
+/// WorldTransformをGroupに設定
+/// ===================================================
+void GameObject::CreateWorldTransformGruop() {
+	GameObject::Group& group = CreateGroup("Transform");
+	group.SetPtr("scale", &worldTransform_.scale_);
+	group.SetPtr("rotate", &worldTransform_.rotation_);
+	group.SetPtr("translate", &worldTransform_.translation_);
+}
+
 #pragma endregion
-
-
 
 
 /// ===================================================
@@ -468,6 +477,13 @@ void GameObject::LoadFile(const std::string& key, const std::string& filePath) {
 /// ===================================================
 void GameObject::ImGuiDebug() {
 
+	for(auto& group : groups_) {
+		if(!ImGui::TreeNodeEx(group.first.c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {
+			continue;
+		}
 
+		group.second.ImGuiDebug();
+		ImGui::TreePop();
+	}
 
 }

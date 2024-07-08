@@ -2,6 +2,9 @@
 
 #include <imgui.h>
 
+#include <GameObject.h>
+#include <GameCamera.h>
+
 
 Scene_Game::Scene_Game() {}
 Scene_Game::~Scene_Game() {}
@@ -11,6 +14,8 @@ Scene_Game::~Scene_Game() {}
 /// 初期化
 /// ===================================================
 void Scene_Game::Initialize() {
+
+	GameCamera*
 
 }
 

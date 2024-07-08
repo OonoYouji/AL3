@@ -26,6 +26,6 @@ public:
 
 private:
 
-	std::unique_ptr<BaseCamera> camera_;
+	BaseCamera* camera_;
 
 };

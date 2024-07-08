@@ -2,6 +2,7 @@
 
 #include "BaseScene.h"
 
+
 class Scene_Game : public BaseScene {
 public:
 
@@ -17,6 +18,5 @@ public:
 
 private:
 
-	
 
 };
