@@ -1,13 +1,11 @@
-#include "GameObjectManager.h"
-
-#include <ImGuiManager.h>
+#include "MainCamera.h"
 
 
 /// ===================================================
 /// インスタンス確保
 /// ===================================================
-GameObjectManager* GameObjectManager::GetInstance() {
-	static GameObjectManager instance;
+MainCamera* MainCamera::GetInstance() {
+	static MainCamera instance;
 	return &instance;
 }
 
@@ -15,7 +13,8 @@ GameObjectManager* GameObjectManager::GetInstance() {
 /// ===================================================
 /// 初期化
 /// ===================================================
-void GameObjectManager::Initialize() {
+void MainCamera::Initialize() {
+
 
 }
 
@@ -23,39 +22,32 @@ void GameObjectManager::Initialize() {
 /// ===================================================
 /// 更新
 /// ===================================================
-void GameObjectManager::Update() {
-	for(auto& obj : objects_) {
-		obj->Update();
-	}
+void MainCamera::Update() {
+
+
 }
 
 
 /// ===================================================
 /// 描画
 /// ===================================================
-void GameObjectManager::Draw() {
-	for(auto& obj : objects_) {
-		obj->Draw();
-	}
+void MainCamera::Draw() {
+
+
 }
 
 
 /// ===================================================
-/// ゲームオブジェクトの追加
+/// カメラのセット
 /// ===================================================
-void GameObjectManager::AddGameObject(GameObject* object) {
-	std::unique_ptr<GameObject> newObject(object);
-	objects_.push_back(std::move(newObject));
+void MainCamera::SetCamera(BaseCamera* camera) {
+	camera_.reset(camera);
 }
 
 
 /// ===================================================
-/// imguiでデバッグ表示
+/// ViewProjectionの取得
 /// ===================================================
-void GameObjectManager::ImGuiDebug() {
-#ifdef _DEBUG
-	//ImGui::Begin("")
-
-
-#endif // _DEBUG
+const ViewProjection& MainCamera::GetViewProjection() const {
+	return camera_->GetViewProjection();
 }

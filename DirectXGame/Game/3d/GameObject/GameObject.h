@@ -1,5 +1,6 @@
 #pragma once
 
+#include <list>
 #include <WorldTransform.h>
 
 /// <summary>
@@ -40,11 +41,17 @@ public:
 	void SetScale(const Vec3f& v) { worldTransform_.scale_ = v; }
 #pragma endregion
 
+#pragma region Parent Child
+	void SetParent(GameObject* parent);
+	void AddChild(GameObject* child);
+#pragma endregion
+
 
 private:
 
 	WorldTransform worldTransform_;
 
 	GameObject* parent_;
+	std::list<GameObject*> childs_;
 
 };

@@ -40,6 +40,11 @@ public:
 	/// <param name="object"></param>
 	void AddGameObject(GameObject* object);
 
+	/// <summary>
+	/// imguiでデバッグ表示
+	/// </summary>
+	void ImGuiDebug();
+
 private:
 
 	std::list<std::unique_ptr<GameObject>> objects_;
