@@ -52,24 +52,6 @@
     <Filter Include="ソース ファイル\2d">
       <UniqueIdentifier>{814a0f6d-f847-4c45-856d-4688fa4c9e6c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game">
-      <UniqueIdentifier>{4e9b6a0f-8555-4b1c-96aa-5112b42a0904}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\3d">
-      <UniqueIdentifier>{981f439f-e187-4671-b828-1f27bb838d31}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Math">
-      <UniqueIdentifier>{10722bd4-66d9-4842-8c9f-fd7ec6c15933}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\3d\GameObject">
-      <UniqueIdentifier>{a87fb64c-0bf1-4ae4-a974-1d97273fbe25}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Scene">
-      <UniqueIdentifier>{fa349296-392c-40ba-822d-4dca15683717}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\3d\Camera">
-      <UniqueIdentifier>{1ca272b9-45cf-4a67-a6bf-71ad1018e8a9}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -86,30 +68,6 @@
     </ClCompile>
     <ClCompile Include="2d\ImGuiManager.cpp">
       <Filter>ソース ファイル\2d</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\3d\GameObject\GameObject.cpp">
-      <Filter>Game\3d\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\3d\GameObject\GameObjectManager.cpp">
-      <Filter>Game\3d\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Math\Mat4Math.cpp">
-      <Filter>Game\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Scene\BaseScene.cpp">
-      <Filter>Game\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Scene\SceneManager.cpp">
-      <Filter>Game\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Scene\Scene_Game.cpp">
-      <Filter>Game\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\3d\Camera\BaseCamera.cpp">
-      <Filter>Game\3d\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\3d\Camera\MainCamera.cpp">
-      <Filter>Game\3d\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -199,30 +157,6 @@
     </ClInclude>
     <ClInclude Include="3d\ObjectColor.h">
       <Filter>ヘッダー ファイル\3d</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\3d\GameObject\GameObject.h">
-      <Filter>Game\3d\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\3d\GameObject\GameObjectManager.h">
-      <Filter>Game\3d\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Math\Mat4Math.h">
-      <Filter>Game\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Scene\BaseScene.h">
-      <Filter>Game\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Scene\SceneManager.h">
-      <Filter>Game\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Scene\Scene_Game.h">
-      <Filter>Game\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\3d\Camera\BaseCamera.h">
-      <Filter>Game\3d\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\3d\Camera\MainCamera.h">
-      <Filter>Game\3d\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

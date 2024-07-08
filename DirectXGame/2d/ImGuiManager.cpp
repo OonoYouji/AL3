@@ -1,4 +1,4 @@
-﻿#include "ImGuiManager.h"
+#include "ImGuiManager.h"
 
 #ifdef _DEBUG
 #include "DirectXCommon.h"
@@ -31,6 +31,10 @@ void ImGuiManager::Initialize(
 
 	// ImGuiのコンテキストを生成
 	ImGui::CreateContext();
+
+	ImGuiIO& io = ImGui::GetIO();
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
 	// ImGuiのスタイルを設定
 	ImGui::StyleColorsDark();
 	// プラットフォームとレンダラーのバックエンドを設定する
@@ -41,7 +45,6 @@ void ImGuiManager::Initialize(
 	    srvHeap_->GetCPUDescriptorHandleForHeapStart(),
 	    srvHeap_->GetGPUDescriptorHandleForHeapStart());
 
-	ImGuiIO& io = ImGui::GetIO();
 	// 標準フォントを追加する
 	io.Fonts->AddFontDefault();
 #endif

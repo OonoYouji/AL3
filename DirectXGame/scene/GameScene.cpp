@@ -2,29 +2,26 @@
 #include "TextureManager.h"
 #include <cassert>
 
-#include "ImGuiManager.h"
-#include "PrimitiveDrawer.h"
-#include "AxisIndicator.h"
-
+#include <ImGuiManager.h>
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene() {
-
-}
+GameScene::~GameScene() {}
 
 void GameScene::Initialize() {
 
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
-
-
-
 }
 
 void GameScene::Update() {
 
+	ImGui::Begin("A");
+	ImGui::End();
+	
+	ImGui::Begin("D");
+	ImGui::End();
 
 }
 
@@ -37,7 +34,9 @@ void GameScene::Draw() {
 	// 背景スプライト描画前処理
 	Sprite::PreDraw(commandList);
 
-
+	/// <summary>
+	/// ここに背景スプライトの描画処理を追加できる
+	/// </summary>
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -49,7 +48,9 @@ void GameScene::Draw() {
 	// 3Dオブジェクト描画前処理
 	Model::PreDraw(commandList);
 
-
+	/// <summary>
+	/// ここに3Dオブジェクトの描画処理を追加できる
+	/// </summary>
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
