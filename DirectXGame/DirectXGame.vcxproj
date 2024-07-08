@@ -113,6 +113,8 @@
     <ClCompile Include="Game\3d\GameObject\GameObjectManager.cpp" />
     <ClCompile Include="Game\Math\Mat4Math.cpp" />
     <ClCompile Include="Game\Scene\BaseScene.cpp" />
+    <ClCompile Include="Game\Scene\SceneManager.cpp" />
+    <ClCompile Include="Game\Scene\Scene_Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
   </ItemGroup>
@@ -144,6 +146,8 @@
     <ClInclude Include="Game\3d\GameObject\GameObjectManager.h" />
     <ClInclude Include="Game\Math\Mat4Math.h" />
     <ClInclude Include="Game\Scene\BaseScene.h" />
+    <ClInclude Include="Game\Scene\SceneManager.h" />
+    <ClInclude Include="Game\Scene\Scene_Game.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="math\Matrix4x4.h" />
     <ClInclude Include="math\Vector2.h" />
