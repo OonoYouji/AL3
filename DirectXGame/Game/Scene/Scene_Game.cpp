@@ -1,6 +1,6 @@
 #include "Scene_Game.h"
 
-
+#include <imgui.h>
 
 
 Scene_Game::Scene_Game() {}
@@ -19,6 +19,7 @@ void Scene_Game::Initialize() {
 /// 更新
 /// ===================================================
 void Scene_Game::Update() {
+
 
 }
 
