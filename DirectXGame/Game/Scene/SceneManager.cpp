@@ -1,6 +1,5 @@
 #include "SceneManager.h"
 
-#include "BaseScene.h"
 #include "Scene_Game.h"
 
 
@@ -51,4 +50,12 @@ void SceneManager::Draw() {
 void SceneManager::Load(BaseScene* next) {
 	scene_.reset(next);
 	scene_->Initialize();
+}
+
+
+/// ===================================================
+/// シーンのゲット
+/// ===================================================
+BaseScene* SceneManager::GetScene() const {
+	return scene_.get();
 }

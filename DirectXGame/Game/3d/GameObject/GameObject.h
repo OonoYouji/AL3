@@ -1,6 +1,10 @@
 #pragma once
 
 #include <list>
+#include <string>
+#include <variant>
+#include <unordered_map>
+
 #include <WorldTransform.h>
 
 /// <summary>
@@ -24,7 +28,7 @@ public:
 
 	const Mat4& GetMatTransform() const;
 
-#pragma region Setter
+#pragma region Setter SRT
 	void SetPosX(float x) { worldTransform_.translation_.x = x; }
 	void SetPosY(float y) { worldTransform_.translation_.y = y; }
 	void SetPosZ(float z) { worldTransform_.translation_.z = z; }
@@ -43,15 +47,95 @@ public:
 
 #pragma region Parent Child
 	void SetParent(GameObject* parent);
+	GameObject* GetParent() const;
 	void AddChild(GameObject* child);
+	const std::list<GameObject*>& GetChilds() const;
 #pragma endregion
 
+#pragma region Accesser Tag Name
+	void SetTag(const std::string& tag);
+	const std::string& GetTag() const;
+	void SetName(const std::string& name);
+	const std::string& GetName() const;
+#pragma endregion
+
+#pragma region JSON 保存 読み込み
+	/// ---------------------------------------------------
+	/// 変数一個当たりの情報
+	/// ---------------------------------------------------
+	struct Item final {
+		using Pointer = std::variant<int*, float*, Vector3*, bool*, std::string*>;	///- ポインタ
+		using Value = std::variant<int, float, Vector3, bool, std::string>;		///- 実体
+		std::pair<Pointer, Value> variable;
+	};
+
+	/// ---------------------------------------------------
+	/// Itemの集合
+	/// ---------------------------------------------------
+	struct Group final {
+		/// <summary>
+		/// 値のsetter
+		/// </summary>
+		/// <param name="key">: itemsへのkey</param>
+		/// <param name="value">: itemsへセットする値</param>
+		template<typename T>
+		void SetPtr(const std::string& key, T* ptr);
+
+		template<typename T>
+		void SetValue(const std::string& key, const T& value);
+
+		/// <summary>
+		/// 値のGetter
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		template<typename T>
+		const T& GetItem(const std::string& key);
+
+		/// <summary>
+		/// デバッグ
+		/// </summary>
+		void ImGuiDebug();
+
+		/// <summary>
+		/// Itemの集合
+		/// </summary>
+		std::unordered_map<std::string, Item> items;
+	};
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="groupName"></param>
+	Group& CreateGroup(const std::string& groupName);
+
+
+	/// <summary>
+	/// jsonに保存
+	/// </summary>
+	void SaveFile();
+
+	/// <summary>
+	/// jsonから読み込み
+	/// </summary>
+	/// <param name="key"></param>
+	/// <param name="filePath"></param>
+	void LoadFile(const std::string& key, const std::string& filePath);
+
+#pragma endregion
+
+	void ImGuiDebug();
 
 private:
+
+	std::string tag_;	//- グループごとの名前 : Enemyなど
+	std::string name_;	//- オブジェクトごとに違う名前 : Enemy1, Enemy2など
 
 	WorldTransform worldTransform_;
 
 	GameObject* parent_;
 	std::list<GameObject*> childs_;
+
+	std::unordered_map<std::string, Group> groups_;
 
 };

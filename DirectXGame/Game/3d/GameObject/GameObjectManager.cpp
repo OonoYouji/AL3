@@ -54,8 +54,71 @@ void GameObjectManager::AddGameObject(GameObject* object) {
 /// ===================================================
 void GameObjectManager::ImGuiDebug() {
 #ifdef _DEBUG
-	//ImGui::Begin("")
 
+	/// ===================================================
+	///  ヒエラルキー オブジェクトの選択
+	/// ===================================================
+	ImGui::Begin("Hierarchy", nullptr, ImGuiWindowFlags_MenuBar);
+
+	
+	/// ------------------------------------------------
+	/// GameObject SelecTable
+	/// ------------------------------------------------
+	for(auto& gameObject : objects_) {
+
+		if(gameObject->GetParent()) { continue; }
+		if(ImGui::Selectable(gameObject->GetName().c_str(), selectObject_ == gameObject.get())) {
+			selectObject_ = gameObject.get();
+		}
+
+		ImGuiSelectChilds(gameObject->GetChilds());
+
+	}
+	
+	ImGui::End();
+
+
+	/// ===================================================
+	/// 選択されたオブジェクトのデバッグ表示
+	/// ===================================================
+	ImGui::Begin("Inspector");
+
+	if(selectObject_) {
+		ImGuiSelectObjectDebug();
+	}
+
+	ImGui::End();
 
 #endif // _DEBUG
+}
+
+
+
+/// ===================================================
+/// ImGuiのGameObjectの子供をselectableで設定
+/// ===================================================
+void GameObjectManager::ImGuiSelectChilds(const std::list<GameObject*>& childs) {
+	ImGui::Indent();
+	for(auto& child : childs) {
+		if(ImGui::Selectable(child->GetName().c_str(), selectObject_ == child)) {
+			selectObject_ = child;
+		}
+		ImGuiSelectChilds(child->GetChilds());
+	}
+	ImGui::Unindent();
+}
+
+
+/// ===================================================
+/// select objcetのデバッグ
+/// ===================================================
+void GameObjectManager::ImGuiSelectObjectDebug() {
+	ImGui::SetNextItemOpen(true, ImGuiCond_Always);
+	if(!ImGui::TreeNodeEx(selectObject_->GetName().c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {
+		return;
+	}
+
+	selectObject_->ImGuiDebug();
+
+	ImGui::TreePop();
 }

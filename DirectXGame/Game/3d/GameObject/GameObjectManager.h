@@ -40,14 +40,29 @@ public:
 	/// <param name="object"></param>
 	void AddGameObject(GameObject* object);
 
+#pragma region ImGui
 	/// <summary>
 	/// imguiでデバッグ表示
 	/// </summary>
 	void ImGuiDebug();
 
+	/// <summary>
+	/// ImGui::Selectableでchild objectをインデントする
+	/// </summary>
+	/// <param name="childs"></param>
+	void ImGuiSelectChilds(const std::list<GameObject*>& childs);
+
+	/// <summary>
+	/// select objcetのデバッグ
+	/// </summary>
+	void ImGuiSelectObjectDebug();
+
+#pragma endregion
+
 private:
 
 	std::list<std::unique_ptr<GameObject>> objects_;
+	GameObject* selectObject_ = nullptr;
 
 private:
 	GameObjectManager(const GameObjectManager&) = delete;

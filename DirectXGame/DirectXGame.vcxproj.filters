@@ -224,6 +224,9 @@
     <ClInclude Include="Game\Math\Mat4Math.h">
       <Filter>Game\Math</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Math\CreateName.h">
+      <Filter>Game\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\SpritePS.hlsl">

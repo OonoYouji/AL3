@@ -3,7 +3,7 @@
 
 #include <memory>
 
-class BaseScene;
+#include "BaseScene.h"
 
 /// <summary>
 /// BaseSceneクラスの管理クラス
@@ -38,6 +38,11 @@ public:
 	/// シーンの読み込み
 	/// </summary>
 	void Load(BaseScene* next);
+
+	/// <summary>
+	/// シーンのゲット
+	/// </summary>
+	BaseScene* GetScene() const;
 
 private:
 
