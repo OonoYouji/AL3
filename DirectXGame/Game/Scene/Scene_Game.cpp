@@ -3,7 +3,12 @@
 #include <imgui.h>
 
 #include <GameObject.h>
+#include <GameObjectManager.h>
+
 #include <GameCamera.h>
+#include <MainCamera.h>
+
+#include <Player.h>
 
 
 Scene_Game::Scene_Game() {}
@@ -15,7 +20,12 @@ Scene_Game::~Scene_Game() {}
 /// ===================================================
 void Scene_Game::Initialize() {
 
-	GameCamera*
+	GameCamera* camera = new GameCamera();
+	camera->Initialize();
+
+	MainCamera::GetInstance()->SetCamera(camera);
+	
+	(new Player())->Initialize();
 
 }
 
@@ -24,7 +34,7 @@ void Scene_Game::Initialize() {
 /// 更新
 /// ===================================================
 void Scene_Game::Update() {
-
+	GameObjectManager::GetInstance()->Update();
 
 }
 
@@ -41,6 +51,7 @@ void Scene_Game::BackSpriteDraw() {
 /// 3d objectの描画
 /// ===================================================
 void Scene_Game::Object3dDraw() {
+	GameObjectManager::GetInstance()->Draw();
 
 }
 

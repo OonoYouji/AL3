@@ -7,6 +7,8 @@ BaseCamera::BaseCamera() {
 
 }
 
+void BaseCamera::Draw() {}
+
 const ViewProjection& BaseCamera::GetViewProjection() const {
 	return viewProjection_;
 }

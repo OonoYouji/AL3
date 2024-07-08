@@ -2,7 +2,13 @@
 
 #include <MainCamera.h>
 
-Player::Player() {}
+#include <CreateName.h>
+
+
+Player::Player() {
+	SetName(CreateName(this));
+	SetTag("Player");
+}
 Player::~Player() {}
 
 
@@ -18,7 +24,12 @@ void Player::Initialize() {
 
 
 
-void Player::Update() {}
+void Player::Update() {
+
+	worldTransform_.rotation_.y += 1.0f;
+
+	UpdateMatrix();
+}
 
 
 

@@ -131,7 +131,6 @@ public:
 
 	void ImGuiDebug();
 
-
 private:
 	std::string tag_;	//- グループごとの名前 : Enemyなど
 	std::string name_;	//- オブジェクトごとに違う名前 : Enemy1, Enemy2など

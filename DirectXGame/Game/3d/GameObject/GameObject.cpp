@@ -12,6 +12,8 @@
 #include <GameObjectManager.h>
 #include <SceneManager.h>
 
+#include <CreateName.h>
+
 
 using json = nlohmann::json;
 
@@ -21,6 +23,10 @@ using json = nlohmann::json;
 GameObject::GameObject() {
 	GameObjectManager::GetInstance()->AddGameObject(this);
 	CreateWorldTransformGruop();
+
+	std::string name = CreateName(this);
+	SetName(name);
+	SetTag(name);
 }
 
 
@@ -221,10 +227,14 @@ void GameObject::Group::ImGuiDebug() {
 		///- int
 		if(std::holds_alternative<int>(second)) {
 			int* value = std::get_if<int>(&second);
+			int* ptr = std::get<int*>(first);
+			if(*value != *ptr) {
+				*value = *ptr;
+			}
+
 			ImGui::DragInt(item.first.c_str(), value, 1);
 			///- 値を変えたらptrにも適用する
 			if(ImGui::IsItemEdited()) {
-				int* ptr = std::get<int*>(first);
 				if(ptr) {
 					*ptr = std::get<int>(second);
 				}
@@ -235,10 +245,14 @@ void GameObject::Group::ImGuiDebug() {
 		///- float
 		if(std::holds_alternative<float>(second)) {
 			float* value = std::get_if<float>(&second);
+			float* ptr = std::get<float*>(first);
+			if(*value != *ptr) {
+				*value = *ptr;
+			}
+
 			ImGui::DragFloat(item.first.c_str(), value, 0.05f);
 			///- 値を変えたらptrにも適用する
 			if(ImGui::IsItemEdited()) {
-				float* ptr = std::get<float*>(first);
 				if(ptr) {
 					*ptr = std::get<float>(second);
 				}
@@ -249,10 +263,14 @@ void GameObject::Group::ImGuiDebug() {
 		///- vector3
 		if(std::holds_alternative<Vector3>(second)) {
 			Vector3* value = std::get_if<Vector3>(&second);
+			Vector3* ptr = std::get<Vector3*>(first);
+			if(*value != *ptr) {
+				*value = *ptr;
+			}
+
 			ImGui::DragFloat3(item.first.c_str(), &value->x, 0.05f);
 			///- 値を変えたらptrにも適用する
 			if(ImGui::IsItemEdited()) {
-				Vector3* ptr = std::get<Vector3*>(first);
 				if(ptr) {
 					*ptr = std::get<Vector3>(second);
 				}
@@ -264,10 +282,14 @@ void GameObject::Group::ImGuiDebug() {
 		///- bool
 		if(std::holds_alternative<bool>(second)) {
 			bool* value = std::get_if<bool>(&second);
+			bool* ptr = std::get<bool*>(first);
+			if(*value != *ptr) {
+				*value = *ptr;
+			}
+
 			ImGui::Checkbox(item.first.c_str(), value);
 			///- 値を変えたらptrにも適用する
 			if(ImGui::IsItemEdited()) {
-				bool* ptr = std::get<bool*>(first);
 				if(ptr) {
 					*ptr = std::get<bool>(second);
 				}

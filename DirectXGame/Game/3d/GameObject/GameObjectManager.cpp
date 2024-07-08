@@ -24,6 +24,9 @@ void GameObjectManager::Initialize() {
 /// 更新
 /// ===================================================
 void GameObjectManager::Update() {
+
+	ImGuiDebug();
+
 	for(auto& obj : objects_) {
 		obj->Update();
 	}
@@ -58,7 +61,7 @@ void GameObjectManager::ImGuiDebug() {
 	/// ===================================================
 	///  ヒエラルキー オブジェクトの選択
 	/// ===================================================
-	ImGui::Begin("Hierarchy", nullptr, ImGuiWindowFlags_MenuBar);
+	ImGui::Begin("Hierarchy");
 
 	
 	/// ------------------------------------------------
