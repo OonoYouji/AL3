@@ -76,6 +76,9 @@
     <Filter Include="Game\3d\Actor\Player">
       <UniqueIdentifier>{8d3c4894-a3db-429b-81af-8ca9e43c61c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Collision">
+      <UniqueIdentifier>{de6d1c79-96ec-42b0-92fb-d6b7edc0a6ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -122,6 +125,12 @@
     </ClCompile>
     <ClCompile Include="Game\3d\Camera\GameCamera.cpp">
       <Filter>Game\3d\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Math\GridDraw.cpp">
+      <Filter>Game\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Collision\AABB.cpp">
+      <Filter>Game\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -244,6 +253,12 @@
     </ClInclude>
     <ClInclude Include="Game\3d\Camera\GameCamera.h">
       <Filter>Game\3d\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Math\GridDraw.h">
+      <Filter>Game\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Collision\AABB.h">
+      <Filter>Game\Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

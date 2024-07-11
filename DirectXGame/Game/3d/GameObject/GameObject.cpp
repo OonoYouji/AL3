@@ -51,6 +51,15 @@ const Mat4& GameObject::GetMatTransform() const {
 }
 
 
+/// ===================================================
+/// 座標のゲット
+/// ===================================================
+const Vec3f GameObject::GetPosition() const {
+	return Transform({}, worldTransform_.matWorld_);
+}
+
+
+
 #pragma region Parent Child
 /// ===================================================
 /// 親のセット

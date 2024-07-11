@@ -45,6 +45,11 @@ public:
 	void SetScale(const Vec3f& v) { worldTransform_.scale_ = v; }
 #pragma endregion
 
+#pragma region Getter SRT
+	const Vec3f GetPosition() const;
+#pragma endregion
+
+
 #pragma region Parent Child
 	void SetParent(GameObject* parent);
 	GameObject* GetParent() const;

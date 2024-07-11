@@ -2,6 +2,7 @@
 
 #include <imgui.h>
 
+#include <GridDraw.h>
 #include <GameObject.h>
 #include <GameObjectManager.h>
 
@@ -27,6 +28,9 @@ void Scene_Game::Initialize() {
 	
 	(new Player())->Initialize();
 
+	GridDraw::GetInstance()->Intiailize(MainCamera::GetInstance()->GetViewProjection());
+
+
 }
 
 
@@ -51,8 +55,11 @@ void Scene_Game::BackSpriteDraw() {
 /// 3d objectの描画
 /// ===================================================
 void Scene_Game::Object3dDraw() {
+
+
 	GameObjectManager::GetInstance()->Draw();
 
+	GridDraw::GetInstance()->Draw();
 }
 
 
