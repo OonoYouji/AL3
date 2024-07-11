@@ -58,10 +58,18 @@ void AABB::Draw(const Vector4& color) {
 
 
 	for(uint32_t i = 0; i < 4; ++i) {
-		primitiveDrawer->DrawLine3d(points[i], points[(i + 1) % 4], color);
+		if(primitiveDrawer->GetIndexLine() < primitiveDrawer->kMaxLineCount) {
+			primitiveDrawer->DrawLine3d(points[i], points[(i + 1) % 4], color);
+		}
 		uint32_t j = i + 4;
-		primitiveDrawer->DrawLine3d(points[j], points[(j + 1) % 4 + 4], color);
-		primitiveDrawer->DrawLine3d(points[i], points[j], color);
+		if(primitiveDrawer->GetIndexLine() < primitiveDrawer->kMaxLineCount) {
+			primitiveDrawer->DrawLine3d(points[j], points[(j + 1) % 4 + 4], color);
+		}
+
+		if(primitiveDrawer->GetIndexLine() < primitiveDrawer->kMaxLineCount) {
+			primitiveDrawer->DrawLine3d(points[i], points[j], color);
+		}
+
 	}
 
 }

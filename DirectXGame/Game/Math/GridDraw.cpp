@@ -27,9 +27,13 @@ void GridDraw::Draw(float halfWidth, uint32_t subdivision) {
 		Vector3 start = { -halfWidth, 0.0f, (xIndex - subdivision / 2.0f) * kGridEvery };
 		Vector3 end = { halfWidth, 0.0f, (xIndex - subdivision / 2.0f) * kGridEvery };
 		if(xIndex == subdivision / 2) {
-			primitiveDrawer->DrawLine3d(start, end, { 0.0f,0.0f,1.0f,1.0f });
+			if(primitiveDrawer->GetIndexLine() < primitiveDrawer->kMaxLineCount) {
+				primitiveDrawer->DrawLine3d(start, end, { 0.0f,0.0f,1.0f,1.0f });
+			}
 		} else {
-			primitiveDrawer->DrawLine3d(start, end, { 0x20 / 255.0f, 0x20 / 255.0f, 0x20 / 255.0f,1.0f });
+			if(primitiveDrawer->GetIndexLine() < primitiveDrawer->kMaxLineCount) {
+				primitiveDrawer->DrawLine3d(start, end, { 0x20 / 255.0f, 0x20 / 255.0f, 0x20 / 255.0f,1.0f });
+			}
 		}
 	}
 
@@ -37,9 +41,13 @@ void GridDraw::Draw(float halfWidth, uint32_t subdivision) {
 		Vector3 start = { (zIndex - subdivision / 2.0f) * kGridEvery, 0.0f, -halfWidth };
 		Vector3 end = { (zIndex - subdivision / 2.0f) * kGridEvery, 0.0f, halfWidth };
 		if(zIndex == subdivision / 2) {
-			primitiveDrawer->DrawLine3d(start, end, { 0.0f,0.0f,1.0f,1.0f });
+			if(primitiveDrawer->GetIndexLine() < primitiveDrawer->kMaxLineCount) {
+				primitiveDrawer->DrawLine3d(start, end, { 0.0f,0.0f,1.0f,1.0f });
+			}
 		} else {
-			primitiveDrawer->DrawLine3d(start, end, { 0x20 / 255.0f, 0x20 / 255.0f, 0x20 / 255.0f,1.0f });
+			if(primitiveDrawer->GetIndexLine() < primitiveDrawer->kMaxLineCount) {
+				primitiveDrawer->DrawLine3d(start, end, { 0x20 / 255.0f, 0x20 / 255.0f, 0x20 / 255.0f,1.0f });
+			}
 		}
 	}
 

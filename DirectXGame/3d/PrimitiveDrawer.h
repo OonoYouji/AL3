@@ -109,6 +109,8 @@ public:
 		viewProjection_ = viewProjection;
 	}
 
+	uint32_t GetIndexLine() { return indexLine_; }
+
 private:
 	PrimitiveDrawer() = default;
 	~PrimitiveDrawer() = default;

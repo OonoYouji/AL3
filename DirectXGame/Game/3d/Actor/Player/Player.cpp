@@ -17,7 +17,7 @@ Player::~Player() {}
 
 void Player::Initialize() {
 
-	model_.reset(Model::CreateSphere());
+	model_.reset(Model::CreateFromOBJ("Suzanne"));
 
 	worldTransform_.Initialize();
 
@@ -44,7 +44,7 @@ void Player::Update() {
 			}
 
 			auto& back = polygonAABB_.back();
-			back.ExpandToFit(Transform(mesh->GetVertices()[index].pos, GetMatTransform()));
+			back.ExpandToFit(TransformNormal(mesh->GetVertices()[index].pos, GetMatTransform()));
 			back.translation = GetPosition();
 
 		}
