@@ -15,7 +15,7 @@ MainCamera* MainCamera::GetInstance() {
 /// ===================================================
 void MainCamera::Initialize() {
 
-	
+	viewProjection_.Initialize();
 
 }
 
@@ -24,8 +24,9 @@ void MainCamera::Initialize() {
 /// 更新
 /// ===================================================
 void MainCamera::Update() {
-	
-
+	viewProjection_.matProjection = camera_->GetViewProjection().matProjection;
+	viewProjection_.matView = camera_->GetViewProjection().matView;
+	viewProjection_.TransferMatrix();
 }
 
 
@@ -50,5 +51,7 @@ void MainCamera::SetCamera(BaseCamera* camera) {
 /// ViewProjectionの取得
 /// ===================================================
 const ViewProjection& MainCamera::GetViewProjection() const {
-	return camera_->GetViewProjection();
+	return viewProjection_;
 }
+
+

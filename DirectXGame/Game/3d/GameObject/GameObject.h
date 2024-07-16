@@ -148,4 +148,8 @@ protected:
 
 	std::unordered_map<std::string, Group> groups_;
 
+public:
+
+	bool isActive = true;
+
 };

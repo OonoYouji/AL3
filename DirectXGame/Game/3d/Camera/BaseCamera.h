@@ -20,6 +20,8 @@ public:
 
 	const ViewProjection& GetViewProjection() const;
 
+	void SetViewProjection(const ViewProjection& viewPro);
+
 	void UpdateViewProjection();
 
 protected:

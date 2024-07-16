@@ -1,7 +1,11 @@
 #pragma once
 
+#include <memory>
+
 #include "BaseScene.h"
 
+class MyDebugCamera;
+class GameCamera;
 
 class Scene_Game : public BaseScene {
 public:
@@ -18,5 +22,7 @@ public:
 
 private:
 
+	GameCamera* camera_ = nullptr;
+	MyDebugCamera* debugCamera_ = nullptr;
 
 };

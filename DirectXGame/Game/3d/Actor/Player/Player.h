@@ -22,4 +22,7 @@ private:
 
 	std::list<AABB> polygonAABB_;
 
+	std::array<std::list<AABB*>, 8> octreeList_;
+	std::array<AABB, 8> octree_;
+
 };

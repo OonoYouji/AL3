@@ -28,7 +28,9 @@ void GameObjectManager::Update() {
 	ImGuiDebug();
 
 	for(auto& obj : objects_) {
-		obj->Update();
+		if(obj->isActive) {
+			obj->Update();
+		}
 	}
 }
 
@@ -38,7 +40,9 @@ void GameObjectManager::Update() {
 /// ===================================================
 void GameObjectManager::Draw() {
 	for(auto& obj : objects_) {
-		obj->Draw();
+		if(obj->isActive) {
+			obj->Draw();
+		}
 	}
 }
 
@@ -63,7 +67,7 @@ void GameObjectManager::ImGuiDebug() {
 	/// ===================================================
 	ImGui::Begin("Hierarchy");
 
-	
+
 	/// ------------------------------------------------
 	/// GameObject SelecTable
 	/// ------------------------------------------------
@@ -77,7 +81,7 @@ void GameObjectManager::ImGuiDebug() {
 		ImGuiSelectChilds(gameObject->GetChilds());
 
 	}
-	
+
 	ImGui::End();
 
 

@@ -8,6 +8,7 @@
 
 #include <GameCamera.h>
 #include <MainCamera.h>
+#include <MyDebugCamera.h>
 
 #include <Player.h>
 
@@ -21,11 +22,16 @@ Scene_Game::~Scene_Game() {}
 /// ===================================================
 void Scene_Game::Initialize() {
 
-	GameCamera* camera = new GameCamera();
-	camera->Initialize();
-
-	MainCamera::GetInstance()->SetCamera(camera);
 	
+	camera_ = new GameCamera();
+	camera_->Initialize();
+
+	debugCamera_ = new MyDebugCamera();
+	debugCamera_->Initialize();
+	debugCamera_->isActive = false;
+
+	MainCamera::GetInstance()->SetCamera(camera_);
+
 	(new Player())->Initialize();
 
 	GridDraw::GetInstance()->Intiailize(MainCamera::GetInstance()->GetViewProjection());
@@ -38,6 +44,18 @@ void Scene_Game::Initialize() {
 /// 更新
 /// ===================================================
 void Scene_Game::Update() {
+#ifdef _DEBUG
+	ImGui::Begin("setting");
+	ImGui::Checkbox("debug camera active", &debugCamera_->isActive);
+	ImGui::End();
+
+	if(debugCamera_->isActive) {
+		MainCamera::GetInstance()->SetCamera(debugCamera_);
+	} else {
+		MainCamera::GetInstance()->SetCamera(camera_);
+	}
+#endif // _DEBUG
+
 	GameObjectManager::GetInstance()->Update();
 
 }

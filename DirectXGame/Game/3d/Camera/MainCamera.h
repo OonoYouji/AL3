@@ -27,5 +27,6 @@ public:
 private:
 
 	BaseCamera* camera_;
+	ViewProjection viewProjection_;
 
 };
