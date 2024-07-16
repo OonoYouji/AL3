@@ -1,5 +1,8 @@
 #pragma once
 
+#include <list>
+#include <array>
+
 #include <Vector3.h>
 #include <Vector4.h>
 
@@ -27,6 +30,8 @@ public:
 	/// </summary>
 	void Draw(const Vector4& color = { 1.0f, 1.0f, 1.0f, 1.0f });
 
+	bool IsCollision(const AABB& other);
+
 public:
 
 	/// ===================================================
@@ -36,5 +41,6 @@ public:
 	Vec3f min = { 0.0f,0.0f,0.0f };
 	Vec3f max = { 0.0f,0.0f,0.0f };
 	Vec3f translation = { 0.0f, 0.0f, 0.0f };
-
 };
+
+

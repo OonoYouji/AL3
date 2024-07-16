@@ -3,7 +3,7 @@
 #include <GameObject.h>
 #include <Model.h>
 
-#include <AABB.h>
+#include <Octree.h>
 
 class Player : public GameObject {
 public:
@@ -18,11 +18,7 @@ public:
 private:
 
 	std::unique_ptr<Model> model_;
-	AABB aabb_;
 
-	std::list<AABB> polygonAABB_;
-
-	std::array<std::list<AABB*>, 8> octreeList_;
-	std::array<AABB, 8> octree_;
+	Octree octree_;
 
 };

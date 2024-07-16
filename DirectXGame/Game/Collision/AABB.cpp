@@ -8,6 +8,7 @@
 #include <PrimitiveDrawer.h>
 
 
+
 AABB::AABB() {}
 
 AABB::~AABB() {}
@@ -73,3 +74,15 @@ void AABB::Draw(const Vector4& color) {
 	}
 
 }
+
+bool AABB::IsCollision(const AABB& other) {
+	Vec3f thisMin = this->min + this->translation;
+	Vec3f thisMax = this->max + this->translation;
+	Vec3f otherMin = other.min + other.translation;
+	Vec3f otherMax = other.max + other.translation;
+	if(!(thisMin.x < otherMax.x && thisMax.x > otherMin.x)) { return false; }
+	if(!(thisMin.y < otherMax.y && thisMax.y > otherMin.y)) { return false; }
+	if(!(thisMin.z < otherMax.z && thisMax.z > otherMin.z)) { return false; }
+	return true;
+}
+
