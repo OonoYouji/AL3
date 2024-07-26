@@ -117,6 +117,7 @@
     <ClCompile Include="Game\3d\GameObject\GameObject.cpp" />
     <ClCompile Include="Game\3d\GameObject\GameObjectManager.cpp" />
     <ClCompile Include="Game\Collision\AABB.cpp" />
+    <ClCompile Include="Game\Collision\MeshCollider.cpp" />
     <ClCompile Include="Game\Collision\Octree.cpp" />
     <ClCompile Include="Game\Math\GridDraw.cpp" />
     <ClCompile Include="Game\Math\Mat4Math.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Game\3d\GameObject\GameObject.h" />
     <ClInclude Include="Game\3d\GameObject\GameObjectManager.h" />
     <ClInclude Include="Game\Collision\AABB.h" />
+    <ClInclude Include="Game\Collision\MeshCollider.h" />
     <ClInclude Include="Game\Collision\Octree.h" />
     <ClInclude Include="Game\Math\CreateName.h" />
     <ClInclude Include="Game\Math\GridDraw.h" />

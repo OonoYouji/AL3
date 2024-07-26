@@ -2,6 +2,7 @@
 
 #include <list>
 #include <array>
+#include <vector>
 
 #include <Vector3.h>
 #include <Vector4.h>
@@ -24,6 +25,8 @@ public:
 	/// </summary>
 	/// <param name="point"></param>
 	void ExpandToFit(const Vec3f& point);
+
+	void ComputeAABB(const std::vector<Vec3f>& vertices);
 
 	/// <summary>
 	/// AABBを描画

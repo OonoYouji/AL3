@@ -141,6 +141,9 @@
     <ClCompile Include="Game\Collision\Octree.cpp">
       <Filter>Game\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Collision\MeshCollider.cpp">
+      <Filter>Game\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -276,6 +279,9 @@
       <Filter>Game\Math</Filter>
     </ClInclude>
     <ClInclude Include="Game\Collision\Octree.h">
+      <Filter>Game\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Collision\MeshCollider.h">
       <Filter>Game\Collision</Filter>
     </ClInclude>
   </ItemGroup>

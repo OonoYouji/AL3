@@ -46,18 +46,25 @@ void Octree::Update() {
 
 	polygonAABB_.clear();
 	for(const auto& mesh : pModel_->GetMeshes()) {
-		for(auto& index : mesh->GetIndices()) {
-			if(index % 3 == 0) {
+		uint32_t i = 0;
+		for(uint32_t index = 0u; index < mesh->GetIndices().size(); ++index) {
+			if(i % 3 == 0) {
 				polygonAABB_.push_back(AABB());
-				continue;
+
+				auto& back = polygonAABB_.back();
+				back.ExpandToFit(TransformNormal(mesh->GetVertices()[mesh->GetIndices()[index + 0]].pos, pGameObject_->GetMatTransform()));
+				back.ExpandToFit(TransformNormal(mesh->GetVertices()[mesh->GetIndices()[index + 1]].pos, pGameObject_->GetMatTransform()));
+				back.ExpandToFit(TransformNormal(mesh->GetVertices()[mesh->GetIndices()[index + 2]].pos, pGameObject_->GetMatTransform()));
+
+				back.translation = pGameObject_->GetPosition();
+
 			}
 
-			auto& back = polygonAABB_.back();
-			back.ExpandToFit(TransformNormal(mesh->GetVertices()[index].pos, pGameObject_->GetMatTransform()));
-			back.translation = pGameObject_->GetPosition();
-
+			i++;
 		}
 	}
+
+
 
 	for(auto& aabb : polygonAABB_) {
 		for(int i = 7; i >= 0; --i) {
@@ -71,36 +78,40 @@ void Octree::Update() {
 }
 
 void Octree::Draw() {
-	aabb_.Draw();
+	//aabb_.Draw();
+
+	float alpha = 0.75f;
 
 	for(auto& tree : node_) {
-		tree.Draw({ 0.0f, 0.0f, 1.0f, 1.0f });
+		tree.Draw({ 0.0f, 0.0f, 1.0f, alpha });
 	}
 
-	/*for(auto& aabb : trees_[0]) {
-		aabb->Draw({ 1.0f, 0.0f,0.0f, 1.0f });
+	trees_[OCTREE_FRONT_LT].front()->Draw({ 1.0f, 0.0f, 0.0f, 1.0f });
+
+	/*for(auto& aabb : trees_[OCTREE_FRONT_LT]) {
+		aabb->Draw({ 1.0f, 0.0f,0.0f, alpha });
 	}
-	for(auto& aabb : trees_[1]) {
-		aabb->Draw({ 0.0f, 1.0f, 0.0f, 1.0f });
+	for(auto& aabb : trees_[OCTREE_FRONT_RT]) {
+		aabb->Draw({ 0.0f, 1.0f, 0.0f, alpha });
 	}
-	for(auto& aabb : trees_[2]) {
-		aabb->Draw({ 0.0f, 0.0f, 1.0f, 1.0f });
+	for(auto& aabb : trees_[OCTREE_FRONT_RB]) {
+		aabb->Draw({ 0.0f, 0.0f, 1.0f, alpha });
 	}
-	for(auto& aabb : trees_[3]) {
-		aabb->Draw({ 0.0f, 0.0f, 0.0f, 1.0f });
+	for(auto& aabb : trees_[OCTREE_FRONT_LB]) {
+		aabb->Draw({ 0.0f, 0.0f, 0.0f, alpha });
 	}
 
-	for(auto& aabb : trees_[4]) {
-		aabb->Draw({ 1.0f, 1.0f, 0.0f, 1.0f });
+	for(auto& aabb : trees_[OCTREE_BACK_LT]) {
+		aabb->Draw({ 1.0f, 1.0f, 0.0f, alpha });
 	}
-	for(auto& aabb : trees_[5]) {
-		aabb->Draw({ 0.0f, 1.0f, 1.0f, 1.0f });
+	for(auto& aabb : trees_[OCTREE_BACK_RT]) {
+		aabb->Draw({ 0.0f, 1.0f, 1.0f, alpha });
 	}
-	for(auto& aabb : trees_[6]) {
-		aabb->Draw({ 1.0f, 0.5f, 0.0f, 1.0f });
+	for(auto& aabb : trees_[OCTREE_BACK_RB]) {
+		aabb->Draw({ 1.0f, 0.5f, 0.0f, alpha });
 	}
-	for(auto& aabb : trees_[7]) {
-		aabb->Draw({ 1.0f, 1.0f, 0.0f, 1.0f });
+	for(auto& aabb : trees_[OCTREE_BACK_LB]) {
+		aabb->Draw({ 1.0f, 1.0f, 0.0f, alpha });
 	}*/
 
 }

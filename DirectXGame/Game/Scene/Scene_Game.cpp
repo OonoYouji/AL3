@@ -77,7 +77,7 @@ void Scene_Game::Object3dDraw() {
 
 	GameObjectManager::GetInstance()->Draw();
 
-	GridDraw::GetInstance()->Draw();
+	//GridDraw::GetInstance()->Draw();
 }
 
 

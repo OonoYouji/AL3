@@ -7,6 +7,8 @@
 
 #include <PrimitiveDrawer.h>
 
+#include <Vec3Math.h>
+
 
 
 AABB::AABB() {}
@@ -27,6 +29,40 @@ void AABB::ExpandToFit(const Vec3f& point) {
 	max.x = std::max(max.x, point.x);
 	max.y = std::max(max.y, point.y);
 	max.z = std::max(max.z, point.z);
+
+}
+
+
+
+void AABB::ComputeAABB(const std::vector<Vec3f>& vertices) {
+	Vec3f maxDir = Vec3f(1, 1, 1);
+	Vec3f minDir = Vec3f(-1, -1, -1);
+
+	min = vertices[0];
+	max = vertices[0];
+
+	float minDot = Dot(min, minDir);
+	float maxDot = Dot(max, maxDir);
+
+	///- 最小と最大を計算
+	for(uint32_t index = 1u; index < vertices.size(); ++index) {
+
+		float d = Dot(vertices[index], minDir);
+		if(d > minDot) {
+			minDot = d;
+			min = vertices[index];
+		}
+	}
+
+	for(uint32_t index = 1u; index < vertices.size(); ++index) {
+
+		float d = Dot(vertices[index], maxDir);
+		if(d > maxDot) {
+			maxDot = d;
+			max = vertices[index];
+		}
+
+	}
 
 }
 
