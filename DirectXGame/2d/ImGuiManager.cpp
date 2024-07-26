@@ -31,7 +31,7 @@ void ImGuiManager::Initialize(
 
 	// ImGuiのコンテキストを生成
 	ImGui::CreateContext();
-
+	
 	ImGuiIO& io = ImGui::GetIO();
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 

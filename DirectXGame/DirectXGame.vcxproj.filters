@@ -96,17 +96,44 @@
     <ClCompile Include="2d\ImGuiManager.cpp">
       <Filter>ソース ファイル\2d</Filter>
     </ClCompile>
+    <ClCompile Include="Game\3d\Actor\Player\Player.cpp">
+      <Filter>Game\3d\Actor\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3d\Camera\BaseCamera.cpp">
+      <Filter>Game\3d\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3d\Camera\GameCamera.cpp">
+      <Filter>Game\3d\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3d\Camera\MainCamera.cpp">
+      <Filter>Game\3d\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3d\Camera\MyDebugCamera.cpp">
+      <Filter>Game\3d\Camera</Filter>
+    </ClCompile>
     <ClCompile Include="Game\3d\GameObject\GameObject.cpp">
       <Filter>Game\3d\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Game\3d\GameObject\GameObjectManager.cpp">
       <Filter>Game\3d\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Game\3d\Camera\BaseCamera.cpp">
-      <Filter>Game\3d\Camera</Filter>
+    <ClCompile Include="Game\Collision\AABB.cpp">
+      <Filter>Game\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="Game\3d\Camera\MainCamera.cpp">
-      <Filter>Game\3d\Camera</Filter>
+    <ClCompile Include="Game\Collision\MeshCollider.cpp">
+      <Filter>Game\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Collision\Octree.cpp">
+      <Filter>Game\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Math\GridDraw.cpp">
+      <Filter>Game\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Math\Mat4Math.cpp">
+      <Filter>Game\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Math\Vec3Math.cpp">
+      <Filter>Game\Math</Filter>
     </ClCompile>
     <ClCompile Include="Game\Scene\BaseScene.cpp">
       <Filter>Game\Scene</Filter>
@@ -116,33 +143,6 @@
     </ClCompile>
     <ClCompile Include="Game\Scene\SceneManager.cpp">
       <Filter>Game\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Math\Mat4Math.cpp">
-      <Filter>Game\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\3d\Actor\Player\Player.cpp">
-      <Filter>Game\3d\Actor\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\3d\Camera\GameCamera.cpp">
-      <Filter>Game\3d\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Math\GridDraw.cpp">
-      <Filter>Game\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Collision\AABB.cpp">
-      <Filter>Game\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\3d\Camera\MyDebugCamera.cpp">
-      <Filter>Game\3d\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Math\Vec3Math.cpp">
-      <Filter>Game\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Collision\Octree.cpp">
-      <Filter>Game\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Collision\MeshCollider.cpp">
-      <Filter>Game\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -233,17 +233,47 @@
     <ClInclude Include="3d\ObjectColor.h">
       <Filter>ヘッダー ファイル\3d</Filter>
     </ClInclude>
+    <ClInclude Include="Game\3d\Actor\Player\Player.h">
+      <Filter>Game\3d\Actor\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Camera\BaseCamera.h">
+      <Filter>Game\3d\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Camera\GameCamera.h">
+      <Filter>Game\3d\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Camera\MainCamera.h">
+      <Filter>Game\3d\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Camera\MyDebugCamera.h">
+      <Filter>Game\3d\Camera</Filter>
+    </ClInclude>
     <ClInclude Include="Game\3d\GameObject\GameObject.h">
       <Filter>Game\3d\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Game\3d\GameObject\GameObjectManager.h">
       <Filter>Game\3d\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Game\3d\Camera\BaseCamera.h">
-      <Filter>Game\3d\Camera</Filter>
+    <ClInclude Include="Game\Collision\AABB.h">
+      <Filter>Game\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Game\3d\Camera\MainCamera.h">
-      <Filter>Game\3d\Camera</Filter>
+    <ClInclude Include="Game\Collision\MeshCollider.h">
+      <Filter>Game\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Collision\Octree.h">
+      <Filter>Game\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Math\CreateName.h">
+      <Filter>Game\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Math\GridDraw.h">
+      <Filter>Game\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Math\Mat4Math.h">
+      <Filter>Game\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Math\Vec3Math.h">
+      <Filter>Game\Math</Filter>
     </ClInclude>
     <ClInclude Include="Game\Scene\BaseScene.h">
       <Filter>Game\Scene</Filter>
@@ -253,36 +283,6 @@
     </ClInclude>
     <ClInclude Include="Game\Scene\SceneManager.h">
       <Filter>Game\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Math\Mat4Math.h">
-      <Filter>Game\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Math\CreateName.h">
-      <Filter>Game\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\3d\Actor\Player\Player.h">
-      <Filter>Game\3d\Actor\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\3d\Camera\GameCamera.h">
-      <Filter>Game\3d\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Math\GridDraw.h">
-      <Filter>Game\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Collision\AABB.h">
-      <Filter>Game\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\3d\Camera\MyDebugCamera.h">
-      <Filter>Game\3d\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Math\Vec3Math.h">
-      <Filter>Game\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Collision\Octree.h">
-      <Filter>Game\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Collision\MeshCollider.h">
-      <Filter>Game\Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

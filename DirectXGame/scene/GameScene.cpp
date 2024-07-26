@@ -15,15 +15,7 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 }
 
-void GameScene::Update() {
-
-	ImGui::Begin("A");
-	ImGui::End();
-	
-	ImGui::Begin("D");
-	ImGui::End();
-
-}
+void GameScene::Update() {}
 
 void GameScene::Draw() {
 

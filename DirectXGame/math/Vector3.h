@@ -120,7 +120,7 @@ inline Vector3& Vector3::operator*=(float value) {
 }
 
 inline bool Vector3::operator!=(const Vector3& other) {
-	return this->x != other.x 
-		|| this->y != other.y 
+	return this->x != other.x
+		|| this->y != other.y
 		|| this->z != other.z;
 }

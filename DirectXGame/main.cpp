@@ -19,6 +19,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Audio* audio = nullptr;
 	AxisIndicator* axisIndicator = nullptr;
 	PrimitiveDrawer* primitiveDrawer = nullptr;
+	GameScene* gameScene = nullptr;
 
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
@@ -58,6 +59,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	primitiveDrawer = PrimitiveDrawer::GetInstance();
 	primitiveDrawer->Initialize();
 #pragma endregion
+
+	// ゲームシーンの初期化
+	gameScene = new GameScene();
+	gameScene->Initialize();
 
 	SceneManager* sceneManager = SceneManager::GetInstance();
 	sceneManager->Initialize();
@@ -99,6 +104,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		dxCommon->PostDraw();
 	}
 
+	// 各種解放
+	delete gameScene;
 	// 3Dモデル解放
 	Model::StaticFinalize();
 	audio->Finalize();
