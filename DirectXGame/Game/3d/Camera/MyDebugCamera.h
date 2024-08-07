@@ -22,7 +22,7 @@ private:
 
 	Input* input_ = nullptr;
 
-	Vec3f velocity_;
+	Vec3 velocity_;
 	const float kSpeed_ = 0.025f;
 
 };

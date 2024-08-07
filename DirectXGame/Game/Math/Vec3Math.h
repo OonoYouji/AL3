@@ -9,7 +9,7 @@
 /// </summary>
 /// <param name="v">三次元ベクトル</param>
 /// <returns>単位ベクトル</returns>
-Vec3f Normalize(const Vec3f& v);
+Vec3 Normalize(const Vec3& v);
 
 
 /// <summary>
@@ -17,7 +17,7 @@ Vec3f Normalize(const Vec3f& v);
 /// </summary>
 /// <param name="v">三次元ベクトル</param>
 /// <returns>ベクトルの長さ</returns>
-float Length(const Vec3f& v);
+float Length(const Vec3& v);
 
 /// <summary>
 /// 三次元ベクトルの線形補完
@@ -26,7 +26,7 @@ float Length(const Vec3f& v);
 /// <param name="v2"></param>
 /// <param name="t"></param>
 /// <returns></returns>
-Vec3f Lerp(const Vec3f& v1, const Vec3f& v2, float t);
+Vec3 Lerp(const Vec3& v1, const Vec3& v2, float t);
 
 
 /// <summary>
@@ -36,7 +36,7 @@ Vec3f Lerp(const Vec3f& v1, const Vec3f& v2, float t);
 /// <param name="v2"></param>
 /// <param name="t"></param>
 /// <returns></returns>
-Vec3f Slerp(const Vec3f& v1, const Vec3f& v2, float t);
+Vec3 Slerp(const Vec3& v1, const Vec3& v2, float t);
 
 
 /// <summary>
@@ -45,4 +45,4 @@ Vec3f Slerp(const Vec3f& v1, const Vec3f& v2, float t);
 /// <param name="v1"></param>
 /// <param name="v2"></param>
 /// <returns></returns>
-float Dot(const Vec3f& v1, const Vec3f& v2);
+float Dot(const Vec3& v1, const Vec3& v2);

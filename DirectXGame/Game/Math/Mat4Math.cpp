@@ -3,14 +3,14 @@
 #include <cmath>
 #include <cassert>
 
-Mat4 MakeAffine(const Vec3f& scale, const Vec3f& rotate, const Vec3f& translate) {
+Mat4 MakeAffine(const Vec3& scale, const Vec3& rotate, const Vec3& translate) {
 	Mat4 matScale = MakeScale(scale);
 	Mat4 matRotate = MakeRotate(rotate);
 	Mat4 matTranslate = MakeTranslate(translate);
 	return matScale * matRotate * matTranslate;
 }
 
-Mat4 MakeScale(const Vec3f& scale) {
+Mat4 MakeScale(const Vec3& scale) {
 	return {
 		scale.x, 0.0f, 0.0f, 0.0f,
 		0.0f, scale.y, 0.0f, 0.0f,
@@ -46,14 +46,14 @@ Mat4 MakeRotateZ(float theta) {
 	};
 }
 
-Mat4 MakeRotate(const Vec3f& rotate) {
+Mat4 MakeRotate(const Vec3& rotate) {
 	Mat4 x = MakeRotateX(rotate.x);
 	Mat4 y = MakeRotateY(rotate.y);
 	Mat4 z = MakeRotateZ(rotate.z);
 	return x * y * z;
 }
 
-Mat4 MakeTranslate(const Vec3f& translate) {
+Mat4 MakeTranslate(const Vec3& translate) {
 	return {
 		1.0f,0.0f,0.0f,0.0f,
 		0.0f,1.0f,0.0f,0.0f,
@@ -254,9 +254,9 @@ Mat4 MakeIdentity() {
 	};
 }
 
-Vec3f Transform(const Vec3f& v, const Mat4& m) {
+Vec3 Transform(const Vec3& v, const Mat4& m) {
 	//w=1がデカルト座標系であるので(x,y,1)のベクトルとしてmatrixとの積をとる
-	Vec3f result{ 0.0f,0.0f,0.0f };
+	Vec3 result{ 0.0f,0.0f,0.0f };
 
 	result.x = v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0] + 1.0f * m.m[3][0];
 	result.y = v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1] + 1.0f * m.m[3][1];
@@ -275,8 +275,8 @@ Vec3f Transform(const Vec3f& v, const Mat4& m) {
 	return result;
 }
 
-Vec3f TransformNormal(const Vec3f& v, const Mat4& m) {
-	Vec3f result{
+Vec3 TransformNormal(const Vec3& v, const Mat4& m) {
+	Vec3 result{
 		v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0],
 		v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1],
 		v.x * m.m[0][2] + v.y * m.m[1][2] + v.z * m.m[2][2]

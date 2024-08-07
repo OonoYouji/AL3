@@ -23,7 +23,7 @@ struct Vector3 final {
 
 };
 
-using Vec3f = Vector3;
+using Vec3 = Vector3;
 
 
 inline Vector3 operator+(const Vector3& v1, const Vector3& v2) {

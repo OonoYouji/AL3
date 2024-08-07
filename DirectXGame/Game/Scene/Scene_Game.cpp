@@ -2,6 +2,7 @@
 
 #include <imgui.h>
 
+#include <WorldTime.h>
 #include <GridDraw.h>
 #include <BaseGameObject.h>
 #include <GameObjectManager.h>
@@ -9,6 +10,7 @@
 #include <GameCamera.h>
 #include <MainCamera.h>
 #include <MyDebugCamera.h>
+
 
 #include <Player.h>
 
@@ -55,6 +57,8 @@ void Scene_Game::Update() {
 		MainCamera::GetInstance()->SetCamera(camera_);
 	}
 #endif // _DEBUG
+
+	WorldTime::GetInstance()->ImGuiDebug();
 
 	GameObjectManager::GetInstance()->Update();
 

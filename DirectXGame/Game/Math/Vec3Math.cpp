@@ -4,28 +4,28 @@
 #include <iostream>
 
 
-Vec3f Normalize(const Vec3f& v) {
+Vec3 Normalize(const Vec3& v) {
 	float len = Length(v);
 	if(len != 0) { return v / len; }
 	return v;
 }
 
-float Length(const Vec3f& v) {
+float Length(const Vec3& v) {
 	return std::sqrt((v.x * v.x) + (v.y * v.y) + (v.z * v.z));
 }
 
-Vec3f Lerp(const Vec3f& v1, const Vec3f& v2, float t) {
-	return Vec3f(
+Vec3 Lerp(const Vec3& v1, const Vec3& v2, float t) {
+	return Vec3(
 		std::lerp(v1.x, v2.x, t),
 		std::lerp(v1.y, v2.y, t),
 		std::lerp(v1.z, v2.z, t)
 	);
 }
 
-Vec3f Slerp(const Vec3f& v1, const Vec3f& v2, float t) {
+Vec3 Slerp(const Vec3& v1, const Vec3& v2, float t) {
 
-	Vec3f nv1 = Normalize(v1);
-	Vec3f nv2 = Normalize(v2);
+	Vec3 nv1 = Normalize(v1);
+	Vec3 nv2 = Normalize(v2);
 
 	float dot = Dot(nv1, nv2);
 
@@ -35,7 +35,7 @@ Vec3f Slerp(const Vec3f& v1, const Vec3f& v2, float t) {
 	float sinThetaFrom = std::sin((1.0f - t) * theta);
 	float sinThetaTo = std::sin(t * theta);
 
-	Vec3f nLerpVector = nv1 * (sinThetaFrom / sinTheta) + nv2 * (sinThetaTo / sinTheta);
+	Vec3 nLerpVector = nv1 * (sinThetaFrom / sinTheta) + nv2 * (sinThetaTo / sinTheta);
 	if(sinTheta < 1.0e-5) {
 		nLerpVector = nv1;
 	} else {
@@ -49,6 +49,6 @@ Vec3f Slerp(const Vec3f& v1, const Vec3f& v2, float t) {
 	return nLerpVector * length;
 }
 
-float Dot(const Vec3f& v1, const Vec3f& v2) {
+float Dot(const Vec3& v1, const Vec3& v2) {
 	return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
 }

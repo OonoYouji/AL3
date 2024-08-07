@@ -21,7 +21,7 @@ void MyDebugCamera::Update() {
 	velocity_ = { 0.0f,0.0f,0.0f };
 
 	if(input_->IsPressMouse(2)) {
-		velocity_ += (Vec3f(
+		velocity_ += (Vec3(
 			static_cast<float>(input_->GetMouseMove().lX), 
 			static_cast<float>(input_->GetMouseMove().lY), 
 			0.0f) / 256.0f) * -1.0f;

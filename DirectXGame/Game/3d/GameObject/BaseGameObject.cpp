@@ -54,7 +54,7 @@ const Mat4& BaseGameObject::GetMatTransform() const {
 /// ===================================================
 /// 座標のゲット
 /// ===================================================
-const Vec3f BaseGameObject::GetPosition() const {
+const Vec3 BaseGameObject::GetPosition() const {
 	return Transform({}, worldTransform_.matWorld_);
 }
 
@@ -163,7 +163,7 @@ void BaseGameObject::Group::SetPtr(const std::string& key, T* ptr) {
 /// ---------------------------------------------------
 template void BaseGameObject::Group::SetPtr<int>(const std::string& key, int* ptr);
 template void BaseGameObject::Group::SetPtr<float>(const std::string& key, float* ptr);
-template void BaseGameObject::Group::SetPtr<Vec3f>(const std::string& key, Vec3f* ptr);
+template void BaseGameObject::Group::SetPtr<Vec3>(const std::string& key, Vec3* ptr);
 template void BaseGameObject::Group::SetPtr<bool>(const std::string& key, bool* ptr);
 template void BaseGameObject::Group::SetPtr<std::string>(const std::string& key, std::string* ptr);
 
@@ -363,7 +363,7 @@ void BaseGameObject::SaveFile() {
 
 			///- Vector3
 			if(std::holds_alternative<Vector3>(value)) {
-				Vec3f v = std::get<Vector3>(value);
+				Vec3 v = std::get<Vector3>(value);
 				root[GetName()][group.first][item.first] = json::array({ v.x, v.y, v.z });
 				continue;
 			}
@@ -463,7 +463,7 @@ void BaseGameObject::LoadFile(const std::string& key, const std::string& filePat
 
 				///- Vector3
 				if(itItem->is_array() && itItem->size() == 3) {
-					Vec3f value = { itItem->at(0), itItem->at(1), itItem->at(2) };
+					Vec3 value = { itItem->at(0), itItem->at(1), itItem->at(2) };
 					newGroup.SetValue(itItem.key(), value);
 					continue;
 				}
