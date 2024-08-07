@@ -19,6 +19,10 @@ void GameObjectManager::Initialize() {
 
 }
 
+void GameObjectManager::Finalize() {
+	objects_.clear();
+}
+
 
 /// ===================================================
 /// 更新
@@ -53,6 +57,18 @@ void GameObjectManager::Draw() {
 void GameObjectManager::AddGameObject(BaseGameObject* object) {
 	std::unique_ptr<BaseGameObject> newObject(object);
 	objects_.push_back(std::move(newObject));
+}
+
+void GameObjectManager::SubGameObject(BaseGameObject* object) {
+	auto it = std::find_if(objects_.begin(), objects_.end(),
+						   [object](const std::unique_ptr<BaseGameObject>& obj) {
+		return obj.get() == object;
+	});
+
+	if(it != objects_.end()) {
+		objects_.erase(it);
+	}
+
 }
 
 

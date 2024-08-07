@@ -21,6 +21,10 @@ void SceneManager::Initialize() {
 	
 }
 
+void SceneManager::Finalize() {
+	scene_.reset();
+}
+
 
 /// ===================================================
 /// 更新

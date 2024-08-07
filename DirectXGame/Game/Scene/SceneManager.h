@@ -24,6 +24,8 @@ public:
 	/// </summary>
 	void Initialize();
 
+	void Finalize();
+
 	/// <summary>
 	/// 更新
 	/// </summary>

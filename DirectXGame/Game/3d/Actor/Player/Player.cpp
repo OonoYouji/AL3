@@ -1,3 +1,4 @@
+#define NOMINMAX
 #include "Player.h"
 
 #include <cassert>
@@ -5,18 +6,23 @@
 
 #include <Input.h>
 #include <MainCamera.h>
+#include <WorldTime.h>
+#include <GameObjectManager.h>
 
 #include <CreateName.h>
 #include <Mat4Math.h>
 
-#include <WorldTime.h>
+#include <PlayerBullet.h>
+
 
 
 Player::Player() {
 	SetName(CreateName(this));
 	SetTag("Player");
 }
-Player::~Player() {}
+Player::~Player() {
+	bullets_.clear();
+}
 
 
 
@@ -25,6 +31,7 @@ void Player::Initialize() {
 	input_ = Input::GetInstance();
 
 	model_.reset(Model::CreateSphere());
+	bulletModel_.reset(Model::Create());
 
 	worldTransform_.Initialize();
 
@@ -43,9 +50,7 @@ void Player::Update() {
 
 	UpdateMatrix();
 
-	nextAttenuation_ += float(input_->PushKey(DIK_UP) - input_->PushKey(DIK_DOWN)) / 60.0f;
-	nextAttenuation_ = std::clamp(nextAttenuation_, 0.2f, 1.0f);
-	WorldTime::SetAttenuation(nextAttenuation_);
+
 
 	move_ = {
 		float(input_->PushKey(DIK_D) - input_->PushKey(DIK_A)),
@@ -54,8 +59,34 @@ void Player::Update() {
 
 	worldTransform_.translation_ += move_ * speed_ * WorldTime::FrameTime();
 
-	color_.SetColor({ 1.0f,1.0f,1.0f,0.5f });
-	color_.TransferMatrix();
+
+	if(move_ != Vec3(0.0f, 0.0f)) {
+		leftShootCT_ = std::min(leftShootCT_ - (1.0f * WorldTime::GetAttenuation()), kShootCT_);
+		if(leftShootCT_ <= 0.0f) {
+			leftShootCT_ = kShootCT_;
+			Fire();
+		}
+
+		nextAttenuation_ += 1.0f / 120.0f;
+	} else {
+		nextAttenuation_ -= 1.0f / 20.0f;
+	}
+
+	nextAttenuation_ = std::clamp(nextAttenuation_, 0.0f, 1.0f);
+	WorldTime::SetAttenuation(nextAttenuation_);
+
+
+	//for(auto& bullet : bullets_) {
+	//	bullet->Update();
+	//}
+
+	bullets_.remove_if([](PlayerBullet* bullet) {
+		if(bullet->IsDesctory()) {
+			GameObjectManager::GetInstance()->SubGameObject(bullet);
+			return true;
+		}
+		return false;
+	});
 
 	UpdateMatrix();
 }
@@ -65,4 +96,14 @@ void Player::Update() {
 void Player::Draw() {
 	model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection(), &color_);
 
+
+}
+
+
+void Player::Fire() {
+	PlayerBullet* newBullet(new PlayerBullet);
+	newBullet->Initialize();
+	newBullet->SetModel(bulletModel_.get());
+	newBullet->SetPos(GetPosition());
+	bullets_.push_back(newBullet);
 }

@@ -24,6 +24,8 @@ public:
 	/// </summary>
 	void Initialize();
 
+	void Finalize();
+
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -39,6 +41,12 @@ public:
 	/// </summary>
 	/// <param name="object"></param>
 	void AddGameObject(BaseGameObject* object);
+
+	/// <summary>
+	/// BaseGameObjectの削除
+	/// </summary>
+	/// <param name="object"></param>
+	void SubGameObject(BaseGameObject* object);
 
 #pragma region ImGui
 	/// <summary>

@@ -11,7 +11,7 @@ public:
 	}
 
 	/// <summary>
-	/// Frame単位での時間 * 減衰度の時間を返す
+	/// deltaTime * 減衰度の時間を返す
 	/// </summary>
 	/// <returns></returns>
 	static float FrameTime() {

@@ -110,6 +110,7 @@
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="Game\3d\Actor\Player\Player.cpp" />
+    <ClCompile Include="Game\3d\Actor\Player\PlayerBullet.cpp" />
     <ClCompile Include="Game\3d\Camera\BaseCamera.cpp" />
     <ClCompile Include="Game\3d\Camera\GameCamera.cpp" />
     <ClCompile Include="Game\3d\Camera\MainCamera.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="base\TextureManager.h" />
     <ClInclude Include="base\WinApp.h" />
     <ClInclude Include="Game\3d\Actor\Player\Player.h" />
+    <ClInclude Include="Game\3d\Actor\Player\PlayerBullet.h" />
     <ClInclude Include="Game\3d\Camera\BaseCamera.h" />
     <ClInclude Include="Game\3d\Camera\GameCamera.h" />
     <ClInclude Include="Game\3d\Camera\MainCamera.h" />
