@@ -48,10 +48,6 @@ void Player::Initialize() {
 
 void Player::Update() {
 
-	UpdateMatrix();
-
-
-
 	move_ = {
 		float(input_->PushKey(DIK_D) - input_->PushKey(DIK_A)),
 		float(input_->PushKey(DIK_W) - input_->PushKey(DIK_S))
@@ -59,14 +55,26 @@ void Player::Update() {
 
 	worldTransform_.translation_ += move_ * speed_ * WorldTime::FrameTime();
 
+	UpdateMatrix();
 
-	if(move_ != Vec3(0.0f, 0.0f)) {
+
+
+	/// -----------------------------------------------------------------
+	/// 弾を打つ処理
+	/// -----------------------------------------------------------------
+	if(move_ != Vec3(0, 0, 0)) {
 		leftShootCT_ = std::min(leftShootCT_ - (1.0f * WorldTime::GetAttenuation()), kShootCT_);
 		if(leftShootCT_ <= 0.0f) {
 			leftShootCT_ = kShootCT_;
 			Fire();
 		}
+	}
 
+
+	/// -----------------------------------------------------------------
+	/// 減衰度を計算する
+	/// -----------------------------------------------------------------
+	if(move_ != Vec3(0, 0, 0)) {
 		nextAttenuation_ += 1.0f / 120.0f;
 	} else {
 		nextAttenuation_ -= 1.0f / 20.0f;
@@ -76,10 +84,8 @@ void Player::Update() {
 	WorldTime::SetAttenuation(nextAttenuation_);
 
 
-	//for(auto& bullet : bullets_) {
-	//	bullet->Update();
-	//}
 
+	/// 消滅した弾をリストから外す処理
 	bullets_.remove_if([](PlayerBullet* bullet) {
 		if(bullet->IsDesctory()) {
 			GameObjectManager::GetInstance()->SubGameObject(bullet);
