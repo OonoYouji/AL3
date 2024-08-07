@@ -10,11 +10,11 @@
 /// <summary>
 /// すべてのゲームオブジェクトの基本となるクラス
 /// </summary>
-class GameObject {
+class BaseGameObject {
 public:
 
-	GameObject();
-	virtual ~GameObject() = default;
+	BaseGameObject();
+	virtual ~BaseGameObject() = default;
 
 public:
 
@@ -51,10 +51,10 @@ public:
 
 
 #pragma region Parent Child
-	void SetParent(GameObject* parent);
-	GameObject* GetParent() const;
-	void AddChild(GameObject* child);
-	const std::list<GameObject*>& GetChilds() const;
+	void SetParent(BaseGameObject* parent);
+	BaseGameObject* GetParent() const;
+	void AddChild(BaseGameObject* child);
+	const std::list<BaseGameObject*>& GetChilds() const;
 #pragma endregion
 
 #pragma region Accesser Tag Name
@@ -143,8 +143,8 @@ protected:
 
 	WorldTransform worldTransform_;
 
-	GameObject* parent_;
-	std::list<GameObject*> childs_;
+	BaseGameObject* parent_;
+	std::list<BaseGameObject*> childs_;
 
 	std::unordered_map<std::string, Group> groups_;
 

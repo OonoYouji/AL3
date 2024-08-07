@@ -1,4 +1,4 @@
-#include "GameObject.h"
+#include "BaseGameObject.h"
 
 #include <json.hpp>
 
@@ -20,7 +20,7 @@ using json = nlohmann::json;
 /// ===================================================
 /// コンストラクタ
 /// ===================================================
-GameObject::GameObject() {
+BaseGameObject::BaseGameObject() {
 	GameObjectManager::GetInstance()->AddGameObject(this);
 	CreateWorldTransformGruop();
 
@@ -33,7 +33,7 @@ GameObject::GameObject() {
 /// ===================================================
 /// 行列の更新
 /// ===================================================
-void GameObject::UpdateMatrix() {
+void BaseGameObject::UpdateMatrix() {
 	worldTransform_.matWorld_ = MakeAffine(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
 	if(parent_) {
 		worldTransform_.matWorld_ *= parent_->GetMatTransform();
@@ -46,7 +46,7 @@ void GameObject::UpdateMatrix() {
 /// ===================================================
 /// 行列のゲット
 /// ===================================================
-const Mat4& GameObject::GetMatTransform() const {
+const Mat4& BaseGameObject::GetMatTransform() const {
 	return worldTransform_.matWorld_;
 }
 
@@ -54,7 +54,7 @@ const Mat4& GameObject::GetMatTransform() const {
 /// ===================================================
 /// 座標のゲット
 /// ===================================================
-const Vec3f GameObject::GetPosition() const {
+const Vec3f BaseGameObject::GetPosition() const {
 	return Transform({}, worldTransform_.matWorld_);
 }
 
@@ -64,7 +64,7 @@ const Vec3f GameObject::GetPosition() const {
 /// ===================================================
 /// 親のセット
 /// ===================================================
-void GameObject::SetParent(GameObject* parent) {
+void BaseGameObject::SetParent(BaseGameObject* parent) {
 	parent_ = parent;
 	parent->AddChild(this); //- 相手の子供に自身を追加
 }
@@ -73,7 +73,7 @@ void GameObject::SetParent(GameObject* parent) {
 /// ===================================================
 /// 親のゲット
 /// ===================================================
-GameObject* GameObject::GetParent() const {
+BaseGameObject* BaseGameObject::GetParent() const {
 	return parent_;
 }
 
@@ -81,7 +81,7 @@ GameObject* GameObject::GetParent() const {
 /// ===================================================
 /// 子供の追加
 /// ===================================================
-void GameObject::AddChild(GameObject* child) {
+void BaseGameObject::AddChild(BaseGameObject* child) {
 	childs_.push_back(child);
 }
 
@@ -89,7 +89,7 @@ void GameObject::AddChild(GameObject* child) {
 /// ===================================================
 /// 子供のゲット
 /// ===================================================
-const std::list<GameObject*>& GameObject::GetChilds() const {
+const std::list<BaseGameObject*>& BaseGameObject::GetChilds() const {
 	return childs_;
 }
 #pragma endregion
@@ -99,7 +99,7 @@ const std::list<GameObject*>& GameObject::GetChilds() const {
 /// ===================================================
 /// タグのセット
 /// ===================================================
-void GameObject::SetTag(const std::string& tag) {
+void BaseGameObject::SetTag(const std::string& tag) {
 	tag_ = tag;
 }
 
@@ -107,7 +107,7 @@ void GameObject::SetTag(const std::string& tag) {
 /// ===================================================
 /// タグのゲット
 /// ===================================================
-const std::string& GameObject::GetTag() const {
+const std::string& BaseGameObject::GetTag() const {
 	return tag_;
 }
 
@@ -115,7 +115,7 @@ const std::string& GameObject::GetTag() const {
 /// ===================================================
 /// 名前のセット
 /// ===================================================
-void GameObject::SetName(const std::string& name) {
+void BaseGameObject::SetName(const std::string& name) {
 	name_ = name;
 }
 
@@ -123,7 +123,7 @@ void GameObject::SetName(const std::string& name) {
 /// ===================================================
 /// 名前のゲット
 /// ===================================================
-const std::string& GameObject::GetName() const {
+const std::string& BaseGameObject::GetName() const {
 	return name_;
 }
 #pragma endregion 
@@ -133,10 +133,10 @@ const std::string& GameObject::GetName() const {
 #pragma region json file 保存 読み込み
 
 /// ===================================================
-/// GameObject::Group::pointerのsetter
+/// BaseGameObject::Group::pointerのsetter
 /// ===================================================
 template<typename T>
-void GameObject::Group::SetPtr(const std::string& key, T* ptr) {
+void BaseGameObject::Group::SetPtr(const std::string& key, T* ptr) {
 	auto it = items.find(key);
 	if(it != items.end()) { //- あったら
 
@@ -161,19 +161,19 @@ void GameObject::Group::SetPtr(const std::string& key, T* ptr) {
 /// ---------------------------------------------------
 /// SetPtr関数の明示インスタンス化
 /// ---------------------------------------------------
-template void GameObject::Group::SetPtr<int>(const std::string& key, int* ptr);
-template void GameObject::Group::SetPtr<float>(const std::string& key, float* ptr);
-template void GameObject::Group::SetPtr<Vec3f>(const std::string& key, Vec3f* ptr);
-template void GameObject::Group::SetPtr<bool>(const std::string& key, bool* ptr);
-template void GameObject::Group::SetPtr<std::string>(const std::string& key, std::string* ptr);
+template void BaseGameObject::Group::SetPtr<int>(const std::string& key, int* ptr);
+template void BaseGameObject::Group::SetPtr<float>(const std::string& key, float* ptr);
+template void BaseGameObject::Group::SetPtr<Vec3f>(const std::string& key, Vec3f* ptr);
+template void BaseGameObject::Group::SetPtr<bool>(const std::string& key, bool* ptr);
+template void BaseGameObject::Group::SetPtr<std::string>(const std::string& key, std::string* ptr);
 
 
 
 /// ===================================================
-/// GameObject::Group::値のsetter
+/// BaseGameObject::Group::値のsetter
 /// ===================================================
 template<typename T>
-void GameObject::Group::SetValue(const std::string& key, const T& value) {
+void BaseGameObject::Group::SetValue(const std::string& key, const T& value) {
 	///- なかったら
 	if(items.find(key) == items.end()) {
 
@@ -199,35 +199,35 @@ void GameObject::Group::SetValue(const std::string& key, const T& value) {
 /// ---------------------------------------------------
 /// SetValue関数の明示インスタンス化
 /// ---------------------------------------------------
-template void GameObject::Group::SetValue<int>(const std::string& key, const int& value);
-template void GameObject::Group::SetValue<float>(const std::string& key, const float& value);
-template void GameObject::Group::SetValue<Vector3>(const std::string& key, const Vector3& value);
-template void GameObject::Group::SetValue<bool>(const std::string& key, const bool& value);
-template void GameObject::Group::SetValue<std::string>(const std::string& key, const std::string& value);
+template void BaseGameObject::Group::SetValue<int>(const std::string& key, const int& value);
+template void BaseGameObject::Group::SetValue<float>(const std::string& key, const float& value);
+template void BaseGameObject::Group::SetValue<Vector3>(const std::string& key, const Vector3& value);
+template void BaseGameObject::Group::SetValue<bool>(const std::string& key, const bool& value);
+template void BaseGameObject::Group::SetValue<std::string>(const std::string& key, const std::string& value);
 
 
 /// ===================================================
-/// GameObject::Group::値のgetter
+/// BaseGameObject::Group::値のgetter
 /// ===================================================
 template<typename T>
-const T& GameObject::Group::GetItem(const std::string& key) {
+const T& BaseGameObject::Group::GetItem(const std::string& key) {
 	return std::get<T>(items.at(key).variable.second);
 }
 
 /// ---------------------------------------------------
 /// GetItem関数の明示インスタンス化
 /// ---------------------------------------------------
-template const int& GameObject::Group::GetItem<int>(const std::string& key);
-template const float& GameObject::Group::GetItem<float>(const std::string& key);
-template const Vector3& GameObject::Group::GetItem<Vector3>(const std::string& key);
-template const bool& GameObject::Group::GetItem<bool>(const std::string& key);
-template const std::string& GameObject::Group::GetItem<std::string>(const std::string& key);
+template const int& BaseGameObject::Group::GetItem<int>(const std::string& key);
+template const float& BaseGameObject::Group::GetItem<float>(const std::string& key);
+template const Vector3& BaseGameObject::Group::GetItem<Vector3>(const std::string& key);
+template const bool& BaseGameObject::Group::GetItem<bool>(const std::string& key);
+template const std::string& BaseGameObject::Group::GetItem<std::string>(const std::string& key);
 
 
 /// ===================================================
 /// 各Itemのデバッグ表示
 /// ===================================================
-void GameObject::Group::ImGuiDebug() {
+void BaseGameObject::Group::ImGuiDebug() {
 	for(auto& item : items) {
 
 		Item::Pointer& first = item.second.variable.first;
@@ -328,7 +328,7 @@ void GameObject::Group::ImGuiDebug() {
 /// ===================================================
 /// Groupの作成
 /// ===================================================
-GameObject::Group& GameObject::CreateGroup(const std::string& groupName) {
+BaseGameObject::Group& BaseGameObject::CreateGroup(const std::string& groupName) {
 	return groups_[groupName];
 }
 
@@ -336,7 +336,7 @@ GameObject::Group& GameObject::CreateGroup(const std::string& groupName) {
 /// ===================================================
 /// jsonファイルに保存
 /// ===================================================
-void GameObject::SaveFile() {
+void BaseGameObject::SaveFile() {
 
 	///- ファイル
 	json root;
@@ -417,7 +417,7 @@ void GameObject::SaveFile() {
 /// ===================================================
 /// jsonファイルの読み込み
 /// ===================================================
-void GameObject::LoadFile(const std::string& key, const std::string& filePath) {
+void BaseGameObject::LoadFile(const std::string& key, const std::string& filePath) {
 
 	///- File open
 	std::ifstream ifs;
@@ -493,8 +493,8 @@ void GameObject::LoadFile(const std::string& key, const std::string& filePath) {
 /// ===================================================
 /// WorldTransformをGroupに設定
 /// ===================================================
-void GameObject::CreateWorldTransformGruop() {
-	GameObject::Group& group = CreateGroup("Transform");
+void BaseGameObject::CreateWorldTransformGruop() {
+	BaseGameObject::Group& group = CreateGroup("Transform");
 	group.SetPtr("scale", &worldTransform_.scale_);
 	group.SetPtr("rotate", &worldTransform_.rotation_);
 	group.SetPtr("translate", &worldTransform_.translation_);
@@ -506,7 +506,7 @@ void GameObject::CreateWorldTransformGruop() {
 /// ===================================================
 /// ImGuiでデバッグ表示
 /// ===================================================
-void GameObject::ImGuiDebug() {
+void BaseGameObject::ImGuiDebug() {
 
 	for(auto& group : groups_) {
 		if(!ImGui::TreeNodeEx(group.first.c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {

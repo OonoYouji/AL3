@@ -3,10 +3,10 @@
 #include <list>
 #include <memory>
 
-#include <GameObject.h>
+#include <BaseGameObject.h>
 
 /// <summary>
-/// GameObjectを管理するクラス
+/// BaseGameObjectを管理するクラス
 /// </summary>
 class GameObjectManager final {
 	GameObjectManager() = default;
@@ -35,10 +35,10 @@ public:
 	void Draw();
 
 	/// <summary>
-	/// GameObjectの追加
+	/// BaseGameObjectの追加
 	/// </summary>
 	/// <param name="object"></param>
-	void AddGameObject(GameObject* object);
+	void AddGameObject(BaseGameObject* object);
 
 #pragma region ImGui
 	/// <summary>
@@ -50,7 +50,7 @@ public:
 	/// ImGui::Selectableでchild objectをインデントする
 	/// </summary>
 	/// <param name="childs"></param>
-	void ImGuiSelectChilds(const std::list<GameObject*>& childs);
+	void ImGuiSelectChilds(const std::list<BaseGameObject*>& childs);
 
 	/// <summary>
 	/// select objcetのデバッグ
@@ -61,8 +61,8 @@ public:
 
 private:
 
-	std::list<std::unique_ptr<GameObject>> objects_;
-	GameObject* selectObject_ = nullptr;
+	std::list<std::unique_ptr<BaseGameObject>> objects_;
+	BaseGameObject* selectObject_ = nullptr;
 
 private:
 	GameObjectManager(const GameObjectManager&) = delete;

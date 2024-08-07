@@ -3,7 +3,7 @@
 #include <imgui.h>
 
 #include <GridDraw.h>
-#include <GameObject.h>
+#include <BaseGameObject.h>
 #include <GameObjectManager.h>
 
 #include <GameCamera.h>

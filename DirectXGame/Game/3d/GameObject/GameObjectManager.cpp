@@ -50,8 +50,8 @@ void GameObjectManager::Draw() {
 /// ===================================================
 /// ゲームオブジェクトの追加
 /// ===================================================
-void GameObjectManager::AddGameObject(GameObject* object) {
-	std::unique_ptr<GameObject> newObject(object);
+void GameObjectManager::AddGameObject(BaseGameObject* object) {
+	std::unique_ptr<BaseGameObject> newObject(object);
 	objects_.push_back(std::move(newObject));
 }
 
@@ -69,7 +69,7 @@ void GameObjectManager::ImGuiDebug() {
 
 
 	/// ------------------------------------------------
-	/// GameObject SelecTable
+	/// BaseGameObject SelecTable
 	/// ------------------------------------------------
 	for(auto& gameObject : objects_) {
 
@@ -102,9 +102,9 @@ void GameObjectManager::ImGuiDebug() {
 
 
 /// ===================================================
-/// ImGuiのGameObjectの子供をselectableで設定
+/// ImGuiのBaseGameObjectの子供をselectableで設定
 /// ===================================================
-void GameObjectManager::ImGuiSelectChilds(const std::list<GameObject*>& childs) {
+void GameObjectManager::ImGuiSelectChilds(const std::list<BaseGameObject*>& childs) {
 	ImGui::Indent();
 	for(auto& child : childs) {
 		if(ImGui::Selectable(child->GetName().c_str(), selectObject_ == child)) {

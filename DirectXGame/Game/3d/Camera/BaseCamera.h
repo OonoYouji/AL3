@@ -3,12 +3,12 @@
 #include <ViewProjection.h>
 #include <WorldTransform.h>
 
-#include <GameObject.h>
+#include <BaseGameObject.h>
 
 /// <summary>
 /// カメラの基底クラス
 /// </summary>
-class BaseCamera : public GameObject {
+class BaseCamera : public BaseGameObject {
 public:
 
 	BaseCamera();

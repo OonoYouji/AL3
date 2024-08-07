@@ -26,7 +26,6 @@ void SceneManager::Initialize() {
 /// 更新
 /// ===================================================
 void SceneManager::Update() {
-
 	if(scene_) {
 		scene_->Update();
 	}
@@ -37,7 +36,6 @@ void SceneManager::Update() {
 /// 描画
 /// ===================================================
 void SceneManager::Draw() {
-
 	if(scene_) {
 		scene_->Draw();
 	}

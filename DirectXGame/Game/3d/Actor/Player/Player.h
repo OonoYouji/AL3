@@ -1,13 +1,10 @@
 #pragma once
 
-#include <GameObject.h>
+#include <BaseGameObject.h>
 #include <Model.h>
 #include <ObjectColor.h>
 
-#include <Octree.h>
-#include <MeshCollider.h>
-
-class Player : public GameObject {
+class Player : public BaseGameObject {
 public:
 
 	Player();
@@ -21,9 +18,5 @@ private:
 
 	std::unique_ptr<Model> model_;
 	ObjectColor color_;
-
-	Octree octree_;
-
-	MeshCollider collider_;
 
 };
