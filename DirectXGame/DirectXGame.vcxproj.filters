@@ -79,6 +79,9 @@
     <Filter Include="Game\Collision">
       <UniqueIdentifier>{de6d1c79-96ec-42b0-92fb-d6b7edc0a6ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Time">
+      <UniqueIdentifier>{fd96eaec-7352-470c-b434-d5b87e1d4734}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -111,20 +114,8 @@
     <ClCompile Include="Game\3d\Camera\MyDebugCamera.cpp">
       <Filter>Game\3d\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Game\3d\GameObject\GameObject.cpp">
-      <Filter>Game\3d\GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="Game\3d\GameObject\GameObjectManager.cpp">
       <Filter>Game\3d\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Collision\AABB.cpp">
-      <Filter>Game\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Collision\MeshCollider.cpp">
-      <Filter>Game\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Collision\Octree.cpp">
-      <Filter>Game\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Game\Math\GridDraw.cpp">
       <Filter>Game\Math</Filter>
@@ -143,6 +134,15 @@
     </ClCompile>
     <ClCompile Include="Game\Scene\SceneManager.cpp">
       <Filter>Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Time\WorldTime.cpp">
+      <Filter>Game\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3d\GameObject\BaseGameObject.cpp">
+      <Filter>Game\3d\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3d\Actor\Player\PlayerBullet.cpp">
+      <Filter>Game\3d\Actor\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -248,20 +248,8 @@
     <ClInclude Include="Game\3d\Camera\MyDebugCamera.h">
       <Filter>Game\3d\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Game\3d\GameObject\GameObject.h">
-      <Filter>Game\3d\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="Game\3d\GameObject\GameObjectManager.h">
       <Filter>Game\3d\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Collision\AABB.h">
-      <Filter>Game\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Collision\MeshCollider.h">
-      <Filter>Game\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Collision\Octree.h">
-      <Filter>Game\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Game\Math\CreateName.h">
       <Filter>Game\Math</Filter>
@@ -283,6 +271,15 @@
     </ClInclude>
     <ClInclude Include="Game\Scene\SceneManager.h">
       <Filter>Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Time\WorldTime.h">
+      <Filter>Game\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\GameObject\BaseGameObject.h">
+      <Filter>Game\3d\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Actor\Player\PlayerBullet.h">
+      <Filter>Game\3d\Actor\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
