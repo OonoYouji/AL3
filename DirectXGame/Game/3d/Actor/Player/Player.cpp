@@ -76,7 +76,7 @@ void Player::Update() {
 	/// 減衰度を計算する
 	/// -----------------------------------------------------------------
 	if(move_ != Vec3(0, 0, 0)) {
-		nextAttenuation_ += 1.0f / 120.0f;
+		nextAttenuation_ += 1.0f / 20.0f;
 	} else {
 		nextAttenuation_ -= 1.0f / 20.0f;
 	}
