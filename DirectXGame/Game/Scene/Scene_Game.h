@@ -7,6 +7,7 @@
 class MyDebugCamera;
 class GameCamera;
 
+
 class Scene_Game : public BaseScene {
 public:
 

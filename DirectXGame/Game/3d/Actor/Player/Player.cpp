@@ -50,6 +50,7 @@ void Player::Update() {
 
 	move_ = {
 		float(input_->PushKey(DIK_D) - input_->PushKey(DIK_A)),
+		0.0f,
 		float(input_->PushKey(DIK_W) - input_->PushKey(DIK_S))
 	};
 
@@ -85,7 +86,14 @@ void Player::Update() {
 
 
 
+
+}
+
+
+void Player::LastUpdate() {
+	/// -----------------------------------------------------------------
 	/// 消滅した弾をリストから外す処理
+	/// -----------------------------------------------------------------
 	bullets_.remove_if([](PlayerBullet* bullet) {
 		if(bullet->IsDesctory()) {
 			GameObjectManager::GetInstance()->SubGameObject(bullet);

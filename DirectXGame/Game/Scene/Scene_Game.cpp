@@ -11,8 +11,8 @@
 #include <MainCamera.h>
 #include <MyDebugCamera.h>
 
-
 #include <Player.h>
+#include <Ground.h>
 
 
 Scene_Game::Scene_Game() {}
@@ -35,6 +35,7 @@ void Scene_Game::Initialize() {
 	MainCamera::GetInstance()->SetCamera(camera_);
 
 	(new Player())->Initialize();
+	(new Ground())->Initialize();
 
 	GridDraw::GetInstance()->Intiailize(MainCamera::GetInstance()->GetViewProjection());
 

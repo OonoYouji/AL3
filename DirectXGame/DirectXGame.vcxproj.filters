@@ -82,6 +82,9 @@
     <Filter Include="Game\Time">
       <UniqueIdentifier>{fd96eaec-7352-470c-b434-d5b87e1d4734}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\3d\Object">
+      <UniqueIdentifier>{d1277052-01a2-4a58-8926-9fe691dae493}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -143,6 +146,9 @@
     </ClCompile>
     <ClCompile Include="Game\3d\Actor\Player\PlayerBullet.cpp">
       <Filter>Game\3d\Actor\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3d\Object\Ground.cpp">
+      <Filter>Game\3d\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -280,6 +286,9 @@
     </ClInclude>
     <ClInclude Include="Game\3d\Actor\Player\PlayerBullet.h">
       <Filter>Game\3d\Actor\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Object\Ground.h">
+      <Filter>Game\3d\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

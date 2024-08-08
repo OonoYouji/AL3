@@ -22,7 +22,10 @@ public:
 
 	virtual void Update() = 0;
 
+	virtual void LastUpdate() {}
+
 	virtual void Draw() = 0;
+
 
 	void UpdateMatrix();
 

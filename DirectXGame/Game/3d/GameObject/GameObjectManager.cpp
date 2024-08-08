@@ -36,6 +36,14 @@ void GameObjectManager::Update() {
 			obj->Update();
 		}
 	}
+
+	for(auto& obj : objects_) {
+		if(obj->isActive) {
+			obj->LastUpdate();
+		}
+	}
+
+
 }
 
 
