@@ -85,6 +85,9 @@
     <Filter Include="Game\3d\Object">
       <UniqueIdentifier>{d1277052-01a2-4a58-8926-9fe691dae493}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\3d\Actor\Enemy">
+      <UniqueIdentifier>{1f0e023f-596d-48b3-8ad8-463781b343eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -149,6 +152,9 @@
     </ClCompile>
     <ClCompile Include="Game\3d\Object\Ground.cpp">
       <Filter>Game\3d\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3d\Actor\Enemy\Enemy.cpp">
+      <Filter>Game\3d\Actor\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -289,6 +295,9 @@
     </ClInclude>
     <ClInclude Include="Game\3d\Object\Ground.h">
       <Filter>Game\3d\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Actor\Enemy\Enemy.h">
+      <Filter>Game\3d\Actor\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
