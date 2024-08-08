@@ -21,12 +21,14 @@ using json = nlohmann::json;
 /// コンストラクタ
 /// ===================================================
 BaseGameObject::BaseGameObject() {
+	worldTransform_.Initialize();
 	GameObjectManager::GetInstance()->AddGameObject(this);
 	CreateWorldTransformGruop();
 
 	std::string name = CreateName(this);
 	SetName(name);
 	SetTag(name);
+
 }
 
 

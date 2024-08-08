@@ -34,7 +34,10 @@ void Scene_Game::Initialize() {
 
 	MainCamera::GetInstance()->SetCamera(camera_);
 
-	(new Player())->Initialize();
+	Player* player = new Player();
+	player->Initialize();
+	camera_->SetParent(player);
+
 	(new Ground())->Initialize();
 
 	GridDraw::GetInstance()->Intiailize(MainCamera::GetInstance()->GetViewProjection());
