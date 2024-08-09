@@ -40,6 +40,7 @@ private:
 
 	Vec3 move_;
 	float speed_;
+	float moveLenght_ = 0;
 	
 	float nextAttenuation_;
 

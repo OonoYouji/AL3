@@ -38,6 +38,8 @@ void Player::Initialize() {
 	worldTransform_.Initialize();
 
 	color_.Initialize();
+	color_.SetColor({ 1,0,0,1 });
+	color_.TransferMatrix();
 
 
 	move_ = {};
@@ -54,7 +56,7 @@ void Player::Update() {
 	/// 移動処理
 	/// -----------------------------------------------------------------
 
-	
+
 	move_ = {};
 	/// 左キー
 	if(input_->IsPressMouse(0)) {
@@ -65,7 +67,7 @@ void Player::Update() {
 			static_cast<float>(mouseMove.lY)
 		};
 
-		speed_ = v.Len();
+		moveLenght_ = v.Len();
 		v = -v.Norm();
 
 		/// 上下の移動
@@ -103,7 +105,7 @@ void Player::Update() {
 	/// -----------------------------------------------------------------
 	if(move_ != Vec3(0, 0, 0)) {
 		//nextAttenuation_ += 1.0f / 20.0f * move_.Len();
-		nextAttenuation_ = speed_ / 10.0f;
+		nextAttenuation_ = moveLenght_ / 5.0f;
 	} else {
 		nextAttenuation_ = 0.0f;
 	}
