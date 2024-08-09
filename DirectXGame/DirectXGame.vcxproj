@@ -128,6 +128,8 @@
     <ClCompile Include="Game\Scene\Scene_Game.cpp" />
     <ClCompile Include="Game\Time\WorldTime.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="math\Vector2.cpp" />
+    <ClCompile Include="math\Vector3.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
   </ItemGroup>
   <ItemGroup>

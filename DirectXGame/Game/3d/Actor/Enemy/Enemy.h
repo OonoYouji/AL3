@@ -50,4 +50,11 @@ private:
 
 	Model* model_ = nullptr;
 
+
+	/// Move
+	Vec3 move_{};
+	float speed_ = 4.0f;
+
+	/// Attack
+
 };

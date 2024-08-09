@@ -15,7 +15,7 @@ void GameCamera::Initialize() {
 	worldTransform_.Initialize();
 	viewProjection_.Initialize();
 
-	SetPos(Vec3(0.0f, 33.5f, -12.75f));
+	SetPos(Vec3(0.0f, 43.45f, -11.25f));
 	SetRotateX(1.1f);
 
 }

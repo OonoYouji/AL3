@@ -9,8 +9,15 @@
 
 
 
+/// ===================================================
+/// static変数の初期化
+/// ===================================================
 int Enemy::instanceCount_ = 0;
 
+
+/// ===================================================
+/// コンストラクタ
+/// ===================================================
 Enemy::Enemy() {
 	id_ = instanceCount_++;
 
@@ -26,6 +33,11 @@ void Enemy::Initialize() {
 	stateType_ |= StateType::kMove;
 
 	SetModel(EnemyManager::GetInstance()->GetModel());
+
+	/// Move
+	move_ = Vec3(0, 0, -1);
+	speed_ = 4.0f;
+
 }
 
 
@@ -72,10 +84,7 @@ void Enemy::LastUpdate() {
 /// ===================================================
 void Enemy::Move() {
 
-	Vec3 move(0, 0, -1);
-	const float kSpeed = 4.0f;
-
-	worldTransform_.translation_ += move * kSpeed * WorldTime::FrameTime();
+	worldTransform_.translation_ += move_ * speed_ * WorldTime::FrameTime();
 
 }
 
@@ -83,6 +92,8 @@ void Enemy::Move() {
 /// 攻撃
 /// ===================================================
 void Enemy::Attack() {
+
+	
 
 }
 

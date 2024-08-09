@@ -4,6 +4,7 @@
 #include <cassert>
 #include <algorithm>
 
+#include <ImGuiManager.h>
 #include <Input.h>
 #include <MainCamera.h>
 #include <WorldTime.h>
@@ -11,6 +12,7 @@
 
 #include <CreateName.h>
 #include <Mat4Math.h>
+#include <Vector2.h>
 
 #include <PlayerBullet.h>
 
@@ -48,13 +50,37 @@ void Player::Initialize() {
 
 void Player::Update() {
 
-	move_ = {
-		float(input_->PushKey(DIK_D) - input_->PushKey(DIK_A)),
-		0.0f,
-		float(input_->PushKey(DIK_W) - input_->PushKey(DIK_S))
-	};
+	/// -----------------------------------------------------------------
+	/// 移動処理
+	/// -----------------------------------------------------------------
 
-	worldTransform_.translation_ += move_ * speed_ * WorldTime::FrameTime();
+	
+	move_ = {};
+	/// 左キー
+	if(input_->IsPressMouse(0)) {
+
+		Input::MouseMove mouseMove = input_->GetMouseMove();
+		Vector2 v = {
+			static_cast<float>(mouseMove.lX),
+			static_cast<float>(mouseMove.lY)
+		};
+
+		speed_ = v.Len();
+		v = -v.Norm();
+
+		/// 上下の移動
+		if(std::abs(v.x) < std::abs(v.y)) {
+			move_.z = v.y;
+		} else { /// 左右の移動
+			move_.x = -v.x;
+		}
+
+
+		worldTransform_.translation_ += move_ * speed_ * WorldTime::FrameTime();
+
+	}
+
+
 
 	UpdateMatrix();
 
@@ -76,12 +102,12 @@ void Player::Update() {
 	/// 減衰度を計算する
 	/// -----------------------------------------------------------------
 	if(move_ != Vec3(0, 0, 0)) {
-		nextAttenuation_ += 1.0f / 20.0f;
+		//nextAttenuation_ += 1.0f / 20.0f * move_.Len();
+		nextAttenuation_ = speed_ / 10.0f;
 	} else {
-		nextAttenuation_ -= 1.0f / 20.0f;
+		nextAttenuation_ = 0.0f;
 	}
 
-	nextAttenuation_ = std::clamp(nextAttenuation_, 0.0f, 1.0f);
 	WorldTime::SetAttenuation(nextAttenuation_);
 
 
