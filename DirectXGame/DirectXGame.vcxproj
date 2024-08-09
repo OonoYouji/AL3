@@ -120,6 +120,9 @@
     <ClCompile Include="Game\3d\GameObject\BaseGameObject.cpp" />
     <ClCompile Include="Game\3d\GameObject\GameObjectManager.cpp" />
     <ClCompile Include="Game\3d\Object\Ground.cpp" />
+    <ClCompile Include="Game\Collision\BaseCollider.cpp" />
+    <ClCompile Include="Game\Collision\BoxCollider.cpp" />
+    <ClCompile Include="Game\Collision\CollisionManager.cpp" />
     <ClCompile Include="Game\Math\GridDraw.cpp" />
     <ClCompile Include="Game\Math\Mat4Math.cpp" />
     <ClCompile Include="Game\Math\Vec3Math.cpp" />
@@ -167,6 +170,9 @@
     <ClInclude Include="Game\3d\GameObject\BaseGameObject.h" />
     <ClInclude Include="Game\3d\GameObject\GameObjectManager.h" />
     <ClInclude Include="Game\3d\Object\Ground.h" />
+    <ClInclude Include="Game\Collision\BaseCollider.h" />
+    <ClInclude Include="Game\Collision\BoxCollider.h" />
+    <ClInclude Include="Game\Collision\CollisionManager.h" />
     <ClInclude Include="Game\Math\CreateName.h" />
     <ClInclude Include="Game\Math\GridDraw.h" />
     <ClInclude Include="Game\Math\Mat4Math.h" />

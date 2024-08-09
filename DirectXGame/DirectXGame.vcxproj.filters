@@ -165,6 +165,15 @@
     <ClCompile Include="math\Vector3.cpp">
       <Filter>ソース ファイル\math</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Collision\BaseCollider.cpp">
+      <Filter>Game\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Collision\BoxCollider.cpp">
+      <Filter>Game\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Collision\CollisionManager.cpp">
+      <Filter>Game\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -310,6 +319,15 @@
     </ClInclude>
     <ClInclude Include="Game\3d\Actor\Enemy\EnemyManager.h">
       <Filter>Game\3d\Actor\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Collision\BaseCollider.h">
+      <Filter>Game\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Collision\BoxCollider.h">
+      <Filter>Game\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Collision\CollisionManager.h">
+      <Filter>Game\Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

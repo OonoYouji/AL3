@@ -7,6 +7,8 @@
 
 #include <WorldTransform.h>
 
+class BaseCollider;
+
 /// <summary>
 /// すべてのゲームオブジェクトの基本となるクラス
 /// </summary>
@@ -150,6 +152,8 @@ protected:
 	std::list<BaseGameObject*> childs_;
 
 	std::unordered_map<std::string, Group> groups_;
+
+	BaseCollider* collider_ = nullptr;
 
 public:
 
