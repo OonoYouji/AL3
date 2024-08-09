@@ -11,21 +11,35 @@ class Model;
 /// 敵の管理クラス
 /// ===================================================
 class EnemyManager final {
-public:
-
 	EnemyManager() {};
 	~EnemyManager() {};
+public:
+
+
+	static EnemyManager* GetInstance() {
+		static EnemyManager instance;
+		return &instance;
+	}
 
 
 	void Initialize();
 
 
+	void AddEnemy(Enemy* enemy);
+
+	Model* GetModel()const;
+
 private:
 
+	///
+	std::list<Enemy*> enemies_;
 
-	using unique_ptr_Enemy = std::unique_ptr<Enemy>;
-	std::list<unique_ptr_Enemy> enemies_;
+	std::list<std::unique_ptr<Model>> models_;
 
-	std::unique_ptr<Model> enemyModel_;
 
+private:
+	EnemyManager(const EnemyManager&) = delete;
+	EnemyManager(EnemyManager&&) = delete;
+	EnemyManager& operator= (const EnemyManager&) = delete;
+	EnemyManager& operator= (EnemyManager&&) = delete;
 };

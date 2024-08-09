@@ -46,7 +46,7 @@ public:
 
 private:
 
-	float attenuation_ = 1.0f; // 減衰度
+	float attenuation_ = 0.0f; // 減衰度
 
 	float deltaTime_ = 1.0f / 60.0f;
 

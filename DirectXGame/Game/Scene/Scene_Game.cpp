@@ -12,6 +12,8 @@
 #include <MyDebugCamera.h>
 
 #include <Player.h>
+#include <Enemy.h>
+#include <EnemyManager.h>
 #include <Ground.h>
 
 
@@ -37,6 +39,10 @@ void Scene_Game::Initialize() {
 	Player* player = new Player();
 	player->Initialize();
 	camera_->SetParent(player);
+
+	EnemyManager::GetInstance()->Initialize();
+
+	(new Enemy)->Initialize();
 
 	(new Ground())->Initialize();
 
