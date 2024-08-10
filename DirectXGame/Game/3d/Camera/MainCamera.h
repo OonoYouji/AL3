@@ -14,7 +14,7 @@ class MainCamera final {
 	~MainCamera() = default;
 public:
 
-	static MainCamera* GetInstance() {
+	static inline MainCamera* GetInstance() {
 		static MainCamera instance;
 		return &instance;
 	}

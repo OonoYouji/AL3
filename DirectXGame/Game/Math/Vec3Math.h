@@ -1,7 +1,6 @@
 #pragma once
 
-
-
+#include <vector>
 #include <Vector3.h>
 
 /// <summary>
@@ -46,3 +45,6 @@ Vec3 Slerp(const Vec3& v1, const Vec3& v2, float t);
 /// <param name="v2"></param>
 /// <returns></returns>
 float Dot(const Vec3& v1, const Vec3& v2);
+
+
+Vec3 MaxDot(const Vec3& direction, const std::vector<Vec3>& vertices);

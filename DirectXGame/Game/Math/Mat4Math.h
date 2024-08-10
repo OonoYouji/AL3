@@ -22,3 +22,4 @@ Mat4 MakeIdentity();
 Vec3 Transform(const Vec3& v, const Mat4& m);
 
 Vec3 TransformNormal(const Vec3& v, const Mat4& m);
+

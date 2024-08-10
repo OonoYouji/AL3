@@ -284,3 +284,4 @@ Vec3 TransformNormal(const Vec3& v, const Mat4& m) {
 
 	return result;
 }
+

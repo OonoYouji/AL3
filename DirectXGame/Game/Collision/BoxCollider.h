@@ -1,7 +1,8 @@
 #pragma once
 
 #include <BaseCollider.h>
-
+#include <Model.h>
+#include <Vector3.h>
 
 
 class BoxCollider : public BaseCollider {
@@ -10,25 +11,14 @@ public:
 	BoxCollider() {}
 	~BoxCollider() {}
 
-	void Initialize();
+	void Initialize(BaseGameObject* gameObejct, Model* model) override;
 
+	void Draw() override;
 
-	/// <summary>
-	/// 衝突した瞬間呼び出される
-	/// </summary>
-	/// <param name="collider">衝突相手</param>
-	virtual void OnCollisionEnter(BaseCollider* collider) {};
+private:
 
-	/// <summary>
-	/// 衝突しているとき
-	/// </summary>
-	/// <param name="collider">衝突相手</param>
-	virtual void OnCollisionStay(BaseCollider* collider) {};
-
-	/// <summary>
-	/// 離れたとき
-	/// </summary>
-	/// <param name="collider">衝突していた相手</param>
-	virtual void OnCollisionExit(BaseCollider* collider) {};
+	Vec3 min_, max_;
+	
+	Model* cube_ = nullptr;
 
 };

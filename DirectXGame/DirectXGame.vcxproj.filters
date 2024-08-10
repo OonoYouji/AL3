@@ -88,6 +88,9 @@
     <Filter Include="Game\3d\Actor\Enemy">
       <UniqueIdentifier>{1f0e023f-596d-48b3-8ad8-463781b343eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\3d\ModelManager">
+      <UniqueIdentifier>{2ac9d20c-32d2-42c6-8ef6-76a96753d713}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -173,6 +176,9 @@
     </ClCompile>
     <ClCompile Include="Game\Collision\CollisionManager.cpp">
       <Filter>Game\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3d\ModelManager\ModelManager.cpp">
+      <Filter>Game\3d\ModelManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -328,6 +334,9 @@
     </ClInclude>
     <ClInclude Include="Game\Collision\CollisionManager.h">
       <Filter>Game\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\ModelManager\ModelManager.h">
+      <Filter>Game\3d\ModelManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

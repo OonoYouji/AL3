@@ -1,18 +1,17 @@
 #include "BaseGameObject.h"
 
 #include <json.hpp>
-
 #include <filesystem>
 #include <fstream>
 
 #include <ImGuiManager.h>
-
 #include <CreateName.h>
 #include <Mat4Math.h>
-#include <GameObjectManager.h>
-#include <SceneManager.h>
 
-#include <CreateName.h>
+#include <GameObjectManager.h>
+#include <CollisionManager.h>
+#include <SceneManager.h>
+#include <BoxCollider.h>
 
 
 using json = nlohmann::json;
@@ -21,14 +20,17 @@ using json = nlohmann::json;
 /// コンストラクタ
 /// ===================================================
 BaseGameObject::BaseGameObject() {
-	worldTransform_.Initialize();
 	GameObjectManager::GetInstance()->AddGameObject(this);
+	CollisionManager::GetInstance()->AddGameObject(this);
+
+	worldTransform_.Initialize();
 	CreateWorldTransformGruop();
+
+	collider_ = nullptr;
 
 	std::string name = CreateName(this);
 	SetName(name);
 	SetTag(name);
-
 }
 
 
@@ -504,6 +506,16 @@ void BaseGameObject::CreateWorldTransformGruop() {
 
 #pragma endregion
 
+
+void BaseGameObject::CreateBoxCollider(Model* model) {
+	collider_.reset(new BoxCollider);
+
+	BoxCollider* box = static_cast<BoxCollider*>(collider_.get());
+
+	box->Initialize(this, model);
+
+
+}
 
 /// ===================================================
 /// ImGuiでデバッグ表示

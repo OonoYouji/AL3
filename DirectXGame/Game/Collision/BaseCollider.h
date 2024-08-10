@@ -1,31 +1,19 @@
 #pragma once
 
 class BaseGameObject;
+class Model;
 
 class BaseCollider {
 public:
 
 	virtual ~BaseCollider() = default;
 
-	void Initialize(BaseGameObject* gameObject);
+	virtual void Initialize(BaseGameObject* gameObject, Model* model);
 
 	/// <summary>
-	/// 衝突した瞬間呼び出される
+	/// 当たり判定の可視化
 	/// </summary>
-	/// <param name="collider">衝突相手</param>
-	virtual void OnCollisionEnter([[maybe_unused]] BaseCollider* collider) {};
-
-	/// <summary>
-	/// 衝突しているとき
-	/// </summary>
-	/// <param name="collider">衝突相手</param>
-	virtual void OnCollisionStay([[maybe_unused]] BaseCollider* collider) {};
-
-	/// <summary>
-	/// 離れたとき
-	/// </summary>
-	/// <param name="collider">衝突していた相手</param>
-	virtual void OnCollisionExit([[maybe_unused]] BaseCollider* collider) {};
+	virtual void Draw() {}
 
 public:
 

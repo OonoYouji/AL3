@@ -3,11 +3,12 @@
 #include <list>
 #include <string>
 #include <variant>
+#include <memory>
 #include <unordered_map>
 
 #include <WorldTransform.h>
+#include <BaseCollider.h>
 
-class BaseCollider;
 
 /// <summary>
 /// すべてのゲームオブジェクトの基本となるクラス
@@ -139,6 +140,23 @@ public:
 
 #pragma endregion
 
+
+#pragma region Collider 
+
+	virtual void OnCollisionEnter([[maybe_unused]]BaseGameObject* const collision) {}
+	virtual void OnCollisionStay([[maybe_unused]]BaseGameObject* const collision) {}
+	virtual void OnCollisionExit([[maybe_unused]]BaseGameObject* const collision) {}
+
+	void CreateBoxCollider(Model* model);
+
+#pragma endregion
+
+
+	const WorldTransform& GetWorldTransform() const {
+		return worldTransform_;
+	}
+
+
 	void ImGuiDebug();
 
 private:
@@ -153,7 +171,7 @@ protected:
 
 	std::unordered_map<std::string, Group> groups_;
 
-	BaseCollider* collider_ = nullptr;
+	std::unique_ptr<BaseCollider> collider_ = nullptr;
 
 public:
 

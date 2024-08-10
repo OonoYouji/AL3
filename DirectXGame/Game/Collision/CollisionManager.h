@@ -3,7 +3,9 @@
 #include <list>
 #include <memory>
 
-#include <BaseCollider.h>
+#include <BaseGameObject.h>
+
+class BaseGameObject;
 
 
 class CollisionManager final {
@@ -17,17 +19,14 @@ public:
 	}
 
 
-	void Initialize();
-
-
-	void AddCollider(BaseCollider* collider);
+	void AddGameObject(BaseGameObject* collider);
 
 	
 private:
 
-	using collisionPair = std::pair<BaseCollider*, BaseCollider*>;
+	using collisionPair = std::pair<BaseGameObject*, BaseGameObject*>;
 
-	std::list<std::unique_ptr<BaseCollider>> colliders_;
+	std::list<BaseGameObject*> gameObjects_;
 
 
 };

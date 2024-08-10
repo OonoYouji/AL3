@@ -52,3 +52,17 @@ Vec3 Slerp(const Vec3& v1, const Vec3& v2, float t) {
 float Dot(const Vec3& v1, const Vec3& v2) {
 	return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
 }
+
+Vec3 MaxDot(const Vec3& direction, const std::vector<Vec3>& vertices) {
+	float maxDot = 0;
+	Vec3 maxVertex = {};
+	for(auto& vertex : vertices) {
+		float dot = Dot(vertex, direction);
+		if(dot > maxDot) {
+			maxDot = dot;
+			maxVertex = vertex;
+		}
+	}
+
+	return maxVertex;
+}

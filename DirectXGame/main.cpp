@@ -9,6 +9,7 @@
 
 #include "SceneManager.h"
 #include <GameObjectManager.h>
+#include <ModelManager.h>
 #include "MainCamera.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
@@ -20,6 +21,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Audio* audio = nullptr;
 	AxisIndicator* axisIndicator = nullptr;
 	PrimitiveDrawer* primitiveDrawer = nullptr;
+	ModelManager* modelManager = nullptr;
 
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
@@ -59,6 +61,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	primitiveDrawer = PrimitiveDrawer::GetInstance();
 	primitiveDrawer->Initialize();
 #pragma endregion
+
+	modelManager = ModelManager::GetInstance();
+	modelManager->Initialize();
 
 	SceneManager* sceneManager = SceneManager::GetInstance();
 	sceneManager->Initialize();
@@ -101,6 +106,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 
 
+	modelManager->Finalize();
 	GameObjectManager::GetInstance()->Finalize();
 	sceneManager->Finalize();
 	// 3Dモデル解放

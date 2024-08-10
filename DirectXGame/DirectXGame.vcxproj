@@ -63,7 +63,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Game/Time;$(ProjectDir)Game/Scene;$(ProjectDir)Game/Math;$(ProjectDir)Game/Collision;$(ProjectDir)Game/3d/GameObject;$(ProjectDir)Game/3d/Camera;$(ProjectDir)Game/3d/Actor/Enemy;$(ProjectDir)Game/3d/Actor/Player;$(ProjectDir)Game/3d/Actor;$(ProjectDir)Game/3d/Object;$(ProjectDir)Game/3d;$(ProjectDir)Game;$(ProjectDir);$(ProjectDir)2d;$(ProjectDir)3d;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)input;$(ProjectDir)scene;$(ProjectDir)math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Game/Time;$(ProjectDir)Game/Scene;$(ProjectDir)Game/Math;$(ProjectDir)Game/Collision;$(ProjectDir)Game/3d/ModelManager;$(ProjectDir)Game/3d/GameObject;$(ProjectDir)Game/3d/Camera;$(ProjectDir)Game/3d/Actor/Enemy;$(ProjectDir)Game/3d/Actor/Player;$(ProjectDir)Game/3d/Actor;$(ProjectDir)Game/3d/Object;$(ProjectDir)Game/3d;$(ProjectDir)Game;$(ProjectDir);$(ProjectDir)2d;$(ProjectDir)3d;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)input;$(ProjectDir)scene;$(ProjectDir)math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -119,6 +119,7 @@
     <ClCompile Include="Game\3d\Camera\MyDebugCamera.cpp" />
     <ClCompile Include="Game\3d\GameObject\BaseGameObject.cpp" />
     <ClCompile Include="Game\3d\GameObject\GameObjectManager.cpp" />
+    <ClCompile Include="Game\3d\ModelManager\ModelManager.cpp" />
     <ClCompile Include="Game\3d\Object\Ground.cpp" />
     <ClCompile Include="Game\Collision\BaseCollider.cpp" />
     <ClCompile Include="Game\Collision\BoxCollider.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Game\3d\Camera\MyDebugCamera.h" />
     <ClInclude Include="Game\3d\GameObject\BaseGameObject.h" />
     <ClInclude Include="Game\3d\GameObject\GameObjectManager.h" />
+    <ClInclude Include="Game\3d\ModelManager\ModelManager.h" />
     <ClInclude Include="Game\3d\Object\Ground.h" />
     <ClInclude Include="Game\Collision\BaseCollider.h" />
     <ClInclude Include="Game\Collision\BoxCollider.h" />
