@@ -51,7 +51,9 @@ void CollisionManager::CheckCollision(BaseGameObject* a, BaseGameObject* b) {
 			b->OnCollisionStay(a);
 
 #ifdef _DEBUG
-			pairNames_.push_back(a->GetName() + "  to  " + b->GetName());
+			if(a->GetTag() != b->GetTag()) {
+				pairNames_.push_back(a->GetName() + "  to  " + b->GetName());
+			}
 #endif // _DEBUG
 
 
@@ -67,7 +69,7 @@ void CollisionManager::ImGuiDebug() {
 		return;
 	}
 
-	while(pairNames_.size() >= 256) {
+	while(pairNames_.size() >= 100) {
 		pairNames_.pop_front();
 	}
 

@@ -12,7 +12,7 @@ int PlayerBullet::instanceCount_ = 0;
 PlayerBullet::PlayerBullet() {
 	id_ = instanceCount_++;
 
-	SetTag("PlayerBullet");
+	SetTag("Player");
 	SetName("PlayerBullet" + std::to_string(id_));
 }
 PlayerBullet::~PlayerBullet() {}
