@@ -25,15 +25,17 @@ void CollisionManager::Update() {
 			if(objectA == objectB) { continue; }
 
 			auto it = std::find_if(currentCollidedPairs_.begin(), currentCollidedPairs_.end(), [objectA, objectB](const CollidedPair& pair) {
-				return (pair.first == objectA && pair.second == objectB) 
-					|| (pair.first == objectB && pair.second == objectA); 
+				return (pair.first == objectA && pair.second == objectB)
+					|| (pair.first == objectB && pair.second == objectA);
 			});
 
 			if(it != currentCollidedPairs_.end()) {
 				continue;
 			}
 
-			CheckCollision(objectA, objectB);
+			if(objectA->GetTag() != objectB->GetTag()) {
+				CheckCollision(objectA, objectB);
+			}
 		}
 	}
 
@@ -55,21 +57,53 @@ void CollisionManager::CheckCollision(BaseGameObject* a, BaseGameObject* b) {
 
 	if(aCollider && bCollider) {
 
+		CollidedPair pair = std::make_pair(a, b);
+
 		if(aCollider->IsCollision(bCollider)) {
 
-			CollidedPair pair = std::make_pair(a, b);
+			/// Listないのpairの数を数える
+			int64_t count = std::count(collidedPairs_.begin(), collidedPairs_.end(), pair);
+
+			if(count == 0) {
+				/// listないになければ衝突した瞬間なのでEnterを呼ぶ
+				a->OnCollisionEnter(b);
+				b->OnCollisionEnter(a);
+#ifdef _DEBUG
+				pairNames_.push_back("Enter :  " + a->GetName() + "  to  " + b->GetName());
+#endif // _DEBUG
+			
+			} else {
+				/// あったら衝突しているのでStayを呼ぶ
+				a->OnCollisionStay(b);
+				b->OnCollisionStay(a);
+#ifdef _DEBUG
+				pairNames_.push_back("Stay  :  " + a->GetName() + "  to  " + b->GetName());
+#endif // _DEBUG
+			}
+
+			/// Listに追加する
 			currentCollidedPairs_.push_back(pair);
 			collidedPairs_.push_back(pair);
 
-			a->OnCollisionStay(b);
-			b->OnCollisionStay(a);
+
+		} else {
+
+			/// List内にpairが何個あるか数える
+			int64_t count = std::count(collidedPairs_.begin(), collidedPairs_.end(), pair);
+
+			/// List内にあったらExitをよんでListからpairを削除
+			if(count != 0) {
+				a->OnCollisionExit(b);
+				b->OnCollisionExit(a);
+				collidedPairs_.remove_if([pair](const CollidedPair& elem) {
+					return elem.first == pair.first && elem.second == pair.second;
+				});
 
 #ifdef _DEBUG
-			if(a->GetTag() != b->GetTag()) {
-				pairNames_.push_back(a->GetName() + "  to  " + b->GetName());
-			}
+				pairNames_.push_back("Exit  :  " + a->GetName() + "  to  " + b->GetName());
 #endif // _DEBUG
 
+			}
 
 		}
 	}
@@ -78,19 +112,38 @@ void CollisionManager::CheckCollision(BaseGameObject* a, BaseGameObject* b) {
 
 void CollisionManager::ImGuiDebug() {
 #ifdef _DEBUG
-	if(!ImGui::Begin("collision manager hit checker")) {
+	if(!ImGui::Begin("collision manager")) {
 		ImGui::End();
 		return;
 	}
+
+	if(ImGui::Button("clear : hit checker")) {
+		pairNames_.clear();
+	}
+
+	if(ImGui::TreeNodeEx("hit checker")) {
+		for(auto& pairName : pairNames_) {
+			ImGui::Text(pairName.c_str());
+		}
+		ImGui::TreePop();
+	}
+
+	ImGui::Separator();
+
+	if(ImGui::TreeNodeEx("collision")) {
+		for(auto& pair : collidedPairs_) {
+			std::string str = pair.first->GetName() + "  to  " + pair.second->GetName();
+			ImGui::Text(str.c_str());
+		}
+		ImGui::TreePop();
+	}
+
+	ImGui::End();
+
 
 	while(pairNames_.size() >= 100) {
 		pairNames_.pop_front();
 	}
 
-	for(auto& pairName : pairNames_) {
-		ImGui::Text(pairName.c_str());
-	}
-
-	ImGui::End();
 #endif // _DEBUG
 }

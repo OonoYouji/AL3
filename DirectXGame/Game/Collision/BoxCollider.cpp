@@ -51,7 +51,6 @@ void BoxCollider::Draw() {
 }
 
 bool BoxCollider::IsCollision(BaseCollider* other) {
-
 	BoxCollider* box = dynamic_cast<BoxCollider*>(other);
 	if(box && IsCollision(box)) {
 		return true;
@@ -62,9 +61,23 @@ bool BoxCollider::IsCollision(BaseCollider* other) {
 }
 
 bool BoxCollider::IsCollision(BoxCollider* box) {
-	if(!(this->min_.x <= box->max_.x && this->max_.x >= box->min_.x)) { return false; }
-	if(!(this->min_.y <= box->max_.y && this->max_.y >= box->min_.y)) { return false; }
-	if(!(this->min_.z <= box->max_.z && this->max_.z >= box->min_.z)) { return false; }
+	Vec3 thisPos = Transform({}, transform_.matWorld_);
+	Vec3 boxPos  = Transform({}, box->transform_.matWorld_);
+
+	if(!(this->min_.x + thisPos.x <= box->max_.x + boxPos.x &&
+		 this->max_.x + thisPos.x >= box->min_.x + boxPos.x)) {
+		return false;
+	}
+
+	if(!(this->min_.y + thisPos.y <= box->max_.y + boxPos.y &&
+		 this->max_.y + thisPos.y >= box->min_.y + boxPos.y)) {
+		return false;
+	}
+
+	if(!(this->min_.z + thisPos.z <= box->max_.z + boxPos.z &&
+		 this->max_.z + thisPos.z >= box->min_.z + boxPos.z)) {
+		return false;
+	}
 
 	return true;
 }
