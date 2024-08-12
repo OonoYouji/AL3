@@ -42,6 +42,13 @@ public:
 	/// </summary>
 	void CreateObjectGroup();
 
+	
+	/// <summary>
+	/// ゲームのスタートフラグのセット
+	/// </summary>
+	/// <param name="isGameStart"></param>
+	void SetIsGameStart(bool isGameStart);
+
 private:
 
 	/// ===================================================

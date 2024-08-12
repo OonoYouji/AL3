@@ -39,6 +39,19 @@ public:
 
 
 
+	void OnCollisionEnter(BaseGameObject* collision) override;
+
+
+
+public:
+
+	/// ===================================================
+	/// public : not override methods
+	/// ===================================================
+
+	void SetGameManagerObject(BaseGameObject* object);
+
+
 private:
 
 	/// ===================================================
@@ -46,5 +59,7 @@ private:
 	/// ===================================================
 
 	Model* model_ = nullptr;
+
+	BaseGameObject* gameManagerObject_ = nullptr;
 
 };

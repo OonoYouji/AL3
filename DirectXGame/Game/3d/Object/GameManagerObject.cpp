@@ -6,8 +6,8 @@
 /// コンストラクタ
 /// ===================================================
 GameManagerObject::GameManagerObject() {
-	SetTag("GamaManagerObject");
-	SetName("GamaManagerObject");
+	SetTag("GameManagerObject");
+	SetName("GameManagerObject");
 }
 
 
@@ -44,4 +44,13 @@ void GameManagerObject::Draw() {
 void GameManagerObject::CreateObjectGroup() {
 	BaseGameObject::Group& isStartGroup = CreateGroup("Is Start");
 	isStartGroup.SetPtr("is game start", &isGameStart_);
+}
+
+
+
+/// ===================================================
+/// ゲームのスタートフラグのセット
+/// ===================================================
+void GameManagerObject::SetIsGameStart(bool isGameStart) {
+	isGameStart_ = isGameStart;
 }

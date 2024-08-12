@@ -92,6 +92,24 @@ void GameObjectManager::Destory(BaseGameObject* object) {
 
 
 /// ===================================================
+/// nameからGameObjectを探索、返す
+/// ===================================================
+BaseGameObject* GameObjectManager::GetGameObject(const std::string& name) {
+	BaseGameObject* result = nullptr;
+	auto itr = std::find_if(objects_.begin(), objects_.end(), [&name, &result](std::unique_ptr<BaseGameObject>&object) {
+		if(object->GetName() == name) {
+			result = object.get();
+			return true;
+		}
+
+		return false;
+	});
+
+	return result;
+}
+
+
+/// ===================================================
 /// imguiでデバッグ表示
 /// ===================================================
 void GameObjectManager::ImGuiDebug() {

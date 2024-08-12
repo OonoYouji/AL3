@@ -71,7 +71,7 @@ public:
 	/// <param name="object"></param>
 	void Destory(BaseGameObject* object);
 
-
+	BaseGameObject* GetGameObject(const std::string& name);
 
 
 #pragma region ImGui

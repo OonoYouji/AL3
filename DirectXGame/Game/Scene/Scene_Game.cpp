@@ -50,9 +50,9 @@ void Scene_Game::Initialize() {
 	enemy->SetPos({ 0,0, 10 });*/
 
 
+	(new GameManagerObject())->Initialize();
 	(new Ground())->Initialize();
 	(new StartLine())->Initialize();
-	(new GameManagerObject())->Initialize();
 
 	GridDraw::GetInstance()->Intiailize(MainCamera::GetInstance()->GetViewProjection());
 
