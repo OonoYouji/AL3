@@ -22,6 +22,9 @@ void StartLine::Initialize() {
 
 	SetPos({0,0,20});
 
+	CreateBoxCollider(model_);
+
+	UpdateMatrix();
 }
 
 

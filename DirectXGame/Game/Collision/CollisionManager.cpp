@@ -57,7 +57,8 @@ void CollisionManager::CheckCollision(BaseGameObject* a, BaseGameObject* b) {
 
 	if(aCollider && bCollider) {
 
-		CollidedPair pair = std::make_pair(a, b);
+		CollidedPair pairA = std::make_pair(a, b);
+		CollidedPair pairB = std::make_pair(b, a);
 
 		if(a->GetTag() == "Enemy" || b->GetTag() == "Enemy") {
 			if(b->GetName().find(std::string("PlayerBullet")) != std::string::npos
@@ -71,15 +72,20 @@ void CollisionManager::CheckCollision(BaseGameObject* a, BaseGameObject* b) {
 		if(aCollider->IsCollision(bCollider)) {
 
 			/// Listないのpairの数を数える
-			int64_t count = std::count(collidedPairs_.begin(), collidedPairs_.end(), pair);
+			int64_t aCount = std::count(collidedPairs_.begin(), collidedPairs_.end(), pairA);
+			int64_t bCount = std::count(collidedPairs_.begin(), collidedPairs_.end(), pairB);
 
-			if(count == 0) {
+			if(aCount == 0 && bCount == 0) {
 				/// listないになければ衝突した瞬間なのでEnterを呼ぶ
 				a->OnCollisionEnter(b);
 				b->OnCollisionEnter(a);
 #ifdef _DEBUG
 				pairNames_.push_back("Enter :  " + a->GetName() + "  to  " + b->GetName());
 #endif // _DEBUG
+
+				/// Listに追加する
+				collidedPairs_.push_back(pairA);
+
 
 			} else {
 				/// あったら衝突しているのでStayを呼ぶ
@@ -90,22 +96,24 @@ void CollisionManager::CheckCollision(BaseGameObject* a, BaseGameObject* b) {
 #endif // _DEBUG
 			}
 
+		
 			/// Listに追加する
-			currentCollidedPairs_.push_back(pair);
-			collidedPairs_.push_back(pair);
+			currentCollidedPairs_.push_back(pairA);
 
 
 		} else {
 
 			/// List内にpairが何個あるか数える
-			int64_t count = std::count(collidedPairs_.begin(), collidedPairs_.end(), pair);
+			int64_t aCount = std::count(collidedPairs_.begin(), collidedPairs_.end(), pairA);
+			int64_t bCount = std::count(collidedPairs_.begin(), collidedPairs_.end(), pairB);
 
 			/// List内にあったらExitをよんでListからpairを削除
-			if(count != 0) {
+			if(aCount != 0 || bCount != 0) {
 				a->OnCollisionExit(b);
 				b->OnCollisionExit(a);
-				collidedPairs_.remove_if([pair](const CollidedPair& elem) {
-					return elem.first == pair.first && elem.second == pair.second;
+				collidedPairs_.remove_if([pairA, pairB](const CollidedPair& elem) {
+					return elem.first == pairA.first && elem.second == pairA.second
+						|| elem.first == pairB.first && elem.second == pairB.second;
 				});
 
 #ifdef _DEBUG
@@ -139,8 +147,18 @@ void CollisionManager::ImGuiDebug() {
 
 	ImGui::Separator();
 
-	if(ImGui::TreeNodeEx("collision")) {
+	if(ImGui::TreeNodeEx("collision pair")) {
 		for(auto& pair : collidedPairs_) {
+			std::string str = pair.first->GetName() + "  to  " + pair.second->GetName();
+			ImGui::Text(str.c_str());
+		}
+		ImGui::TreePop();
+	}
+
+	ImGui::Separator();
+
+	if(ImGui::TreeNodeEx("current collision pair")) {
+		for(auto& pair : currentCollidedPairs_) {
 			std::string str = pair.first->GetName() + "  to  " + pair.second->GetName();
 			ImGui::Text(str.c_str());
 		}

@@ -95,7 +95,7 @@ void Player::Update() {
 		leftShootCT_ = std::min(leftShootCT_ - (1.0f * WorldTime::GetAttenuation()), kShootCT_);
 		if(leftShootCT_ <= 0.0f) {
 			leftShootCT_ = kShootCT_;
-			Fire();
+			//Fire();
 		}
 	}
 
