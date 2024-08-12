@@ -9,6 +9,8 @@ void ModelManager::Initialize() {
 	Load("playerBullet", "playerBullet");
 	Load("playerBulletHitBox", "playerBulletHitBox");
 
+	Load("startLine", "startLine");
+
 }
 
 void ModelManager::Finalize() {

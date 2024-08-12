@@ -112,9 +112,6 @@ void Player::Update() {
 
 	WorldTime::SetAttenuation(nextAttenuation_);
 
-
-	UpdateMatrix();
-
 }
 
 

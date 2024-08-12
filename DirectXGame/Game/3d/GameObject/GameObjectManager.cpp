@@ -26,6 +26,7 @@ void GameObjectManager::Update() {
 	for(auto& obj : objects_) {
 		if(obj->isActive) {
 			obj->Update();
+			obj->UpdateMatrix();
 		}
 	}
 }

@@ -153,9 +153,6 @@
     <ClCompile Include="Game\3d\Actor\Player\PlayerBullet.cpp">
       <Filter>Game\3d\Actor\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Game\3d\Object\Ground.cpp">
-      <Filter>Game\3d\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Game\3d\Actor\Enemy\Enemy.cpp">
       <Filter>Game\3d\Actor\Enemy</Filter>
     </ClCompile>
@@ -179,6 +176,12 @@
     </ClCompile>
     <ClCompile Include="Game\3d\ModelManager\ModelManager.cpp">
       <Filter>Game\3d\ModelManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3d\Object\Ground.cpp">
+      <Filter>Game\3d\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3d\Object\StartLine.cpp">
+      <Filter>Game\3d\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -317,9 +320,6 @@
     <ClInclude Include="Game\3d\Actor\Player\PlayerBullet.h">
       <Filter>Game\3d\Actor\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Game\3d\Object\Ground.h">
-      <Filter>Game\3d\Object</Filter>
-    </ClInclude>
     <ClInclude Include="Game\3d\Actor\Enemy\Enemy.h">
       <Filter>Game\3d\Actor\Enemy</Filter>
     </ClInclude>
@@ -337,6 +337,12 @@
     </ClInclude>
     <ClInclude Include="Game\3d\ModelManager\ModelManager.h">
       <Filter>Game\3d\ModelManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Object\Ground.h">
+      <Filter>Game\3d\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Object\StartLine.h">
+      <Filter>Game\3d\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

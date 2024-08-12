@@ -19,13 +19,6 @@ void WorldTime::ImGuiDebug() {
 	ImGui::Spacing();
 	ImGui::Text("frame time  : %f", FrameTime());
 
-
-	ImGui::Separator();
-	ImGui::Spacing();
-
-	ImGui::InputFloat("next attenuation", &attenuation_);
-
-
 	ImGui::End();
 
 #endif // _DEBUG

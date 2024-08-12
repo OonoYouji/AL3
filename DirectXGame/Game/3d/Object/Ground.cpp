@@ -8,6 +8,9 @@
 /// ===================================================
 void Ground::Initialize() {
 
+	SetTag("Ground");
+	SetName("Ground");
+
 	model_.reset(Model::CreateFromOBJ("ground"));
 
 	worldTransform_.Initialize();
