@@ -36,7 +36,6 @@ void Player::Initialize() {
 
 	model_.reset(Model::CreateSphere());
 	//model_.reset(Model::CreateFromOBJ("axis"));
-	bulletModel_.reset(Model::Create());
 
 	worldTransform_.Initialize();
 
@@ -151,7 +150,6 @@ void Player::Draw() {
 void Player::Fire() {
 	PlayerBullet* newBullet(new PlayerBullet);
 	newBullet->Initialize();
-	newBullet->SetModel(bulletModel_.get());
 	newBullet->SetPos(GetPosition());
 	bullets_.push_back(newBullet);
 }

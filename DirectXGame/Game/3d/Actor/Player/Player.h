@@ -47,6 +47,5 @@ private:
 	float leftShootCT_ = 0.0f;
 	const float kShootCT_ = 15.0f;
 	std::list<PlayerBullet*> bullets_;
-	std::unique_ptr<Model> bulletModel_;
 
 };

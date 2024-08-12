@@ -3,6 +3,7 @@
 #include <WorldTime.h>
 #include <Model.h>
 #include <MainCamera.h>
+#include <ModelManager.h>
 
 const float PlayerBullet::kLifeTime_ = 180.0f;
 int PlayerBullet::instanceCount_ = 0;
@@ -20,6 +21,9 @@ PlayerBullet::~PlayerBullet() {}
 
 void PlayerBullet::Initialize() {
 	worldTransform_.Initialize();
+
+	SetModel(ModelManager::GetModel("sphere"));
+	CreateBoxCollider(model_);
 
 	move_ = Vec3(0, 0, 1);
 
