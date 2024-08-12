@@ -10,6 +10,7 @@
 #include <WorldTime.h>
 #include <GameObjectManager.h>
 #include <CollisionManager.h>
+#include <ModelManager.h>
 
 #include <CreateName.h>
 #include <Mat4Math.h>
@@ -34,8 +35,7 @@ void Player::Initialize() {
 	input_ = Input::GetInstance();
 
 
-	model_.reset(Model::CreateSphere());
-	//model_.reset(Model::CreateFromOBJ("axis"));
+	model_ = ModelManager::GetModel("cube");
 
 	worldTransform_.Initialize();
 
@@ -48,7 +48,7 @@ void Player::Initialize() {
 	speed_ = 10.0f;
 	nextAttenuation_ = WorldTime::GetAttenuation();
 
-	CreateBoxCollider(model_.get());
+	CreateBoxCollider(model_);
 
 }
 

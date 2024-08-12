@@ -17,13 +17,13 @@ void BoxCollider::Initialize(BaseGameObject* gameObejct, Model* model) {
 		vertices.push_back(vertexPosNormalUv.pos);
 	}
 
-	max_.x = MaxDot(Vec3( 1,  0,  0), vertices).x;
-	max_.y = MaxDot(Vec3( 0,  1,  0), vertices).y;
-	max_.z = MaxDot(Vec3( 0,  0,  1), vertices).z;
-	
-	min_.x = MaxDot(Vec3(-1,  0,  0), vertices).x;
-	min_.y = MaxDot(Vec3( 0, -1,  0), vertices).y;
-	min_.z = MaxDot(Vec3( 0,  0, -1), vertices).z;
+	max_.x = MaxDot(Vec3(1, 0, 0), vertices).x;
+	max_.y = MaxDot(Vec3(0, 1, 0), vertices).y;
+	max_.z = MaxDot(Vec3(0, 0, 1), vertices).z;
+
+	min_.x = MaxDot(Vec3(-1, 0, 0), vertices).x;
+	min_.y = MaxDot(Vec3(0, -1, 0), vertices).y;
+	min_.z = MaxDot(Vec3(0, 0, -1), vertices).z;
 
 
 	cube_ = ModelManager::GetModel("cube");
@@ -48,4 +48,23 @@ void BoxCollider::Draw() {
 	if(cube_) {
 		cube_->Draw(transform_, MainCamera::GetInstance()->GetViewProjection());
 	}
+}
+
+bool BoxCollider::IsCollision(BaseCollider* other) {
+
+	BoxCollider* box = dynamic_cast<BoxCollider*>(other);
+	if(box && IsCollision(box)) {
+		return true;
+	}
+
+
+	return false;
+}
+
+bool BoxCollider::IsCollision(BoxCollider* box) {
+	if(!(this->min_.x <= box->max_.x && this->max_.x >= box->min_.x)) { return false; }
+	if(!(this->min_.y <= box->max_.y && this->max_.y >= box->min_.y)) { return false; }
+	if(!(this->min_.z <= box->max_.z && this->max_.z >= box->min_.z)) { return false; }
+
+	return true;
 }

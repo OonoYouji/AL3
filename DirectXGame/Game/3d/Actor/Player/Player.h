@@ -33,7 +33,7 @@ private:
 
 private:
 
-	std::unique_ptr<Model> model_;
+	Model* model_;
 	ObjectColor color_;
 
 	Input* input_ = nullptr;

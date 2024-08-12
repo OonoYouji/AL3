@@ -2,6 +2,7 @@
 
 class BaseGameObject;
 class Model;
+class BoxCollider;
 
 class BaseCollider {
 public:
@@ -14,6 +15,9 @@ public:
 	/// 当たり判定の可視化
 	/// </summary>
 	virtual void Draw() {}
+
+	virtual bool IsCollision([[maybe_unused]] BaseCollider* other) = 0;
+	virtual bool IsCollision([[maybe_unused]] BoxCollider* box) = 0;
 
 public:
 

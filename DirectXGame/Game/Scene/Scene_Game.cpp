@@ -10,6 +10,7 @@
 #include <GameCamera.h>
 #include <MainCamera.h>
 #include <MyDebugCamera.h>
+#include <CollisionManager.h>
 
 #include <Player.h>
 #include <Enemy.h>
@@ -70,6 +71,7 @@ void Scene_Game::Update() {
 
 	GameObjectManager::GetInstance()->ImGuiDebug();
 	WorldTime::GetInstance()->ImGuiDebug();
+	CollisionManager::GetInstance()->ImGuiDebug();
 
 	if(debugCamera_->isActive) {
 		MainCamera::GetInstance()->SetCamera(debugCamera_);
@@ -87,6 +89,9 @@ void Scene_Game::Update() {
 
 
 	GameObjectManager::GetInstance()->Update();
+
+	CollisionManager::GetInstance()->Update();
+
 	GameObjectManager::GetInstance()->LastUpdate();
 
 }

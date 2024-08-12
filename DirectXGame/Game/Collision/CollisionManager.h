@@ -2,6 +2,7 @@
 
 #include <list>
 #include <memory>
+#include <deque>
 
 #include <BaseGameObject.h>
 
@@ -22,14 +23,24 @@ public:
 	void AddGameObject(BaseGameObject* collider);
 	void SubGameObject(BaseGameObject* collider);
 
+	void Update();
 
 	void DrawHitBoxALL();
 	
+	void CheckCollision(BaseGameObject* a, BaseGameObject* b);
+
+	void ImGuiDebug();
+
 private:
 
-	using collisionPair = std::pair<BaseGameObject*, BaseGameObject*>;
+	using CollidedPair = std::pair<BaseGameObject*, BaseGameObject*>;
 
 	std::list<BaseGameObject*> gameObjects_;
 
+	std::list<CollidedPair> collidedPairs_;
+
+#ifdef _DEBUG
+	std::deque<std::string> pairNames_;
+#endif // _DEBUG
 
 };
