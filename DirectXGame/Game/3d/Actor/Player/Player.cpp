@@ -124,7 +124,7 @@ void Player::LastUpdate() {
 	/// -----------------------------------------------------------------
 	bullets_.remove_if([](PlayerBullet* bullet) {
 		if(bullet->IsDesctory()) {
-			GameObjectManager::GetInstance()->SubGameObject(bullet);
+			GameObjectManager::GetInstance()->Destory(bullet);
 			CollisionManager::GetInstance()->SubGameObject(bullet);
 			return true;
 		}

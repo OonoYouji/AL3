@@ -3,14 +3,6 @@
 #include <ImGuiManager.h>
 
 
-/// ===================================================
-/// インスタンス確保
-/// ===================================================
-GameObjectManager* GameObjectManager::GetInstance() {
-	static GameObjectManager instance;
-	return &instance;
-}
-
 
 /// ===================================================
 /// 初期化
@@ -19,6 +11,9 @@ void GameObjectManager::Initialize() {
 
 }
 
+/// ===================================================
+/// 終了処理
+/// ===================================================
 void GameObjectManager::Finalize() {
 	objects_.clear();
 }
@@ -41,6 +36,13 @@ void GameObjectManager::LastUpdate() {
 			obj->LastUpdate();
 		}
 	}
+
+	/// 消去命令の出たオブジェクトを削除
+	for(auto& obj : destoryList_) {
+		SubGameObject(obj);
+	}
+	destoryList_.clear();
+
 }
 
 
@@ -64,6 +66,10 @@ void GameObjectManager::AddGameObject(BaseGameObject* object) {
 	objects_.push_back(std::move(newObject));
 }
 
+
+/// ===================================================
+/// ゲームオブジェクトの削除
+/// ===================================================
 void GameObjectManager::SubGameObject(BaseGameObject* object) {
 	auto it = std::find_if(objects_.begin(), objects_.end(),
 						   [object](const std::unique_ptr<BaseGameObject>& obj) {
@@ -74,6 +80,13 @@ void GameObjectManager::SubGameObject(BaseGameObject* object) {
 		objects_.erase(it);
 	}
 
+}
+
+/// ===================================================
+/// ゲームオブジェクトの消去リストに追加
+/// ===================================================
+void GameObjectManager::Destory(BaseGameObject* object) {
+	destoryList_.push_back(object);
 }
 
 

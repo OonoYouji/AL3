@@ -17,26 +17,39 @@ public:
 	/// インスタンス確保関数
 	/// </summary>
 	/// <returns></returns>
-	static GameObjectManager* GetInstance();
+	static inline GameObjectManager* GetInstance() {
+		static GameObjectManager instance;
+		return &instance;
+	}
 
 	/// <summary>
 	/// 初期化
 	/// </summary>
 	void Initialize();
 
+	/// <summary>
+	/// 終了処理
+	/// </summary>
 	void Finalize();
 
+
+
 	/// <summary>
-	/// 更新
+	///  オブジェクトのUpdate呼び出し
 	/// </summary>
 	void Update();
 
+	/// <summary>
+	/// オブジェクトのLastUpdate呼び出し
+	/// </summary>
 	void LastUpdate();
 
 	/// <summary>
-	/// 描画
+	/// オブジェクトのDraw呼び出し
 	/// </summary>
 	void Draw();
+
+
 
 	/// <summary>
 	/// BaseGameObjectの追加
@@ -44,11 +57,22 @@ public:
 	/// <param name="object"></param>
 	void AddGameObject(BaseGameObject* object);
 
+private:
 	/// <summary>
 	/// BaseGameObjectの削除
 	/// </summary>
 	/// <param name="object"></param>
 	void SubGameObject(BaseGameObject* object);
+public:
+
+	/// <summary>
+	/// GameObejctの削除
+	/// </summary>
+	/// <param name="object"></param>
+	void Destory(BaseGameObject* object);
+
+
+
 
 #pragma region ImGui
 	/// <summary>
@@ -66,13 +90,14 @@ public:
 	/// select objcetのデバッグ
 	/// </summary>
 	void ImGuiSelectObjectDebug();
-
 #pragma endregion
 
 private:
 
 	std::list<std::unique_ptr<BaseGameObject>> objects_;
 	BaseGameObject* selectObject_ = nullptr;
+
+	std::list<BaseGameObject*> destoryList_;
 
 private:
 	GameObjectManager(const GameObjectManager&) = delete;

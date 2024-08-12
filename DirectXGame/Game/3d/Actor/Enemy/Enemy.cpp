@@ -84,9 +84,9 @@ void Enemy::LastUpdate() {
 
 	UpdateMatrix();
 
-	if(hp_ == 0) {
+	if(hp_ <= 0) {
+		GameObjectManager::GetInstance()->Destory(this);
 		CollisionManager::GetInstance()->SubGameObject(this);
-		GameObjectManager::GetInstance()->SubGameObject(this);
 	}
 
 }

@@ -13,6 +13,9 @@ void MyDebugCamera::Initialize() {
 	worldTransform_.Initialize();
 	viewProjection_.Initialize();
 
+	SetTag("Camera");
+	SetName("DebugCamera");
+
 }
 
 void MyDebugCamera::Update() {
