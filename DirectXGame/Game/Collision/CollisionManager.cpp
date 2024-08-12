@@ -60,15 +60,6 @@ void CollisionManager::CheckCollision(BaseGameObject* a, BaseGameObject* b) {
 		CollidedPair pairA = std::make_pair(a, b);
 		CollidedPair pairB = std::make_pair(b, a);
 
-		if(a->GetTag() == "Enemy" || b->GetTag() == "Enemy") {
-			if(b->GetName().find(std::string("PlayerBullet")) != std::string::npos
-			   || a->GetName().find(std::string("PlayerBullet")) != std::string::npos) {
-
-				int c = 0;
-				c = 0;
-			}
-		}
-
 		if(aCollider->IsCollision(bCollider)) {
 
 			/// Listないのpairの数を数える
