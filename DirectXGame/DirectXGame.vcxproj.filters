@@ -183,6 +183,9 @@
     <ClCompile Include="Game\3d\Object\StartLine.cpp">
       <Filter>Game\3d\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Game\3d\Object\GameManagerObject.cpp">
+      <Filter>Game\3d\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -342,6 +345,9 @@
       <Filter>Game\3d\Object</Filter>
     </ClInclude>
     <ClInclude Include="Game\3d\Object\StartLine.h">
+      <Filter>Game\3d\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Object\GameManagerObject.h">
       <Filter>Game\3d\Object</Filter>
     </ClInclude>
   </ItemGroup>

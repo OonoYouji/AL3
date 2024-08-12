@@ -156,10 +156,13 @@ void GameObjectManager::ImGuiSelectChilds(const std::list<BaseGameObject*>& chil
 /// ===================================================
 void GameObjectManager::ImGuiSelectObjectDebug() {
 	ImGui::SetNextItemOpen(true, ImGuiCond_Always);
-	if(!ImGui::TreeNodeEx(selectObject_->GetName().c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {
+
+	ImGuiTreeNodeFlags_ flags = ImGuiTreeNodeFlags_(ImGuiTreeNodeFlags_DefaultOpen);
+	if(!ImGui::TreeNodeEx(selectObject_->GetName().c_str(), flags)) {
 		return;
 	}
 
+	ImGui::Unindent();
 	selectObject_->ImGuiDebug();
 
 	ImGui::TreePop();

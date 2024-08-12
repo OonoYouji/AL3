@@ -17,6 +17,7 @@
 #include <EnemyManager.h>
 #include <Ground.h>
 #include <StartLine.h>
+#include <GameManagerObject.h>
 
 
 Scene_Game::Scene_Game() {}
@@ -51,6 +52,7 @@ void Scene_Game::Initialize() {
 
 	(new Ground())->Initialize();
 	(new StartLine())->Initialize();
+	(new GameManagerObject())->Initialize();
 
 	GridDraw::GetInstance()->Intiailize(MainCamera::GetInstance()->GetViewProjection());
 
