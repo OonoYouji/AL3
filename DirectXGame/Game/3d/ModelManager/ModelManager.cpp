@@ -5,6 +5,8 @@ void ModelManager::Initialize() {
 	models_["cube"] = std::move(std::unique_ptr<Model>(Model::Create()));
 	models_["sphere"] = std::move(std::unique_ptr<Model>(Model::CreateSphere()));
 
+	Load("playerBullet", "playerBullet");
+	Load("player", "player");
 
 }
 

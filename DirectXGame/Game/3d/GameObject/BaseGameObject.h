@@ -75,8 +75,8 @@ public:
 	/// 変数一個当たりの情報
 	/// ---------------------------------------------------
 	struct Item final {
-		using Pointer = std::variant<int*, float*, Vector3*, bool*, std::string*>;	///- ポインタ
-		using Value = std::variant<int, float, Vector3, bool, std::string>;		///- 実体
+		using Pointer = std::variant<int*, uint32_t*, float*, Vector3*, bool*, std::string*>;	///- ポインタ
+		using Value = std::variant<int, uint32_t, float, Vector3, bool, std::string>;		///- 実体
 		std::pair<Pointer, Value> variable;
 	};
 

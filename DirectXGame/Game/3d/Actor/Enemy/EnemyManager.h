@@ -34,7 +34,7 @@ private:
 	///
 	std::list<Enemy*> enemies_;
 
-	std::list<std::unique_ptr<Model>> models_;
+	std::list<Model*> models_;
 
 
 private:

@@ -22,10 +22,14 @@ PlayerBullet::~PlayerBullet() {}
 void PlayerBullet::Initialize() {
 	worldTransform_.Initialize();
 
-	SetModel(ModelManager::GetModel("sphere"));
+	SetModel(ModelManager::GetModel("playerBullet"));
 	CreateBoxCollider(model_);
 
 	move_ = Vec3(0, 0, 1);
+
+	objectColor_.Initialize();
+	objectColor_.SetColor(Vector4( 244,99,21, 255 ) / 255.0f);
+	objectColor_.TransferMatrix();
 
 }
 
@@ -41,7 +45,7 @@ void PlayerBullet::Update() {
 }
 
 void PlayerBullet::Draw() {
-	model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection());
+	model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection(), &objectColor_);
 }
 
 void PlayerBullet::SetModel(Model* model) {

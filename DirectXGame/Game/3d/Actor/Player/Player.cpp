@@ -35,7 +35,7 @@ void Player::Initialize() {
 	input_ = Input::GetInstance();
 
 
-	model_ = ModelManager::GetModel("cube");
+	model_ = ModelManager::GetModel("player");
 
 	worldTransform_.Initialize();
 
@@ -88,10 +88,6 @@ void Player::Update() {
 
 
 
-	UpdateMatrix();
-
-
-
 	/// -----------------------------------------------------------------
 	/// 弾を打つ処理
 	/// -----------------------------------------------------------------
@@ -117,7 +113,7 @@ void Player::Update() {
 	WorldTime::SetAttenuation(nextAttenuation_);
 
 
-
+	UpdateMatrix();
 
 }
 
@@ -144,6 +140,21 @@ void Player::Draw() {
 	model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection(), &color_);
 
 
+}
+
+void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
+	color_.SetColor(Vector4(0, 0, 0, 1));
+	color_.TransferMatrix();
+}
+
+void Player::OnCollisionStay([[maybe_unused]] BaseGameObject* collision) {
+	color_.SetColor(Vector4(1, 0, 0, 1));
+	color_.TransferMatrix();
+}
+
+void Player::OnCollisionExit([[maybe_unused]] BaseGameObject* collision) {
+	color_.SetColor(Vector4(1, 1, 1, 1));
+	color_.TransferMatrix();
 }
 
 

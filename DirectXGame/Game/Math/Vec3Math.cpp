@@ -54,8 +54,8 @@ float Dot(const Vec3& v1, const Vec3& v2) {
 }
 
 Vec3 MaxDot(const Vec3& direction, const std::vector<Vec3>& vertices) {
-	float maxDot = 0;
-	Vec3 maxVertex = {};
+	float maxDot = Dot(vertices.front(), direction);
+	Vec3 maxVertex = vertices.front();
 	for(auto& vertex : vertices) {
 		float dot = Dot(vertex, direction);
 		if(dot > maxDot) {

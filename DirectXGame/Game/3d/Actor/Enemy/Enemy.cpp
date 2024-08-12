@@ -1,9 +1,12 @@
+#define NOMINMAX
 #include <Enemy.h>
 
 #include <Model.h>
 
 #include <EnemyManager.h>
 #include <MainCamera.h>
+#include <GameObjectManager.h>
+#include <CollisionManager.h>
 
 #include <WorldTime.h>
 
@@ -39,6 +42,8 @@ void Enemy::Initialize() {
 	/// Move
 	move_ = Vec3(0, 0, -1);
 	speed_ = 4.0f;
+
+	CreateStatusGroup();
 
 }
 
@@ -76,7 +81,14 @@ void Enemy::Draw() {
 /// 最後の更新
 /// ===================================================
 void Enemy::LastUpdate() {
+
 	UpdateMatrix();
+
+	if(hp_ == 0) {
+		CollisionManager::GetInstance()->SubGameObject(this);
+		GameObjectManager::GetInstance()->SubGameObject(this);
+	}
+
 }
 
 
@@ -95,13 +107,34 @@ void Enemy::Move() {
 /// ===================================================
 void Enemy::Attack() {
 
-	
+
 
 }
 
 
 
-
+/// ===================================================
+/// modelのセット
+/// ===================================================
 void Enemy::SetModel(Model* model) {
 	model_ = model;
+}
+
+
+/// ===================================================
+/// HPのimguiグループを作成
+/// ===================================================
+void Enemy::CreateStatusGroup() {
+	BaseGameObject::Group& group = CreateGroup("Status");
+	group.SetPtr("HP", &hp_);
+}
+
+
+/// ===================================================
+/// 衝突時の処理
+/// ===================================================
+void Enemy::OnCollisionEnter(BaseGameObject* collision) {
+	if(collision->GetName().find(std::string("PlayerBullet")) != std::string::npos) {
+		hp_ = std::max(hp_ - 1, 0u);
+	}
 }

@@ -18,12 +18,17 @@ void MyDebugCamera::Initialize() {
 void MyDebugCamera::Update() {
 
 
+
+}
+
+void MyDebugCamera::LastUpdate() {
+
 	velocity_ = { 0.0f,0.0f,0.0f };
 
 	if(input_->IsPressMouse(2)) {
 		velocity_ += (Vec3(
-			static_cast<float>(input_->GetMouseMove().lX), 
-			static_cast<float>(input_->GetMouseMove().lY), 
+			static_cast<float>(input_->GetMouseMove().lX),
+			static_cast<float>(input_->GetMouseMove().lY),
 			0.0f) / 256.0f) * -1.0f;
 		velocity_.y *= -1.0f;
 		velocity_.z = 0.0f;
@@ -44,6 +49,5 @@ void MyDebugCamera::Update() {
 	UpdateMatrix();
 	viewProjection_.matView = MakeInverse(worldTransform_.matWorld_);
 	viewProjection_.TransferMatrix();
-
 
 }

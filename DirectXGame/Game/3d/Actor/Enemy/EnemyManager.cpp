@@ -1,11 +1,11 @@
 #include <EnemyManager.h>
 
 #include <Model.h>
+#include <ModelManager.h>
 
 
 void EnemyManager::Initialize() {
-	std::unique_ptr<Model> newModel(Model::CreateSphere());
-	models_.push_back(std::move(newModel));
+	models_.push_back(ModelManager::GetModel("cube"));
 }
 
 
@@ -14,5 +14,5 @@ void EnemyManager::AddEnemy(Enemy* enemy) {
 }
 
 Model* EnemyManager::GetModel() const {
-	return models_.front().get();
+	return models_.front();
 }

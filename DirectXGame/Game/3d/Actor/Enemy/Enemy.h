@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 
 #include <BaseGameObject.h>
 
@@ -30,6 +31,13 @@ public:
 
 	void Draw() override;
 
+	void OnCollisionEnter(BaseGameObject* collision) override;
+
+public:
+
+	/// -------------------------------------------
+	/// not override methods
+	/// -------------------------------------------
 
 	void Move();
 
@@ -37,6 +45,8 @@ public:
 
 
 	void SetModel(Model* model);
+
+	void CreateStatusGroup();
 
 
 private:
@@ -49,6 +59,9 @@ private:
 
 
 	Model* model_ = nullptr;
+
+	/// status
+	uint32_t hp_ = 10;
 
 
 	/// Move

@@ -1,9 +1,9 @@
 #pragma once
 
 #include <BaseGameObject.h>
+#include <ObjectColor.h>
 
 class Model;
-
 
 class PlayerBullet final : public BaseGameObject {
 public:
@@ -39,5 +39,7 @@ private:
 
 	static const float kLifeTime_;
 	float leftLifeTime_ = kLifeTime_;
+
+	ObjectColor objectColor_;
 
 };
