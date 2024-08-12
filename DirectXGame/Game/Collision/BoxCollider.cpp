@@ -62,20 +62,23 @@ bool BoxCollider::IsCollision(BaseCollider* other) {
 
 bool BoxCollider::IsCollision(BoxCollider* box) {
 	Vec3 thisPos = Transform({}, transform_.matWorld_);
-	Vec3 boxPos  = Transform({}, box->transform_.matWorld_);
+	Vec3 boxPos = Transform({}, box->transform_.matWorld_);
 
-	if(!(this->min_.x + thisPos.x <= box->max_.x + boxPos.x &&
-		 this->max_.x + thisPos.x >= box->min_.x + boxPos.x)) {
+	Vec3 thisMin = this->min_ + thisPos;
+	Vec3 thisMax = this->max_ + thisPos;
+
+	Vec3 boxMin = this->min_ + boxPos;
+	Vec3 boxMax = this->max_ + boxPos;
+
+	if(!(thisMin.x <= boxMax.x && thisMax.x >= boxMin.x)) {
 		return false;
 	}
 
-	if(!(this->min_.y + thisPos.y <= box->max_.y + boxPos.y &&
-		 this->max_.y + thisPos.y >= box->min_.y + boxPos.y)) {
+	if(!(thisMin.y <= boxMax.y && thisMax.y >= boxMin.y)) {
 		return false;
 	}
 
-	if(!(this->min_.z + thisPos.z <= box->max_.z + boxPos.z &&
-		 this->max_.z + thisPos.z >= box->min_.z + boxPos.z)) {
+	if(!(thisMin.z <= boxMax.z && thisMax.z >= boxMin.z)) {
 		return false;
 	}
 

@@ -43,7 +43,10 @@ void Scene_Game::Initialize() {
 
 	EnemyManager::GetInstance()->Initialize();
 
-	(new Enemy)->Initialize();
+	Enemy* enemy = (new Enemy);
+	enemy->Initialize();
+	enemy->SetPos({ 0,0, 10 });
+
 
 	(new Ground())->Initialize();
 

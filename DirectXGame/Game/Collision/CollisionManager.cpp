@@ -59,6 +59,15 @@ void CollisionManager::CheckCollision(BaseGameObject* a, BaseGameObject* b) {
 
 		CollidedPair pair = std::make_pair(a, b);
 
+		if(a->GetTag() == "Enemy" || b->GetTag() == "Enemy") {
+			if(b->GetName().find(std::string("PlayerBullet")) != std::string::npos
+			   || a->GetName().find(std::string("PlayerBullet")) != std::string::npos) {
+
+				int c = 0;
+				c = 0;
+			}
+		}
+
 		if(aCollider->IsCollision(bCollider)) {
 
 			/// Listないのpairの数を数える
@@ -71,7 +80,7 @@ void CollisionManager::CheckCollision(BaseGameObject* a, BaseGameObject* b) {
 #ifdef _DEBUG
 				pairNames_.push_back("Enter :  " + a->GetName() + "  to  " + b->GetName());
 #endif // _DEBUG
-			
+
 			} else {
 				/// あったら衝突しているのでStayを呼ぶ
 				a->OnCollisionStay(b);

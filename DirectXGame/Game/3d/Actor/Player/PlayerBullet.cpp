@@ -23,7 +23,7 @@ void PlayerBullet::Initialize() {
 	worldTransform_.Initialize();
 
 	SetModel(ModelManager::GetModel("playerBullet"));
-	CreateBoxCollider(model_);
+	CreateBoxCollider(ModelManager::GetModel("playerBulletHitBox"));
 
 	move_ = Vec3(0, 0, 1);
 
