@@ -71,7 +71,7 @@ void Enemy::Update() {
 /// ===================================================
 void Enemy::Draw() {
 	if(model_) {
-		//model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection());
+		model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection());
 	}
 }
 

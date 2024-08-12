@@ -12,6 +12,15 @@ void CollisionManager::SubGameObject(BaseGameObject* collider) {
 	auto itr = std::find(gameObjects_.begin(), gameObjects_.end(), collider);
 	assert(itr != gameObjects_.end());
 	gameObjects_.erase(itr);
+
+	collidedPairs_.remove_if([&collider](const CollidedPair& pair) {
+		return pair.first == collider || pair.second == collider;
+	});
+
+	currentCollidedPairs_.remove_if([&collider](const CollidedPair& pair) {
+		return pair.first == collider || pair.second == collider;
+	});
+
 }
 
 
@@ -24,7 +33,7 @@ void CollisionManager::Update() {
 
 			if(objectA == objectB) { continue; }
 
-			auto it = std::find_if(currentCollidedPairs_.begin(), currentCollidedPairs_.end(), [objectA, objectB](const CollidedPair& pair) {
+			auto it = std::find_if(currentCollidedPairs_.begin(), currentCollidedPairs_.end(), [&objectA, &objectB](const CollidedPair& pair) {
 				return (pair.first == objectA && pair.second == objectB)
 					|| (pair.first == objectB && pair.second == objectA);
 			});
@@ -87,7 +96,7 @@ void CollisionManager::CheckCollision(BaseGameObject* a, BaseGameObject* b) {
 #endif // _DEBUG
 			}
 
-		
+
 			/// Listに追加する
 			currentCollidedPairs_.push_back(pairA);
 
@@ -102,7 +111,7 @@ void CollisionManager::CheckCollision(BaseGameObject* a, BaseGameObject* b) {
 			if(aCount != 0 || bCount != 0) {
 				a->OnCollisionExit(b);
 				b->OnCollisionExit(a);
-				collidedPairs_.remove_if([pairA, pairB](const CollidedPair& elem) {
+				collidedPairs_.remove_if([&pairA, &pairB](const CollidedPair& elem) {
 					return elem.first == pairA.first && elem.second == pairA.second
 						|| elem.first == pairB.first && elem.second == pairB.second;
 				});

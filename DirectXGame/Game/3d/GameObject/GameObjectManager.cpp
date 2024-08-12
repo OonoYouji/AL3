@@ -73,7 +73,7 @@ void GameObjectManager::AddGameObject(BaseGameObject* object) {
 /// ===================================================
 void GameObjectManager::SubGameObject(BaseGameObject* object) {
 	auto it = std::find_if(objects_.begin(), objects_.end(),
-						   [object](const std::unique_ptr<BaseGameObject>& obj) {
+						   [&object](const std::unique_ptr<BaseGameObject>& obj) {
 		return obj.get() == object;
 	});
 
