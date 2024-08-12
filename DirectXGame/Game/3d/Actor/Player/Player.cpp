@@ -32,6 +32,7 @@ void Player::Initialize() {
 
 	input_ = Input::GetInstance();
 
+
 	model_.reset(Model::CreateSphere());
 	bulletModel_.reset(Model::Create());
 
@@ -45,6 +46,8 @@ void Player::Initialize() {
 	move_ = {};
 	speed_ = 10.0f;
 	nextAttenuation_ = WorldTime::GetAttenuation();
+
+	CreateBoxCollider(model_.get());
 
 }
 

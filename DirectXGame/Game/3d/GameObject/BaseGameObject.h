@@ -143,11 +143,13 @@ public:
 
 #pragma region Collider 
 
-	virtual void OnCollisionEnter([[maybe_unused]]BaseGameObject* const collision) {}
-	virtual void OnCollisionStay([[maybe_unused]]BaseGameObject* const collision) {}
-	virtual void OnCollisionExit([[maybe_unused]]BaseGameObject* const collision) {}
+	virtual void OnCollisionEnter([[maybe_unused]] BaseGameObject* const collision) {}
+	virtual void OnCollisionStay([[maybe_unused]] BaseGameObject* const collision) {}
+	virtual void OnCollisionExit([[maybe_unused]] BaseGameObject* const collision) {}
 
 	void CreateBoxCollider(Model* model);
+
+	BaseCollider* GetCollider() const { return collider_.get(); }
 
 #pragma endregion
 

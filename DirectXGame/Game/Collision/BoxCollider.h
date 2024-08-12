@@ -3,7 +3,7 @@
 #include <BaseCollider.h>
 #include <Model.h>
 #include <Vector3.h>
-
+#include <WorldTransform.h>
 
 class BoxCollider : public BaseCollider {
 public:
@@ -20,5 +20,6 @@ private:
 	Vec3 min_, max_;
 	
 	Model* cube_ = nullptr;
+	WorldTransform transform_;
 
 };

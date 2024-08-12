@@ -3,6 +3,7 @@
 #include "DirectXCommon.h"
 #include "Sprite.h"
 #include "Model.h"
+#include <CollisionManager.h>
 
 namespace {
 	DirectXCommon* dxCommon;
@@ -36,6 +37,14 @@ void BaseScene::Draw() {
 	Object3dDraw();
 	Model::PostDraw();
 	
+#ifdef _DEBUG
+	/// ---------------------------------------------------
+	/// 当たり判定の描画
+	/// ---------------------------------------------------
+	Model::PreDraw(commandList, ModelCommon::PipelineSetWireFrame);
+	CollisionManager::GetInstance()->DrawHitBoxALL();
+	Model::PostDraw();
+#endif // _DEBUG
 
 
 	/// ---------------------------------------------------

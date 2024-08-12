@@ -21,6 +21,8 @@ public:
 
 	void AddGameObject(BaseGameObject* collider);
 
+
+	void DrawHitBoxALL();
 	
 private:
 
