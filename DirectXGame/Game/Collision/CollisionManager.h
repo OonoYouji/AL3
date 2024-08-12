@@ -20,6 +20,7 @@ public:
 
 
 	void AddGameObject(BaseGameObject* collider);
+	void SubGameObject(BaseGameObject* collider);
 
 
 	void DrawHitBoxALL();

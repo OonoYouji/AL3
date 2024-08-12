@@ -12,7 +12,11 @@ public:
 	void Update() override;
 	void LastUpdate() override;
 
+	void SetTarget(BaseGameObject* target);
+
 private:
 
+	BaseGameObject* target_ = nullptr;
+	Vec3 offset_ = {};
 	
 };

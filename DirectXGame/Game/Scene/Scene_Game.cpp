@@ -38,7 +38,7 @@ void Scene_Game::Initialize() {
 
 	Player* player = new Player();
 	player->Initialize();
-	camera_->SetParent(player);
+	camera_->SetTarget(player);
 
 	EnemyManager::GetInstance()->Initialize();
 
@@ -59,18 +59,35 @@ void Scene_Game::Update() {
 #ifdef _DEBUG
 	ImGui::Begin("setting");
 	ImGui::Checkbox("debug camera active", &debugCamera_->isActive);
+
+	ImGui::Separator();
+
+	static bool isActive = true;
+	ImGui::Checkbox("scene active", &isActive);
+	
+
 	ImGui::End();
+
+	GameObjectManager::GetInstance()->ImGuiDebug();
+	WorldTime::GetInstance()->ImGuiDebug();
 
 	if(debugCamera_->isActive) {
 		MainCamera::GetInstance()->SetCamera(debugCamera_);
 	} else {
 		MainCamera::GetInstance()->SetCamera(camera_);
 	}
+
+	if(!isActive) {
+		GameObjectManager::GetInstance()->LastUpdate();
+		return;
+	}
+
+
 #endif // _DEBUG
 
-	WorldTime::GetInstance()->ImGuiDebug();
 
 	GameObjectManager::GetInstance()->Update();
+	GameObjectManager::GetInstance()->LastUpdate();
 
 }
 

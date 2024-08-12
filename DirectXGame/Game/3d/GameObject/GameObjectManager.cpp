@@ -28,22 +28,19 @@ void GameObjectManager::Finalize() {
 /// 更新
 /// ===================================================
 void GameObjectManager::Update() {
-
-	ImGuiDebug();
-
 	for(auto& obj : objects_) {
 		if(obj->isActive) {
 			obj->Update();
 		}
 	}
+}
 
+void GameObjectManager::LastUpdate() {
 	for(auto& obj : objects_) {
 		if(obj->isActive) {
 			obj->LastUpdate();
 		}
 	}
-
-
 }
 
 

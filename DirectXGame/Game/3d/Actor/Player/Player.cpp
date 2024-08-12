@@ -9,6 +9,7 @@
 #include <MainCamera.h>
 #include <WorldTime.h>
 #include <GameObjectManager.h>
+#include <CollisionManager.h>
 
 #include <CreateName.h>
 #include <Mat4Math.h>
@@ -34,6 +35,7 @@ void Player::Initialize() {
 
 
 	model_.reset(Model::CreateSphere());
+	//model_.reset(Model::CreateFromOBJ("axis"));
 	bulletModel_.reset(Model::Create());
 
 	worldTransform_.Initialize();
@@ -128,6 +130,7 @@ void Player::LastUpdate() {
 	bullets_.remove_if([](PlayerBullet* bullet) {
 		if(bullet->IsDesctory()) {
 			GameObjectManager::GetInstance()->SubGameObject(bullet);
+			CollisionManager::GetInstance()->SubGameObject(bullet);
 			return true;
 		}
 		return false;

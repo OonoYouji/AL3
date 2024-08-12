@@ -31,6 +31,8 @@ public:
 	/// </summary>
 	void Update();
 
+	void LastUpdate();
+
 	/// <summary>
 	/// 描画
 	/// </summary>
