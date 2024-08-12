@@ -17,9 +17,22 @@ void CollisionManager::SubGameObject(BaseGameObject* collider) {
 
 void CollisionManager::Update() {
 
+	currentCollidedPairs_.clear();
+
 	for(auto& objectA : gameObjects_) {
 		for(auto& objectB : gameObjects_) {
+
 			if(objectA == objectB) { continue; }
+
+			auto it = std::find_if(currentCollidedPairs_.begin(), currentCollidedPairs_.end(), [objectA, objectB](const CollidedPair& pair) {
+				return (pair.first == objectA && pair.second == objectB) 
+					|| (pair.first == objectB && pair.second == objectA); 
+			});
+
+			if(it != currentCollidedPairs_.end()) {
+				continue;
+			}
+
 			CheckCollision(objectA, objectB);
 		}
 	}
@@ -45,6 +58,7 @@ void CollisionManager::CheckCollision(BaseGameObject* a, BaseGameObject* b) {
 		if(aCollider->IsCollision(bCollider)) {
 
 			CollidedPair pair = std::make_pair(a, b);
+			currentCollidedPairs_.push_back(pair);
 			collidedPairs_.push_back(pair);
 
 			a->OnCollisionStay(b);

@@ -38,6 +38,7 @@ private:
 	std::list<BaseGameObject*> gameObjects_;
 
 	std::list<CollidedPair> collidedPairs_;
+	std::list<CollidedPair> currentCollidedPairs_; /// 1frame間で衝突したもののみpush_back()
 
 #ifdef _DEBUG
 	std::deque<std::string> pairNames_;
