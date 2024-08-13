@@ -17,6 +17,7 @@
 #include <Vector2.h>
 
 #include <PlayerBullet.h>
+#include <GameManagerObject.h>
 
 
 
@@ -142,6 +143,16 @@ void Player::Draw() {
 void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 	color_.SetColor(Vector4(0, 0, 0, 1));
 	color_.TransferMatrix();
+
+	if(collision->GetName().find("Enemy") != std::string::npos) {
+
+		GameManagerObject* object = dynamic_cast<GameManagerObject*>(
+				GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
+
+		object->SetIsGameOver(true);
+
+	}
+
 }
 
 void Player::OnCollisionStay([[maybe_unused]] BaseGameObject* collision) {

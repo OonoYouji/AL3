@@ -38,6 +38,5 @@ private:
 	Vec3 min_, max_;
 
 	Model* cube_ = nullptr;
-	WorldTransform transform_;
 
 };

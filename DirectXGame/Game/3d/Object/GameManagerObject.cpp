@@ -44,6 +44,7 @@ void GameManagerObject::Draw() {
 void GameManagerObject::CreateObjectGroup() {
 	BaseGameObject::Group& isStartGroup = CreateGroup("Is Start");
 	isStartGroup.SetPtr("is game start", &isGameStart_);
+	isStartGroup.SetPtr("is game over", &isGameOver_);
 }
 
 
@@ -53,4 +54,8 @@ void GameManagerObject::CreateObjectGroup() {
 /// ===================================================
 void GameManagerObject::SetIsGameStart(bool isGameStart) {
 	isGameStart_ = isGameStart;
+}
+
+void GameManagerObject::SetIsGameOver(bool isGameOver) {
+	isGameOver_ = isGameOver;
 }

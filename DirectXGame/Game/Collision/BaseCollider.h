@@ -1,5 +1,6 @@
 #pragma once
 
+#include <WorldTransform.h>
 class BaseGameObject;
 class Model;
 class BoxCollider;
@@ -19,8 +20,11 @@ public:
 	virtual bool IsCollision([[maybe_unused]] BaseCollider* other) = 0;
 	virtual bool IsCollision([[maybe_unused]] BoxCollider* box) = 0;
 
+	void UpdateMatrix();
+
 public:
 
 	BaseGameObject* gameObject_ = nullptr;
+	WorldTransform transform_;
 
 };

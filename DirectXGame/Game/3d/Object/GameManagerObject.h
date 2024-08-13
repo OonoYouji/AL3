@@ -49,6 +49,8 @@ public:
 	/// <param name="isGameStart"></param>
 	void SetIsGameStart(bool isGameStart);
 
+	void SetIsGameOver(bool isGameOver);
+
 private:
 
 	/// ===================================================
@@ -56,6 +58,7 @@ private:
 	/// ===================================================
 
 	bool isGameStart_ = false;
+	bool isGameOver_ = false;
 
 
 

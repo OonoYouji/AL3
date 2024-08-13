@@ -40,10 +40,7 @@ void BoxCollider::Initialize(BaseGameObject* gameObejct, Model* model) {
 
 void BoxCollider::Draw() {
 
-	transform_.matWorld_ = MakeAffine(transform_.scale_, transform_.rotation_, transform_.translation_);
-	transform_.matWorld_ *= transform_.parent_->matWorld_;
-
-	transform_.TransferMatrix();
+	UpdateMatrix();
 
 	if(cube_) {
 		cube_->Draw(transform_, MainCamera::GetInstance()->GetViewProjection());
@@ -51,6 +48,10 @@ void BoxCollider::Draw() {
 }
 
 bool BoxCollider::IsCollision(BaseCollider* other) {
+
+	UpdateMatrix();
+	other->UpdateMatrix();
+
 	BoxCollider* box = dynamic_cast<BoxCollider*>(other);
 	if(box && IsCollision(box)) {
 		return true;
