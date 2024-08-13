@@ -63,7 +63,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Game/Time;$(ProjectDir)Game/Scene;$(ProjectDir)Game/Math;$(ProjectDir)Game/Collision;$(ProjectDir)Game/3d/ModelManager;$(ProjectDir)Game/3d/GameObject;$(ProjectDir)Game/3d/Camera;$(ProjectDir)Game/3d/Actor/Enemy;$(ProjectDir)Game/3d/Actor/Player;$(ProjectDir)Game/3d/Actor;$(ProjectDir)Game/3d/Object;$(ProjectDir)Game/3d;$(ProjectDir)Game;$(ProjectDir);$(ProjectDir)2d;$(ProjectDir)3d;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)input;$(ProjectDir)scene;$(ProjectDir)math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Game/Time;$(ProjectDir)Game/Scene;$(ProjectDir)Game/Math;$(ProjectDir)Game/Collision;$(ProjectDir)Game/3d/ModelManager;$(ProjectDir)Game/3d/GameObject;$(ProjectDir)Game/3d/Camera;$(ProjectDir)Game/3d/Actor/Enemy/State;$(ProjectDir)Game/3d/Actor/Enemy;$(ProjectDir)Game/3d/Actor/Player;$(ProjectDir)Game/3d/Actor;$(ProjectDir)Game/3d/Object;$(ProjectDir)Game/3d;$(ProjectDir)Game;$(ProjectDir);$(ProjectDir)2d;$(ProjectDir)3d;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)input;$(ProjectDir)scene;$(ProjectDir)math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -111,6 +111,12 @@
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="Game\3d\Actor\Enemy\Enemy.cpp" />
     <ClCompile Include="Game\3d\Actor\Enemy\EnemyManager.cpp" />
+    <ClCompile Include="Game\3d\Actor\Enemy\State\BaseEnemyState.cpp" />
+    <ClCompile Include="Game\3d\Actor\Enemy\State\EnemyStateChase.cpp" />
+    <ClCompile Include="Game\3d\Actor\Enemy\State\EnemyStateDown.cpp" />
+    <ClCompile Include="Game\3d\Actor\Enemy\State\EnemyStateLeft.cpp" />
+    <ClCompile Include="Game\3d\Actor\Enemy\State\EnemyStateRight.cpp" />
+    <ClCompile Include="Game\3d\Actor\Enemy\State\EnemyStateUp.cpp" />
     <ClCompile Include="Game\3d\Actor\Player\Player.cpp" />
     <ClCompile Include="Game\3d\Actor\Player\PlayerBullet.cpp" />
     <ClCompile Include="Game\3d\Camera\BaseCamera.cpp" />
@@ -164,6 +170,12 @@
     <ClInclude Include="base\WinApp.h" />
     <ClInclude Include="Game\3d\Actor\Enemy\Enemy.h" />
     <ClInclude Include="Game\3d\Actor\Enemy\EnemyManager.h" />
+    <ClInclude Include="Game\3d\Actor\Enemy\State\BaseEnemyState.h" />
+    <ClInclude Include="Game\3d\Actor\Enemy\State\EnemyStateChase.h" />
+    <ClInclude Include="Game\3d\Actor\Enemy\State\EnemyStateDown.h" />
+    <ClInclude Include="Game\3d\Actor\Enemy\State\EnemyStateLeft.h" />
+    <ClInclude Include="Game\3d\Actor\Enemy\State\EnemyStateRight.h" />
+    <ClInclude Include="Game\3d\Actor\Enemy\State\EnemyStateUp.h" />
     <ClInclude Include="Game\3d\Actor\Player\Player.h" />
     <ClInclude Include="Game\3d\Actor\Player\PlayerBullet.h" />
     <ClInclude Include="Game\3d\Camera\BaseCamera.h" />

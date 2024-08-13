@@ -35,6 +35,7 @@ Enemy::Enemy() {
 /// ===================================================
 void Enemy::Initialize() {
 	stateType_ |= StateType::kMove;
+	moveType_ = MoveType::kChase;
 
 	SetModel(EnemyManager::GetInstance()->GetModel());
 
@@ -55,7 +56,7 @@ void Enemy::Initialize() {
 void Enemy::Update() {
 
 	if(stateType_ & StateType::kMove) {
-		Move();
+		EnemyManager::GetInstance()->MoveStateUpdate(this, moveType_);
 	}
 
 	if(stateType_ & StateType::kAttack) {
@@ -92,16 +93,6 @@ void Enemy::LastUpdate() {
 
 }
 
-
-
-/// ===================================================
-/// 移動
-/// ===================================================
-void Enemy::Move() {
-
-	worldTransform_.translation_ += move_ * speed_ * WorldTime::FrameTime();
-
-}
 
 /// ===================================================
 /// 攻撃

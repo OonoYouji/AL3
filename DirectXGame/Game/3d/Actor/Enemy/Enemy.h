@@ -7,18 +7,31 @@
 class Model;
 
 /// ===================================================
-/// 行動パターン
-/// ===================================================
-enum EnemyStateType {
-	kNone	= 1 << 0,
-	kMove	= 1 << 1,
-	kAttack	= 1 << 2,
-};
-
-/// ===================================================
 /// 敵のクラス
 /// ===================================================
 class Enemy : public BaseGameObject {
+public:
+
+	/// ===================================================
+	/// 行動パターン
+	/// ===================================================
+	enum StateType {
+		kNone   = 1 << 0, /// 何もしない
+		kMove   = 1 << 1, /// 移動する
+		kAttack = 1 << 2, /// 攻撃する
+	};
+
+
+	enum MoveType {
+		kDown,	/// 上から下へ
+		kUp,	/// 下から上へ
+		kLeft,	/// 右から左へ
+		kRight,	/// 左から右へ
+		kChase,	/// プレイヤーを追う
+		kCount, /// enumのカウント用
+	};
+
+
 public:
 
 	Enemy();
@@ -39,8 +52,6 @@ public:
 	/// not override methods
 	/// -------------------------------------------
 
-	void Move();
-
 	void Attack();
 
 
@@ -48,15 +59,13 @@ public:
 
 	void CreateStatusGroup();
 
-
 private:
 
 	static int instanceCount_;
 	int id_;
 
-	using StateType = EnemyStateType;
-	int stateType_;
-
+	int stateType_; /// enum StateType を参照
+	int moveType_;	/// enum MoveType  を参照
 
 	Model* model_ = nullptr;
 

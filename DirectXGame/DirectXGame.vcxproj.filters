@@ -91,6 +91,9 @@
     <Filter Include="Game\3d\ModelManager">
       <UniqueIdentifier>{2ac9d20c-32d2-42c6-8ef6-76a96753d713}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\3d\Actor\Enemy\State">
+      <UniqueIdentifier>{7cd4fb31-b53b-4e0e-a492-d31b730f513b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -185,6 +188,24 @@
     </ClCompile>
     <ClCompile Include="Game\3d\Object\GameManagerObject.cpp">
       <Filter>Game\3d\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3d\Actor\Enemy\State\BaseEnemyState.cpp">
+      <Filter>Game\3d\Actor\Enemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3d\Actor\Enemy\State\EnemyStateDown.cpp">
+      <Filter>Game\3d\Actor\Enemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3d\Actor\Enemy\State\EnemyStateLeft.cpp">
+      <Filter>Game\3d\Actor\Enemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3d\Actor\Enemy\State\EnemyStateRight.cpp">
+      <Filter>Game\3d\Actor\Enemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3d\Actor\Enemy\State\EnemyStateUp.cpp">
+      <Filter>Game\3d\Actor\Enemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3d\Actor\Enemy\State\EnemyStateChase.cpp">
+      <Filter>Game\3d\Actor\Enemy\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -349,6 +370,24 @@
     </ClInclude>
     <ClInclude Include="Game\3d\Object\GameManagerObject.h">
       <Filter>Game\3d\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Actor\Enemy\State\BaseEnemyState.h">
+      <Filter>Game\3d\Actor\Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Actor\Enemy\State\EnemyStateDown.h">
+      <Filter>Game\3d\Actor\Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Actor\Enemy\State\EnemyStateLeft.h">
+      <Filter>Game\3d\Actor\Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Actor\Enemy\State\EnemyStateRight.h">
+      <Filter>Game\3d\Actor\Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Actor\Enemy\State\EnemyStateUp.h">
+      <Filter>Game\3d\Actor\Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Actor\Enemy\State\EnemyStateChase.h">
+      <Filter>Game\3d\Actor\Enemy\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

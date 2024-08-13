@@ -1,9 +1,12 @@
 #pragma once
 
 #include <list>
+#include <vector>
 #include <memory>
 
 #include <Enemy.h>
+
+#include <BaseEnemyState.h>
 
 class Model;
 
@@ -16,7 +19,7 @@ class EnemyManager final {
 public:
 
 
-	static EnemyManager* GetInstance() {
+	static inline EnemyManager* GetInstance() {
 		static EnemyManager instance;
 		return &instance;
 	}
@@ -29,12 +32,17 @@ public:
 
 	Model* GetModel()const;
 
+	void MoveStateUpdate(Enemy* enemy, int moveType);
+
 private:
 
 	///
 	std::list<Enemy*> enemies_;
 
 	std::list<Model*> models_;
+
+	/// 動きの種類
+	std::vector<std::unique_ptr<EnemyState::BaseState>> moveStates_;
 
 
 private:
