@@ -49,6 +49,10 @@ public:
 	/// <param name="isGameStart"></param>
 	void SetIsGameStart(bool isGameStart);
 
+	/// <summary>
+	/// ゲームオーバーのフラグのセット
+	/// </summary>
+	/// <param name="isGameOver"></param>
 	void SetIsGameOver(bool isGameOver);
 
 private:

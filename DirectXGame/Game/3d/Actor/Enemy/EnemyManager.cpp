@@ -20,6 +20,12 @@ void EnemyManager::Initialize() {
 	moveStates_[Enemy::kRight].reset(new EnemyState::Right);
 	moveStates_[Enemy::kChase].reset(new EnemyState::Chase);
 
+	emitters_.push_back(new EnemyEmitter());
+
+	for(auto& emitter : emitters_) {
+		emitter->Initialize();
+	}
+
 }
 
 

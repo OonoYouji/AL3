@@ -10,6 +10,7 @@ void ModelManager::Initialize() {
 	Load("playerBulletHitBox", "playerBulletHitBox");
 
 	Load("enemy", "enemy");
+	Load("enemyEmitter", "enemyEmitter");
 
 	Load("startLine", "startLine");
 

@@ -5,7 +5,7 @@
 #include <memory>
 
 #include <Enemy.h>
-
+#include <EnemyEmitter.h>
 #include <BaseEnemyState.h>
 
 class Model;
@@ -38,6 +38,7 @@ private:
 
 	///
 	std::list<Enemy*> enemies_;
+	std::list<EnemyEmitter*> emitters_;
 
 	std::list<Model*> models_;
 

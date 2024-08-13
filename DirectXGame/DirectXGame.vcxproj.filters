@@ -207,6 +207,9 @@
     <ClCompile Include="Game\3d\Actor\Enemy\State\EnemyStateChase.cpp">
       <Filter>Game\3d\Actor\Enemy\State</Filter>
     </ClCompile>
+    <ClCompile Include="Game\3d\Actor\Enemy\EnemyEmitter.cpp">
+      <Filter>Game\3d\Actor\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -388,6 +391,9 @@
     </ClInclude>
     <ClInclude Include="Game\3d\Actor\Enemy\State\EnemyStateChase.h">
       <Filter>Game\3d\Actor\Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Actor\Enemy\EnemyEmitter.h">
+      <Filter>Game\3d\Actor\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
