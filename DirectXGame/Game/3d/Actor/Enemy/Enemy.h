@@ -54,10 +54,12 @@ public:
 
 	void Attack();
 
+	void CreateStatusGroup();
+
 
 	void SetModel(Model* model);
 
-	void CreateStatusGroup();
+	void SetMoveType(int moveType) { moveType_ = moveType; }
 
 private:
 

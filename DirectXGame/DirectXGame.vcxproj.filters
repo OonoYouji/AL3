@@ -94,6 +94,9 @@
     <Filter Include="Game\3d\Actor\Enemy\State">
       <UniqueIdentifier>{7cd4fb31-b53b-4e0e-a492-d31b730f513b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Random">
+      <UniqueIdentifier>{d1ba6c86-28ef-470a-840c-f9ef42826c91}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -209,6 +212,9 @@
     </ClCompile>
     <ClCompile Include="Game\3d\Actor\Enemy\EnemyEmitter.cpp">
       <Filter>Game\3d\Actor\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Random\Random.cpp">
+      <Filter>Game\Random</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -394,6 +400,9 @@
     </ClInclude>
     <ClInclude Include="Game\3d\Actor\Enemy\EnemyEmitter.h">
       <Filter>Game\3d\Actor\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Random\Random.h">
+      <Filter>Game\Random</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

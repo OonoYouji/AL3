@@ -1,7 +1,7 @@
 #include "GameObjectManager.h"
 
 #include <ImGuiManager.h>
-
+#include <CollisionManager.h>
 
 
 /// ===================================================
@@ -78,6 +78,7 @@ void GameObjectManager::SubGameObject(BaseGameObject* object) {
 	});
 
 	if(it != objects_.end()) {
+		CollisionManager::GetInstance()->SubGameObject(object);
 		objects_.erase(it);
 	}
 

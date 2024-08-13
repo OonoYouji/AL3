@@ -4,6 +4,8 @@
 #include <ObjectColor.h>
 #include <Vector3.h>
 
+class Player;
+
 /// ===================================================
 /// エネミーの出現位置 クラス
 /// ===================================================
@@ -63,5 +65,7 @@ private:
 
 	Model* model_ = nullptr;
 	ObjectColor objectColor;
+
+	Player* pPlayer_ = nullptr;
 
 };
