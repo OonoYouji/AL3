@@ -166,7 +166,6 @@ void BaseGameObject::Group::SetPtr(const std::string& key, T* ptr) {
 /// SetPtr関数の明示インスタンス化
 /// ---------------------------------------------------
 template void BaseGameObject::Group::SetPtr<int>(const std::string& key, int* ptr);
-template void BaseGameObject::Group::SetPtr<uint32_t>(const std::string& key, uint32_t* ptr);
 template void BaseGameObject::Group::SetPtr<float>(const std::string& key, float* ptr);
 template void BaseGameObject::Group::SetPtr<Vec3>(const std::string& key, Vec3* ptr);
 template void BaseGameObject::Group::SetPtr<bool>(const std::string& key, bool* ptr);
@@ -205,7 +204,6 @@ void BaseGameObject::Group::SetValue(const std::string& key, const T& value) {
 /// SetValue関数の明示インスタンス化
 /// ---------------------------------------------------
 template void BaseGameObject::Group::SetValue<int>(const std::string& key, const int& value);
-template void BaseGameObject::Group::SetValue<uint32_t>(const std::string& key, const uint32_t& value);
 template void BaseGameObject::Group::SetValue<float>(const std::string& key, const float& value);
 template void BaseGameObject::Group::SetValue<Vector3>(const std::string& key, const Vector3& value);
 template void BaseGameObject::Group::SetValue<bool>(const std::string& key, const bool& value);
@@ -224,7 +222,6 @@ const T& BaseGameObject::Group::GetItem(const std::string& key) {
 /// GetItem関数の明示インスタンス化
 /// ---------------------------------------------------
 template const int& BaseGameObject::Group::GetItem<int>(const std::string& key);
-template const uint32_t& BaseGameObject::Group::GetItem<uint32_t>(const std::string& key);
 template const float& BaseGameObject::Group::GetItem<float>(const std::string& key);
 template const Vector3& BaseGameObject::Group::GetItem<Vector3>(const std::string& key);
 template const bool& BaseGameObject::Group::GetItem<bool>(const std::string& key);
@@ -258,26 +255,6 @@ void BaseGameObject::Group::ImGuiDebug() {
 			continue;
 		}
 		
-		///- uint32_t
-		if(std::holds_alternative<uint32_t>(second)) {
-			uint32_t* value = std::get_if<uint32_t>(&second);
-			uint32_t* ptr = std::get<uint32_t*>(first);
-			if(*value != *ptr) {
-				*value = *ptr;
-			}
-
-			int tmp = static_cast<int>(*value);
-			ImGui::DragInt(item.first.c_str(), &tmp, 1, 0, int(std::pow(2, 32)));
-			*value = tmp;
-			///- 値を変えたらptrにも適用する
-			if(ImGui::IsItemEdited()) {
-				if(ptr) {
-					*ptr = std::get<uint32_t>(second);
-				}
-			}
-			continue;
-		}
-
 		///- float
 		if(std::holds_alternative<float>(second)) {
 			float* value = std::get_if<float>(&second);

@@ -34,6 +34,15 @@ public:
 
 	void MoveStateUpdate(Enemy* enemy, int moveType);
 
+
+	/// <summary>
+	/// jsonファイルに保存
+	/// </summary>
+	/// <param name="filePath">出力先のファイルパス</param>
+	void SaveJson(const std::string& filePath);
+
+
+
 private:
 
 	///

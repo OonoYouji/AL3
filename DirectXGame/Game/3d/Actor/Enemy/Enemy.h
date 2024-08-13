@@ -72,7 +72,7 @@ private:
 	Model* model_ = nullptr;
 
 	/// status
-	uint32_t hp_ = 10;
+	int hp_ = 1;
 
 
 	/// Move

@@ -126,6 +126,6 @@ void Enemy::CreateStatusGroup() {
 /// ===================================================
 void Enemy::OnCollisionEnter(BaseGameObject* collision) {
 	if(collision->GetName().find(std::string("PlayerBullet")) != std::string::npos) {
-		hp_ = std::max(hp_ - 1, 0u);
+		hp_ = std::max(hp_ - 1, 0);
 	}
 }

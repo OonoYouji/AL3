@@ -45,12 +45,6 @@ void Scene_Game::Initialize() {
 
 	EnemyManager::GetInstance()->Initialize();
 
-	Enemy* enemy = (new Enemy);
-	enemy->Initialize();
-	enemy->SetPos({ 0,0, 30 });
-	enemy->UpdateMatrix();
-
-
 	(new GameManagerObject())->Initialize();
 	(new Ground())->Initialize();
 	(new StartLine())->Initialize();
@@ -74,6 +68,11 @@ void Scene_Game::Update() {
 	static bool isActive = true;
 	ImGui::Checkbox("scene active", &isActive);
 	
+	ImGui::Separator();
+
+	if(ImGui::Button("save   enemy emitter")) {
+		EnemyManager::GetInstance()->SaveJson("./Resources/GameData/EnemyEmitter");
+	}
 
 	ImGui::End();
 

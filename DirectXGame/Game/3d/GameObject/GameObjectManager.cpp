@@ -78,6 +78,9 @@ void GameObjectManager::SubGameObject(BaseGameObject* object) {
 	});
 
 	if(it != objects_.end()) {
+		if(object == selectObject_) {
+			selectObject_ = nullptr;
+		}
 		CollisionManager::GetInstance()->SubGameObject(object);
 		objects_.erase(it);
 	}

@@ -12,9 +12,15 @@
 #include <Random.h>
 
 
+int EnemyEmitter::instanceCount_ = 0;
+
+
 EnemyEmitter::EnemyEmitter() {
+
+	id_ = instanceCount_++;
+
 	SetTag("EnemyEmitter");
-	SetName("EnemyEmitter");
+	SetName("EnemyEmitter" + std::to_string(id_));
 
 	CreateVariablesGroup();
 }
@@ -32,7 +38,7 @@ void EnemyEmitter::Initialize() {
 	objectColor.TransferMatrix();
 
 	rangeZ_ = 50.0f;
-	spawnNum_ = 5;
+	spawnNum_ = 10;
 	
 	min_ = Vec3{ 0,0,0 } + GetPosition();
 	max_ = Vec3{ 10,0,10 } + GetPosition();
@@ -94,7 +100,7 @@ void EnemyEmitter::CreateVariablesGroup() {
 	group.SetPtr("min", &min_);
 	group.SetPtr("max", &max_);
 
-	group.SetPtr("spawn num", &spawnNum_);
+	group.SetPtr("spawnNum", &spawnNum_);
 
 	group.SetPtr("type", &type_);
 

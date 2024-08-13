@@ -47,12 +47,20 @@ public:
 
 	void SetType(int type) { type_ = type; }
 
+	const Vec3& GetMin() const { return min_; }
+	const Vec3& GetMax() const { return max_; }
+
+	float GetRangeZ() const { return rangeZ_; }
+	int GetSpawnNum() const { return spawnNum_; }
 
 private:
 
 	/// ===================================================
 	/// private : objects
 	/// ===================================================
+
+	static int instanceCount_;
+	int id_ = 0;
 
 	Vec3 min_ = { -1, -1, -1 };
 	Vec3 max_ = {  1,  1,  1 };
