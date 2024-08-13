@@ -41,10 +41,6 @@ void Enemy::Initialize() {
 
 	CreateBoxCollider(model_);
 
-	/// Move
-	move_ = Vec3(0, 0, -1);
-	speed_ = 4.0f;
-
 	CreateStatusGroup();
 
 }

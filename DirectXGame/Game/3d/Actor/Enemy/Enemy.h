@@ -74,11 +74,6 @@ private:
 	/// status
 	int hp_ = 1;
 
-
-	/// Move
-	Vec3 move_{};
-	float speed_ = 4.0f;
-
 	/// Attack
 
 };
