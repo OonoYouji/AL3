@@ -7,6 +7,7 @@
 #include <MainCamera.h>
 #include <GameObjectManager.h>
 #include <CollisionManager.h>
+#include <ModelManager.h>
 
 #include <WorldTime.h>
 

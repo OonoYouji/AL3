@@ -64,65 +64,66 @@ void CollisionManager::CheckCollision(BaseGameObject* a, BaseGameObject* b) {
 	BaseCollider* aCollider = a->GetCollider();
 	BaseCollider* bCollider = b->GetCollider();
 
-	if(aCollider && bCollider) {
+	if(!aCollider || !bCollider) {
+		return;
+	}
 
-		CollidedPair pairA = std::make_pair(a, b);
-		CollidedPair pairB = std::make_pair(b, a);
+	CollidedPair pairA = std::make_pair(a, b);
+	CollidedPair pairB = std::make_pair(b, a);
 
-		if(aCollider->IsCollision(bCollider)) {
+	if(aCollider->IsCollision(bCollider)) {
 
-			/// Listないのpairの数を数える
-			int64_t aCount = std::count(collidedPairs_.begin(), collidedPairs_.end(), pairA);
-			int64_t bCount = std::count(collidedPairs_.begin(), collidedPairs_.end(), pairB);
+		/// Listないのpairの数を数える
+		int64_t aCount = std::count(collidedPairs_.begin(), collidedPairs_.end(), pairA);
+		int64_t bCount = std::count(collidedPairs_.begin(), collidedPairs_.end(), pairB);
 
-			if(aCount == 0 && bCount == 0) {
-				/// listないになければ衝突した瞬間なのでEnterを呼ぶ
-				a->OnCollisionEnter(b);
-				b->OnCollisionEnter(a);
+		if(aCount == 0 && bCount == 0) {
+			/// listないになければ衝突した瞬間なのでEnterを呼ぶ
+			a->OnCollisionEnter(b);
+			b->OnCollisionEnter(a);
 #ifdef _DEBUG
-				pairNames_.push_back("Enter :  " + a->GetName() + "  to  " + b->GetName());
+			pairNames_.push_back("Enter :  " + a->GetName() + "  to  " + b->GetName());
 #endif // _DEBUG
-
-				/// Listに追加する
-				collidedPairs_.push_back(pairA);
-
-
-			} else {
-				/// あったら衝突しているのでStayを呼ぶ
-				a->OnCollisionStay(b);
-				b->OnCollisionStay(a);
-#ifdef _DEBUG
-				pairNames_.push_back("Stay  :  " + a->GetName() + "  to  " + b->GetName());
-#endif // _DEBUG
-			}
-
 
 			/// Listに追加する
-			currentCollidedPairs_.push_back(pairA);
+			collidedPairs_.push_back(pairA);
 
 
 		} else {
+			/// あったら衝突しているのでStayを呼ぶ
+			a->OnCollisionStay(b);
+			b->OnCollisionStay(a);
+#ifdef _DEBUG
+			pairNames_.push_back("Stay  :  " + a->GetName() + "  to  " + b->GetName());
+#endif // _DEBUG
+		}
 
-			/// List内にpairが何個あるか数える
-			int64_t aCount = std::count(collidedPairs_.begin(), collidedPairs_.end(), pairA);
-			int64_t bCount = std::count(collidedPairs_.begin(), collidedPairs_.end(), pairB);
 
-			/// List内にあったらExitをよんでListからpairを削除
-			if(aCount != 0 || bCount != 0) {
-				a->OnCollisionExit(b);
-				b->OnCollisionExit(a);
-				collidedPairs_.remove_if([&pairA, &pairB](const CollidedPair& elem) {
-					return elem.first == pairA.first && elem.second == pairA.second
-						|| elem.first == pairB.first && elem.second == pairB.second;
-				});
+		/// Listに追加する
+		currentCollidedPairs_.push_back(pairA);
+
+
+	} else {
+
+		/// List内にpairが何個あるか数える
+		int64_t aCount = std::count(collidedPairs_.begin(), collidedPairs_.end(), pairA);
+		int64_t bCount = std::count(collidedPairs_.begin(), collidedPairs_.end(), pairB);
+
+		/// List内にあったらExitをよんでListからpairを削除
+		if(aCount != 0 || bCount != 0) {
+			a->OnCollisionExit(b);
+			b->OnCollisionExit(a);
+			collidedPairs_.remove_if([&pairA, &pairB](const CollidedPair& elem) {
+				return elem.first == pairA.first && elem.second == pairA.second
+					|| elem.first == pairB.first && elem.second == pairB.second;
+			});
 
 #ifdef _DEBUG
-				pairNames_.push_back("Exit  :  " + a->GetName() + "  to  " + b->GetName());
+			pairNames_.push_back("Exit  :  " + a->GetName() + "  to  " + b->GetName());
 #endif // _DEBUG
 
-			}
-
 		}
+
 	}
 
 }

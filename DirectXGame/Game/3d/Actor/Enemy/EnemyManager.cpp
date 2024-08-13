@@ -5,7 +5,7 @@
 
 
 void EnemyManager::Initialize() {
-	models_.push_back(ModelManager::GetModel("cube"));
+	models_.push_back(ModelManager::GetModel("enemy"));
 }
 
 
