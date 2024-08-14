@@ -42,6 +42,8 @@ void EnemyManager::Initialize() {
 	pGameManagerObject_ = dynamic_cast<GameManagerObject*>(GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
 	assert(pGameManagerObject_);
 
+	LoadJson("./Resources/GameData/EnemyEmitter/EnemyEmitter.json");
+
 }
 
 
@@ -56,7 +58,7 @@ void EnemyManager::Update() {
 		for(auto& emitter : emitters_) {
 			emitter->isActive = true;
 		}
-	} 
+	}
 
 }
 
@@ -150,16 +152,17 @@ void EnemyManager::SaveJson(const std::string& filePath) {
 
 		node["Transform"] = json::object();
 		const WorldTransform& transform = emitter->GetWorldTransform();
-		node["Transform"]["scale"]     = json::array({ transform.scale_.x,		 transform.scale_.y,	   transform.scale_.z });
-		node["Transform"]["rotate"]    = json::array({ transform.rotation_.x,	 transform.rotation_.y,	   transform.rotation_.z });
+		node["Transform"]["scale"] = json::array({ transform.scale_.x,		 transform.scale_.y,	   transform.scale_.z });
+		node["Transform"]["rotate"] = json::array({ transform.rotation_.x,	 transform.rotation_.y,	   transform.rotation_.z });
 		node["Transform"]["translate"] = json::array({ transform.translation_.x, transform.translation_.y, transform.translation_.z });
 
 
+		node["center"] = json::array({ emitter->GetCenter().x, emitter->GetCenter().y, emitter->GetCenter().z });
 		node["min"] = json::array({ emitter->GetMin().x, emitter->GetMin().y, emitter->GetMin().z });
 		node["max"] = json::array({ emitter->GetMax().x, emitter->GetMax().y, emitter->GetMax().z });
 
 		node["spawnNum"] = emitter->GetSpawnNum();
-		node["rangeZ"]   = emitter->GetRangeZ();
+		node["rangeZ"] = emitter->GetRangeZ();
 
 	}
 
@@ -195,7 +198,101 @@ void EnemyManager::SaveJson(const std::string& filePath) {
 /// ===================================================
 void EnemyManager::LoadJson(const std::string& filePath) {
 
-	filePath;
+	std::ifstream ifs;
+	ifs.open(filePath);
+
+	/// ファイルが開かなければreturn
+	if(!ifs.is_open()) {
+		return;
+	}
+
+	json root;
+	ifs >> root;
+	ifs.close();
+
+	size_t size = emitters_.size();
+
+	for(const auto& [key, value] : root.items()) {
+
+		/// ---------------------------------------------------
+		/// Transformの値をゲット
+		/// ---------------------------------------------------
+
+		auto transform = value["Transform"];
+
+		Vec3 scale = {
+			transform["scale"].at(0),
+			transform["scale"].at(1),
+			transform["scale"].at(2)
+		};
+
+		Vec3 rotate = {
+			transform["rotate"].at(0),
+			transform["rotate"].at(1),
+			transform["rotate"].at(2)
+		};
+
+		Vec3 position = {
+			transform["translate"].at(0),
+			transform["translate"].at(1),
+			transform["translate"].at(2)
+		};
+
+
+		/// ---------------------------------------------------
+		/// 各種変数の値をゲット
+		/// ---------------------------------------------------
+
+		Vec3 center = {
+			value["center"].at(0),
+			value["center"].at(1),
+			value["center"].at(2)
+		};
+
+		Vec3 min = {
+			value["min"].at(0),
+			value["min"].at(1),
+			value["min"].at(2)
+		};
+
+		Vec3 max = {
+			value["max"].at(0),
+			value["max"].at(1),
+			value["max"].at(2)
+		};
+
+		float rangeZ = value["rangeZ"];
+		int spawnNum = value["spawnNum"];
+
+
+		/// ---------------------------------------------------
+		/// Emitterに対して値をセットする
+		/// ---------------------------------------------------
+
+		EnemyEmitter* emitter = nullptr;
+		if(size > 0) {
+			auto itr = emitters_.end();
+			--itr;
+
+			emitter = *itr;
+
+			--size;
+		} else {
+			emitter = CreateEmitter();
+		}
+
+		emitter->SetScale(scale);
+		emitter->SetRotate(rotate);
+		emitter->SetPos(position);
+
+		emitter->SetCenter(center);
+		emitter->SetMin(min);
+		emitter->SetMax(max);
+
+		emitter->SetRangeZ(rangeZ);
+		emitter->SetSpawnNum(spawnNum);
+
+	}
 
 }
 
@@ -203,11 +300,12 @@ void EnemyManager::LoadJson(const std::string& filePath) {
 /// ===================================================
 /// enemy emitter の生成
 /// ===================================================
-void EnemyManager::CreateEmitter() {
+EnemyEmitter* EnemyManager::CreateEmitter() {
 
 	EnemyEmitter* emitter = new EnemyEmitter();
 	emitter->Initialize();
 
 	AddEmitter(emitter);
 
+	return emitter;
 }

@@ -53,6 +53,7 @@ void CollisionManager::Update() {
 
 void CollisionManager::DrawHitBoxALL() {
 	for(auto& gameObject : gameObjects_) {
+		if(!gameObject->isDrawActive) { continue; }
 		BaseCollider* collider = gameObject->GetCollider();
 		if(collider) {
 			collider->Draw();

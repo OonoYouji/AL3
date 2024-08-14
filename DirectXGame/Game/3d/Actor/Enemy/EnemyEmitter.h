@@ -41,13 +41,16 @@ public:
 	void CreateVariablesGroup();
 
 
+	void SetCenter(const Vec3& center) { center_ = center; }
 	void SetMin(const Vec3& min) { min_ = min; }
 	void SetMax(const Vec3& max) { max_ = max; }
 
+	void SetRangeZ(float rangeZ) { rangeZ_ = rangeZ; }
 	void SetSpawnNum(int spawnNum) { spawnNum_ = spawnNum; }
 
 	void SetType(int type) { type_ = type; }
 
+	const Vec3& GetCenter() const { return center_; }
 	const Vec3& GetMin() const { return min_; }
 	const Vec3& GetMax() const { return max_; }
 

@@ -95,7 +95,7 @@ public:
 	/// <summary>
 	/// emitterの作成
 	/// </summary>
-	void CreateEmitter();
+	EnemyEmitter* CreateEmitter();
 
 private:
 
