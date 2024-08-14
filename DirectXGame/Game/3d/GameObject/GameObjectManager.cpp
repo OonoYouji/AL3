@@ -52,7 +52,7 @@ void GameObjectManager::LastUpdate() {
 /// ===================================================
 void GameObjectManager::Draw() {
 	for(auto& obj : objects_) {
-		if(obj->isActive) {
+		if(obj->isDrawActive) {
 			obj->Draw();
 		}
 	}

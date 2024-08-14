@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 
+#include <ImGuiManager.h>
 #include <Model.h>
 #include <ModelManager.h>
 #include <GameObjectManager.h>
@@ -55,8 +56,45 @@ void EnemyManager::Update() {
 		for(auto& emitter : emitters_) {
 			emitter->isActive = true;
 		}
+	} 
+
+}
+
+
+
+/// ===================================================
+/// imguiでのデバッグ処理
+/// ===================================================
+void EnemyManager::ImGuiDebug() {
+#ifdef _DEBUG
+
+	if(!ImGui::Begin("EnemyManager")) {
+		ImGui::End();
+		return;
 	}
 
+
+	if(ImGui::Button("Create Emitter")) {
+		CreateEmitter();
+	}
+
+	ImGui::Spacing();
+
+	if(ImGui::Button("Save Emitter")) {
+		EnemyManager::GetInstance()->SaveJson("./Resources/GameData/EnemyEmitter");
+	}
+
+	ImGui::End();
+
+
+
+	if(!pGameManagerObject_->GetIsGameStart()) {
+		for(auto& emitter : emitters_) {
+			emitter->LastUpdate();
+		}
+	}
+
+#endif // _DEBUG
 }
 
 
@@ -168,6 +206,7 @@ void EnemyManager::LoadJson(const std::string& filePath) {
 void EnemyManager::CreateEmitter() {
 
 	EnemyEmitter* emitter = new EnemyEmitter();
+	emitter->Initialize();
 
 	AddEmitter(emitter);
 

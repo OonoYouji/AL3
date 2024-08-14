@@ -65,6 +65,7 @@ private:
 
 	Vec3 min_ = { -1, -1, -1 };
 	Vec3 max_ = {  1,  1,  1 };
+	Vec3 center_ = {};
 
 	int spawnNum_;
 

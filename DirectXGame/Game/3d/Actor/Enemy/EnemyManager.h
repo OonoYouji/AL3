@@ -40,6 +40,12 @@ public:
 	void Update();
 
 
+	/// <summary>
+	/// imguiを使用したデバッグ処理
+	/// </summary>
+	void ImGuiDebug();
+
+
 
 	/// <summary>
 	/// エネミーの追加

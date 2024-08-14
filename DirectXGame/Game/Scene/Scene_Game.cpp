@@ -70,15 +70,14 @@ void Scene_Game::Update() {
 
 	ImGui::Separator();
 
-	if(ImGui::Button("save   enemy emitter")) {
-		EnemyManager::GetInstance()->SaveJson("./Resources/GameData/EnemyEmitter");
-	}
+	
 
 	ImGui::End();
 
 	GameObjectManager::GetInstance()->ImGuiDebug();
 	WorldTime::GetInstance()->ImGuiDebug();
 	CollisionManager::GetInstance()->ImGuiDebug();
+	EnemyManager::GetInstance()->ImGuiDebug();
 
 	if(debugCamera_->isActive) {
 		MainCamera::GetInstance()->SetCamera(debugCamera_);

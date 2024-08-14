@@ -71,7 +71,12 @@ void EnemyEmitter::Update() {
 
 void EnemyEmitter::LastUpdate() {
 	
-	//worldTransform_.translation_ = Lerp(max_, min_, 0.5f);
+	/// min, maxのyは固定
+	min_.y = 0.0f;
+	max_.y = 0.0f;
+	center_.y = 0.0f;
+
+	worldTransform_.translation_ = Lerp(max_, min_, 0.5f) + center_;
 	worldTransform_.translation_.y = 0.1f;
 
 	worldTransform_.scale_ = max_ - Lerp(max_, min_, 0.5f);
@@ -101,8 +106,9 @@ void EnemyEmitter::CreateEnemies() {
 
 void EnemyEmitter::CreateVariablesGroup() {
 	BaseGameObject::Group& group = CreateGroup("variables");
-	group.SetPtr("min", &min_);
+	group.SetPtr("center", &center_);
 	group.SetPtr("max", &max_);
+	group.SetPtr("min", &min_);
 
 	group.SetPtr("spawnNum", &spawnNum_);
 

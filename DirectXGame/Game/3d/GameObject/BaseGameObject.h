@@ -178,5 +178,6 @@ protected:
 public:
 
 	bool isActive = true;
+	bool isDrawActive = true;
 
 };
