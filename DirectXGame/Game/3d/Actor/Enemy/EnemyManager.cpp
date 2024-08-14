@@ -6,6 +6,8 @@
 
 #include <Model.h>
 #include <ModelManager.h>
+#include <GameObjectManager.h>
+#include <GameManagerObject.h>
 
 #include <EnemyStateDown.h>
 #include <EnemyStateLeft.h>
@@ -17,6 +19,9 @@
 using json = nlohmann::json;
 
 
+/// ===================================================
+/// 初期化
+/// ===================================================
 void EnemyManager::Initialize() {
 	models_.push_back(ModelManager::GetModel("enemy"));
 
@@ -33,17 +38,54 @@ void EnemyManager::Initialize() {
 		emitter->Initialize();
 	}
 
+	pGameManagerObject_ = dynamic_cast<GameManagerObject*>(GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
+	assert(pGameManagerObject_);
+
 }
 
 
+
+/// ===================================================
+/// 更新処理
+/// ===================================================
+void EnemyManager::Update() {
+
+	/// ゲームが始まったらエミッターの更新処理がされるようになる
+	if(pGameManagerObject_->GetIsGameStart()) {
+		for(auto& emitter : emitters_) {
+			emitter->isActive = true;
+		}
+	}
+
+}
+
+
+/// ===================================================
+/// エネミーの追加
+/// ===================================================
 void EnemyManager::AddEnemy(Enemy* enemy) {
 	enemies_.push_back(enemy);
 }
 
+
+/// ===================================================
+/// エミッターの追加
+/// ===================================================
+void EnemyManager::AddEmitter(EnemyEmitter* emitter) {
+	emitters_.push_back(emitter);
+}
+
+
+/// ===================================================
+/// モデルの追加
+/// ===================================================
 Model* EnemyManager::GetModel() const {
 	return models_.front();
 }
 
+/// ===================================================
+/// エネミーのステートの更新処理
+/// ===================================================
 void EnemyManager::MoveStateUpdate(Enemy* enemy, int moveType) {
 	if(!enemy) { return; }
 	if(moveType >= Enemy::kCount) { return; }
@@ -106,5 +148,27 @@ void EnemyManager::SaveJson(const std::string& filePath) {
 	ofs << std::setw(4) << root << std::endl;
 	ofs.close();
 
+
+}
+
+
+/// ===================================================
+/// jsonファイルの読み込みでEmiterを作成する
+/// ===================================================
+void EnemyManager::LoadJson(const std::string& filePath) {
+
+	filePath;
+
+}
+
+
+/// ===================================================
+/// enemy emitter の生成
+/// ===================================================
+void EnemyManager::CreateEmitter() {
+
+	EnemyEmitter* emitter = new EnemyEmitter();
+
+	AddEmitter(emitter);
 
 }

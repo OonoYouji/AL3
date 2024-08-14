@@ -27,10 +27,12 @@ EnemyEmitter::EnemyEmitter() {
 
 void EnemyEmitter::Initialize() {
 
+	isActive = false;
+
 	model_ = ModelManager::GetModel("enemyEmitter");
 
-	worldTransform_.translation_.y = 0.1f;
-	worldTransform_.translation_.z = 100.0f;
+	/*worldTransform_.translation_.y = 0.1f;
+	worldTransform_.translation_.z = 100.0f;*/
 	UpdateMatrix();
 
 	objectColor.Initialize();
@@ -40,19 +42,21 @@ void EnemyEmitter::Initialize() {
 	rangeZ_ = 50.0f;
 	spawnNum_ = 10;
 	
-	min_ = Vec3{ 0,0,0 } + GetPosition();
+	/*min_ = Vec3{ 0,0,0 } + GetPosition();
 	max_ = Vec3{ 10,0,10 } + GetPosition();
-	worldTransform_.translation_ = Lerp(max_, min_, 0.5f);
+	worldTransform_.translation_ = Lerp(max_, min_, 0.5f);*/
 
 	
 	pPlayer_ = dynamic_cast<Player*>(GameObjectManager::GetInstance()->GetGameObject("Player"));
 	assert(pPlayer_);
+	
 
 }
 
 
 void EnemyEmitter::Update() {
 
+	
 	Vec3 playerPos = pPlayer_->GetPosition();
 	Vec3 thisPos = GetPosition();
 	float z = std::abs(pPlayer_->GetPosition().z - GetPosition().z);

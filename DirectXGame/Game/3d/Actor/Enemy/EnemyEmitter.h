@@ -5,6 +5,7 @@
 #include <Vector3.h>
 
 class Player;
+class GameManagerObject;
 
 /// ===================================================
 /// エネミーの出現位置 クラス

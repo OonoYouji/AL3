@@ -49,6 +49,8 @@ public:
 	/// <param name="isGameStart"></param>
 	void SetIsGameStart(bool isGameStart);
 
+	bool GetIsGameStart() const { return isGameStart_; }
+
 	/// <summary>
 	/// ゲームオーバーのフラグのセット
 	/// </summary>

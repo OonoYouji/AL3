@@ -29,7 +29,7 @@ Scene_Game::~Scene_Game() {}
 /// ===================================================
 void Scene_Game::Initialize() {
 
-	
+
 	camera_ = new GameCamera();
 	camera_->Initialize();
 
@@ -43,14 +43,14 @@ void Scene_Game::Initialize() {
 	player->Initialize();
 	camera_->SetTarget(player);
 
-	EnemyManager::GetInstance()->Initialize();
 
 	(new GameManagerObject())->Initialize();
 	(new Ground())->Initialize();
 	(new StartLine())->Initialize();
 
-	GridDraw::GetInstance()->Intiailize(MainCamera::GetInstance()->GetViewProjection());
+	//GridDraw::GetInstance()->Intiailize(MainCamera::GetInstance()->GetViewProjection());
 
+	EnemyManager::GetInstance()->Initialize();
 
 }
 
@@ -67,7 +67,7 @@ void Scene_Game::Update() {
 
 	static bool isActive = true;
 	ImGui::Checkbox("scene active", &isActive);
-	
+
 	ImGui::Separator();
 
 	if(ImGui::Button("save   enemy emitter")) {
@@ -96,6 +96,8 @@ void Scene_Game::Update() {
 
 
 	GameObjectManager::GetInstance()->Update();
+	EnemyManager::GetInstance()->Update();
+
 
 	CollisionManager::GetInstance()->Update();
 
