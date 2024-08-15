@@ -34,6 +34,7 @@ void EnemyManager::Initialize() {
 	moveStates_[Enemy::kChase].reset(new EnemyState::Chase);
 
 	emitters_.push_back(new EnemyEmitter());
+	emitters_.push_back(new EnemyEmitter());
 
 	for(auto& emitter : emitters_) {
 		emitter->Initialize();
@@ -271,8 +272,10 @@ void EnemyManager::LoadJson(const std::string& filePath) {
 
 		EnemyEmitter* emitter = nullptr;
 		if(size > 0) {
-			auto itr = emitters_.end();
-			--itr;
+			auto itr = emitters_.begin();
+			for(int i = 0; i < int(emitters_.size() - size); ++i) {
+				++itr;
+			}
 
 			emitter = *itr;
 
