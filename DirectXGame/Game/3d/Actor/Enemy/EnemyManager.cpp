@@ -33,13 +33,6 @@ void EnemyManager::Initialize() {
 	moveStates_[Enemy::kRight].reset(new EnemyState::Right);
 	moveStates_[Enemy::kChase].reset(new EnemyState::Chase);
 
-	emitters_.push_back(new EnemyEmitter());
-	emitters_.push_back(new EnemyEmitter());
-
-	for(auto& emitter : emitters_) {
-		emitter->Initialize();
-	}
-
 	pGameManagerObject_ = dynamic_cast<GameManagerObject*>(GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
 	assert(pGameManagerObject_);
 
@@ -164,6 +157,9 @@ void EnemyManager::SaveJson(const std::string& filePath) {
 
 		node["spawnNum"] = emitter->GetSpawnNum();
 		node["rangeZ"] = emitter->GetRangeZ();
+		node["type"] = emitter->GetType();
+
+		node["enemyHP"] = emitter->GetEnemyHP();
 
 	}
 
@@ -264,7 +260,8 @@ void EnemyManager::LoadJson(const std::string& filePath) {
 
 		float rangeZ = value["rangeZ"];
 		int spawnNum = value["spawnNum"];
-
+		int type = value["type"];
+		int enemyHP = value["enemyHP"];
 
 		/// ---------------------------------------------------
 		/// Emitterに対して値をセットする
@@ -294,6 +291,8 @@ void EnemyManager::LoadJson(const std::string& filePath) {
 
 		emitter->SetRangeZ(rangeZ);
 		emitter->SetSpawnNum(spawnNum);
+		emitter->SetType(type);
+		emitter->SetEnemyHP(enemyHP);
 
 	}
 

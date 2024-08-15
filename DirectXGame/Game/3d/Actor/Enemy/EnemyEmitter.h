@@ -3,6 +3,7 @@
 #include <BaseGameObject.h>
 #include <ObjectColor.h>
 #include <Vector3.h>
+#include <Enemy.h>
 
 class Player;
 class GameManagerObject;
@@ -47,8 +48,9 @@ public:
 
 	void SetRangeZ(float rangeZ) { rangeZ_ = rangeZ; }
 	void SetSpawnNum(int spawnNum) { spawnNum_ = spawnNum; }
-
 	void SetType(int type) { type_ = type; }
+	void SetEnemyHP(int enemyHP) { enemyHP_ = enemyHP; }
+
 
 	const Vec3& GetCenter() const { return center_; }
 	const Vec3& GetMin() const { return min_; }
@@ -56,6 +58,8 @@ public:
 
 	float GetRangeZ() const { return rangeZ_; }
 	int GetSpawnNum() const { return spawnNum_; }
+	int GetType() const { return type_; }
+	int GetEnemyHP() const { return enemyHP_; }
 
 private:
 
@@ -66,15 +70,18 @@ private:
 	static int instanceCount_;
 	int id_ = 0;
 
-	Vec3 min_ = { -1, -1, -1 };
-	Vec3 max_ = {  1,  1,  1 };
+	
+	
 	Vec3 center_ = {};
+	Vec3 max_ = {  1,  1,  1 };
+	Vec3 min_ = { -1, -1, -1 };
 
-	int spawnNum_;
+	int spawnNum_	= 10;			/// 出現する敵の数
+	float rangeZ_	= 50.0f;		/// 敵が出現する距離
+	int type_		= Enemy::kDown;	/// 出現する敵の移動タイプ
+	int enemyHP_	= 1;			/// 出現する敵のHP
 
-	float rangeZ_;
-
-	int type_;
+	bool isSpawned_ = false;
 
 	Model* model_ = nullptr;
 	ObjectColor objectColor;

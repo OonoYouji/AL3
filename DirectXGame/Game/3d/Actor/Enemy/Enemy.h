@@ -61,6 +61,8 @@ public:
 
 	void SetMoveType(int moveType) { moveType_ = moveType; }
 
+	void SetHP(int hp) { hp_ = hp; }
+
 private:
 
 	static int instanceCount_;

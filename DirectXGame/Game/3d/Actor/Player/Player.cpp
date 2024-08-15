@@ -33,8 +33,8 @@ Player::~Player() {
 
 void Player::Initialize() {
 
-	isActive = false;
-	isDrawActive = false;
+	/*isActive = false;
+	isDrawActive = false;*/
 
 	input_ = Input::GetInstance();
 
@@ -87,6 +87,8 @@ void Player::Update() {
 
 
 		worldTransform_.translation_ += move_ * speed_ * WorldTime::FrameTime();
+
+		worldTransform_.translation_.x = std::clamp(worldTransform_.translation_.x, -60.0f, 60.0f);
 
 	}
 

@@ -59,6 +59,12 @@ void Enemy::Update() {
 		Attack();
 	}
 
+	UpdateMatrix();
+	Vec3 position = GetPosition();
+	if(position.x > 80.0f || position.x < -80.0f) {
+		GameObjectManager::GetInstance()->Destory(this);
+	}
+
 }
 
 
