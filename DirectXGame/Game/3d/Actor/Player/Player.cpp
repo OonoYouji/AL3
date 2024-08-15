@@ -89,6 +89,7 @@ void Player::Update() {
 		worldTransform_.translation_ += move_ * speed_ * WorldTime::FrameTime();
 
 		worldTransform_.translation_.x = std::clamp(worldTransform_.translation_.x, -60.0f, 60.0f);
+		worldTransform_.translation_.z = std::max(-50.0f, worldTransform_.translation_.z);
 
 	}
 

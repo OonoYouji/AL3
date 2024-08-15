@@ -3,6 +3,8 @@
 #include <Model.h>
 #include <MainCamera.h>
 
+
+
 /// ===================================================
 /// 初期化
 /// ===================================================
@@ -14,6 +16,7 @@ void Ground::Initialize() {
 	model_.reset(Model::CreateFromOBJ("ground"));
 
 	worldTransform_.Initialize();
+	objectColor_.Initialize();
 }
 
 
@@ -41,5 +44,15 @@ void Ground::LastUpdate() {
 /// 描画処理
 /// ===================================================
 void Ground::Draw() {
-	model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection());
+	model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection(), &objectColor_);
+}
+
+
+
+/// ===================================================
+/// 色のセット
+/// ===================================================
+void Ground::SetColor(const Vector4& color) {
+	objectColor_.SetColor(color);
+	objectColor_.TransferMatrix();
 }

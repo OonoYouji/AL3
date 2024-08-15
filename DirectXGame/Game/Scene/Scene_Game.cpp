@@ -48,7 +48,22 @@ void Scene_Game::Initialize() {
 	(new Ground())->Initialize();
 	(new StartLine())->Initialize();
 
-	//GridDraw::GetInstance()->Intiailize(MainCamera::GetInstance()->GetViewProjection());
+
+	/// 左右の移動制限ゾーンの描画用
+	for(uint32_t i = 0; i < 2; ++i) {
+		Ground* ground = new Ground();
+		ground->Initialize();
+
+		if(i == 0) {
+			ground->SetPos({ -120,0,0 });
+		} else {
+			ground->SetPos({  120,0,0 });
+		}
+
+		ground->SetColor({ 0.5f, 0.5f, 0.5f, 1 });
+	}
+
+
 
 	EnemyManager::GetInstance()->Initialize();
 
@@ -70,7 +85,7 @@ void Scene_Game::Update() {
 
 	ImGui::Separator();
 
-	
+
 
 	ImGui::End();
 
