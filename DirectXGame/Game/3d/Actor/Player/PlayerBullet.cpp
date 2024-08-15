@@ -4,6 +4,8 @@
 #include <Model.h>
 #include <MainCamera.h>
 #include <ModelManager.h>
+#include <GameObjectManager.h>
+#include <Enemy.h>
 
 const float PlayerBullet::kLifeTime_ = 180.0f;
 int PlayerBullet::instanceCount_ = 0;
@@ -47,6 +49,19 @@ void PlayerBullet::Update() {
 void PlayerBullet::Draw() {
 	model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection(), &objectColor_);
 }
+
+
+
+void PlayerBullet::OnCollisionEnter(BaseGameObject* collision) {
+
+	Enemy* enemy = dynamic_cast<Enemy*>(collision);
+	if(enemy) {
+		GameObjectManager::GetInstance()->Destory(this);
+	}
+
+}
+
+
 
 void PlayerBullet::SetModel(Model* model) {
 	model_ = model;

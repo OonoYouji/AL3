@@ -20,6 +20,9 @@ public:
 	void Draw() override;
 
 
+	void OnCollisionEnter(BaseGameObject* collision) override;
+
+
 	void SetModel(Model* model);
 
 	bool IsDesctory() const {
