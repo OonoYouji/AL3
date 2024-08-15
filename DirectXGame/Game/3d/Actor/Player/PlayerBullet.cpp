@@ -57,6 +57,7 @@ void PlayerBullet::OnCollisionEnter(BaseGameObject* collision) {
 	Enemy* enemy = dynamic_cast<Enemy*>(collision);
 	if(enemy) {
 		GameObjectManager::GetInstance()->Destory(this);
+		MainCamera::GetInstance()->SetShake(0.2f, 0.2f);
 	}
 
 }

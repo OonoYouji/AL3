@@ -27,9 +27,15 @@ public:
 
 	const ViewProjection& GetViewProjection() const;
 
+	void SetShake(float value, float time);
+
 private:
 
 	BaseCamera* camera_;
 	ViewProjection viewProjection_;
+
+	float shakeValue_ = 0;
+	float shakeTime_ = 0;
+	float maxShakeTime_ = 0;
 
 };

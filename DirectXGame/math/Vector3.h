@@ -11,6 +11,7 @@ struct Vector3 final {
 
 
 	float Len() const;
+	Vector3 Norm() const;
 
 	Vector3 operator- () const;
 
