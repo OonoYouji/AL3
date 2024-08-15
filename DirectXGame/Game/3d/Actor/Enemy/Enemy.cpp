@@ -65,7 +65,7 @@ void Enemy::Update() {
 		GameObjectManager::GetInstance()->Destory(this);
 	}
 
-	if(position.z <= 50.0f) {
+	if(position.z <= -50.0f) {
 		GameObjectManager::GetInstance()->Destory(this);
 	}
 
