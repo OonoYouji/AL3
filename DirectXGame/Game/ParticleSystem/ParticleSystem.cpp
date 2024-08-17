@@ -1,6 +1,7 @@
 #include "ParticleSystem.h"
 
 #include <MainCamera.h>
+#include <WorldTime.h>
 
 int ParticleSystem::sInstanceCount_ = 0;
 
@@ -54,5 +55,47 @@ void ParticleSystem::CreateParticle() {
 
 
 	particles_.push_back(std::move(newParticle));
+
+}
+
+
+void ParticleSystem::UpdateParticle(Particle* particle) {
+
+	/// 移動計算
+	Vec3 velocity = particle->direction * 100.0f;
+
+	if(isActiveAttenuation_) {
+		velocity *= WorldTime::FrameTime();
+	}
+
+	particle->worldTransform.translation_ += velocity;
+
+	//Mat4 matRotate;
+
+	/// 回転計算
+	switch(rotateType) {
+	case kForward:		/// 順回転
+		
+		break;
+	case kBackspin:		/// 逆回転
+		
+		break;
+	case kSideForward:	/// 横順回転
+		
+		break;
+	case kSideBackspin:	/// 横逆回転
+
+		break;
+	}
+
+	particle->worldTransform.UpdateMatrix();
+
+	/// 制限時間の減少
+	float subTime = WorldTime::GetDeltaTime();
+	if(isActiveAttenuation_) {
+		subTime = WorldTime::FrameTime();
+	}
+
+	particle->lifeTime -= subTime;
 
 }

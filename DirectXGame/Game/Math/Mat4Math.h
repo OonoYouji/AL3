@@ -13,6 +13,11 @@ Mat4 MakeRotateZ(float theta);
 
 Mat4 MakeRotate(const Vec3& rotate);
 
+Mat4 MakeRotate(const Vec3& axis, float theta);
+
+Vec3 ExtractEuler(const Mat4& m);
+
+
 Mat4 MakeTranslate(const Vec3& translate);
 
 Mat4 MakeInverse(const Mat4& m);

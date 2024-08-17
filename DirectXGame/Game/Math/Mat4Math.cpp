@@ -3,6 +3,29 @@
 #include <cmath>
 #include <cassert>
 
+#include <DirectXMath.h>
+
+using namespace DirectX;
+
+namespace {
+	Matrix4x4 ConvertXMMATRIXToMatrix4x4(const XMMATRIX& matrix) {
+		Matrix4x4 result;
+
+		for(int i = 0; i < 4; ++i) {
+			XMVECTOR row = matrix.r[i];
+
+			result.m[i][0] = XMVectorGetX(row);
+			result.m[i][1] = XMVectorGetY(row);
+			result.m[i][2] = XMVectorGetZ(row);
+			result.m[i][3] = XMVectorGetW(row);
+		}
+
+		return result;
+	}
+}
+
+
+
 Mat4 MakeAffine(const Vec3& scale, const Vec3& rotate, const Vec3& translate) {
 	Mat4 matScale = MakeScale(scale);
 	Mat4 matRotate = MakeRotate(rotate);
@@ -51,6 +74,28 @@ Mat4 MakeRotate(const Vec3& rotate) {
 	Mat4 y = MakeRotateY(rotate.y);
 	Mat4 z = MakeRotateZ(rotate.z);
 	return x * y * z;
+}
+
+Mat4 MakeRotate(const Vec3& axis, float theta) {
+	XMVECTOR vector = XMVectorSet(axis.x, axis.y, axis.z, 1.0f);
+	XMMATRIX rotationMatrix = XMMatrixRotationAxis(vector, theta);
+	return ConvertXMMATRIXToMatrix4x4(rotationMatrix);
+}
+
+Vec3 ExtractEuler(const Mat4& m) {
+	Vector3 euler{};
+
+	float R11 = m.m[0][0];
+	float R21 = m.m[1][0];
+	float R31 = m.m[2][0];
+	float R32 = m.m[2][1];
+	float R33 = m.m[2][2];
+
+	euler.x = std::atan2(R32, R33);
+	euler.y = std::atan2(-R31, std::sqrt(R32 * R32 + R33 * R33));
+	euler.z = std::atan2(R21, R11);
+
+	return euler;
 }
 
 Mat4 MakeTranslate(const Vec3& translate) {

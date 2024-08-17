@@ -5,18 +5,34 @@
 #include <BaseGameObject.h>
 #include <Model.h>
 
-
 /// ===================================================
 /// パーティクルシステム
 /// ===================================================
 class ParticleSystem final : public BaseGameObject {
 	
 	/// ===================================================
-	/// 1粒子当たりの構造
+	/// private : sub class
 	/// ===================================================
+
 	struct Particle {
 		WorldTransform worldTransform;
+		Vec3 direction;
+		float lifeTime;
 	};
+
+public:
+
+	/// ===================================================
+	/// public : sub class  or  enum
+	/// ===================================================
+
+	enum RotateType {
+		kForward,		/// 順回転
+		kBackspin,		/// 逆回転
+		kSideForward,	/// 横順回転
+		kSideBackspin,	/// 横逆回転
+	};
+
 
 public:
 
@@ -33,12 +49,24 @@ public:
 	void Draw() override;
 
 
+	/// <summary>
+	/// 時間の減衰度を使用するかどうかのフラグ
+	/// </summary>
+	void SetIsActiveAttenuation(bool isActiveAttenuation) {
+		isActiveAttenuation_ = isActiveAttenuation;
+	}
+
+	//void SetUseGravity()
+
+
 private:
 	
 	/// ===================================================
 	/// private : methods
 	/// ===================================================
 	void CreateParticle();
+
+	void UpdateParticle(Particle* particle);
 
 private:
 	
@@ -54,8 +82,11 @@ private:
 
 	int maxParticleCount_;
 	int spawnTime_;
-	int time;
+	float lifeTime_;
+	float rotateValue_ = 0.0f;
 
 	bool isActiveAttenuation_; /// WorldTimeのAttenuationを適用されるのか
+	bool isRotate_; /// particleが回転するかどうか 
+	int rotateType; /// particleの回転方式
 
 };
