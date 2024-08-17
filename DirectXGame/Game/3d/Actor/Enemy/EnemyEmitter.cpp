@@ -13,12 +13,12 @@
 #include <Random.h>
 
 
-int EnemyEmitter::instanceCount_ = 0;
+int EnemyEmitter::sInstanceCount_ = 0;
 
 
 EnemyEmitter::EnemyEmitter() {
 
-	id_ = instanceCount_++;
+	id_ = sInstanceCount_++;
 
 	SetTag("EnemyEmitter");
 	SetName("EnemyEmitter" + std::to_string(id_));

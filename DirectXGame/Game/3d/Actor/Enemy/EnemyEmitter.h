@@ -67,7 +67,7 @@ private:
 	/// private : objects
 	/// ===================================================
 
-	static int instanceCount_;
+	static int sInstanceCount_;
 	int id_ = 0;
 
 	

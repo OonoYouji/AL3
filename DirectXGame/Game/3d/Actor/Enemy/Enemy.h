@@ -65,7 +65,7 @@ public:
 
 private:
 
-	static int instanceCount_;
+	static int sInstanceCount_;
 	int id_;
 
 	int stateType_; /// enum StateType を参照

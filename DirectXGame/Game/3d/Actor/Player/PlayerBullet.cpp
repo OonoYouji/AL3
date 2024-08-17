@@ -7,12 +7,12 @@
 #include <GameObjectManager.h>
 #include <Enemy.h>
 
-const float PlayerBullet::kLifeTime_ = 180.0f;
-int PlayerBullet::instanceCount_ = 0;
+const float PlayerBullet::skLifeTime_ = 180.0f;
+int PlayerBullet::sInstanceCount_ = 0;
 
 
 PlayerBullet::PlayerBullet() {
-	id_ = instanceCount_++;
+	id_ = sInstanceCount_++;
 
 	SetTag("Player");
 	SetName("PlayerBullet" + std::to_string(id_));

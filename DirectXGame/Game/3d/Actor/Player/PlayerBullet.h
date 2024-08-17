@@ -31,7 +31,7 @@ public:
 
 private:
 
-	static int instanceCount_;
+	static int sInstanceCount_;
 	int id_ = 0;
 
 
@@ -40,8 +40,8 @@ private:
 
 	Model* model_ = nullptr;
 
-	static const float kLifeTime_;
-	float leftLifeTime_ = kLifeTime_;
+	static const float skLifeTime_;
+	float leftLifeTime_ = skLifeTime_;
 
 	ObjectColor objectColor_;
 
