@@ -97,6 +97,9 @@
     <Filter Include="Game\Random">
       <UniqueIdentifier>{d1ba6c86-28ef-470a-840c-f9ef42826c91}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\ParticleSystem">
+      <UniqueIdentifier>{237845e2-d8ff-402b-8647-cf89a50a3965}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -215,6 +218,9 @@
     </ClCompile>
     <ClCompile Include="Game\Random\Random.cpp">
       <Filter>Game\Random</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\ParticleSystem\ParticleSystem.cpp">
+      <Filter>Game\ParticleSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -403,6 +409,9 @@
     </ClInclude>
     <ClInclude Include="Game\Random\Random.h">
       <Filter>Game\Random</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\ParticleSystem\ParticleSystem.h">
+      <Filter>Game\ParticleSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

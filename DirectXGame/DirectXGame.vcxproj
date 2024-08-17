@@ -63,7 +63,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Game/Random;$(ProjectDir)Game/Time;$(ProjectDir)Game/Scene;$(ProjectDir)Game/Math;$(ProjectDir)Game/Collision;$(ProjectDir)Game/3d/ModelManager;$(ProjectDir)Game/3d/GameObject;$(ProjectDir)Game/3d/Camera;$(ProjectDir)Game/3d/Actor/Enemy/State;$(ProjectDir)Game/3d/Actor/Enemy;$(ProjectDir)Game/3d/Actor/Player;$(ProjectDir)Game/3d/Actor;$(ProjectDir)Game/3d/Object;$(ProjectDir)Game/3d;$(ProjectDir)Game;$(ProjectDir);$(ProjectDir)2d;$(ProjectDir)3d;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)input;$(ProjectDir)scene;$(ProjectDir)math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Game/ParticleSystem;$(ProjectDir)Game/Random;$(ProjectDir)Game/Time;$(ProjectDir)Game/Scene;$(ProjectDir)Game/Math;$(ProjectDir)Game/Collision;$(ProjectDir)Game/3d/ModelManager;$(ProjectDir)Game/3d/GameObject;$(ProjectDir)Game/3d/Camera;$(ProjectDir)Game/3d/Actor/Enemy/State;$(ProjectDir)Game/3d/Actor/Enemy;$(ProjectDir)Game/3d/Actor/Player;$(ProjectDir)Game/3d/Actor;$(ProjectDir)Game/3d/Object;$(ProjectDir)Game/3d;$(ProjectDir)Game;$(ProjectDir);$(ProjectDir)2d;$(ProjectDir)3d;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)input;$(ProjectDir)scene;$(ProjectDir)math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -136,6 +136,7 @@
     <ClCompile Include="Game\Math\GridDraw.cpp" />
     <ClCompile Include="Game\Math\Mat4Math.cpp" />
     <ClCompile Include="Game\Math\Vec3Math.cpp" />
+    <ClCompile Include="Game\ParticleSystem\ParticleSystem.cpp" />
     <ClCompile Include="Game\Random\Random.cpp" />
     <ClCompile Include="Game\Scene\BaseScene.cpp" />
     <ClCompile Include="Game\Scene\SceneManager.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="Game\Math\GridDraw.h" />
     <ClInclude Include="Game\Math\Mat4Math.h" />
     <ClInclude Include="Game\Math\Vec3Math.h" />
+    <ClInclude Include="Game\ParticleSystem\ParticleSystem.h" />
     <ClInclude Include="Game\Random\Random.h" />
     <ClInclude Include="Game\Scene\BaseScene.h" />
     <ClInclude Include="Game\Scene\SceneManager.h" />
