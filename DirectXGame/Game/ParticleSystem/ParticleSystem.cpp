@@ -96,7 +96,8 @@ void ParticleSystem::CreateParticle() {
 
 	/// world transformの設定
 	newParticle->worldTransform.Initialize();
-	newParticle->worldTransform.parent_ = &worldTransform_;
+	//newParticle->worldTransform.parent_ = &worldTransform_;
+	newParticle->worldTransform.translation_ = GetPosition();
 	newParticle->worldTransform.UpdateMatrix();
 
 	////////////////////////////////////////////////////////////////////
