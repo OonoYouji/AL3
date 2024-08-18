@@ -59,6 +59,7 @@ public:
 		if(parent_) {
 			matWorld_ *= parent_->matWorld_;
 		}
+		TransferMatrix();
 	}
 
 private:

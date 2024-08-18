@@ -53,6 +53,14 @@ float Dot(const Vec3& v1, const Vec3& v2) {
 	return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
 }
 
+Vec3 Cross(const Vec3& v1, const Vec3& v2) {
+	return Vector3(
+		v1.y * v2.z - v1.z * v2.y,
+		v1.z * v2.x - v1.x * v2.z,
+		v1.x * v2.y - v1.y * v2.x
+	);
+}
+
 Vec3 MaxDot(const Vec3& direction, const std::vector<Vec3>& vertices) {
 	float maxDot = Dot(vertices.front(), direction);
 	Vec3 maxVertex = vertices.front();

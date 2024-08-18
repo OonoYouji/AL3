@@ -1,7 +1,10 @@
+#define NOMINMAX
 #include "ParticleSystem.h"
 
 #include <MainCamera.h>
 #include <WorldTime.h>
+#include <Vec3Math.h>
+#include <ModelManager.h>
 
 int ParticleSystem::sInstanceCount_ = 0;
 
@@ -20,13 +23,45 @@ ParticleSystem::ParticleSystem() {
 /// ===================================================
 /// 初期化
 /// ===================================================
-void ParticleSystem::Initialize() {}
+void ParticleSystem::Initialize() {
+	model_ = ModelManager::GetModel("cube");
+
+	direction_ = { 0,1,0 };
+	lifeTime_ = 1.0f;
+
+}
 
 
 /// ===================================================
 /// 更新処理
 /// ===================================================
-void ParticleSystem::Update() {}
+void ParticleSystem::Update() {
+
+	float subTime = WorldTime::GetDeltaTime();
+	if(isActiveAttenuation_) {
+		subTime *= WorldTime::GetAttenuation();
+	}
+	
+	spawnTime_ -= subTime;
+
+
+	if(spawnTime_ <= 0.0f) {
+		CreateParticle();
+		spawnTime_ = kSpawnTime_;
+	}
+
+	for(auto& particle : particles_) {
+		UpdateParticle(particle.get());
+	}
+
+	particles_.remove_if([](const std::unique_ptr<Particle>& particle) {
+		if(particle->lifeTime <= 0.0f) {
+			return true;
+		}
+		return false;
+	});
+
+}
 
 
 /// ===================================================
@@ -45,14 +80,15 @@ void ParticleSystem::Draw() {
 
 
 void ParticleSystem::CreateParticle() {
-	std::unique_ptr<Particle> newParticle;
+	std::unique_ptr<Particle> newParticle(new Particle());
 
 	/// world transformの設定
 	newParticle->worldTransform.Initialize();
 	newParticle->worldTransform.parent_ = &worldTransform_;
 	newParticle->worldTransform.UpdateMatrix();
 
-
+	newParticle->direction = direction_;
+	newParticle->lifeTime = lifeTime_;
 
 	particles_.push_back(std::move(newParticle));
 
@@ -62,31 +98,13 @@ void ParticleSystem::CreateParticle() {
 void ParticleSystem::UpdateParticle(Particle* particle) {
 
 	/// 移動計算
-	Vec3 velocity = particle->direction * 100.0f;
+	Vec3 velocity = particle->direction * 100.0f * WorldTime::GetDeltaTime();
 
 	if(isActiveAttenuation_) {
-		velocity *= WorldTime::FrameTime();
+		velocity *= WorldTime::GetAttenuation();
 	}
 
 	particle->worldTransform.translation_ += velocity;
-
-	//Mat4 matRotate;
-
-	/// 回転計算
-	switch(rotateType) {
-	case kForward:		/// 順回転
-		
-		break;
-	case kBackspin:		/// 逆回転
-		
-		break;
-	case kSideForward:	/// 横順回転
-		
-		break;
-	case kSideBackspin:	/// 横逆回転
-
-		break;
-	}
 
 	particle->worldTransform.UpdateMatrix();
 
@@ -96,6 +114,6 @@ void ParticleSystem::UpdateParticle(Particle* particle) {
 		subTime = WorldTime::FrameTime();
 	}
 
-	particle->lifeTime -= subTime;
+	particle->lifeTime = std::max(particle->lifeTime - subTime, 0.0f);
 
 }

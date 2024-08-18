@@ -81,9 +81,12 @@ private:
 	std::list<std::unique_ptr<Particle>> particles_;
 
 	int maxParticleCount_;
-	int spawnTime_;
+	const float kSpawnTime_ = 0.1f;
+	float spawnTime_ = kSpawnTime_;
 	float lifeTime_;
 	float rotateValue_ = 0.0f;
+
+	Vec3 direction_;
 
 	bool isActiveAttenuation_; /// WorldTimeのAttenuationを適用されるのか
 	bool isRotate_; /// particleが回転するかどうか 

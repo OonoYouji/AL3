@@ -18,6 +18,7 @@
 #include <Ground.h>
 #include <StartLine.h>
 #include <GameManagerObject.h>
+#include <ParticleSystem.h>
 
 
 Scene_Game::Scene_Game() {}
@@ -47,6 +48,7 @@ void Scene_Game::Initialize() {
 	(new GameManagerObject())->Initialize();
 	(new Ground())->Initialize();
 	(new StartLine())->Initialize();
+	(new ParticleSystem)->Initialize();
 
 
 	/// 左右の移動制限ゾーンの描画用
