@@ -33,8 +33,8 @@ Player::~Player() {
 
 void Player::Initialize() {
 
-	/*isActive = false;
-	isDrawActive = false;*/
+	isActive = false;
+	isDrawActive = false;
 
 	input_ = Input::GetInstance();
 

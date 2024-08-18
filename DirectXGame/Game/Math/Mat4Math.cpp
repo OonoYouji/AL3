@@ -33,6 +33,13 @@ Mat4 MakeAffine(const Vec3& scale, const Vec3& rotate, const Vec3& translate) {
 	return matScale * matRotate * matTranslate;
 }
 
+Mat4 MakeAffine(const Vec3& scale, const Vec3& rotate, const Vec3& translate, RotateOrder order) {
+	Mat4 matScale = MakeScale(scale);
+	Mat4 matRotate = MakeRotate(rotate, order);
+	Mat4 matTranslate = MakeTranslate(translate);
+	return matScale * matRotate * matTranslate;
+}
+
 Mat4 MakeScale(const Vec3& scale) {
 	return {
 		scale.x, 0.0f, 0.0f, 0.0f,
@@ -73,6 +80,21 @@ Mat4 MakeRotate(const Vec3& rotate) {
 	Mat4 x = MakeRotateX(rotate.x);
 	Mat4 y = MakeRotateY(rotate.y);
 	Mat4 z = MakeRotateZ(rotate.z);
+	return x * y * z;
+}
+
+Mat4 MakeRotate(const Vec3& rotate, RotateOrder rotateOrder) {
+	Mat4 x = MakeRotateX(rotate.x);
+	Mat4 y = MakeRotateY(rotate.y);
+	Mat4 z = MakeRotateZ(rotate.z);
+
+	switch(rotateOrder) {
+	case XYZ:
+		return x * y * z;
+	case YXZ:
+		return y * x * z;
+	}
+
 	return x * y * z;
 }
 

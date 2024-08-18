@@ -3,7 +3,13 @@
 #include "Matrix4x4.h"
 #include "Vector3.h"
 
+enum RotateOrder{
+	XYZ,
+	YXZ,
+};
+
 Mat4 MakeAffine(const Vec3& scale, const Vec3& rotate, const Vec3& translate);
+Mat4 MakeAffine(const Vec3& scale, const Vec3& rotate, const Vec3& translate, RotateOrder order);
 
 Mat4 MakeScale(const Vec3& scale);
 
@@ -12,6 +18,7 @@ Mat4 MakeRotateY(float theta);
 Mat4 MakeRotateZ(float theta);
 
 Mat4 MakeRotate(const Vec3& rotate);
+Mat4 MakeRotate(const Vec3& rotate, RotateOrder rotateOrder);
 
 Mat4 MakeRotate(const Vec3& axis, float theta);
 

@@ -54,8 +54,8 @@ public:
 	/// <returns>定数バッファ</returns>
 	const Microsoft::WRL::ComPtr<ID3D12Resource>& GetConstBuffer() const { return constBuffer_; }
 
-	void UpdateMatrix() {
-		matWorld_ = MakeAffine(scale_, rotation_, translation_);
+	void UpdateMatrix(RotateOrder order = XYZ) {
+		matWorld_ = MakeAffine(scale_, rotation_, translation_, order);
 		if(parent_) {
 			matWorld_ *= parent_->matWorld_;
 		}

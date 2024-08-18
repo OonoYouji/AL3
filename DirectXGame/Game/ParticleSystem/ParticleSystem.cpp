@@ -47,16 +47,20 @@ void ParticleSystem::Update() {
 
 	spawnTime_ -= subTime;
 
+	angle_ = std::max(angle_, 0.0f);
 
+	/// particleの生成
 	if(spawnTime_ <= 0.0f) {
 		CreateParticle();
 		spawnTime_ = spawnCT_;
 	}
 
+	/// particleの更新処理
 	for(auto& particle : particles_) {
 		UpdateParticle(particle.get());
 	}
 
+	/// life timeが0以下になったものを消去
 	particles_.remove_if([](const std::unique_ptr<Particle>& particle) {
 		if(particle->lifeTime <= 0.0f) {
 			return true;
@@ -71,6 +75,11 @@ void ParticleSystem::Update() {
 /// 描画処理
 /// ===================================================
 void ParticleSystem::Draw() {
+
+#ifdef _DEBUG
+	ModelManager::GetModel("sphere")->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection());
+#endif // _DEBUG
+
 
 	if(!model_) { return; }
 
@@ -100,9 +109,9 @@ void ParticleSystem::CreateParticle() {
 	float theta = Random::Float(0, 2 * std::numbers::pi_v<float>);
 	float angle = Random::Float(0.0f, angle_) * convertDegreeToRadian;
 	Vec3 dir = {
-		std::cos(theta),
+		std::cos(theta) * angle_ * convertDegreeToRadian,
 		std::cos(angle),
-		std::sin(theta)
+		std::sin(theta)* angle_* convertDegreeToRadian
 	};
 
 	newParticle->direction = Transform(dir.Norm(), matRotate);
@@ -128,7 +137,10 @@ void ParticleSystem::UpdateParticle(Particle* particle) {
 
 	particle->worldTransform.translation_ += velocity;
 
-	particle->worldTransform.UpdateMatrix();
+	/*Vec3 cross = Cross({ 0,1,0 }, velocity) * std::numbers::pi_v<float> / 2.0f;
+	particle->worldTransform.rotation_ += cross;*/
+
+	particle->worldTransform.UpdateMatrix(YXZ);
 
 	/// 制限時間の減少
 	float subTime = WorldTime::GetDeltaTime();
