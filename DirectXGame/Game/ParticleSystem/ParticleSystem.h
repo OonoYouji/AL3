@@ -68,6 +68,9 @@ private:
 
 	void UpdateParticle(Particle* particle);
 
+
+	void CreateVariablesGroup();
+
 private:
 	
 	/// ===================================================
@@ -80,13 +83,14 @@ private:
 
 	std::list<std::unique_ptr<Particle>> particles_;
 
-	int maxParticleCount_;
-	const float kSpawnTime_ = 0.1f;
-	float spawnTime_ = kSpawnTime_;
+	float spawnCT_ = 0.1f;
+	float spawnTime_ = spawnCT_;
 	float lifeTime_;
-	float rotateValue_ = 0.0f;
+
+	float speed_ = 10.0f;
 
 	Vec3 direction_;
+	float angle_ = 90.0f;
 
 	bool isActiveAttenuation_; /// WorldTimeのAttenuationを適用されるのか
 	bool isRotate_; /// particleが回転するかどうか 

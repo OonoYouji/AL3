@@ -5,6 +5,8 @@
 #include <WorldTime.h>
 #include <Vec3Math.h>
 #include <ModelManager.h>
+#include <Random.h>
+#include <numbers>
 
 int ParticleSystem::sInstanceCount_ = 0;
 
@@ -18,6 +20,7 @@ ParticleSystem::ParticleSystem() {
 	SetTag("ParticleSystem");
 	SetName("ParticleSystem" + std::to_string(id_));
 
+	CreateVariablesGroup();
 }
 
 /// ===================================================
@@ -41,13 +44,13 @@ void ParticleSystem::Update() {
 	if(isActiveAttenuation_) {
 		subTime *= WorldTime::GetAttenuation();
 	}
-	
+
 	spawnTime_ -= subTime;
 
 
 	if(spawnTime_ <= 0.0f) {
 		CreateParticle();
-		spawnTime_ = kSpawnTime_;
+		spawnTime_ = spawnCT_;
 	}
 
 	for(auto& particle : particles_) {
@@ -87,7 +90,26 @@ void ParticleSystem::CreateParticle() {
 	newParticle->worldTransform.parent_ = &worldTransform_;
 	newParticle->worldTransform.UpdateMatrix();
 
-	newParticle->direction = direction_;
+	////////////////////////////////////////////////////////////////////
+
+	Vec3 cross = Cross({ 0, 1, 0 }, direction_.Norm());
+	cross *= std::numbers::pi_v<float> / 2.0f;
+	Mat4 matRotate = MakeRotate(cross);
+
+	float convertDegreeToRadian = (std::numbers::pi_v<float> / 180.0f);
+	float theta = Random::Float(0, 2 * std::numbers::pi_v<float>);
+	float angle = Random::Float(0.0f, angle_) * convertDegreeToRadian;
+	Vec3 dir = {
+		std::cos(theta),
+		std::cos(angle),
+		std::sin(theta)
+	};
+
+	newParticle->direction = Transform(dir.Norm(), matRotate);
+
+	////////////////////////////////////////////////////////////////////
+
+
 	newParticle->lifeTime = lifeTime_;
 
 	particles_.push_back(std::move(newParticle));
@@ -98,7 +120,7 @@ void ParticleSystem::CreateParticle() {
 void ParticleSystem::UpdateParticle(Particle* particle) {
 
 	/// 移動計算
-	Vec3 velocity = particle->direction * 100.0f * WorldTime::GetDeltaTime();
+	Vec3 velocity = particle->direction * speed_ * WorldTime::GetDeltaTime();
 
 	if(isActiveAttenuation_) {
 		velocity *= WorldTime::GetAttenuation();
@@ -115,5 +137,18 @@ void ParticleSystem::UpdateParticle(Particle* particle) {
 	}
 
 	particle->lifeTime = std::max(particle->lifeTime - subTime, 0.0f);
+
+}
+
+void ParticleSystem::CreateVariablesGroup() {
+	BaseGameObject::Group& group = CreateGroup("variables");
+
+	group.SetPtr("speed", &speed_);
+
+	group.SetPtr("lifeTime", &lifeTime_);
+	group.SetPtr("spawnCT", &spawnCT_);
+
+	group.SetPtr("direction", &direction_);
+	group.SetPtr("angle", &angle_);
 
 }
