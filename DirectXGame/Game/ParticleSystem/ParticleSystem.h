@@ -16,7 +16,7 @@ class ParticleSystem final : public BaseGameObject {
 
 	struct Particle {
 		WorldTransform worldTransform;
-		Vec3 direction;
+		Vec3 velocity;
 		float lifeTime;
 	};
 
@@ -56,8 +56,13 @@ public:
 		isActiveAttenuation_ = isActiveAttenuation;
 	}
 
-	//void SetUseGravity()
-
+	/// <summary>
+	/// 一回に作成するパーティクルの量
+	/// </summary>
+	/// <param name="count"></param>
+	void SetCreateParticleCount(int count) {
+		createParticleCount_ = count;
+	}
 
 private:
 	
@@ -67,7 +72,6 @@ private:
 	void CreateParticle();
 
 	void UpdateParticle(Particle* particle);
-
 
 	void CreateVariablesGroup();
 
@@ -85,6 +89,8 @@ private:
 
 	float spawnCT_ = 0.1f;
 	float spawnTime_ = spawnCT_;
+	int createParticleCount_ = 1; /// 一回に作成するパーティクルの量
+
 	float lifeTime_;
 
 	float speed_ = 10.0f;
@@ -93,6 +99,7 @@ private:
 	float angle_ = 90.0f;
 
 	bool isActiveAttenuation_; /// WorldTimeのAttenuationを適用されるのか
+
 	bool isRotate_; /// particleが回転するかどうか 
 	int rotateType; /// particleの回転方式
 

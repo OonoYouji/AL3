@@ -8,6 +8,7 @@
 #include <GameObjectManager.h>
 #include <CollisionManager.h>
 #include <ModelManager.h>
+#include <ParticleSystem.h>
 
 #include <WorldTime.h>
 
@@ -94,6 +95,13 @@ void Enemy::LastUpdate() {
 
 	if(hp_ <= 0) {
 		GameObjectManager::GetInstance()->Destory(this);
+
+		ParticleSystem* particle = new  ParticleSystem();
+		particle->Initialize();
+		particle->SetPos(GetPosition());
+		particle->SetCreateParticleCount(3);
+		particle->SetIsActiveAttenuation(true);
+
 	}
 
 }

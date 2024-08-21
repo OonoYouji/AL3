@@ -51,7 +51,9 @@ void ParticleSystem::Update() {
 
 	/// particleの生成
 	if(spawnTime_ <= 0.0f) {
-		CreateParticle();
+		for(int i = 0; i < createParticleCount_; ++i) {
+			CreateParticle();
+		}
 		spawnTime_ = spawnCT_;
 	}
 
@@ -92,16 +94,21 @@ void ParticleSystem::Draw() {
 
 
 void ParticleSystem::CreateParticle() {
+
 	std::unique_ptr<Particle> newParticle(new Particle());
 
+
+	/// --------------------------------------------------
 	/// world transformの設定
+	/// --------------------------------------------------
 	newParticle->worldTransform.Initialize();
-	//newParticle->worldTransform.parent_ = &worldTransform_;
 	newParticle->worldTransform.translation_ = GetPosition();
 	newParticle->worldTransform.UpdateMatrix();
 
-	////////////////////////////////////////////////////////////////////
 
+	/// --------------------------------------------------
+	/// velocityの計算
+	/// --------------------------------------------------
 	Vec3 cross = Cross({ 0, 1, 0 }, direction_.Norm());
 	cross *= std::numbers::pi_v<float> / 2.0f;
 	Mat4 matRotate = MakeRotate(cross);
@@ -112,14 +119,16 @@ void ParticleSystem::CreateParticle() {
 	Vec3 dir = {
 		std::cos(theta) * angle_ * convertDegreeToRadian,
 		std::cos(angle),
-		std::sin(theta)* angle_* convertDegreeToRadian
+		std::sin(theta) * angle_ * convertDegreeToRadian
 	};
 
-	newParticle->direction = Transform(dir.Norm(), matRotate);
-
-	////////////////////////////////////////////////////////////////////
+	newParticle->velocity = Transform(dir.Norm(), matRotate) * speed_;
 
 
+
+	/// --------------------------------------------------
+	/// 
+	/// --------------------------------------------------
 	newParticle->lifeTime = lifeTime_;
 
 	particles_.push_back(std::move(newParticle));
@@ -130,7 +139,7 @@ void ParticleSystem::CreateParticle() {
 void ParticleSystem::UpdateParticle(Particle* particle) {
 
 	/// 移動計算
-	Vec3 velocity = particle->direction * speed_ * WorldTime::GetDeltaTime();
+	Vec3 velocity = particle->velocity * WorldTime::GetDeltaTime();
 
 	if(isActiveAttenuation_) {
 		velocity *= WorldTime::GetAttenuation();
@@ -160,6 +169,7 @@ void ParticleSystem::CreateVariablesGroup() {
 
 	group.SetPtr("lifeTime", &lifeTime_);
 	group.SetPtr("spawnCT", &spawnCT_);
+	group.SetPtr("createCount", &createParticleCount_);
 
 	group.SetPtr("direction", &direction_);
 	group.SetPtr("angle", &angle_);
