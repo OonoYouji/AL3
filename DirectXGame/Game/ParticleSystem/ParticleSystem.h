@@ -57,11 +57,27 @@ public:
 	}
 
 	/// <summary>
-	/// 一回に作成するパーティクルの量
+	/// 一回に作成するパーティクルの量のセット
 	/// </summary>
 	/// <param name="count"></param>
 	void SetCreateParticleCount(int count) {
 		createParticleCount_ = count;
+	}
+
+	/// <summary>
+	/// このインスタンスのライフタイムのセット
+	/// </summary>
+	/// <param name="lifeTime"></param>
+	void SetThisLifeTime(float lifeTime) {
+		thisLifeTime_ = lifeTime;
+	}
+
+	/// <summary>
+	/// パーティクルのライフタイムのセット
+	/// </summary>
+	/// <param name="lifeTime"></param>
+	void SetParticleLifeTime(float lifeTime) {
+		particleLifeTime_ = lifeTime;
 	}
 
 private:
@@ -84,6 +100,7 @@ private:
 	int id_;
 
 	Model* model_ = nullptr;
+	float thisLifeTime_ = 1.0f; /// パーティクルシステムのライフタイム
 
 	std::list<std::unique_ptr<Particle>> particles_;
 
@@ -91,7 +108,7 @@ private:
 	float spawnTime_ = spawnCT_;
 	int createParticleCount_ = 1; /// 一回に作成するパーティクルの量
 
-	float lifeTime_;
+	float particleLifeTime_ = 1.0f; /// パーティクルのライフタイム
 
 	float speed_ = 10.0f;
 

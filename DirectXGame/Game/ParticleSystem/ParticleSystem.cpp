@@ -1,12 +1,14 @@
 #define NOMINMAX
 #include "ParticleSystem.h"
 
+#include <numbers>
+
+#include <GameObjectManager.h>
 #include <MainCamera.h>
 #include <WorldTime.h>
 #include <Vec3Math.h>
 #include <ModelManager.h>
 #include <Random.h>
-#include <numbers>
 
 int ParticleSystem::sInstanceCount_ = 0;
 
@@ -30,7 +32,6 @@ void ParticleSystem::Initialize() {
 	model_ = ModelManager::GetModel("cube");
 
 	direction_ = { 0,1,0 };
-	lifeTime_ = 1.0f;
 
 }
 
@@ -46,15 +47,18 @@ void ParticleSystem::Update() {
 	}
 
 	spawnTime_ -= subTime;
+	thisLifeTime_ -= subTime;
 
 	angle_ = std::max(angle_, 0.0f);
 
 	/// particleの生成
-	if(spawnTime_ <= 0.0f) {
-		for(int i = 0; i < createParticleCount_; ++i) {
-			CreateParticle();
+	if(thisLifeTime_ > 0.0f) {
+		if(spawnTime_ <= 0.0f) {
+			for(int i = 0; i < createParticleCount_; ++i) {
+				CreateParticle();
+			}
+			spawnTime_ = spawnCT_;
 		}
-		spawnTime_ = spawnCT_;
 	}
 
 	/// particleの更新処理
@@ -69,6 +73,14 @@ void ParticleSystem::Update() {
 		}
 		return false;
 	});
+
+
+	/// Life Timeが0以下になってparticleが一個もなければ消す
+	if(thisLifeTime_ <= 0.0f) {
+		if(particles_.empty()) {
+			GameObjectManager::GetInstance()->Destory(this);
+		}
+	}
 
 }
 
@@ -129,7 +141,7 @@ void ParticleSystem::CreateParticle() {
 	/// --------------------------------------------------
 	/// 
 	/// --------------------------------------------------
-	newParticle->lifeTime = lifeTime_;
+	newParticle->lifeTime = particleLifeTime_;
 
 	particles_.push_back(std::move(newParticle));
 
@@ -167,7 +179,8 @@ void ParticleSystem::CreateVariablesGroup() {
 
 	group.SetPtr("speed", &speed_);
 
-	group.SetPtr("lifeTime", &lifeTime_);
+	group.SetPtr("particleLifeTime", &particleLifeTime_);
+	group.SetPtr("thisLifeTime", &thisLifeTime_);
 	group.SetPtr("spawnCT", &spawnCT_);
 	group.SetPtr("createCount", &createParticleCount_);
 
