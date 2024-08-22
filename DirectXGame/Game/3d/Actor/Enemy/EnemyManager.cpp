@@ -90,6 +90,11 @@ void EnemyManager::ImGuiDebug() {
 		}
 	}
 
+	for(auto emitter : desctoryEmitter_) {
+		SubEmitter(emitter);
+	}
+	desctoryEmitter_.clear();
+
 #endif // _DEBUG
 }
 
@@ -107,6 +112,16 @@ void EnemyManager::AddEnemy(Enemy* enemy) {
 /// ===================================================
 void EnemyManager::AddEmitter(EnemyEmitter* emitter) {
 	emitters_.push_back(emitter);
+}
+
+void EnemyManager::SubEmitter(EnemyEmitter* emitter) {
+	auto itr = std::find(emitters_.begin(), emitters_.end(), emitter);
+	if(itr == emitters_.end()) { return; }
+	emitters_.erase(itr);
+}
+
+void EnemyManager::DesctoryEmitter(EnemyEmitter* emitter) {
+	desctoryEmitter_.push_back(emitter);
 }
 
 

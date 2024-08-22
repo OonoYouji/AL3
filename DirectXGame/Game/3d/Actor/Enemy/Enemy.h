@@ -3,6 +3,7 @@
 #include <cmath>
 
 #include <BaseGameObject.h>
+#include <ObjectColor.h>
 
 class Model;
 
@@ -63,6 +64,12 @@ public:
 
 	void SetHP(int hp) { hp_ = hp; }
 
+	void SetHasItem(bool hasItem) {
+		hasItem_ = hasItem;
+	}
+
+	void SetColor(const Vector4& color);
+
 private:
 
 	static int sInstanceCount_;
@@ -72,10 +79,11 @@ private:
 	int moveType_;	/// enum MoveType  を参照
 
 	Model* model_ = nullptr;
+	ObjectColor objectColor_;
 
 	/// status
 	int hp_ = 1;
 
-	/// Attack
+	bool hasItem_ = false;
 
 };

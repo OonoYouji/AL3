@@ -16,10 +16,11 @@
 #include <CreateName.h>
 #include <Mat4Math.h>
 #include <Vector2.h>
+#include <Random.h>
 
 #include <PlayerBullet.h>
 #include <GameManagerObject.h>
-
+#include <BulletItem.h>
 
 
 Player::Player() {
@@ -189,6 +190,17 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 			GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
 
 		object->SetIsGameOver(true);
+
+		return;
+	}
+
+	BulletItem* item = dynamic_cast<BulletItem*>(collision);
+	if(item) {
+
+		GameObjectManager::GetInstance()->Destory(item);
+
+		int arrRefe = Random::Int(2, ArrRefe_Count) - 1;
+		fireNums_[arrRefe] = std::min(fireNums_[arrRefe] + 1, 5);
 
 	}
 

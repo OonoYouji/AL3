@@ -9,6 +9,7 @@
 #include <CollisionManager.h>
 #include <ModelManager.h>
 #include <ParticleSystem.h>
+#include <BulletItem.h>
 
 #include <WorldTime.h>
 
@@ -43,6 +44,9 @@ void Enemy::Initialize() {
 	CreateBoxCollider(model_);
 
 	CreateStatusGroup();
+
+	objectColor_.Initialize();
+	SetColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 
 }
 
@@ -80,7 +84,7 @@ void Enemy::Update() {
 /// ===================================================
 void Enemy::Draw() {
 	if(model_) {
-		model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection());
+		model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection(), &objectColor_);
 	}
 }
 
@@ -93,14 +97,25 @@ void Enemy::LastUpdate() {
 
 	UpdateMatrix();
 
+	/// ---------------------------------------------------
+	/// 倒した時の処理
+	/// ---------------------------------------------------
 	if(hp_ <= 0) {
 		GameObjectManager::GetInstance()->Destory(this);
 
-		ParticleSystem* particle = new  ParticleSystem();
+		/// パーティクルの生成
+		ParticleSystem* particle = new ParticleSystem();
 		particle->Initialize();
 		particle->SetPos(GetPosition());
 		particle->SetCreateParticleCount(3);
 		particle->SetIsActiveAttenuation(true);
+
+		/// アイテムの生成
+		if(hasItem_) {
+			BulletItem* item = new BulletItem();
+			item->Initialize();
+			item->SetPos(GetPosition());
+		}
 
 	}
 
@@ -123,6 +138,11 @@ void Enemy::Attack() {
 /// ===================================================
 void Enemy::SetModel(Model* model) {
 	model_ = model;
+}
+
+void Enemy::SetColor(const Vector4& color) {
+	objectColor_.SetColor(color);
+	objectColor_.TransferMatrix();
 }
 
 

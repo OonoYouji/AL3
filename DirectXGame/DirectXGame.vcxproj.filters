@@ -222,6 +222,9 @@
     <ClCompile Include="Game\ParticleSystem\ParticleSystem.cpp">
       <Filter>Game\ParticleSystem</Filter>
     </ClCompile>
+    <ClCompile Include="Game\3d\Object\BulletItem.cpp">
+      <Filter>Game\3d\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -412,6 +415,9 @@
     </ClInclude>
     <ClInclude Include="Game\ParticleSystem\ParticleSystem.h">
       <Filter>Game\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Object\BulletItem.h">
+      <Filter>Game\3d\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -8,6 +8,7 @@
 #include <MainCamera.h>
 #include <Player.h>
 #include <Enemy.h>
+#include <EnemyManager.h>
 
 #include <Vec3Math.h>
 #include <Random.h>
@@ -32,8 +33,6 @@ void EnemyEmitter::Initialize() {
 
 	model_ = ModelManager::GetModel("enemyEmitter");
 
-	/*worldTransform_.translation_.y = 0.1f;
-	worldTransform_.translation_.z = 100.0f;*/
 	UpdateMatrix();
 
 	objectColor.Initialize();
@@ -43,14 +42,12 @@ void EnemyEmitter::Initialize() {
 	rangeZ_ = 50.0f;
 	spawnNum_ = 10;
 
-	/*min_ = Vec3{ 0,0,0 } + GetPosition();
-	max_ = Vec3{ 10,0,10 } + GetPosition();
-	worldTransform_.translation_ = Lerp(max_, min_, 0.5f);*/
-
-
 	pPlayer_ = dynamic_cast<Player*>(GameObjectManager::GetInstance()->GetGameObject("Player"));
 	assert(pPlayer_);
 
+	if(!Random::Int(0, 1)) {
+		enemyHasItem_ = true;
+	}
 
 }
 
@@ -79,7 +76,7 @@ void EnemyEmitter::Update() {
 				isSpawned_ = true;
 			}
 		}
-		
+
 	}
 
 	/// min, maxのyは固定
@@ -98,6 +95,15 @@ void EnemyEmitter::LastUpdate() {
 	worldTransform_.scale_ = max_ - Lerp(max_, min_, 0.5f);
 	worldTransform_.scale_.y = 1;
 	UpdateMatrix();
+
+#ifdef _DEBUG
+	if(isDesctory_) {
+		GameObjectManager::GetInstance()->Destory(this);
+		EnemyManager::GetInstance()->DesctoryEmitter(this);
+	}
+#endif // _DEBUG
+
+
 }
 
 
@@ -118,6 +124,12 @@ void EnemyEmitter::CreateEnemies() {
 		enemy->SetMoveType(std::min(type_, static_cast<int>(Enemy::kCount - 1)));
 		enemy->SetHP(enemyHP_);
 
+		if(enemyHasItem_) {
+			enemy->SetHasItem(true);
+			enemy->SetColor({ 0.1f, 0.1f, 0.5f, 1.0f });
+			enemyHasItem_ = false;
+		}
+
 		enemy->UpdateMatrix();
 	}
 }
@@ -133,5 +145,11 @@ void EnemyEmitter::CreateVariablesGroup() {
 	group.SetPtr("enemyHP", &enemyHP_);
 
 	group.SetPtr("type", &type_);
+
+#ifdef _DEBUG
+	BaseGameObject::Group& debugGroup = CreateGroup("debug");
+	debugGroup.SetPtr("isDesctory", &isDesctory_);
+#endif // _DEBUG
+
 
 }

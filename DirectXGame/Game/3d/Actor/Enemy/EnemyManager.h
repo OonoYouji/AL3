@@ -59,7 +59,9 @@ public:
 	/// <param name="emitter"></param>
 	void AddEmitter(EnemyEmitter* emitter);
 
+	void SubEmitter(EnemyEmitter* emitter);
 
+	void DesctoryEmitter(EnemyEmitter* emitter);
 
 	/// <summary>
 	/// Enemy用モデルのゲッター
@@ -102,6 +104,7 @@ private:
 	///
 	std::list<Enemy*> enemies_;
 	std::list<EnemyEmitter*> emitters_;
+	std::list<EnemyEmitter*> desctoryEmitter_;
 
 	std::list<Model*> models_;
 

@@ -83,9 +83,15 @@ private:
 
 	bool isSpawned_ = false;
 
+	bool enemyHasItem_ = false;
+
 	Model* model_ = nullptr;
 	ObjectColor objectColor;
 
 	Player* pPlayer_ = nullptr;
+
+#ifdef _DEBUG
+	bool isDesctory_ = false;
+#endif // _DEBUG
 
 };
