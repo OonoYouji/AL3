@@ -97,6 +97,7 @@ private:
 	std::list<PlayerBullet*> bullets_;
 
 	std::array<int, ArrRefe_Count> fireNums_;  /// 弾の種類ごとに撃つ数
+	std::array<int, ArrRefe_Count> currentFireNums_;  /// 弾の種類ごとに撃つ数
 
 	std::array<float, ArrRefe_Count> leftShootCTs_; /// 弾の種類ごとにクールタイム(減衰する方)
 	std::array<float, ArrRefe_Count> shootCTs_; /// 弾の種類ごとにクールタイム(最大数)

@@ -57,16 +57,16 @@ void Player::Initialize() {
 
 
 	/// 0ですべて初期化
-	for(auto fireNum : fireNums_) {
+	for(auto& fireNum : fireNums_) {
 		fireNum = 0;
 	}
 
 	fireNums_[ArrRefe_Normal] = 1; /// 通常弾は1固定
 
 	for(auto& shootCT : shootCTs_) {
-		shootCT = 0.4f;
+		shootCT = 1.0f;
 	}
-	shootCTs_[ArrRefe_Twin] = 0.6f;
+	shootCTs_[ArrRefe_Normal] = 0.4f;
 
 	for(auto& shootCT : leftShootCTs_) {
 		shootCT = 0.0f;
@@ -126,6 +126,10 @@ void Player::Update() {
 
 		/// cool timeの減衰
 		for(int i = 0; i < ArrRefe_Count; ++i) {
+
+			/// 撃つ数が0なら撃たない
+			if(!fireNums_[i]) { continue; }
+
 			leftShootCTs_[i] = std::max(leftShootCTs_[i] - WorldTime::FrameTime(), 0.0f);
 
 			if(leftShootCTs_[i] <= 0.0f) {
@@ -219,7 +223,6 @@ void Player::NormalFire() {
 	Fire();
 
 	leftShootCTs_[ArrRefe_Normal] = shootCTs_[ArrRefe_Normal];
-
 }
 
 
@@ -242,8 +245,14 @@ void Player::TwinFire() {
 
 	}
 
+	--currentFireNums_[ArrRefe_Twin];
+	if(currentFireNums_[ArrRefe_Twin] <= 0.0f) {
+		leftShootCTs_[ArrRefe_Twin] = shootCTs_[ArrRefe_Twin];
+		currentFireNums_[ArrRefe_Twin] = fireNums_[ArrRefe_Twin];
+	} else {
+		leftShootCTs_[ArrRefe_Twin] = shootCTs_[ArrRefe_Twin] / 5.0f;
+	}
 
-	leftShootCTs_[ArrRefe_Twin] = shootCTs_[ArrRefe_Twin];
 
 }
 
@@ -263,14 +272,20 @@ void Player::WideFire() {
 
 		float theta = 30.0f * std::numbers::pi_v<float> / 180.0f;
 		Mat4 matRotate = MakeRotateY(i ? theta : -theta);
-		bullet->SetMove(Transform({0,0,1}, matRotate));
+		bullet->SetMove(Transform({ 0,0,1 }, matRotate));
 
 		/// 向きの計算
 		bullet->SetRotateY(i ? theta : -theta);
 
 	}
 
-	leftShootCTs_[ArrRefe_Wide] = shootCTs_[ArrRefe_Wide];
+	--currentFireNums_[ArrRefe_Wide];
+	if(currentFireNums_[ArrRefe_Wide] <= 0.0f) {
+		leftShootCTs_[ArrRefe_Wide] = shootCTs_[ArrRefe_Wide];
+		currentFireNums_[ArrRefe_Wide] = fireNums_[ArrRefe_Wide];
+	} else {
+		leftShootCTs_[ArrRefe_Wide] = shootCTs_[ArrRefe_Wide] / 5.0f;
+	}
 }
 
 
@@ -297,6 +312,11 @@ void Player::SideFire() {
 	}
 
 
-	leftShootCTs_[ArrRefe_Side] = shootCTs_[ArrRefe_Side];
-
+	--currentFireNums_[ArrRefe_Side];
+	if(currentFireNums_[ArrRefe_Side] <= 0.0f) {
+		leftShootCTs_[ArrRefe_Side] = shootCTs_[ArrRefe_Side];
+		currentFireNums_[ArrRefe_Side] = fireNums_[ArrRefe_Side];
+	} else {
+		leftShootCTs_[ArrRefe_Side] = shootCTs_[ArrRefe_Side] / 5.0f;
+	}
 }
