@@ -67,3 +67,10 @@ void PlayerBullet::OnCollisionEnter(BaseGameObject* collision) {
 void PlayerBullet::SetModel(Model* model) {
 	model_ = model;
 }
+
+
+
+void PlayerBullet::SetColor(const Vector4& color) {
+	objectColor_.SetColor(color);
+	objectColor_.TransferMatrix();
+}

@@ -2,6 +2,7 @@
 
 #include <list>
 #include <memory>
+#include <functional>
 
 #include <Vector3.h>
 
@@ -12,11 +13,40 @@
 class Input;
 class PlayerBullet;
 
+/// ============================================
+/// プレイヤーの弾の種類のenum
+/// ============================================
+enum ShootOrder {
+	kNormal = 1 << 0, /// 前方に一発
+	kTwin   = 1 << 1, /// 前方に二発同時
+	kWide   = 1 << 2, /// 斜め45度に一発ずつ
+	kSide   = 1 << 3, /// 真横に一発ずつ
+};
+
+/// ============================================
+/// 上記のenumと同じもの、配列の参照用
+/// ============================================
+enum ArrRefe {
+	ArrRefe_Normal, /// 前方に一発
+	ArrRefe_Twin,	 /// 前方に二発同時
+	ArrRefe_Wide,	 /// 斜め45度に一発ずつ
+	ArrRefe_Side,	 /// 真横に一発ずつ
+	ArrRefe_Count
+};
+
+
+/// ============================================
+/// プレイヤー本体のクラス
+/// ============================================
 class Player : public BaseGameObject {
 public:
 
 	Player();
 	~Player();
+
+	/// ============================================
+	/// public : methods
+	/// ============================================
 
 	void Initialize() override;
 	void Update() override;
@@ -29,12 +59,27 @@ public:
 
 private:
 
+	/// ============================================
+	/// private : methods
+	/// ============================================
 
-	void Fire();
+
+	PlayerBullet* Fire();
 
 
+	void NormalFire();
+
+	void TwinFire();
+
+	void WideFire();
+
+	void SideFire();
 
 private:
+
+	/// ============================================
+	/// private : objects
+	/// ============================================
 
 	Model* model_;
 	ObjectColor color_;
@@ -44,11 +89,18 @@ private:
 	Vec3 move_;
 	float speed_;
 	float moveLenght_ = 0;
-	
+
 	float nextAttenuation_;
 
 	float leftShootCT_ = 0.0f;
 	const float kShootCT_ = 15.0f;
 	std::list<PlayerBullet*> bullets_;
+
+	std::array<int, ArrRefe_Count> fireNums_;  /// 弾の種類ごとに撃つ数
+
+	std::array<float, ArrRefe_Count> leftShootCTs_; /// 弾の種類ごとにクールタイム(減衰する方)
+	std::array<float, ArrRefe_Count> shootCTs_; /// 弾の種類ごとにクールタイム(最大数)
+
+	std::function<void()> FireMethods_[ArrRefe_Count];
 
 };

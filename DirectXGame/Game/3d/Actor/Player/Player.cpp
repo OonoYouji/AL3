@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <algorithm>
+#include <numbers>
 
 #include <ImGuiManager.h>
 #include <Input.h>
@@ -54,6 +55,29 @@ void Player::Initialize() {
 
 	CreateBoxCollider(model_);
 
+
+	/// 0ですべて初期化
+	for(auto fireNum : fireNums_) {
+		fireNum = 0;
+	}
+
+	fireNums_[ArrRefe_Normal] = 1; /// 通常弾は1固定
+
+	for(auto& shootCT : shootCTs_) {
+		shootCT = 0.4f;
+	}
+	shootCTs_[ArrRefe_Twin] = 0.6f;
+
+	for(auto& shootCT : leftShootCTs_) {
+		shootCT = 0.0f;
+	}
+
+
+	/// 弾を撃つ関数を配列化
+	FireMethods_[ArrRefe_Normal] = std::bind(&Player::NormalFire, this);
+	FireMethods_[ArrRefe_Twin] = std::bind(&Player::TwinFire, this);
+	FireMethods_[ArrRefe_Wide] = std::bind(&Player::WideFire, this);
+	FireMethods_[ArrRefe_Side] = std::bind(&Player::SideFire, this);
 }
 
 
@@ -99,11 +123,17 @@ void Player::Update() {
 	/// 弾を打つ処理
 	/// -----------------------------------------------------------------
 	if(move_ != Vec3(0, 0, 0)) {
-		leftShootCT_ = std::min(leftShootCT_ - (1.0f * WorldTime::GetAttenuation()), kShootCT_);
-		if(leftShootCT_ <= 0.0f) {
-			leftShootCT_ = kShootCT_;
-			Fire();
+
+		/// cool timeの減衰
+		for(int i = 0; i < ArrRefe_Count; ++i) {
+			leftShootCTs_[i] = std::max(leftShootCTs_[i] - WorldTime::FrameTime(), 0.0f);
+
+			if(leftShootCTs_[i] <= 0.0f) {
+				FireMethods_[i]();
+			}
+
 		}
+
 	}
 
 
@@ -152,7 +182,7 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 	if(collision->GetName().find("Enemy") != std::string::npos) {
 
 		GameManagerObject* object = dynamic_cast<GameManagerObject*>(
-				GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
+			GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
 
 		object->SetIsGameOver(true);
 
@@ -171,9 +201,102 @@ void Player::OnCollisionExit([[maybe_unused]] BaseGameObject* collision) {
 }
 
 
-void Player::Fire() {
+PlayerBullet* Player::Fire() {
 	PlayerBullet* newBullet(new PlayerBullet);
 	newBullet->Initialize();
 	newBullet->SetPos(GetPosition());
 	bullets_.push_back(newBullet);
+
+	return newBullet;
+}
+
+
+
+/// ===================================================
+/// 通常弾の発射
+/// ===================================================
+void Player::NormalFire() {
+	Fire();
+
+	leftShootCTs_[ArrRefe_Normal] = shootCTs_[ArrRefe_Normal];
+
+}
+
+
+/// ===================================================
+/// 前方に二発発射
+/// ===================================================
+void Player::TwinFire() {
+
+	const float kDistance = 1.0f; /// 中心からの距離
+
+	for(int i = 0; i < 2; ++i) {
+		PlayerBullet* bullet = Fire();
+
+		Vec3 position = GetPosition();
+		position.x += i ? kDistance : -kDistance;
+
+		bullet->SetPos(position);
+		bullet->SetColor({ 1.0f, 0.0f, 0.0f, 1.0f });
+		bullet->SetSpeed(15.0f);
+
+	}
+
+
+	leftShootCTs_[ArrRefe_Twin] = shootCTs_[ArrRefe_Twin];
+
+}
+
+
+/// ===================================================
+/// 斜め前に二発発射
+/// ===================================================
+void Player::WideFire() {
+
+	for(int i = 0; i < 2; ++i) {
+		PlayerBullet* bullet = Fire();
+
+		Vec3 position = GetPosition();
+
+		bullet->SetPos(position);
+		bullet->SetColor({ 1.0f, 0.0f, 0.0f, 1.0f });
+
+		float theta = 30.0f * std::numbers::pi_v<float> / 180.0f;
+		Mat4 matRotate = MakeRotateY(i ? theta : -theta);
+		bullet->SetMove(Transform({0,0,1}, matRotate));
+
+		/// 向きの計算
+		bullet->SetRotateY(i ? theta : -theta);
+
+	}
+
+	leftShootCTs_[ArrRefe_Wide] = shootCTs_[ArrRefe_Wide];
+}
+
+
+/// ===================================================
+/// 左右に一発ずつ発射
+/// ===================================================
+void Player::SideFire() {
+
+	for(int i = 0; i < 2; ++i) {
+		PlayerBullet* bullet = Fire();
+
+		Vec3 position = GetPosition();
+
+		bullet->SetPos(position);
+		bullet->SetColor({ 1.0f, 0.0f, 0.0f, 1.0f });
+
+		float theta = std::numbers::pi_v<float> / 2.0f;
+		Mat4 matRotate = MakeRotateY(i ? theta : -theta);
+		bullet->SetMove(Transform({ 0,0,1 }, matRotate));
+
+		/// 向きの計算
+		bullet->SetRotateY(i ? theta : -theta);
+
+	}
+
+
+	leftShootCTs_[ArrRefe_Side] = shootCTs_[ArrRefe_Side];
+
 }
