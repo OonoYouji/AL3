@@ -2,8 +2,10 @@
 
 #include <cmath>
 #include <cassert>
+#include <numbers>
 
 #include <DirectXMath.h>
+#include <Vec3Math.h>
 
 using namespace DirectX;
 
@@ -99,15 +101,36 @@ Mat4 MakeRotate(const Vec3& rotate, RotateOrder rotateOrder) {
 }
 
 Mat4 MakeRotate(const Vec3& axis, float theta) {
-	XMVECTOR vector = XMVectorSet(axis.x, axis.y, axis.z, 1.0f);
-	XMMATRIX rotationMatrix = XMMatrixRotationAxis(vector, theta);
-	return ConvertXMMATRIXToMatrix4x4(rotationMatrix);
+	Matrix4x4 result = MakeIdentity();
+
+	float cosAngle = cos(theta);
+	float sinAngle = sin(theta);
+	float oneMinusCos = 1.0f - cosAngle;
+
+	result.m[0][0] = cosAngle + axis.x * axis.x * oneMinusCos;
+	result.m[0][1] = axis.x * axis.y * oneMinusCos - axis.z * sinAngle;
+	result.m[0][2] = axis.x * axis.z * oneMinusCos + axis.y * sinAngle;
+
+	result.m[1][0] = axis.y * axis.x * oneMinusCos + axis.z * sinAngle;
+	result.m[1][1] = cosAngle + axis.y * axis.y * oneMinusCos;
+	result.m[1][2] = axis.y * axis.z * oneMinusCos - axis.x * sinAngle;
+
+	result.m[2][0] = axis.z * axis.x * oneMinusCos - axis.y * sinAngle;
+	result.m[2][1] = axis.z * axis.y * oneMinusCos + axis.x * sinAngle;
+	result.m[2][2] = cosAngle + axis.z * axis.z * oneMinusCos;
+
+	// 3行目と4行目は回転行列のため固定
+	result.m[0][3] = result.m[1][3] = result.m[2][3] = 0.0f;
+	result.m[3][0] = result.m[3][1] = result.m[3][2] = 0.0f;
+	result.m[3][3] = 1.0f;
+
+	return result;
 }
 
-Vec3 ExtractEuler(const Mat4& m) {
+Vec3 ExtractEuler(const Mat4& matrix) {
 	Vector3 euler{};
 
-	float R11 = m.m[0][0];
+	/*float R11 = m.m[0][0];
 	float R21 = m.m[1][0];
 	float R31 = m.m[2][0];
 	float R32 = m.m[2][1];
@@ -115,9 +138,24 @@ Vec3 ExtractEuler(const Mat4& m) {
 
 	euler.x = std::atan2(R32, R33);
 	euler.y = std::atan2(-R31, std::sqrt(R32 * R32 + R33 * R33));
-	euler.z = std::atan2(R21, R11);
+	euler.z = std::atan2(R21, R11);*/
 
+	euler.x = atan2(matrix.m[2][1], matrix.m[2][2]);
+	euler.y = atan2(-matrix.m[2][0], sqrt(matrix.m[2][1] * matrix.m[2][1] + matrix.m[2][2] * matrix.m[2][2]));
+	euler.z = atan2(matrix.m[1][0], matrix.m[0][0]);
 	return euler;
+}
+
+Mat4 LockAt(const Vec3& forward, const Vec3& up) {
+	Vec3 fNorm = forward.Norm();
+	Vec3 right = Cross(up, fNorm).Norm();
+	Vec3 newUp = Cross(fNorm, right);
+	return {
+		right.x, newUp.x, -fNorm.x, 0.0f,
+		right.y, newUp.y, -fNorm.y, 0.0f,
+		right.z, newUp.z, -fNorm.z, 0.0f,
+		0.0f,	 0.0f,	  0.0f,	   1.0f
+	};
 }
 
 Mat4 MakeTranslate(const Vec3& translate) {

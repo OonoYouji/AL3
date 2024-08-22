@@ -48,7 +48,10 @@ void Scene_Game::Initialize() {
 	(new GameManagerObject())->Initialize();
 	(new Ground())->Initialize();
 	(new StartLine())->Initialize();
-	//(new ParticleSystem)->Initialize();
+	ParticleSystem* particle = new ParticleSystem();
+	particle->Initialize();
+	particle->SetThisLifeTime(600);
+	particle->SetCreateParticleCount(2);
 
 
 	/// 左右の移動制限ゾーンの描画用

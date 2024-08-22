@@ -80,6 +80,12 @@ public:
 		particleLifeTime_ = lifeTime;
 	}
 
+	/// <summary>
+	/// モデルのセット
+	/// </summary>
+	/// <param name="modelName"></param>
+	void SetModel(const std::string& modelName);
+
 private:
 	
 	/// ===================================================
@@ -104,15 +110,14 @@ private:
 
 	std::list<std::unique_ptr<Particle>> particles_;
 
-	float spawnCT_ = 0.1f;
+	float spawnCT_ = 0.1f; /// 単位は秒
 	float spawnTime_ = spawnCT_;
 	int createParticleCount_ = 1; /// 一回に作成するパーティクルの量
 
 	float particleLifeTime_ = 1.0f; /// パーティクルのライフタイム
 
-	float speed_ = 10.0f;
-
 	Vec3 direction_;
+	float speed_ = 10.0f;
 	float angle_ = 90.0f;
 
 	bool isActiveAttenuation_; /// WorldTimeのAttenuationを適用されるのか

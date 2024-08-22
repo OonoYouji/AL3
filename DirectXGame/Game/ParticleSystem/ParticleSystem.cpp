@@ -105,6 +105,12 @@ void ParticleSystem::Draw() {
 
 
 
+void ParticleSystem::SetModel(const std::string& modelName) {
+	model_ = ModelManager::GetModel(modelName);
+}
+
+
+
 void ParticleSystem::CreateParticle() {
 
 	std::unique_ptr<Particle> newParticle(new Particle());
@@ -115,15 +121,14 @@ void ParticleSystem::CreateParticle() {
 	/// --------------------------------------------------
 	newParticle->worldTransform.Initialize();
 	newParticle->worldTransform.translation_ = GetPosition();
-	newParticle->worldTransform.UpdateMatrix();
 
 
 	/// --------------------------------------------------
 	/// velocityの計算
 	/// --------------------------------------------------
-	Vec3 cross = Cross({ 0, 1, 0 }, direction_.Norm());
-	cross *= std::numbers::pi_v<float> / 2.0f;
-	Mat4 matRotate = MakeRotate(cross);
+	Vec3 rotate = Cross({ 0, 1, 0 }, direction_.Norm());
+	rotate *= std::numbers::pi_v<float> *0.5f;
+	Mat4 matRotate = MakeRotate(rotate);
 
 	float convertDegreeToRadian = (std::numbers::pi_v<float> / 180.0f);
 	float theta = Random::Float(0, 2 * std::numbers::pi_v<float>);
@@ -139,10 +144,19 @@ void ParticleSystem::CreateParticle() {
 
 
 	/// --------------------------------------------------
-	/// 
+	/// 姿勢の計算
 	/// --------------------------------------------------
+
+	/*matRotate = LockAt(newParticle->velocity, { 0, 0, 1 });
+	newParticle->worldTransform.rotation_ = ExtractEuler(matRotate);*/
+
+
+
+
+
 	newParticle->lifeTime = particleLifeTime_;
 
+	newParticle->worldTransform.UpdateMatrix(XYZ);
 	particles_.push_back(std::move(newParticle));
 
 }
@@ -159,10 +173,11 @@ void ParticleSystem::UpdateParticle(Particle* particle) {
 
 	particle->worldTransform.translation_ += velocity;
 
-	/*Vec3 cross = Cross({ 0,1,0 }, velocity) * std::numbers::pi_v<float> / 2.0f;
-	particle->worldTransform.rotation_ += cross;*/
+	//Vec3 rotate = Cross({ 0,1,0 }, velocity.Norm());
+	//Mat4 matRotate = MakeRotate(rotate, YXZ);
+	//particle->worldTransform.rotation_ += Transform({ 1,0,0 }, matRotate) * WorldTime::GetDeltaTime();
 
-	particle->worldTransform.UpdateMatrix(YXZ);
+	particle->worldTransform.UpdateMatrix(XYZ);
 
 	/// 制限時間の減少
 	float subTime = WorldTime::GetDeltaTime();
