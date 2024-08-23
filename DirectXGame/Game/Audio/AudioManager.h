@@ -14,6 +14,17 @@
 class AudioManager final {
 	AudioManager() {}
 	~AudioManager() {}
+private:
+
+	/// ============================================
+	/// private : sub class
+	/// ============================================
+
+	struct SoundData {
+		uint32_t handle;
+		std::list<uint32_t> voiceHandles_;
+	};
+
 public:
 
 	/// ============================================
@@ -28,7 +39,38 @@ public:
 	}
 
 
-	static void Load(const std::string& filePath);
+	static void Load(const std::string& key, const std::string& filePath);
+
+	/// <summary>
+	/// 音の再生
+	/// </summary>
+	/// <param name="key">再生する音のkey</param>
+	/// <param name="isLoop">ループすかどうかフラグ</param>
+	/// <param name="volume">再生する音の音量</param>
+	/// <returns>voiceHandle</returns>
+	static uint32_t PlayAudio(const std::string& key, float volume = 1.0f, bool isLoop = false);
+
+
+	/// <summary>
+	/// 音の停止
+	/// </summary>
+	/// <param name="voiceHandle">止める音のvoiceHandle</param>
+	static void StopAudio(uint32_t voiceHandle);
+
+
+	/// <summary>
+	/// 音の一時停止
+	/// </summary>
+	/// <param name="voiceHandle">止める音のvoiceHandle</param>
+	static void PauseAudio(uint32_t voiceHandle);
+
+
+	/// <summary>
+	/// keyの音をすべて停止する
+	/// </summary>
+	/// <param name="key">止める音のkey</param>
+	static void StopAudioAll(const std::string& key);
+
 
 public:
 
@@ -63,7 +105,9 @@ private:
 
 	Audio* audio_ = nullptr;
 
-	std::unordered_map<std::string, uint32_t> soundDataHandles_;
+	std::unordered_map<std::string, SoundData> soundDatas_;
+
+	float masterVolume_ = 0.5f;
 
 private:
 	/// ============================================

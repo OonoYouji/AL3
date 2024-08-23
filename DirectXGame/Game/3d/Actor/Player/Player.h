@@ -9,7 +9,6 @@
 #include <BaseGameObject.h>
 #include <Model.h>
 #include <ObjectColor.h>
-#include <Audio.h>
 
 class Input;
 class PlayerBullet;
@@ -94,8 +93,5 @@ private:
 	std::array<float, ArrRefe_Count> shootCTs_; /// 弾の種類ごとにクールタイム(最大数)
 
 	std::function<void()> FireMethods_[ArrRefe_Count];
-
-	Audio* audio_ = nullptr;
-	int soundDataHandle_ = 0;
 
 };

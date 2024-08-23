@@ -12,6 +12,7 @@
 #include <GameObjectManager.h>
 #include <CollisionManager.h>
 #include <ModelManager.h>
+#include <AudioManager.h>
 
 #include <CreateName.h>
 #include <Mat4Math.h>
@@ -87,9 +88,6 @@ void Player::Initialize() {
 	/// Audio関係の初期化
 	/// ------------------------------------------------------
 
-	audio_ = Audio::GetInstance();
-	soundDataHandle_ = audio_->LoadWave("fanfare.wav");
-	audio_->PlayWave(soundDataHandle_);
 
 }
 
