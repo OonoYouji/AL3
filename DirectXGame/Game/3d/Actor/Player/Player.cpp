@@ -56,7 +56,9 @@ void Player::Initialize() {
 
 	CreateBoxCollider(model_);
 
-
+	/// ------------------------------------------------------
+	/// Bullet関係の初期化
+	/// ------------------------------------------------------
 	/// 0ですべて初期化
 	for(auto& fireNum : fireNums_) {
 		fireNum = 0;
@@ -79,6 +81,16 @@ void Player::Initialize() {
 	FireMethods_[ArrRefe_Twin] = std::bind(&Player::TwinFire, this);
 	FireMethods_[ArrRefe_Wide] = std::bind(&Player::WideFire, this);
 	FireMethods_[ArrRefe_Side] = std::bind(&Player::SideFire, this);
+
+
+	/// ------------------------------------------------------
+	/// Audio関係の初期化
+	/// ------------------------------------------------------
+
+	audio_ = Audio::GetInstance();
+	soundDataHandle_ = audio_->LoadWave("fanfare.wav");
+	audio_->PlayWave(soundDataHandle_);
+
 }
 
 

@@ -100,6 +100,9 @@
     <Filter Include="Game\ParticleSystem">
       <UniqueIdentifier>{237845e2-d8ff-402b-8647-cf89a50a3965}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Audio">
+      <UniqueIdentifier>{4ae1efb5-3a49-4994-ae5d-9f3b914eb805}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -224,6 +227,9 @@
     </ClCompile>
     <ClCompile Include="Game\3d\Object\BulletItem.cpp">
       <Filter>Game\3d\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Audio\AudioManager.cpp">
+      <Filter>Game\Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -418,6 +424,9 @@
     </ClInclude>
     <ClInclude Include="Game\3d\Object\BulletItem.h">
       <Filter>Game\3d\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Audio\AudioManager.h">
+      <Filter>Game\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

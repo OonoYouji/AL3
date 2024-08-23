@@ -9,6 +9,7 @@
 #include <BaseGameObject.h>
 #include <Model.h>
 #include <ObjectColor.h>
+#include <Audio.h>
 
 class Input;
 class PlayerBullet;
@@ -16,18 +17,8 @@ class PlayerBullet;
 /// ============================================
 /// プレイヤーの弾の種類のenum
 /// ============================================
-enum ShootOrder {
-	kNormal = 1 << 0, /// 前方に一発
-	kTwin   = 1 << 1, /// 前方に二発同時
-	kWide   = 1 << 2, /// 斜め45度に一発ずつ
-	kSide   = 1 << 3, /// 真横に一発ずつ
-};
-
-/// ============================================
-/// 上記のenumと同じもの、配列の参照用
-/// ============================================
 enum ArrRefe {
-	ArrRefe_Normal, /// 前方に一発
+	ArrRefe_Normal,  /// 前方に一発
 	ArrRefe_Twin,	 /// 前方に二発同時
 	ArrRefe_Wide,	 /// 斜め45度に一発ずつ
 	ArrRefe_Side,	 /// 真横に一発ずつ
@@ -103,5 +94,8 @@ private:
 	std::array<float, ArrRefe_Count> shootCTs_; /// 弾の種類ごとにクールタイム(最大数)
 
 	std::function<void()> FireMethods_[ArrRefe_Count];
+
+	Audio* audio_ = nullptr;
+	int soundDataHandle_ = 0;
 
 };

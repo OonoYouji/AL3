@@ -11,6 +11,7 @@
 #include <GameObjectManager.h>
 #include <ModelManager.h>
 #include "MainCamera.h"
+#include <AudioManager.h>
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -22,6 +23,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	AxisIndicator* axisIndicator = nullptr;
 	PrimitiveDrawer* primitiveDrawer = nullptr;
 	ModelManager* modelManager = nullptr;
+	AudioManager* audioManager = nullptr;
 
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
@@ -43,6 +45,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// オーディオの初期化
 	audio = Audio::GetInstance();
 	audio->Initialize();
+
+	audioManager = AudioManager::GetInstance();
+	audioManager->Initialize();
 
 	// テクスチャマネージャの初期化
 	TextureManager::GetInstance()->Initialize(dxCommon->GetDevice());
@@ -82,6 +87,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		imguiManager->Begin();
 		// 入力関連の毎フレーム処理
 		input->Update();
+
+		if(input->TriggerKey(DIK_F11)) {
+			win->SetFullscreen(!win->IsFullscreen());
+		}
+
 		// ゲームシーンの毎フレーム処理
 		mainCamra->Update();
 		sceneManager->Update();
@@ -106,6 +116,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 
 
+	audioManager->Finalize();
 	modelManager->Finalize();
 	GameObjectManager::GetInstance()->Finalize();
 	sceneManager->Finalize();

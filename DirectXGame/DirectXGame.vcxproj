@@ -63,7 +63,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Game/ParticleSystem;$(ProjectDir)Game/Random;$(ProjectDir)Game/Time;$(ProjectDir)Game/Scene;$(ProjectDir)Game/Math;$(ProjectDir)Game/Collision;$(ProjectDir)Game/3d/ModelManager;$(ProjectDir)Game/3d/GameObject;$(ProjectDir)Game/3d/Camera;$(ProjectDir)Game/3d/Actor/Enemy/State;$(ProjectDir)Game/3d/Actor/Enemy;$(ProjectDir)Game/3d/Actor/Player;$(ProjectDir)Game/3d/Actor;$(ProjectDir)Game/3d/Object;$(ProjectDir)Game/3d;$(ProjectDir)Game;$(ProjectDir);$(ProjectDir)2d;$(ProjectDir)3d;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)input;$(ProjectDir)scene;$(ProjectDir)math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Game/Audio;$(ProjectDir)Game/ParticleSystem;$(ProjectDir)Game/Random;$(ProjectDir)Game/Time;$(ProjectDir)Game/Scene;$(ProjectDir)Game/Math;$(ProjectDir)Game/Collision;$(ProjectDir)Game/3d/ModelManager;$(ProjectDir)Game/3d/GameObject;$(ProjectDir)Game/3d/Camera;$(ProjectDir)Game/3d/Actor/Enemy/State;$(ProjectDir)Game/3d/Actor/Enemy;$(ProjectDir)Game/3d/Actor/Player;$(ProjectDir)Game/3d/Actor;$(ProjectDir)Game/3d/Object;$(ProjectDir)Game/3d;$(ProjectDir)Game;$(ProjectDir);$(ProjectDir)2d;$(ProjectDir)3d;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)input;$(ProjectDir)scene;$(ProjectDir)math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -131,6 +131,7 @@
     <ClCompile Include="Game\3d\Object\GameManagerObject.cpp" />
     <ClCompile Include="Game\3d\Object\Ground.cpp" />
     <ClCompile Include="Game\3d\Object\StartLine.cpp" />
+    <ClCompile Include="Game\Audio\AudioManager.cpp" />
     <ClCompile Include="Game\Collision\BaseCollider.cpp" />
     <ClCompile Include="Game\Collision\BoxCollider.cpp" />
     <ClCompile Include="Game\Collision\CollisionManager.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="Game\3d\Object\GameManagerObject.h" />
     <ClInclude Include="Game\3d\Object\Ground.h" />
     <ClInclude Include="Game\3d\Object\StartLine.h" />
+    <ClInclude Include="Game\Audio\AudioManager.h" />
     <ClInclude Include="Game\Collision\BaseCollider.h" />
     <ClInclude Include="Game\Collision\BoxCollider.h" />
     <ClInclude Include="Game\Collision\CollisionManager.h" />
