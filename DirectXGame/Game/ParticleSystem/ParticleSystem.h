@@ -81,6 +81,14 @@ public:
 	}
 
 	/// <summary>
+	/// パーティクルの出現頻度のセット
+	/// </summary>
+	/// <param name="spawnCT"></param>
+	void SetSpawnCT(float spawnCT) {
+		spawnCT_ = spawnCT;
+	}
+
+	/// <summary>
 	/// モデルのセット
 	/// </summary>
 	/// <param name="modelName"></param>

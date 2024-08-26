@@ -71,6 +71,9 @@ void ParticleSystem::Update() {
 		if(particle->lifeTime <= 0.0f) {
 			return true;
 		}
+		if(particle->worldTransform.scale_ == Vec3(0.0f, 0.0f, 0.0f)) {
+			return true;
+		}
 		return false;
 	});
 
@@ -172,10 +175,7 @@ void ParticleSystem::UpdateParticle(Particle* particle) {
 	}
 
 	particle->worldTransform.translation_ += velocity;
-
-	//Vec3 rotate = Cross({ 0,1,0 }, velocity.Norm());
-	//Mat4 matRotate = MakeRotate(rotate, YXZ);
-	//particle->worldTransform.rotation_ += Transform({ 1,0,0 }, matRotate) * WorldTime::GetDeltaTime();
+	particle->worldTransform.scale_ = Lerp({0,0,0}, { 1,1,1 }, particle->lifeTime / particleLifeTime_);
 
 	particle->worldTransform.UpdateMatrix(XYZ);
 

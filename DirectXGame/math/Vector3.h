@@ -24,6 +24,7 @@ struct Vector3 final {
 	Vector3& operator*= (float value);
 
 	bool operator!= (const Vector3& other);
+	bool operator== (const Vector3& other);
 
 };
 
@@ -127,4 +128,10 @@ inline bool Vector3::operator!=(const Vector3& other) {
 	return this->x != other.x
 		|| this->y != other.y
 		|| this->z != other.z;
+}
+
+inline bool Vector3::operator==(const Vector3& other) {
+	return this->x == other.x
+		&& this->y == other.y
+		&& this->z == other.z;
 }

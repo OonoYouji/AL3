@@ -105,8 +105,10 @@ void Enemy::LastUpdate() {
 		/// パーティクルの生成
 		ParticleSystem* particle = new ParticleSystem();
 		particle->Initialize();
+		particle->SetThisLifeTime(0.5f);
 		particle->SetPos(GetPosition());
 		particle->SetCreateParticleCount(3);
+		particle->SetSpawnCT(0.02f);
 		particle->SetIsActiveAttenuation(true);
 
 		/// アイテムの生成

@@ -74,3 +74,11 @@ Vec3 MaxDot(const Vec3& direction, const std::vector<Vec3>& vertices) {
 
 	return maxVertex;
 }
+
+Vec3 MaxVec3(const Vec3& left, const Vec3& right) {
+	return Vec3(
+		std::max(left.x, right.x),
+		std::max(left.y, right.y),
+		std::max(left.z, right.z)
+	);
+}

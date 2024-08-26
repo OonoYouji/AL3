@@ -50,3 +50,5 @@ Vec3 Cross(const Vec3& v1, const Vec3& v2);
 
 
 Vec3 MaxDot(const Vec3& direction, const std::vector<Vec3>& vertices);
+
+Vec3 MaxVec3(const Vec3& left, const Vec3& right);
