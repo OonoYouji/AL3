@@ -22,6 +22,7 @@
 #include <PlayerBullet.h>
 #include <GameManagerObject.h>
 #include <BulletItem.h>
+#include <DeadZone.h>
 
 
 Player::Player() {
@@ -209,7 +210,21 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 
 		AudioManager::PlayAudio("ItemGet", 0.5f);
 
+		return;
 	}
+
+
+	DeadZone* deadZone = dynamic_cast<DeadZone*>(collision);
+	if(deadZone) {
+
+		GameManagerObject* object = dynamic_cast<GameManagerObject*>(
+			GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
+
+		object->SetIsGameOver(true);
+
+		return;
+	}
+
 
 }
 

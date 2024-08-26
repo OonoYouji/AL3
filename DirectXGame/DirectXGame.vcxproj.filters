@@ -231,6 +231,9 @@
     <ClCompile Include="Game\Audio\AudioManager.cpp">
       <Filter>Game\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="Game\3d\Object\DeadZone.cpp">
+      <Filter>Game\3d\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -427,6 +430,9 @@
     </ClInclude>
     <ClInclude Include="Game\Audio\AudioManager.h">
       <Filter>Game\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Object\DeadZone.h">
+      <Filter>Game\3d\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -8,7 +8,7 @@
 
 #include <WorldTransform.h>
 #include <BaseCollider.h>
-
+#include <Model.h>
 
 /// <summary>
 /// すべてのゲームオブジェクトの基本となるクラス

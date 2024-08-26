@@ -15,6 +15,9 @@ void ModelManager::Initialize() {
 
 	Load("startLine", "startLine");
 
+	Load("deadZone", "deadZone");
+	Load("deadZoneHitBox", "deadZoneHitBox");
+
 }
 
 void ModelManager::Finalize() {

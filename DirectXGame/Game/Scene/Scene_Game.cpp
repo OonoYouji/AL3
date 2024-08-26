@@ -19,7 +19,7 @@
 #include <Ground.h>
 #include <StartLine.h>
 #include <GameManagerObject.h>
-#include <ParticleSystem.h>
+#include <DeadZone.h>
 
 
 Scene_Game::Scene_Game() {}
@@ -47,14 +47,10 @@ void Scene_Game::Initialize() {
 
 
 	(new GameManagerObject())->Initialize();
-	(new Ground())->Initialize();
 	(new StartLine())->Initialize();
-	/*ParticleSystem* particle = new ParticleSystem();
-	particle->Initialize();
-	particle->SetThisLifeTime(600);
-	particle->SetCreateParticleCount(2);*/
 
 
+	(new Ground())->Initialize();
 	/// 左右の移動制限ゾーンの描画用
 	for(uint32_t i = 0; i < 2; ++i) {
 		Ground* ground = new Ground();
@@ -69,7 +65,7 @@ void Scene_Game::Initialize() {
 		ground->SetColor({ 0.5f, 0.5f, 0.5f, 1 });
 	}
 
-
+	(new DeadZone())->Initialize();
 
 	EnemyManager::GetInstance()->Initialize();
 

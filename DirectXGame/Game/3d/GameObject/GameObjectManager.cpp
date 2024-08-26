@@ -114,6 +114,7 @@ BaseGameObject* GameObjectManager::GetGameObject(const std::string& name) {
 
 void GameObjectManager::DestoryAll() {
 	objects_.clear();
+	selectObject_ = nullptr;
 }
 
 
