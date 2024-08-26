@@ -4,6 +4,8 @@
 #include <GameObjectManager.h>
 #include <MainCamera.h>
 #include <GameManagerObject.h>
+#include <AudioManager.h>
+
 
 
 /// ===================================================
@@ -54,23 +56,6 @@ void StartLine::Draw() {
 	if(model_) {
 		model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection());
 	}
-}
-
-
-
-/// ===================================================
-/// 衝突した瞬間の処理
-/// ===================================================
-void StartLine::OnCollisionEnter(BaseGameObject* collision) {
-
-	if(collision->GetName() == "Player") {
-
-		GameManagerObject* obj = dynamic_cast<GameManagerObject*>(gameManagerObject_);
-		if(obj) {
-			obj->SetIsGameStart(true);
-		}
-	}
-
 }
 
 

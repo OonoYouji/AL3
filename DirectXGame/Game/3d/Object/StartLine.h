@@ -38,11 +38,6 @@ public:
 	void Draw() override;
 
 
-
-	void OnCollisionEnter(BaseGameObject* collision) override;
-
-
-
 public:
 
 	/// ===================================================

@@ -23,6 +23,7 @@
 #include <GameManagerObject.h>
 #include <BulletItem.h>
 #include <DeadZone.h>
+#include <StartLine.h>
 
 
 Player::Player() {
@@ -182,14 +183,12 @@ void Player::LastUpdate() {
 
 void Player::Draw() {
 	model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection(), &color_);
-
-
 }
 
 void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
-	color_.SetColor(Vector4(0, 0, 0, 1));
-	color_.TransferMatrix();
 
+
+	/// 敵に衝突したときの処理
 	if(collision->GetName().find("Enemy") != std::string::npos) {
 
 		GameManagerObject* object = dynamic_cast<GameManagerObject*>(
@@ -200,6 +199,7 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 		return;
 	}
 
+	/// 弾の種類を増やすアイテムと衝突したときの処理
 	BulletItem* item = dynamic_cast<BulletItem*>(collision);
 	if(item) {
 
@@ -214,6 +214,7 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 	}
 
 
+	/// デッドゾーンに衝突したときの処理
 	DeadZone* deadZone = dynamic_cast<DeadZone*>(collision);
 	if(deadZone) {
 
@@ -226,17 +227,27 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 	}
 
 
+	/// スタートラインに衝突したときの処理
+	StartLine* startLine = dynamic_cast<StartLine*>(collision);
+	if(startLine) {
+
+		GameManagerObject* object = dynamic_cast<GameManagerObject*>(
+			GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
+
+
+		if(!object->GetIsGameStart()) {
+
+			object->SetIsGameStart(true);
+			AudioManager::PlayAudio("Start", 0.2f);
+
+		}
+
+		return;
+	}
+
+
 }
 
-void Player::OnCollisionStay([[maybe_unused]] BaseGameObject* collision) {
-	color_.SetColor(Vector4(1, 0, 0, 1));
-	color_.TransferMatrix();
-}
-
-void Player::OnCollisionExit([[maybe_unused]] BaseGameObject* collision) {
-	color_.SetColor(Vector4(1, 1, 1, 1));
-	color_.TransferMatrix();
-}
 
 
 PlayerBullet* Player::Fire() {

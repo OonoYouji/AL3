@@ -44,8 +44,6 @@ public:
 	void Draw() override;
 
 	void OnCollisionEnter(BaseGameObject* collision) override;
-	void OnCollisionStay(BaseGameObject* collision) override;
-	void OnCollisionExit(BaseGameObject* collision) override;
 
 private:
 
