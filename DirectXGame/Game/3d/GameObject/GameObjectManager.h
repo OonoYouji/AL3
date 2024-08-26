@@ -73,6 +73,11 @@ public:
 
 	BaseGameObject* GetGameObject(const std::string& name);
 
+	/// <summary>
+	/// すべてのオブジェクトを消去する
+	/// </summary>
+	void DestoryAll();
+
 
 #pragma region ImGui
 	/// <summary>

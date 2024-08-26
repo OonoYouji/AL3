@@ -100,7 +100,7 @@ void GameObjectManager::Destory(BaseGameObject* object) {
 /// ===================================================
 BaseGameObject* GameObjectManager::GetGameObject(const std::string& name) {
 	BaseGameObject* result = nullptr;
-	auto itr = std::find_if(objects_.begin(), objects_.end(), [&name, &result](std::unique_ptr<BaseGameObject>&object) {
+	auto itr = std::find_if(objects_.begin(), objects_.end(), [&name, &result](std::unique_ptr<BaseGameObject>& object) {
 		if(object->GetName() == name) {
 			result = object.get();
 			return true;
@@ -110,6 +110,10 @@ BaseGameObject* GameObjectManager::GetGameObject(const std::string& name) {
 	});
 
 	return result;
+}
+
+void GameObjectManager::DestoryAll() {
+	objects_.clear();
 }
 
 

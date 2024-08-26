@@ -1,6 +1,8 @@
 #include <GameManagerObject.h>
 
-
+#include <Input.h>
+#include <SceneManager.h>
+#include <Scene_Game.h>
 
 /// ===================================================
 /// コンストラクタ
@@ -26,6 +28,15 @@ void GameManagerObject::Initialize() {
 /// 更新
 /// ===================================================
 void GameManagerObject::Update() {
+
+	if(isGameOver_) {
+
+		if(Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+			SceneManager::GetInstance()->Load(new Scene_Game());
+		}
+
+	}
+
 
 }
 

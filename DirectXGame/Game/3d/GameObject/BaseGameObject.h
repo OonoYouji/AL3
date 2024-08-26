@@ -168,7 +168,7 @@ protected:
 
 	WorldTransform worldTransform_;
 
-	BaseGameObject* parent_;
+	BaseGameObject* parent_ = nullptr;
 	std::list<BaseGameObject*> childs_;
 
 	std::unordered_map<std::string, Group> groups_;

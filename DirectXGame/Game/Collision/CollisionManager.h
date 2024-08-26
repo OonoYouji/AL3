@@ -31,6 +31,8 @@ public:
 
 	void ImGuiDebug();
 
+	void Reset();
+
 private:
 
 	using CollidedPair = std::pair<BaseGameObject*, BaseGameObject*>;

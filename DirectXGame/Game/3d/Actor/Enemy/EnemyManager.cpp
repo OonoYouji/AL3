@@ -9,6 +9,7 @@
 #include <ModelManager.h>
 #include <GameObjectManager.h>
 #include <GameManagerObject.h>
+#include <AudioManager.h>
 
 #include <EnemyStateDown.h>
 #include <EnemyStateLeft.h>
@@ -25,6 +26,7 @@ using json = nlohmann::json;
 /// ===================================================
 void EnemyManager::Initialize() {
 	models_.push_back(ModelManager::GetModel("enemy"));
+	emitters_.clear();
 
 	moveStates_.resize(Enemy::kCount);
 	moveStates_[Enemy::kDown].reset(new EnemyState::Down);

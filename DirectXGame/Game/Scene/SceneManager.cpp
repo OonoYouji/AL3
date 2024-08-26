@@ -1,7 +1,8 @@
 #include "SceneManager.h"
 
 #include "Scene_Game.h"
-
+#include <GameObjectManager.h>
+#include <CollisionManager.h>
 
 /// ===================================================
 /// インスタンス確保
@@ -16,13 +17,13 @@ SceneManager* SceneManager::GetInstance() {
 /// 初期化
 /// ===================================================
 void SceneManager::Initialize() {
-	scene_.reset(new Scene_Game());
-	scene_->Initialize();
+	currentScene_.reset(new Scene_Game());
+	currentScene_->Initialize();
 	
 }
 
 void SceneManager::Finalize() {
-	scene_.reset();
+	currentScene_.reset();
 }
 
 
@@ -30,8 +31,17 @@ void SceneManager::Finalize() {
 /// 更新
 /// ===================================================
 void SceneManager::Update() {
-	if(scene_) {
-		scene_->Update();
+
+	if(nextScene_.get()) {
+		currentScene_ = std::move(nextScene_);
+		nextScene_.reset(nullptr);
+		GameObjectManager::GetInstance()->DestoryAll();
+		CollisionManager::GetInstance()->Reset();
+		currentScene_->Initialize();
+	}
+
+	if(currentScene_) {
+		currentScene_->Update();
 	}
 }
 
@@ -40,8 +50,8 @@ void SceneManager::Update() {
 /// 描画
 /// ===================================================
 void SceneManager::Draw() {
-	if(scene_) {
-		scene_->Draw();
+	if(currentScene_) {
+		currentScene_->Draw();
 	}
 }
 
@@ -50,8 +60,7 @@ void SceneManager::Draw() {
 /// シーンのロード
 /// ===================================================
 void SceneManager::Load(BaseScene* next) {
-	scene_.reset(next);
-	scene_->Initialize();
+	nextScene_.reset(next);
 }
 
 
@@ -59,5 +68,5 @@ void SceneManager::Load(BaseScene* next) {
 /// シーンのゲット
 /// ===================================================
 BaseScene* SceneManager::GetScene() const {
-	return scene_.get();
+	return currentScene_.get();
 }

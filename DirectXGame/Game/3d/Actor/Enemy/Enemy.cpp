@@ -1,16 +1,15 @@
 #define NOMINMAX
 #include <Enemy.h>
 
-#include <Model.h>
-
 #include <EnemyManager.h>
-#include <MainCamera.h>
+#include <AudioManager.h>
 #include <GameObjectManager.h>
 #include <CollisionManager.h>
 #include <ModelManager.h>
+
+#include <MainCamera.h>
 #include <ParticleSystem.h>
 #include <BulletItem.h>
-
 #include <WorldTime.h>
 
 
@@ -116,6 +115,8 @@ void Enemy::LastUpdate() {
 			item->Initialize();
 			item->SetPos(GetPosition());
 		}
+
+		AudioManager::PlayAudio("EnemyDead", 0.2f);
 
 	}
 

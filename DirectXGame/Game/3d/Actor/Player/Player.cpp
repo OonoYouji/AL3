@@ -83,12 +83,6 @@ void Player::Initialize() {
 	FireMethods_[ArrRefe_Wide] = std::bind(&Player::WideFire, this);
 	FireMethods_[ArrRefe_Side] = std::bind(&Player::SideFire, this);
 
-
-	/// ------------------------------------------------------
-	/// Audio関係の初期化
-	/// ------------------------------------------------------
-
-
 }
 
 
@@ -145,6 +139,7 @@ void Player::Update() {
 
 			if(leftShootCTs_[i] <= 0.0f) {
 				FireMethods_[i]();
+				AudioManager::PlayAudio("fire", 0.1f);
 			}
 
 		}
@@ -211,6 +206,8 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 
 		int arrRefe = Random::Int(2, ArrRefe_Count) - 1;
 		fireNums_[arrRefe] = std::min(fireNums_[arrRefe] + 1, 5);
+
+		AudioManager::PlayAudio("ItemGet", 0.5f);
 
 	}
 

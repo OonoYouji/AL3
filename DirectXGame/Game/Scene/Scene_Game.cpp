@@ -11,6 +11,7 @@
 #include <MainCamera.h>
 #include <MyDebugCamera.h>
 #include <CollisionManager.h>
+#include <AudioManager.h>
 
 #include <Player.h>
 #include <Enemy.h>
@@ -71,6 +72,12 @@ void Scene_Game::Initialize() {
 
 
 	EnemyManager::GetInstance()->Initialize();
+
+
+	AudioManager::Load("fire", "Audios/Fire.mp3");
+	AudioManager::Load("EnemyDead", "Audios/EnemyDead.mp3");
+	AudioManager::Load("ItemGet", "Audios/ItemGet.mp3");
+
 
 }
 

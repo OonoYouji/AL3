@@ -176,3 +176,7 @@ void CollisionManager::ImGuiDebug() {
 
 #endif // _DEBUG
 }
+
+void CollisionManager::Reset() {
+	gameObjects_.clear();
+}
