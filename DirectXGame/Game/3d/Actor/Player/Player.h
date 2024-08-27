@@ -92,4 +92,6 @@ private:
 
 	std::function<void()> FireMethods_[ArrRefe_Count];
 
+	bool isAlive_ = true;
+
 };

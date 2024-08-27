@@ -24,6 +24,9 @@
 #include <BulletItem.h>
 #include <DeadZone.h>
 #include <StartLine.h>
+#include <Enemy.h>
+#include <PlayerDeadEffect.h>
+#include <GameCamera.h>
 
 
 Player::Player() {
@@ -90,6 +93,38 @@ void Player::Initialize() {
 
 
 void Player::Update() {
+
+
+	/// -----------------------------------------------------------------
+	/// プレイヤーが死亡したときの処理
+	/// -----------------------------------------------------------------
+	if(!isAlive_) {
+		/// objectsからplayerを削除
+		GameObjectManager::GetInstance()->Destory(this);
+
+		/// effectを作成
+		PlayerDeadEffect* effect = new PlayerDeadEffect;
+		effect->Initialize();
+
+		Vec3 worldPos = GetPosition();
+		worldPos.y += 2.0f;
+		effect->SetPos(worldPos);
+
+		/// effectをcameraのtargetに設定
+		GameCamera* camera = dynamic_cast<GameCamera*>(MainCamera::GetInstance()->GetCamera());
+		if(camera) {
+			camera->SetTarget(effect);
+			camera->SetOffset(Vec3(8.0f, 8.0f, -11.25f * 2.0f));
+			camera->SetRotate(Vec3(
+				0.225f,
+				-0.35f,
+				0.0f
+			));
+		}
+
+		return;
+	}
+
 
 	/// -----------------------------------------------------------------
 	/// 移動処理
@@ -189,12 +224,14 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 
 
 	/// 敵に衝突したときの処理
-	if(collision->GetName().find("Enemy") != std::string::npos) {
+	Enemy* enemy = dynamic_cast<Enemy*>(collision);
+	if(enemy) {
 
 		GameManagerObject* object = dynamic_cast<GameManagerObject*>(
 			GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
 
 		object->SetIsGameOver(true);
+		isAlive_ = false;
 
 		return;
 	}
@@ -222,6 +259,7 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 			GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
 
 		object->SetIsGameOver(true);
+		isAlive_ = false;
 
 		return;
 	}

@@ -25,6 +25,8 @@ public:
 
 	void SetCamera(BaseCamera* camera);
 
+	BaseCamera* GetCamera() const { return camera_; }
+
 	const ViewProjection& GetViewProjection() const;
 
 	void SetShake(float value, float time);

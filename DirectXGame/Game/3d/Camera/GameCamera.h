@@ -14,6 +14,10 @@ public:
 
 	void SetTarget(BaseGameObject* target);
 
+	void SetOffset(const Vec3& offset) {
+		offset_ = offset;
+	}
+
 private:
 
 	BaseGameObject* target_ = nullptr;

@@ -131,6 +131,7 @@
     <ClCompile Include="Game\3d\Object\DeadZone.cpp" />
     <ClCompile Include="Game\3d\Object\GameManagerObject.cpp" />
     <ClCompile Include="Game\3d\Object\Ground.cpp" />
+    <ClCompile Include="Game\3d\Object\PlayerDeadEffect.cpp" />
     <ClCompile Include="Game\3d\Object\StartLine.cpp" />
     <ClCompile Include="Game\Audio\AudioManager.cpp" />
     <ClCompile Include="Game\Collision\BaseCollider.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="Game\3d\Object\DeadZone.h" />
     <ClInclude Include="Game\3d\Object\GameManagerObject.h" />
     <ClInclude Include="Game\3d\Object\Ground.h" />
+    <ClInclude Include="Game\3d\Object\PlayerDeadEffect.h" />
     <ClInclude Include="Game\3d\Object\StartLine.h" />
     <ClInclude Include="Game\Audio\AudioManager.h" />
     <ClInclude Include="Game\Collision\BaseCollider.h" />
