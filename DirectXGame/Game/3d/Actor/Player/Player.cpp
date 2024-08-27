@@ -16,6 +16,7 @@
 
 #include <CreateName.h>
 #include <Mat4Math.h>
+#include <Vec3Math.h>
 #include <Vector2.h>
 #include <Random.h>
 
@@ -27,6 +28,7 @@
 #include <Enemy.h>
 #include <PlayerDeadEffect.h>
 #include <GameCamera.h>
+#include <ParticleSystem.h>
 
 
 Player::Player() {
@@ -98,29 +100,7 @@ void Player::Update() {
 	/// -----------------------------------------------------------------
 	/// プレイヤーが死亡したときの処理
 	/// -----------------------------------------------------------------
-	if(!isAlive_) {
-		/// objectsからplayerを削除
-		GameObjectManager::GetInstance()->Destory(this);
-
-		/// effectを作成
-		PlayerDeadEffect* effect = new PlayerDeadEffect;
-		effect->Initialize();
-
-		Vec3 worldPos = GetPosition();
-		worldPos.y += 2.0f;
-		effect->SetPos(worldPos);
-
-		/// effectをcameraのtargetに設定
-		GameCamera* camera = dynamic_cast<GameCamera*>(MainCamera::GetInstance()->GetCamera());
-		if(camera) {
-			camera->SetTarget(effect);
-			camera->SetOffset(Vec3(8.0f, 8.0f, -11.25f * 2.0f));
-			camera->SetRotate(Vec3(
-				0.225f,
-				-0.35f,
-				0.0f
-			));
-		}
+	if(DeadEffect()) {
 
 		return;
 	}
@@ -233,6 +213,10 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 		object->SetIsGameOver(true);
 		isAlive_ = false;
 
+		DeadZone* deadZone = dynamic_cast<DeadZone*>(
+			GameObjectManager::GetInstance()->GetGameObject("DeadZone"));
+		deadZone->isActive = false;
+
 		return;
 	}
 
@@ -260,6 +244,7 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 
 		object->SetIsGameOver(true);
 		isAlive_ = false;
+		deadZone->isActive = false;
 
 		return;
 	}
@@ -402,4 +387,94 @@ void Player::SideFire() {
 	} else {
 		leftShootCTs_[ArrRefe_Side] = shootCTs_[ArrRefe_Side] / 5.0f;
 	}
+}
+
+bool Player::DeadEffect() {
+	if(isAlive_) {
+		return false;
+	}
+
+
+	if(deadEffect_.lerpT == 1.0f) {
+
+		deadSinceTime_ += WorldTime::GetDeltaTime();
+
+		if(deadSinceTime_ >= 0.2f) {
+			WorldTime::SetAttenuation(0.01f);
+		}
+
+		if(!isEffectTransition_) {
+			isEffectTransition_ = true;
+
+			playerLerpStartPos_ = GetPosition();
+			playerLerpEndPos_ = playerLerpStartPos_;
+			playerLerpEndPos_.x += 20.0f;
+			playerLerpEndPos_.z -= 20.0f;
+			playerLerpEndPos_.y = 3.0f;
+
+
+			/// effectをcameraのtargetに設定
+			GameCamera* camera = dynamic_cast<GameCamera*>(MainCamera::GetInstance()->GetCamera());
+			if(camera) {
+				cameraOffset_ = camera->GetOffset();
+				cameraRotate_ = camera->GetRotate();
+			}
+
+		} else {
+
+			float t = std::min(deadSinceTime_ / 0.2f, 1.0f);
+			Vec3 cameraOffset = Lerp(cameraOffset_, Vec3(0.0f, 3.0f, -17.0f), t);
+			Vec3 cameraRotate = Lerp(cameraRotate_, {}, t);
+
+			Vec3 position = Lerp(playerLerpStartPos_, playerLerpEndPos_, t);
+			SetPos(position);
+			
+			GameCamera* camera = dynamic_cast<GameCamera*>(MainCamera::GetInstance()->GetCamera());
+			camera->SetOffset(cameraOffset);
+			camera->SetRotate(cameraRotate);
+
+			if(t == 1.0f) {
+				isDrawActive = true;
+			}
+
+		}
+
+
+	} else {
+
+		WorldTime::SetAttenuation(0.5f);
+
+
+		deadEffect_.currentTime = std::min(deadEffect_.currentTime + WorldTime::GetDeltaTime(), deadEffect_.maxTime);
+		deadEffect_.lerpT = deadEffect_.currentTime / deadEffect_.maxTime;
+
+		float t = 0.5f * (sin(deadEffect_.lerpT * 10.0f) + 1.0f) * 0.5f + 0.5f;
+		color_.SetColor(Vector4(91 / 255.0f, 110 / 255.0f, 225 / 255.0f, 1.0f) * t);
+		color_.TransferMatrix();
+
+		if(deadEffect_.lerpT == 1.0f) {
+			isDrawActive = false;
+
+			ParticleSystem* particle = new ParticleSystem();
+			particle->Initialize();
+			particle->SetPos(GetPosition());
+			particle->UpdateMatrix();
+			particle->SetThisLifeTime(1.0f);
+			particle->SetCreateParticleCount(3);
+			particle->SetIsActiveAttenuation(true);
+
+			WorldTime::SetAttenuation(0.5f);
+			for(int i = 0; i < 60; ++i) {
+				particle->Update();
+			}
+
+			color_.SetColor(Vector4(91 / 255.0f, 110 / 255.0f, 225 / 255.0f, 1.0f));
+			color_.TransferMatrix();
+
+			deadSinceTime_ = 0.0f;
+		}
+
+	}
+
+	return true;
 }

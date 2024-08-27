@@ -18,6 +18,10 @@ public:
 		offset_ = offset;
 	}
 
+	const Vec3& GetOffset() const {
+		return offset_;
+	}
+
 private:
 
 	BaseGameObject* target_ = nullptr;

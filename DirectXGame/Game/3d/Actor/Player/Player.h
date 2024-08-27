@@ -63,6 +63,8 @@ private:
 
 	void SideFire();
 
+	bool DeadEffect();
+
 private:
 
 	/// ============================================
@@ -84,6 +86,8 @@ private:
 	const float kShootCT_ = 15.0f;
 	std::list<PlayerBullet*> bullets_;
 
+	
+	/// player bulletの挙動用
 	std::array<int, ArrRefe_Count> fireNums_;  /// 弾の種類ごとに撃つ数
 	std::array<int, ArrRefe_Count> currentFireNums_;  /// 弾の種類ごとに撃つ数
 
@@ -92,6 +96,25 @@ private:
 
 	std::function<void()> FireMethods_[ArrRefe_Count];
 
+	
+	
 	bool isAlive_ = true;
+
+
+	/// dead effect用
+	struct EffectTime {
+		float maxTime = 0.5f;
+		float currentTime = 0.0f;
+		float lerpT = 0.0f;
+	};
+
+	EffectTime deadEffect_;
+	float deadSinceTime_;
+	bool isEffectTransition_ = false;
+	Vec3 cameraPos_;
+	Vec3 cameraRotate_;
+	Vec3 cameraOffset_;
+	Vec3 playerLerpStartPos_;
+	Vec3 playerLerpEndPos_;
 
 };

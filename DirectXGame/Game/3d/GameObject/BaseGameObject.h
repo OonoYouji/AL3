@@ -56,6 +56,7 @@ public:
 
 #pragma region Getter SRT
 	const Vec3 GetPosition() const;
+	const Vec3 GetRotate() const { return worldTransform_.rotation_; }
 #pragma endregion
 
 

@@ -20,6 +20,8 @@ void GameCamera::Initialize() {
 
 	offset_ = Vec3(0.0f, 43.45f, -11.25f);
 
+	BaseGameObject::Group& group = CreateGroup("variable");
+	group.SetPtr("offset", &offset_);
 
 }
 

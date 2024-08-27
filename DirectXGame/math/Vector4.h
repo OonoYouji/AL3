@@ -28,3 +28,20 @@ inline Vector4 operator/ (float scaler, const Vector4& v) {
 		v.w / scaler
 	};
 }
+inline Vector4 operator* (const Vector4& v, float scaler) {
+	return {
+		v.x * scaler,
+		v.y * scaler,
+		v.z * scaler,
+		v.w * scaler
+	};
+}
+
+inline Vector4 operator* (float scaler, const Vector4& v) {
+	return {
+		v.x * scaler,
+		v.y * scaler,
+		v.z * scaler,
+		v.w * scaler
+	};
+}
