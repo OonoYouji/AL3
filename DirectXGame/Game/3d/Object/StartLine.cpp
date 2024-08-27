@@ -74,7 +74,7 @@ void StartLine::Update() {
 		startFont_sprite_->SetPosition(pos);
 
 		if(lerpT_ == 1.0f) {
-			isDrawActive = true;
+			GameObjectManager::GetInstance()->Destory(this);
 		}
 
 	}
