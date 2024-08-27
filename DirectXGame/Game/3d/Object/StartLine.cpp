@@ -1,10 +1,18 @@
+#define NOMINMAX
 #include <StartLine.h>
 
 #include <ModelManager.h>
 #include <GameObjectManager.h>
+#include <AudioManager.h>
+#include <TextureManager.h>
+
 #include <MainCamera.h>
 #include <GameManagerObject.h>
-#include <AudioManager.h>
+#include <Player.h>
+
+#include <Vec2Math.h>
+#include <Vec3Math.h>
+#include <WorldTime.h>
 
 
 
@@ -22,14 +30,22 @@ StartLine::StartLine() {
 /// ===================================================
 void StartLine::Initialize() {
 
+	//isDrawActive = false;
+
 	model_ = ModelManager::GetModel("startLine");
 
-	SetPos({0,0,20});
+	SetPos({ 0,0,20 });
 	UpdateMatrix();
 
 	CreateBoxCollider(model_);
 
 	SetGameManagerObject(GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
+	player_ = GameObjectManager::GetInstance()->GetGameObject("Player");
+
+	int lineHandle = TextureManager::Load("Textures/startLine.png");
+	int fontHandle = TextureManager::Load("Textures/start.png");
+	startLine_sprite_.reset(Sprite::Create(lineHandle, screenPos_, { 1,1,1,1 }, { 0.5f, 0.5f }));
+	startFont_sprite_.reset(Sprite::Create(fontHandle, screenPos_, { 1,1,1,1 }, { -1.0f, 0.0f }));
 
 }
 
@@ -37,7 +53,28 @@ void StartLine::Initialize() {
 /// ===================================================
 /// 更新
 /// ===================================================
-void StartLine::Update() {}
+void StartLine::Update() {
+
+	/// spriteの座標計算
+	Vec3 worldPos = GetPosition();
+	worldPos.x += player_->GetPosition().x;
+	screenPos_ = ConvertScreen(worldPos);
+
+	startLine_sprite_->SetPosition(screenPos_);
+	startFont_sprite_->SetPosition(screenPos_);
+
+	if(isStart_) {
+		currentTime_ = std::min(currentTime_ + WorldTime::GetDeltaTime(), maxTime_);
+		lerpT_ = currentTime_ / maxTime_;
+
+		Vec2 pos = Lerp(screenPos_, { screenPos_.x - 1500.0f, screenPos_.y }, lerpT_);
+
+		startLine_sprite_->SetPosition(pos);
+		startFont_sprite_->SetPosition(pos);
+
+	}
+
+}
 
 
 
@@ -53,8 +90,25 @@ void StartLine::LastUpdate() {
 /// 描画
 /// ===================================================
 void StartLine::Draw() {
-	if(model_) {
-		model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection());
+	//if(model_) {
+	//	model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection());
+	//}
+}
+
+void StartLine::FrontSpriteDraw() {
+	startLine_sprite_->Draw();
+	startFont_sprite_->Draw();
+}
+
+
+
+void StartLine::OnCollisionEnter(BaseGameObject* collision) {
+	Player* player = dynamic_cast<Player*>(collision);
+	if(player) {
+
+		isStart_ = true;
+
+		return;
 	}
 }
 

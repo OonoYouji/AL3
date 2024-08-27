@@ -138,6 +138,7 @@
     <ClCompile Include="Game\Collision\CollisionManager.cpp" />
     <ClCompile Include="Game\Math\GridDraw.cpp" />
     <ClCompile Include="Game\Math\Mat4Math.cpp" />
+    <ClCompile Include="Game\Math\Vec2Math.cpp" />
     <ClCompile Include="Game\Math\Vec3Math.cpp" />
     <ClCompile Include="Game\ParticleSystem\ParticleSystem.cpp" />
     <ClCompile Include="Game\Random\Random.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Game\Math\CreateName.h" />
     <ClInclude Include="Game\Math\GridDraw.h" />
     <ClInclude Include="Game\Math\Mat4Math.h" />
+    <ClInclude Include="Game\Math\Vec2Math.h" />
     <ClInclude Include="Game\Math\Vec3Math.h" />
     <ClInclude Include="Game\ParticleSystem\ParticleSystem.h" />
     <ClInclude Include="Game\Random\Random.h" />

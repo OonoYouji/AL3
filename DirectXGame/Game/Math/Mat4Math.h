@@ -30,9 +30,10 @@ Mat4 MakeTranslate(const Vec3& translate);
 
 Mat4 MakeInverse(const Mat4& m);
 
+Mat4 MakeViewport(float top, float left, float width, float height, float minD, float maxD);
+
 Mat4 MakeIdentity();
 
 Vec3 Transform(const Vec3& v, const Mat4& m);
 
 Vec3 TransformNormal(const Vec3& v, const Mat4& m);
-

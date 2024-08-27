@@ -133,6 +133,7 @@ void Scene_Game::Update() {
 /// 背景spriteの描画
 /// ===================================================
 void Scene_Game::BackSpriteDraw() {
+	GameObjectManager::GetInstance()->BackSpriteDraw();
 
 }
 
@@ -145,7 +146,6 @@ void Scene_Game::Object3dDraw() {
 
 	GameObjectManager::GetInstance()->Draw();
 
-	//GridDraw::GetInstance()->Draw();
 }
 
 
@@ -153,7 +153,7 @@ void Scene_Game::Object3dDraw() {
 /// 前景spriteの描画
 /// ===================================================
 void Scene_Game::FrontSpriteDraw() {
-
+	GameObjectManager::GetInstance()->FrontSpriteDraw();
 }
 
 

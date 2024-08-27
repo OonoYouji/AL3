@@ -44,3 +44,6 @@ inline Vector2 Vector2::operator/(float scaler) const {
 inline Vector2 Vector2::operator-() const {
 	return *this * -1.0f;
 }
+
+
+using Vec2 = Vector2;

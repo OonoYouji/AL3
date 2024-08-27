@@ -234,6 +234,9 @@
     <ClCompile Include="Game\3d\Object\DeadZone.cpp">
       <Filter>Game\3d\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Math\Vec2Math.cpp">
+      <Filter>Game\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -433,6 +436,9 @@
     </ClInclude>
     <ClInclude Include="Game\3d\Object\DeadZone.h">
       <Filter>Game\3d\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Math\Vec2Math.h">
+      <Filter>Game\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

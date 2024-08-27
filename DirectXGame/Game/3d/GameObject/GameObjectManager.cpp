@@ -58,6 +58,22 @@ void GameObjectManager::Draw() {
 	}
 }
 
+void GameObjectManager::FrontSpriteDraw() {
+	for(auto& obj : objects_) {
+		if(obj->isDrawActive) {
+			obj->FrontSpriteDraw();
+		}
+	}
+}
+
+void GameObjectManager::BackSpriteDraw() {
+	for(auto& obj : objects_) {
+		if(obj->isDrawActive) {
+			obj->BackSpriteDraw();
+		}
+	}
+}
+
 
 /// ===================================================
 /// ゲームオブジェクトの追加

@@ -49,6 +49,9 @@ public:
 	/// </summary>
 	void Draw();
 
+	void FrontSpriteDraw();
+
+	void BackSpriteDraw();
 
 
 	/// <summary>

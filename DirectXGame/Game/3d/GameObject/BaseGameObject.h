@@ -29,6 +29,9 @@ public:
 
 	virtual void Draw() = 0;
 
+	virtual void FrontSpriteDraw() {};
+	virtual void BackSpriteDraw() {};
+
 
 	void UpdateMatrix();
 

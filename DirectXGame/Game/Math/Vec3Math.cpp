@@ -1,7 +1,13 @@
+#define NOMINMAX
 #include <Vec3Math.h>
 
 #include <cmath>
 #include <iostream>
+
+#include <MainCamera.h>
+#include <Mat4Math.h>
+#include <WinApp.h>
+
 
 
 Vec3 Normalize(const Vec3& v) {
@@ -81,4 +87,16 @@ Vec3 MaxVec3(const Vec3& left, const Vec3& right) {
 		std::max(left.y, right.y),
 		std::max(left.z, right.z)
 	);
+}
+
+Vec2 ConvertScreen(const Vec3& worldPosition) {
+	
+	/// view projection viewport 行列の計算
+	Matrix4x4 matViewport = MakeViewport(0, 0, WinApp::kWindowWidth, WinApp::kWindowHeight, 0.0f, 1.0f);
+	MainCamera* camera = MainCamera::GetInstance();
+	Matrix4x4 matVPV = camera->GetViewProjection().matView * camera->GetViewProjection().matProjection * matViewport;
+
+	/// world -> screen計算
+	Vec3 positionRaticle = Transform(worldPosition, matVPV);
+	return Vec2(positionRaticle.x, positionRaticle.y);
 }
