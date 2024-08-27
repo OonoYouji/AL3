@@ -70,7 +70,7 @@ private:
 
 	bool isStart_ = false;
 	float lerpT_ = 0.0f;
-	float maxTime_ = 1.0f;		/// second
+	float maxTime_ = 0.5f;		/// second
 	float currentTime_ = 0.0f;	/// second
 
 };

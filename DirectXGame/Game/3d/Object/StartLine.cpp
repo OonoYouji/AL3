@@ -10,6 +10,7 @@
 #include <GameManagerObject.h>
 #include <Player.h>
 
+#include <Easing.h>
 #include <Vec2Math.h>
 #include <Vec3Math.h>
 #include <WorldTime.h>
@@ -67,10 +68,14 @@ void StartLine::Update() {
 		currentTime_ = std::min(currentTime_ + WorldTime::GetDeltaTime(), maxTime_);
 		lerpT_ = currentTime_ / maxTime_;
 
-		Vec2 pos = Lerp(screenPos_, { screenPos_.x - 1500.0f, screenPos_.y }, lerpT_);
+		Vec2 pos = Lerp(screenPos_, { screenPos_.x - 1500.0f, screenPos_.y }, Ease::Out::Quint(lerpT_));
 
 		startLine_sprite_->SetPosition(pos);
 		startFont_sprite_->SetPosition(pos);
+
+		if(lerpT_ == 1.0f) {
+			isDrawActive = true;
+		}
 
 	}
 
