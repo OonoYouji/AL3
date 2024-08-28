@@ -25,7 +25,6 @@ using json = nlohmann::json;
 /// 初期化
 /// ===================================================
 void EnemyManager::Initialize() {
-	models_.push_back(ModelManager::GetModel("enemy"));
 	emitters_.clear();
 
 	moveStates_.resize(Enemy::kCount);
@@ -126,13 +125,6 @@ void EnemyManager::DesctoryEmitter(EnemyEmitter* emitter) {
 	desctoryEmitter_.push_back(emitter);
 }
 
-
-/// ===================================================
-/// モデルの追加
-/// ===================================================
-Model* EnemyManager::GetModel() const {
-	return models_.front();
-}
 
 /// ===================================================
 /// エネミーのステートの更新処理

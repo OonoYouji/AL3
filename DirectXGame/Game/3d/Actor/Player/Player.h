@@ -14,30 +14,33 @@ class Input;
 class PlayerBullet;
 
 /// ============================================
-/// プレイヤーの弾の種類のenum
-/// ============================================
-enum ArrRefe {
-	ArrRefe_Normal,  /// 前方に一発
-	ArrRefe_Twin,	 /// 前方に二発同時
-	ArrRefe_Wide,	 /// 斜め45度に一発ずつ
-	ArrRefe_Side,	 /// 真横に一発ずつ
-	ArrRefe_Count
-};
-
-enum PART {
-	BODY,	/// 胴体
-	HEAD,	/// 頭
-	L_ARM,	/// 左腕
-	R_ARM,	/// 右腕
-	L_LEG,	/// 左脚
-	R_LEG,	/// 右脚
-	PART_COUNT
-};
-
-/// ============================================
 /// プレイヤー本体のクラス
 /// ============================================
 class Player : public BaseGameObject {
+
+
+	/// ============================================
+	/// プレイヤーの弾の種類のenum
+	/// ============================================
+	enum ArrRefe {
+		ArrRefe_Normal,  /// 前方に一発
+		ArrRefe_Twin,	 /// 前方に二発同時
+		ArrRefe_Wide,	 /// 斜め45度に一発ずつ
+		ArrRefe_Side,	 /// 真横に一発ずつ
+		ArrRefe_Count
+	};
+
+	enum PLAYER_PART {
+		BODY,	/// 胴体
+		HEAD,	/// 頭
+		L_ARM,	/// 左腕
+		R_ARM,	/// 右腕
+		L_LEG,	/// 左脚
+		R_LEG,	/// 右脚
+		PART_COUNT
+	};
+
+
 public:
 
 	Player();

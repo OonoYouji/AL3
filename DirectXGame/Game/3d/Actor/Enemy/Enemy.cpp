@@ -38,9 +38,21 @@ void Enemy::Initialize() {
 	stateType_ |= StateType::kMove;
 	moveType_ = MoveType::kChase;
 
-	SetModel(EnemyManager::GetInstance()->GetModel());
+	modelParts_.resize(ENEMY_PART_COUNT);
+	for(auto& part : modelParts_) {
+		part.reset(new ModelPart());
+	}
 
-	CreateBoxCollider(model_);
+	modelParts_[HEAD]->model = ModelManager::GetModel("enemy_head");
+	modelParts_[BODY]->model = ModelManager::GetModel("enemy_body");
+	modelParts_[TAIL]->model = ModelManager::GetModel("enemy_tail");
+
+	for(auto& part : modelParts_) {
+		part->transform_.Initialize();
+		part->transform_.parent_ = &worldTransform_;
+	}
+
+	CreateBoxCollider(ModelManager::GetModel("cube"));
 
 	CreateStatusGroup();
 
@@ -82,8 +94,8 @@ void Enemy::Update() {
 /// 描画処理
 /// ===================================================
 void Enemy::Draw() {
-	if(model_) {
-		model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection(), &objectColor_);
+	for(auto& part : modelParts_) {
+		part->model->Draw(part->transform_, MainCamera::GetInstance()->GetViewProjection(), &objectColor_);
 	}
 }
 
@@ -95,6 +107,9 @@ void Enemy::Draw() {
 void Enemy::LastUpdate() {
 
 	UpdateMatrix();
+	for(auto& part : modelParts_) {
+		part->transform_.UpdateMatrix();
+	}
 
 	/// ---------------------------------------------------
 	/// 倒した時の処理
@@ -136,13 +151,6 @@ void Enemy::Attack() {
 }
 
 
-
-/// ===================================================
-/// modelのセット
-/// ===================================================
-void Enemy::SetModel(Model* model) {
-	model_ = model;
-}
 
 void Enemy::SetColor(const Vector4& color) {
 	objectColor_.SetColor(color);

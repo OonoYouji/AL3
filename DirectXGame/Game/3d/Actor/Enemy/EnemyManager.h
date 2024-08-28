@@ -64,14 +64,6 @@ public:
 	void DesctoryEmitter(EnemyEmitter* emitter);
 
 	/// <summary>
-	/// Enemy用モデルのゲッター
-	/// </summary>
-	/// <returns></returns>
-	Model* GetModel()const;
-
-
-
-	/// <summary>
 	/// Enemyのステートの更新処理
 	/// </summary>
 	/// <param name="enemy"></param>
@@ -105,8 +97,6 @@ private:
 	std::list<Enemy*> enemies_;
 	std::list<EnemyEmitter*> emitters_;
 	std::list<EnemyEmitter*> desctoryEmitter_;
-
-	std::list<Model*> models_;
 
 	/// 動きの種類
 	std::vector<std::unique_ptr<EnemyState::BaseState>> moveStates_;

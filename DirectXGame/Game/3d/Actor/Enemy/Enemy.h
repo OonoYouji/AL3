@@ -7,6 +7,7 @@
 
 class Model;
 
+
 /// ===================================================
 /// 敵のクラス
 /// ===================================================
@@ -32,6 +33,12 @@ public:
 		kCount, /// enumのカウント用
 	};
 
+	enum ENEMY_PART {
+		HEAD,
+		BODY,
+		TAIL,
+		ENEMY_PART_COUNT
+	};
 
 public:
 
@@ -57,9 +64,6 @@ public:
 
 	void CreateStatusGroup();
 
-
-	void SetModel(Model* model);
-
 	void SetMoveType(int moveType) { moveType_ = moveType; }
 
 	void SetHP(int hp) { hp_ = hp; }
@@ -78,7 +82,12 @@ private:
 	int stateType_; /// enum StateType を参照
 	int moveType_;	/// enum MoveType  を参照
 
-	Model* model_ = nullptr;
+	struct ModelPart {
+		Model* model;
+		WorldTransform transform_;
+	};
+
+	std::vector<std::unique_ptr<ModelPart>> modelParts_;
 	ObjectColor objectColor_;
 
 	/// status
