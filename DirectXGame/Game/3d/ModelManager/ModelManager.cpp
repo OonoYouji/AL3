@@ -8,7 +8,7 @@ void ModelManager::Initialize() {
 
 
 	Load("axis", "axis");
-	Load("player", "player");
+	Load("playerHitBox", "playerHitBox");
 	Load("player_head", "player_head");
 	Load("player_body", "player_body");
 	Load("player_l_arm", "player_l_arm");

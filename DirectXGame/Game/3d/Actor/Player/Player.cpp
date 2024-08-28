@@ -48,7 +48,7 @@ void Player::Initialize() {
 	input_ = Input::GetInstance();
 
 
-	model_ = ModelManager::GetModel("player");
+	//model_ = ModelManager::GetModel("player");
 
 
 	worldTransform_.translation_.y = 0.5f;
@@ -83,7 +83,7 @@ void Player::Initialize() {
 	speed_ = 10.0f;
 	nextAttenuation_ = WorldTime::GetAttenuation();
 
-	CreateBoxCollider(model_);
+	CreateBoxCollider(ModelManager::GetModel("playerHitBox"));
 
 	/// ------------------------------------------------------
 	/// Bullet関係の初期化
