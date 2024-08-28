@@ -59,7 +59,7 @@ void Scene_Game::Initialize() {
 		if(i == 0) {
 			ground->SetPos({ -120,0,0 });
 		} else {
-			ground->SetPos({  120,0,0 });
+			ground->SetPos({ 120,0,0 });
 		}
 
 		ground->SetColor({ 0.5f, 0.5f, 0.5f, 1 });
@@ -84,36 +84,46 @@ void Scene_Game::Initialize() {
 /// ===================================================
 void Scene_Game::Update() {
 #ifdef _DEBUG
-	ImGui::Begin("setting");
-	ImGui::Checkbox("debug camera active", &debugCamera_->isActive);
-
-	ImGui::Separator();
-
-	static bool isActive = true;
-	ImGui::Checkbox("scene active", &isActive);
-
-	ImGui::Separator();
-
-
-
-	ImGui::End();
-
-	GameObjectManager::GetInstance()->ImGuiDebug();
-	WorldTime::GetInstance()->ImGuiDebug();
-	CollisionManager::GetInstance()->ImGuiDebug();
-	EnemyManager::GetInstance()->ImGuiDebug();
-
-	if(debugCamera_->isActive) {
-		MainCamera::GetInstance()->SetCamera(debugCamera_);
-	} else {
-		MainCamera::GetInstance()->SetCamera(camera_);
+	
+	static bool isImGuiActive = true;
+	if(input_->TriggerKey(DIK_F5)) {
+		isImGuiActive = !isImGuiActive;
 	}
 
-	if(!isActive) {
-		GameObjectManager::GetInstance()->LastUpdate();
-		return;
-	}
+	if(isImGuiActive) {
 
+
+		ImGui::Begin("setting");
+		ImGui::Checkbox("debug camera active", &debugCamera_->isActive);
+
+		ImGui::Separator();
+
+		static bool isActive = true;
+		ImGui::Checkbox("scene active", &isActive);
+
+		ImGui::Separator();
+
+
+
+		ImGui::End();
+
+		GameObjectManager::GetInstance()->ImGuiDebug();
+		WorldTime::GetInstance()->ImGuiDebug();
+		CollisionManager::GetInstance()->ImGuiDebug();
+		EnemyManager::GetInstance()->ImGuiDebug();
+
+		if(debugCamera_->isActive) {
+			MainCamera::GetInstance()->SetCamera(debugCamera_);
+		} else {
+			MainCamera::GetInstance()->SetCamera(camera_);
+		}
+
+		if(!isActive) {
+			GameObjectManager::GetInstance()->LastUpdate();
+			return;
+		}
+
+	}
 
 #endif // _DEBUG
 
