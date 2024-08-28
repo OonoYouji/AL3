@@ -240,9 +240,6 @@
     <ClCompile Include="Game\Math\Easing.cpp">
       <Filter>Game\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Game\3d\Object\PlayerDeadEffect.cpp">
-      <Filter>Game\3d\Object</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -448,9 +445,6 @@
     </ClInclude>
     <ClInclude Include="Game\Math\Easing.h">
       <Filter>Game\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\3d\Object\PlayerDeadEffect.h">
-      <Filter>Game\3d\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

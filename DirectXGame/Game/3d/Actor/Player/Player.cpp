@@ -26,7 +26,6 @@
 #include <DeadZone.h>
 #include <StartLine.h>
 #include <Enemy.h>
-#include <PlayerDeadEffect.h>
 #include <GameCamera.h>
 #include <ParticleSystem.h>
 

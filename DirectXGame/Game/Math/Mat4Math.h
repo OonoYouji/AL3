@@ -25,6 +25,7 @@ Mat4 MakeRotate(const Vec3& axis, float theta);
 Vec3 ExtractEuler(const Mat4& m);
 
 Mat4 LockAt(const Vec3& forward, const Vec3& up);
+Mat4 LockAt(const Vec3& direction);
 
 Mat4 MakeTranslate(const Vec3& translate);
 

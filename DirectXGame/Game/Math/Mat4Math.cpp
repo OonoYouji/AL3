@@ -130,19 +130,15 @@ Mat4 MakeRotate(const Vec3& axis, float theta) {
 Vec3 ExtractEuler(const Mat4& matrix) {
 	Vector3 euler{};
 
-	/*float R11 = m.m[0][0];
-	float R21 = m.m[1][0];
-	float R31 = m.m[2][0];
-	float R32 = m.m[2][1];
-	float R33 = m.m[2][2];
-
-	euler.x = std::atan2(R32, R33);
-	euler.y = std::atan2(-R31, std::sqrt(R32 * R32 + R33 * R33));
-	euler.z = std::atan2(R21, R11);*/
-
-	euler.x = atan2(matrix.m[2][1], matrix.m[2][2]);
+	/*euler.x = atan2(matrix.m[2][1], matrix.m[2][2]);
 	euler.y = atan2(-matrix.m[2][0], sqrt(matrix.m[2][1] * matrix.m[2][1] + matrix.m[2][2] * matrix.m[2][2]));
 	euler.z = atan2(matrix.m[1][0], matrix.m[0][0]);
+	return euler;*/
+
+	euler.x = atan2(-matrix.m[1][2], matrix.m[2][2]);
+	euler.y = asin(matrix.m[0][2]);
+	euler.z = atan2(-matrix.m[0][1], matrix.m[0][0]);
+
 	return euler;
 }
 
@@ -156,6 +152,12 @@ Mat4 LockAt(const Vec3& forward, const Vec3& up) {
 		right.z, newUp.z, -fNorm.z, 0.0f,
 		0.0f,	 0.0f,	  0.0f,	   1.0f
 	};
+}
+
+Mat4 LockAt(const Vec3& direction) {
+	float yaw = atan2(direction.z, direction.x);
+	float pitch = atan2(direction.y, sqrt(direction.x * direction.x + direction.z * direction.z));
+	return MakeRotateY(yaw) * MakeRotateZ(pitch);
 }
 
 Mat4 MakeTranslate(const Vec3& translate) {

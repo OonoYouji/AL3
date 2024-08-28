@@ -150,8 +150,8 @@ void ParticleSystem::CreateParticle() {
 	/// 姿勢の計算
 	/// --------------------------------------------------
 
-	/*matRotate = LockAt(newParticle->velocity, { 0, 0, 1 });
-	newParticle->worldTransform.rotation_ = ExtractEuler(matRotate);*/
+	matRotate = LockAt(newParticle->velocity);
+	newParticle->worldTransform.rotation_ = ExtractEuler(matRotate);
 
 
 
@@ -175,9 +175,15 @@ void ParticleSystem::UpdateParticle(Particle* particle) {
 	}
 
 	particle->worldTransform.translation_ += velocity;
-	particle->worldTransform.scale_ = Lerp({0,0,0}, { 1,1,1 }, particle->lifeTime / particleLifeTime_);
+	particle->worldTransform.scale_ = Lerp({ 0,0,0 }, { 1,1,1 }, particle->lifeTime / particleLifeTime_);
 
-	particle->worldTransform.UpdateMatrix(XYZ);
+	/*Mat4 matCurrentRotate = MakeRotate(particle->worldTransform.rotation_, XYZ);
+	Mat4 matXRotate = MakeRotateX(0.2f);
+	particle->worldTransform.rotation_ = ExtractEuler(matCurrentRotate * matXRotate);*/
+
+	particle->worldTransform.rotation_.x += 6.0f * WorldTime::FrameTime();
+
+	particle->worldTransform.UpdateMatrix(YXZ);
 
 	/// 制限時間の減少
 	float subTime = WorldTime::GetDeltaTime();
