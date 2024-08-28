@@ -4,6 +4,8 @@
 
 #include <BaseGameObject.h>
 #include <Model.h>
+#include <ObjectColor.h>
+
 
 /// ===================================================
 /// パーティクルシステム
@@ -94,6 +96,8 @@ public:
 	/// <param name="modelName"></param>
 	void SetModel(const std::string& modelName);
 
+	void SetObjectColor(const ObjectColor& objectColor);
+
 private:
 	
 	/// ===================================================
@@ -132,5 +136,7 @@ private:
 
 	bool isRotate_; /// particleが回転するかどうか 
 	int rotateType; /// particleの回転方式
+
+	ObjectColor objectColor_;
 
 };

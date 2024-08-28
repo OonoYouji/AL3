@@ -461,6 +461,7 @@ bool Player::DeadEffect() {
 			particle->SetThisLifeTime(1.0f);
 			particle->SetCreateParticleCount(3);
 			particle->SetIsActiveAttenuation(true);
+			particle->SetObjectColor(color_);
 
 			WorldTime::SetAttenuation(0.5f);
 			for(int i = 0; i < 60; ++i) {

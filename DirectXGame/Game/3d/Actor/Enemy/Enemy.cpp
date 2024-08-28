@@ -110,6 +110,7 @@ void Enemy::LastUpdate() {
 		particle->SetCreateParticleCount(3);
 		particle->SetSpawnCT(0.02f);
 		particle->SetIsActiveAttenuation(true);
+		particle->SetObjectColor(objectColor_);
 
 		/// アイテムの生成
 		if(hasItem_) {

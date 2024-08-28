@@ -33,6 +33,10 @@ void ParticleSystem::Initialize() {
 
 	direction_ = { 0,1,0 };
 
+	objectColor_.Initialize();
+	objectColor_.SetColor({ 1,1,1,1 });
+	objectColor_.TransferMatrix();
+
 }
 
 
@@ -101,7 +105,7 @@ void ParticleSystem::Draw() {
 	if(!model_) { return; }
 
 	for(auto& particle : particles_) {
-		model_->Draw(particle->worldTransform, MainCamera::GetInstance()->GetViewProjection());
+		model_->Draw(particle->worldTransform, MainCamera::GetInstance()->GetViewProjection(), &objectColor_);
 	}
 
 }
@@ -110,6 +114,10 @@ void ParticleSystem::Draw() {
 
 void ParticleSystem::SetModel(const std::string& modelName) {
 	model_ = ModelManager::GetModel(modelName);
+}
+
+void ParticleSystem::SetObjectColor(const ObjectColor& objectColor) {
+	objectColor_ = ObjectColor(objectColor);
 }
 
 
