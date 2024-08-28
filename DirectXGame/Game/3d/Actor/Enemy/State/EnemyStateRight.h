@@ -17,7 +17,7 @@ namespace EnemyState {
 	private:
 
 		Vec3 move_ = { 1, 0, 0 };
-		float speed_ = 2.0f;
+		float speed_ = 5.0f;
 
 	};
 

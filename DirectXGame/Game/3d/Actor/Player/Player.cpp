@@ -50,7 +50,29 @@ void Player::Initialize() {
 
 	model_ = ModelManager::GetModel("player");
 
-	worldTransform_.Initialize();
+
+	worldTransform_.translation_.y = 0.5f;
+
+	modelParts_.resize(PART_COUNT);
+	for(auto& part : modelParts_) {
+		part.reset(new ModelPart());
+	}
+	modelParts_[HEAD]->model = ModelManager::GetModel("player_head");
+	modelParts_[BODY]->model = ModelManager::GetModel("player_body");
+	modelParts_[L_ARM]->model = ModelManager::GetModel("player_l_arm");
+	modelParts_[R_ARM]->model = ModelManager::GetModel("player_r_arm");
+	modelParts_[L_LEG]->model = ModelManager::GetModel("player_l_leg");
+	modelParts_[R_LEG]->model = ModelManager::GetModel("player_r_leg");
+
+	for(auto& part : modelParts_) {
+		part->transform.Initialize();
+		part->transform.parent_ = &worldTransform_;
+	}
+
+	modelParts_[L_ARM]->transform.translation_ = { -1.04113f, 1.63164f, 0.0f };
+	modelParts_[R_ARM]->transform.translation_ = { 1.04113f, 1.63164f, -0.333162f };
+	modelParts_[L_LEG]->transform.translation_ = { 0.822399f, -0.063344f, 0.130576f };
+	modelParts_[R_LEG]->transform.translation_ = { -0.822399f, -0.063344f, 0.130576f };
 
 	color_.Initialize();
 	color_.SetColor({ 1,0,0,1 });
@@ -109,6 +131,8 @@ void Player::Update() {
 	/// 移動処理
 	/// -----------------------------------------------------------------
 
+	
+
 
 	move_ = {};
 	/// 左キー
@@ -138,6 +162,18 @@ void Player::Update() {
 
 	}
 
+
+	/// -----------------------------------------------------------------
+	/// パーツのアニメーション処理
+	/// -----------------------------------------------------------------
+	PartAnimation(move_ != Vec3(0, 0, 0));
+
+	worldTransform_.rotation_.y = 0.0f;
+	if(move_.x > 0.0f) {
+		worldTransform_.rotation_.y = 1.0f / 6.0f;
+	} else if(move_.x < 0.0f) {
+		worldTransform_.rotation_.y = -1.0f / 6.0f;
+	}
 
 
 	/// -----------------------------------------------------------------
@@ -191,12 +227,19 @@ void Player::LastUpdate() {
 	});
 
 	UpdateMatrix();
+
+	for(auto& part : modelParts_) {
+		part->transform.UpdateMatrix();
+	}
 }
 
 
 
 void Player::Draw() {
-	model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection(), &color_);
+	//model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection(), &color_);
+	for(auto& part : modelParts_) {
+		part->model->Draw(part->transform, MainCamera::GetInstance()->GetViewProjection(), &color_);
+	}
 }
 
 void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
@@ -427,10 +470,14 @@ bool Player::DeadEffect() {
 
 			Vec3 position = Lerp(playerLerpStartPos_, playerLerpEndPos_, t);
 			SetPos(position);
-			
+
 			GameCamera* camera = dynamic_cast<GameCamera*>(MainCamera::GetInstance()->GetCamera());
 			camera->SetOffset(cameraOffset);
 			camera->SetRotate(cameraRotate);
+
+			worldTransform_.rotation_.y += 1.0f * WorldTime::GetDeltaTime();
+			UpdateMatrix();
+			PartAnimation(true);
 
 			if(t == 1.0f) {
 				isDrawActive = true;
@@ -477,4 +524,17 @@ bool Player::DeadEffect() {
 	}
 
 	return true;
+}
+
+void Player::PartAnimation(bool isAnimation) {
+	if(!isAnimation) { return; }
+
+	animationTime_ += WorldTime::FrameTime() * 2.0f;
+
+	modelParts_[L_ARM]->transform.rotation_.x = std::sin(animationTime_) * 0.5f;
+	modelParts_[R_ARM]->transform.rotation_.x = -std::sin(animationTime_) * 0.5f;
+
+	modelParts_[L_LEG]->transform.rotation_.x = std::sin(animationTime_) * 0.5f;
+	modelParts_[R_LEG]->transform.rotation_.x = -std::sin(animationTime_) * 0.5f;
+
 }

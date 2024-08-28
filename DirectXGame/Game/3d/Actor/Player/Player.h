@@ -24,6 +24,15 @@ enum ArrRefe {
 	ArrRefe_Count
 };
 
+enum PART {
+	BODY,	/// 胴体
+	HEAD,	/// 頭
+	L_ARM,	/// 左腕
+	R_ARM,	/// 右腕
+	L_LEG,	/// 左脚
+	R_LEG,	/// 右脚
+	PART_COUNT
+};
 
 /// ============================================
 /// プレイヤー本体のクラス
@@ -65,6 +74,8 @@ private:
 
 	bool DeadEffect();
 
+	void PartAnimation(bool isAnimation);
+
 private:
 
 	/// ============================================
@@ -72,6 +83,14 @@ private:
 	/// ============================================
 
 	Model* model_;
+	struct ModelPart {
+		Model* model;
+		WorldTransform transform;
+	};
+
+	std::vector<std::unique_ptr<ModelPart>> modelParts_;
+	float animationTime_ = 0.0f;
+
 	ObjectColor color_;
 
 	Input* input_ = nullptr;

@@ -9,6 +9,13 @@ void ModelManager::Initialize() {
 
 	Load("axis", "axis");
 	Load("player", "player");
+	Load("player_head", "player_head");
+	Load("player_body", "player_body");
+	Load("player_l_arm", "player_l_arm");
+	Load("player_r_arm", "player_r_arm");
+	Load("player_l_leg", "player_l_leg");
+	Load("player_r_leg", "player_r_leg");
+
 	Load("playerBullet", "playerBullet");
 	Load("playerBulletHitBox", "playerBulletHitBox");
 
