@@ -81,6 +81,8 @@ private:
 	int type_		= Enemy::kDown;	/// 出現する敵の移動タイプ
 	int enemyHP_	= 1;			/// 出現する敵のHP
 
+	float rotateYs_[Enemy::kCount];
+
 	bool isSpawned_ = false;
 
 	bool enemyHasItem_ = false;

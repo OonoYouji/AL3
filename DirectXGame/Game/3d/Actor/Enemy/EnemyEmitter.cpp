@@ -2,6 +2,7 @@
 #include "EnemyEmitter.h"
 
 #include <cassert>
+#include <numbers>
 
 #include <ModelManager.h>
 #include <GameObjectManager.h>
@@ -42,12 +43,19 @@ void EnemyEmitter::Initialize() {
 	rangeZ_ = 50.0f;
 	spawnNum_ = 10;
 
+	rotateYs_[Enemy::kUp] = 0.0f;
+	rotateYs_[Enemy::kDown] = 1.0f * std::numbers::pi_v<float>;
+	rotateYs_[Enemy::kLeft] = -0.5f * std::numbers::pi_v<float>;
+	rotateYs_[Enemy::kRight] = 0.5f * std::numbers::pi_v<float>;
+	rotateYs_[Enemy::kChase] = 1.0f * std::numbers::pi_v<float>;
+
 	pPlayer_ = dynamic_cast<Player*>(GameObjectManager::GetInstance()->GetGameObject("Player"));
 	assert(pPlayer_);
 
 	if(!Random::Int(0, 1)) {
 		enemyHasItem_ = true;
 	}
+
 
 }
 
@@ -121,8 +129,10 @@ void EnemyEmitter::CreateEnemies() {
 		enemy->Initialize();
 
 		enemy->SetPos(Random::Vec3(min_, max_) + center_);
+		enemy->SetPosY(0.5f);
 		enemy->SetMoveType(std::min(type_, static_cast<int>(Enemy::kCount - 1)));
 		enemy->SetHP(enemyHP_);
+		enemy->SetRotateY(rotateYs_[type_]);
 
 		if(enemyHasItem_) {
 			enemy->SetHasItem(true);
