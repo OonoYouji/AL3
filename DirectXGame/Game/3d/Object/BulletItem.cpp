@@ -18,7 +18,7 @@ BulletItem::BulletItem() {
 }
 
 void BulletItem::Initialize() {
-	model_ = ModelManager::GetModel("axis");
+	model_ = ModelManager::GetModel("bulletItem");
 
 	CreateBoxCollider(model_);
 

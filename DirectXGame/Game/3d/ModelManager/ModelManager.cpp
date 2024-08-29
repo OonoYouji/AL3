@@ -25,6 +25,8 @@ void ModelManager::Initialize() {
 
 	Load("enemyEmitter", "enemyEmitter");
 
+	Load("bulletItem", "bulletItem");
+
 	Load("startLine", "startLine");
 
 	Load("deadZone", "deadZone");
