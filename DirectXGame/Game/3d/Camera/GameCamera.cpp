@@ -22,6 +22,8 @@ void GameCamera::Initialize() {
 
 	BaseGameObject::Group& group = CreateGroup("variable");
 	group.SetPtr("offset", &offset_);
+	group.SetPtr("fovY", &viewProjection_.fovAngleY);
+
 
 }
 
@@ -35,6 +37,7 @@ void GameCamera::Update() {
 	Vec3 targetPosition = target_->GetPosition();
 	worldTransform_.translation_ = targetPosition + offset_;
 
+	viewProjection_.UpdateProjectionMatrix();
 	UpdateMatrix();
 
 }
