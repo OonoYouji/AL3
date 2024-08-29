@@ -155,9 +155,9 @@ Mat4 LockAt(const Vec3& forward, const Vec3& up) {
 }
 
 Mat4 LockAt(const Vec3& direction) {
-	float yaw = atan2(direction.z, direction.x);
-	float pitch = atan2(direction.y, sqrt(direction.x * direction.x + direction.z * direction.z));
-	return MakeRotateY(yaw) * MakeRotateX(pitch);
+	float yaw = atan2(direction.x, direction.z);
+	float pitch = atan2(direction.y, direction.z);
+	return MakeRotateX(pitch) * MakeRotateY(yaw);
 }
 
 Mat4 MakeTranslate(const Vec3& translate) {
