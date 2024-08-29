@@ -134,10 +134,15 @@ void EnemyEmitter::CreateEnemies() {
 		enemy->SetHP(enemyHP_);
 		enemy->SetRotateY(rotateYs_[type_]);
 
-		if(enemyHasItem_) {
-			enemy->SetHasItem(true);
-			enemy->SetColor({ 0.1f, 0.1f, 0.5f, 1.0f });
-			enemyHasItem_ = false;
+		if(type_ == Enemy::kChase) {
+			enemy->SetColor({ 1,0,0,1 });
+		} else {
+
+			if(enemyHasItem_) {
+				enemy->SetHasItem(true);
+				enemy->SetColor({ 0.1f, 0.1f, 0.5f, 1.0f });
+				enemyHasItem_ = false;
+			}
 		}
 
 		enemy->UpdateMatrix();
