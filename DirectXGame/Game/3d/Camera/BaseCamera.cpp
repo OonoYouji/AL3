@@ -20,5 +20,6 @@ void BaseCamera::SetViewProjection(const ViewProjection& viewPro) {
 
 void BaseCamera::UpdateViewProjection() {
 	viewProjection_.matView = MakeInverse(worldTransform_.matWorld_);
+	viewProjection_.UpdateProjectionMatrix();
 	viewProjection_.TransferMatrix();
 }
