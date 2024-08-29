@@ -182,7 +182,8 @@ void GameObjectManager::ImGuiDebug() {
 /// ===================================================
 /// ImGuiのBaseGameObjectの子供をselectableで設定
 /// ===================================================
-void GameObjectManager::ImGuiSelectChilds(const std::list<BaseGameObject*>& childs) {
+void GameObjectManager::ImGuiSelectChilds([[maybe_unused]] const std::list<BaseGameObject*>& childs) {
+#ifdef _DEBUG
 	ImGui::Indent();
 	for(auto& child : childs) {
 		if(ImGui::Selectable(child->GetName().c_str(), selectObject_ == child)) {
@@ -191,6 +192,7 @@ void GameObjectManager::ImGuiSelectChilds(const std::list<BaseGameObject*>& chil
 		ImGuiSelectChilds(child->GetChilds());
 	}
 	ImGui::Unindent();
+#endif // _DEBUG
 }
 
 
@@ -198,6 +200,7 @@ void GameObjectManager::ImGuiSelectChilds(const std::list<BaseGameObject*>& chil
 /// select objcetのデバッグ
 /// ===================================================
 void GameObjectManager::ImGuiSelectObjectDebug() {
+#ifdef _DEBUG
 	ImGui::SetNextItemOpen(true, ImGuiCond_Always);
 
 	ImGuiTreeNodeFlags_ flags = ImGuiTreeNodeFlags_(ImGuiTreeNodeFlags_DefaultOpen);
@@ -209,4 +212,5 @@ void GameObjectManager::ImGuiSelectObjectDebug() {
 	selectObject_->ImGuiDebug();
 
 	ImGui::TreePop();
+#endif // _DEBUG
 }

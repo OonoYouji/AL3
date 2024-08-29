@@ -232,6 +232,9 @@ template const std::string& BaseGameObject::Group::GetItem<std::string>(const st
 /// 各Itemのデバッグ表示
 /// ===================================================
 void BaseGameObject::Group::ImGuiDebug() {
+#ifdef _DEBUG
+
+
 	for(auto& item : items) {
 
 		Item::Pointer& first = item.second.variable.first;
@@ -326,6 +329,7 @@ void BaseGameObject::Group::ImGuiDebug() {
 			continue;
 		}
 	}
+#endif // _DEBUG
 }
 
 
@@ -521,6 +525,8 @@ void BaseGameObject::CreateBoxCollider(Model* model) {
 /// ImGuiでデバッグ表示
 /// ===================================================
 void BaseGameObject::ImGuiDebug() {
+#ifdef _DEBUG
+
 
 	for(auto& group : groups_) {
 		if(!ImGui::TreeNodeEx(group.first.c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {
@@ -531,4 +537,5 @@ void BaseGameObject::ImGuiDebug() {
 		ImGui::TreePop();
 	}
 
+#endif // _DEBUG
 }

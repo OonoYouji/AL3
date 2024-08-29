@@ -116,9 +116,11 @@ void EnemyEmitter::LastUpdate() {
 
 
 void EnemyEmitter::Draw() {
+#ifdef _DEBUG
 	if(model_) {
 		model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection(), &objectColor);
 	}
+#endif // _DEBUG
 }
 
 

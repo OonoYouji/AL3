@@ -1,7 +1,5 @@
 #include "Scene_Game.h"
 
-#include <imgui.h>
-
 #include <WorldTime.h>
 #include <GridDraw.h>
 #include <BaseGameObject.h>
