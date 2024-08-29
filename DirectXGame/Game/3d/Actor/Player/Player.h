@@ -77,7 +77,7 @@ private:
 
 	bool DeadEffect();
 
-	void PartAnimation(bool isAnimation);
+	void PartAnimation(bool isAnimation, float time);
 
 private:
 

@@ -66,13 +66,19 @@ void Player::Initialize() {
 
 	for(auto& part : modelParts_) {
 		part->transform.Initialize();
-		part->transform.parent_ = &worldTransform_;
+	}
+
+
+	modelParts_[BODY]->transform.parent_ = &worldTransform_;
+	for(int i = 0; i < PART_COUNT; ++i) {
+		if(i == BODY) { continue; }
+		modelParts_[i]->transform.parent_ = &modelParts_[BODY]->transform;
 	}
 
 	modelParts_[L_ARM]->transform.translation_ = { -1.04113f, 1.63164f, 0.0f };
 	modelParts_[R_ARM]->transform.translation_ = { 1.04113f, 1.63164f, -0.333162f };
-	modelParts_[L_LEG]->transform.translation_ = { 0.822399f, -0.063344f, 0.130576f };
-	modelParts_[R_LEG]->transform.translation_ = { -0.822399f, -0.063344f, 0.130576f };
+	modelParts_[L_LEG]->transform.translation_ = { -0.576401f,  0.705473f, 0.0f };
+	modelParts_[R_LEG]->transform.translation_ = {  0.576401f,  0.705473f, 0.0f };
 
 	color_.Initialize();
 	color_.SetColor({ 1,0,0,1 });
@@ -166,7 +172,7 @@ void Player::Update() {
 	/// -----------------------------------------------------------------
 	/// パーツのアニメーション処理
 	/// -----------------------------------------------------------------
-	PartAnimation(move_ != Vec3(0, 0, 0));
+	PartAnimation(move_ != Vec3(0, 0, 0), WorldTime::FrameTime() * 8.0f);
 
 	worldTransform_.rotation_.y = 0.0f;
 	if(move_.x > 0.0f) {
@@ -477,7 +483,7 @@ bool Player::DeadEffect() {
 
 			worldTransform_.rotation_.y += 1.0f * WorldTime::GetDeltaTime();
 			UpdateMatrix();
-			PartAnimation(true);
+			PartAnimation(true, WorldTime::GetDeltaTime() * 8.0f);
 
 			if(t == 1.0f) {
 				isDrawActive = true;
@@ -526,15 +532,17 @@ bool Player::DeadEffect() {
 	return true;
 }
 
-void Player::PartAnimation(bool isAnimation) {
+void Player::PartAnimation(bool isAnimation, float time) {
 	if(!isAnimation) { return; }
 
-	animationTime_ += WorldTime::FrameTime() * 2.0f;
+	animationTime_ += time;
+
+	modelParts_[BODY]->transform.translation_.y = std::sin(animationTime_ * 2.0f) * 0.5f + 0.5f;
 
 	modelParts_[L_ARM]->transform.rotation_.x = std::sin(animationTime_) * 0.5f;
 	modelParts_[R_ARM]->transform.rotation_.x = -std::sin(animationTime_) * 0.5f;
 
-	modelParts_[L_LEG]->transform.rotation_.x = std::sin(animationTime_) * 0.5f;
-	modelParts_[R_LEG]->transform.rotation_.x = -std::sin(animationTime_) * 0.5f;
+	modelParts_[L_LEG]->transform.rotation_.x = -std::sin(animationTime_) * 0.5f;
+	modelParts_[R_LEG]->transform.rotation_.x =  std::sin(animationTime_) * 0.5f;
 
 }

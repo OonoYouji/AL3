@@ -4,6 +4,7 @@
 #include <GridDraw.h>
 #include <BaseGameObject.h>
 #include <GameObjectManager.h>
+#include <ImGuiManager.h>
 
 #include <GameCamera.h>
 #include <MainCamera.h>
