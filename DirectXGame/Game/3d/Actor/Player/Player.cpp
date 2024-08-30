@@ -181,6 +181,11 @@ void Player::Update() {
 		worldTransform_.rotation_.y = -1.0f / 6.0f;
 	}
 
+	/*worldTransform_.rotation_.x = 0.0f;
+	if(move_.z > 0.0f) {
+	}*/
+		worldTransform_.rotation_.x = 0.125f;
+
 
 	/// -----------------------------------------------------------------
 	/// 弾を打つ処理
@@ -550,8 +555,8 @@ void Player::PartAnimation(bool isAnimation, float time) {
 
 	modelParts_[BODY]->transform.translation_.y = std::sin(animationTime_ * 2.0f) * 0.5f + 0.5f;
 
-	modelParts_[L_ARM]->transform.rotation_.x = std::sin(animationTime_) * 0.5f;
-	modelParts_[R_ARM]->transform.rotation_.x = -std::sin(animationTime_) * 0.5f;
+	modelParts_[L_ARM]->transform.rotation_.y = std::sin(animationTime_) * 0.5f;
+	modelParts_[R_ARM]->transform.rotation_.y = std::sin(animationTime_) * 0.5f;
 
 	modelParts_[L_LEG]->transform.rotation_.x = -std::sin(animationTime_) * 0.5f;
 	modelParts_[R_LEG]->transform.rotation_.x = std::sin(animationTime_) * 0.5f;
