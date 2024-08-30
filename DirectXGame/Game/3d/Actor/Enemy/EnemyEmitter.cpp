@@ -64,7 +64,7 @@ void EnemyEmitter::Update() {
 
 	if(!isSpawned_) {
 
-		float z = std::abs(pPlayer_->GetPosition().z - GetPosition().z);
+		float z = (pPlayer_->GetPosition().z - GetPosition().z);
 
 		/// 上に移動する敵の場合
 		if(type_ == Enemy::kUp) {
@@ -78,7 +78,7 @@ void EnemyEmitter::Update() {
 		} else {
 
 			/// 範囲内に入った
-			if(z <= rangeZ_) {
+			if(std::abs(z) <= rangeZ_) {
 				CreateEnemies();
 				//GameObjectManager::GetInstance()->Destory(this);
 				isSpawned_ = true;
