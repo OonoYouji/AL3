@@ -51,8 +51,10 @@ void Enemy::Initialize() {
 
 	for(auto& part : modelParts_) {
 		part->transform_.Initialize();
-		part->transform_.parent_ = &worldTransform_;
+		part->transform_.parent_ = &modelParts_[BODY]->transform_;
 	}
+
+	modelParts_[BODY]->transform_.parent_ = &worldTransform_;
 
 	CreateBoxCollider(ModelManager::GetModel("enemyHitBox"));
 
@@ -77,6 +79,9 @@ void Enemy::Update() {
 		Attack();
 	}
 
+	worldTransform_.translation_.y = 2.0f;
+
+	Animation(true, WorldTime::FrameTime());
 	UpdateMatrix();
 	Vec3 position = GetPosition();
 	if(position.x > 80.0f || position.x < -80.0f) {
@@ -157,6 +162,19 @@ void Enemy::Attack() {
 void Enemy::SetColor(const Vector4& color) {
 	objectColor_.SetColor(color);
 	objectColor_.TransferMatrix();
+}
+
+void Enemy::Animation(bool isAnimation, float time) {
+	if(!isAnimation) {
+		return;
+	}
+
+	animationTime_ += time;
+
+	modelParts_[BODY]->transform_.translation_.y = std::sin(animationTime_ * 2) * 0.5f + 0.5f;
+
+	modelParts_[TAIL]->transform_.rotation_.y = std::sin(animationTime_) * 0.25f;
+
 }
 
 

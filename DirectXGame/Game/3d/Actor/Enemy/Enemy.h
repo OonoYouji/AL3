@@ -54,7 +54,6 @@ public:
 
 	void OnCollisionEnter(BaseGameObject* collision) override;
 
-public:
 
 	/// -------------------------------------------
 	/// not override methods
@@ -76,6 +75,10 @@ public:
 
 private:
 
+	void Animation(bool isAnimation, float time);
+
+private:
+
 	static int sInstanceCount_;
 	int id_;
 
@@ -90,9 +93,12 @@ private:
 	std::vector<std::unique_ptr<ModelPart>> modelParts_;
 	ObjectColor objectColor_;
 
+
 	/// status
 	int hp_ = 1;
 
 	bool hasItem_ = false;
+
+	float animationTime_ = 0.0f;
 
 };
