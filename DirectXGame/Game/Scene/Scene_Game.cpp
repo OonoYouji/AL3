@@ -17,6 +17,7 @@
 #include <EnemyManager.h>
 #include <Ground.h>
 #include <StartLine.h>
+#include <GoalLine.h>
 #include <GameManagerObject.h>
 #include <DeadZone.h>
 #include <OperationUI.h>
@@ -47,6 +48,7 @@ void Scene_Game::Initialize() {
 
 	(new GameManagerObject())->Initialize();
 	(new StartLine())->Initialize();
+	(new GoalLine())->Initialize();
 
 
 	(new Ground())->Initialize();
