@@ -21,17 +21,16 @@ void OperationUI::Initialize() {
 void OperationUI::Update() {
 
 	animationTime_ += WorldTime::GetDeltaTime() * 0.5f;
+	animationTime_ = -fmod(animationTime_, 1.0f);
 
 	/// 座標計算
 	position_.x = 960.0f;
 
-	float value = -fmod(animationTime_, 1.0f);
-
 	position_.y = 460.0f + 100.0f * -0.2f;
 	sprite_->SetTextureHandle(normalTexHandle_);
 
-	if(std::abs(value) >= 0.2f) {
-		position_.y = 460.0f + 100.0f * value;
+	if(std::abs(animationTime_) >= 0.2f) {
+		position_.y = 460.0f + 100.0f * animationTime_;
 		sprite_->SetTextureHandle(clickTexHandle_);
 	}
 
