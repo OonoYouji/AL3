@@ -24,9 +24,6 @@ public:
 	/// </summary>
 	void Draw() override;
 
-	void DrawLine() override;
-
-
 	/// <summary>
 	/// Box to Box Collision
 	/// </summary>

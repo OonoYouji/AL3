@@ -272,7 +272,7 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 	GameManagerObject* gameManagerObject = dynamic_cast<GameManagerObject*>(
 		GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
 	if(gameManagerObject) {
-		if(gameManagerObject->GetIsGameStart()) {
+		if(!gameManagerObject->GetIsGameStart()) {
 			return;
 		}
 	}
