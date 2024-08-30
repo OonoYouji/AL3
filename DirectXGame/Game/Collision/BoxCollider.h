@@ -24,6 +24,8 @@ public:
 	/// </summary>
 	void Draw() override;
 
+	void DrawLine() override;
+
 
 	/// <summary>
 	/// Box to Box Collision
@@ -35,7 +37,14 @@ public:
 
 private:
 
-	Vec3 min_, max_;
+	std::vector<Vec3> GetVertices() const;
+
+	void UpdateOrientatinos();
+
+private:
+
+	Vec3 size_;
+	Vec3 orientatinos_[3];
 
 	Model* cube_ = nullptr;
 

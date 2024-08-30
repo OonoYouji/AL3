@@ -81,6 +81,20 @@ Vec3 MaxDot(const Vec3& direction, const std::vector<Vec3>& vertices) {
 	return maxVertex;
 }
 
+Vec3 MinDot(const Vec3& direction, const std::vector<Vec3>& vertices) {
+	float minDot = Dot(vertices.front(), direction);
+	Vec3 minVertex = vertices.front();
+	for(auto& vertex : vertices) {
+		float dot = Dot(vertex, direction);
+		if(dot < minDot) {
+			minDot = dot;
+			minVertex = vertex;
+		}
+	}
+
+	return minVertex;
+}
+
 Vec3 MaxVec3(const Vec3& left, const Vec3& right) {
 	return Vec3(
 		std::max(left.x, right.x),

@@ -4,6 +4,7 @@
 #include "Sprite.h"
 #include "Model.h"
 #include <CollisionManager.h>
+#include <GameObjectManager.h>
 
 namespace {
 	DirectXCommon* dxCommon;
@@ -47,12 +48,15 @@ void BaseScene::Draw() {
 #endif // _DEBUG
 
 
+
 	/// ---------------------------------------------------
 	/// 前景Spriteの描画
 	/// ---------------------------------------------------
 	Sprite::PreDraw(commandList);
 	FrontSpriteDraw();
 	Sprite::PostDraw();
+
+
 	
 
 }

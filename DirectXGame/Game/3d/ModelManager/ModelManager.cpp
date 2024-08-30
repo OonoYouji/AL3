@@ -22,6 +22,7 @@ void ModelManager::Initialize() {
 	Load("enemy_head", "enemy_head");
 	Load("enemy_body", "enemy_body");
 	Load("enemy_tail", "enemy_tail");
+	Load("enemyHitBox", "enemyHitBox");
 
 	Load("enemyEmitter", "enemyEmitter");
 

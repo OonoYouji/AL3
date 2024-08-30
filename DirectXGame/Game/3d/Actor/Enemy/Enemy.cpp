@@ -11,6 +11,7 @@
 #include <ParticleSystem.h>
 #include <BulletItem.h>
 #include <WorldTime.h>
+#include <PlayerBullet.h>
 
 
 
@@ -43,6 +44,7 @@ void Enemy::Initialize() {
 		part.reset(new ModelPart());
 	}
 
+	//worldTransform_.scale_.z = 0.5f;
 	modelParts_[HEAD]->model = ModelManager::GetModel("enemy_head");
 	modelParts_[BODY]->model = ModelManager::GetModel("enemy_body");
 	modelParts_[TAIL]->model = ModelManager::GetModel("enemy_tail");
@@ -52,7 +54,7 @@ void Enemy::Initialize() {
 		part->transform_.parent_ = &worldTransform_;
 	}
 
-	CreateBoxCollider(ModelManager::GetModel("cube"));
+	CreateBoxCollider(ModelManager::GetModel("enemyHitBox"));
 
 	CreateStatusGroup();
 
@@ -171,7 +173,8 @@ void Enemy::CreateStatusGroup() {
 /// 衝突時の処理
 /// ===================================================
 void Enemy::OnCollisionEnter(BaseGameObject* collision) {
-	if(collision->GetName().find(std::string("PlayerBullet")) != std::string::npos) {
+	PlayerBullet* bullet = dynamic_cast<PlayerBullet*>(collision);
+	if(bullet) {
 		hp_ = std::max(hp_ - 1, 0);
 	}
 }

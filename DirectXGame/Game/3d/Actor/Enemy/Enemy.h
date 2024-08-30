@@ -25,12 +25,12 @@ public:
 
 
 	enum MoveType {
-		kDown,	/// 上から下へ
-		kUp,	/// 下から上へ
-		kLeft,	/// 右から左へ
-		kRight,	/// 左から右へ
-		kChase,	/// プレイヤーを追う
-		kCount, /// enumのカウント用
+		kDown,	/// 上から下へ		: 0
+		kUp,	/// 下から上へ		: 1
+		kLeft,	/// 右から左へ		: 2
+		kRight,	/// 左から右へ		: 3
+		kChase,	/// プレイヤーを追う	: 4
+		kCount, /// enumのカウント用	: 5
 	};
 
 	enum ENEMY_PART {

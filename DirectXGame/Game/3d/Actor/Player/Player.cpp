@@ -78,7 +78,7 @@ void Player::Initialize() {
 	modelParts_[L_ARM]->transform.translation_ = { -1.04113f, 1.63164f, 0.0f };
 	modelParts_[R_ARM]->transform.translation_ = { 1.04113f, 1.63164f, -0.333162f };
 	modelParts_[L_LEG]->transform.translation_ = { -0.576401f,  0.705473f, 0.0f };
-	modelParts_[R_LEG]->transform.translation_ = {  0.576401f,  0.705473f, 0.0f };
+	modelParts_[R_LEG]->transform.translation_ = { 0.576401f,  0.705473f, 0.0f };
 
 	color_.Initialize();
 	color_.SetColor({ 1,0,0,1 });
@@ -137,7 +137,7 @@ void Player::Update() {
 	/// 移動処理
 	/// -----------------------------------------------------------------
 
-	
+
 
 
 	move_ = {};
@@ -250,6 +250,33 @@ void Player::Draw() {
 
 void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 
+	/// スタートラインに衝突したときの処理
+	StartLine* startLine = dynamic_cast<StartLine*>(collision);
+	if(startLine) {
+
+		GameManagerObject* object = dynamic_cast<GameManagerObject*>(
+			GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
+
+
+		if(!object->GetIsGameStart()) {
+
+			object->SetIsGameStart(true);
+			AudioManager::PlayAudio("Start", 0.2f);
+
+		}
+
+		return;
+	}
+
+
+	GameManagerObject* gameManagerObject = dynamic_cast<GameManagerObject*>(
+		GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
+	if(gameManagerObject) {
+		if(gameManagerObject->GetIsGameStart()) {
+			return;
+		}
+	}
+
 
 	/// 敵に衝突したときの処理
 	Enemy* enemy = dynamic_cast<Enemy*>(collision);
@@ -298,23 +325,7 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 	}
 
 
-	/// スタートラインに衝突したときの処理
-	StartLine* startLine = dynamic_cast<StartLine*>(collision);
-	if(startLine) {
 
-		GameManagerObject* object = dynamic_cast<GameManagerObject*>(
-			GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
-
-
-		if(!object->GetIsGameStart()) {
-
-			object->SetIsGameStart(true);
-			AudioManager::PlayAudio("Start", 0.2f);
-
-		}
-
-		return;
-	}
 
 
 }
@@ -543,6 +554,6 @@ void Player::PartAnimation(bool isAnimation, float time) {
 	modelParts_[R_ARM]->transform.rotation_.x = -std::sin(animationTime_) * 0.5f;
 
 	modelParts_[L_LEG]->transform.rotation_.x = -std::sin(animationTime_) * 0.5f;
-	modelParts_[R_LEG]->transform.rotation_.x =  std::sin(animationTime_) * 0.5f;
+	modelParts_[R_LEG]->transform.rotation_.x = std::sin(animationTime_) * 0.5f;
 
 }

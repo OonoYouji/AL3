@@ -19,7 +19,7 @@
 #include <StartLine.h>
 #include <GameManagerObject.h>
 #include <DeadZone.h>
-
+#include <PrimitiveDrawer.h>
 
 Scene_Game::Scene_Game() {}
 Scene_Game::~Scene_Game() {}
@@ -74,6 +74,8 @@ void Scene_Game::Initialize() {
 	AudioManager::Load("ItemGet", "Audios/ItemGet.mp3");
 	AudioManager::Load("Start", "Audios/start.mp3");
 
+
+	PrimitiveDrawer::GetInstance()->SetViewProjection(&MainCamera::GetInstance()->GetViewProjection());
 
 }
 
@@ -151,7 +153,6 @@ void Scene_Game::BackSpriteDraw() {
 /// 3d objectの描画
 /// ===================================================
 void Scene_Game::Object3dDraw() {
-
 
 	GameObjectManager::GetInstance()->Draw();
 
