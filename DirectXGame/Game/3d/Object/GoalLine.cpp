@@ -16,16 +16,15 @@ GoalLine::GoalLine() {
 void GoalLine::Initialize() {
 
 	/// 座標の初期化
-	worldTransform_.translation_.z = 800.0f;
-	worldTransform_.scale_ = {};
+	worldTransform_.translation_.z = 10.0f;
 
 	UpdateMatrix();
 
 	/// textureの初期化
-	uint32_t lnieTexHandle = TextureManager::Load("Textures/startLine.png");
-	uint32_t fontTexHandle = TextureManager::Load("Textures/start.png");
-	lineSprite_.reset(Sprite::Create(lnieTexHandle, Vec2(0, 0), { 1,1,1,1 }, { 0.5f,0.5f }));
-	fontSprite_.reset(Sprite::Create(fontTexHandle, Vec2(0, 0), { 1,1,1,1 }));
+	uint32_t lnieTexHandle = TextureManager::Load("Textures/line.png");
+	uint32_t fontTexHandle = TextureManager::Load("Textures/end.png");
+	lineSprite_.reset(Sprite::Create(lnieTexHandle, Vec2(0, 0), { 1,1,1,1 }, { 0.5f, 0.5f }));
+	fontSprite_.reset(Sprite::Create(fontTexHandle, Vec2(0, 0), { 1,1,1,1 }, { -1.0f, 0.0f }));
 
 	/// 他クラスのポインタの初期化
 	player_ = dynamic_cast<Player*>(GameObjectManager::GetInstance()->GetGameObject("Player"));

@@ -33,17 +33,15 @@ void StartLine::Initialize() {
 
 	//isDrawActive = false;
 
-	model_ = ModelManager::GetModel("startLine");
-
 	SetPos({ 0,0,20 });
 	UpdateMatrix();
 
-	CreateBoxCollider(model_);
+	CreateBoxCollider(ModelManager::GetModel("startLine"));
 
 	SetGameManagerObject(GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
 	player_ = GameObjectManager::GetInstance()->GetGameObject("Player");
 
-	int lineHandle = TextureManager::Load("Textures/startLine.png");
+	int lineHandle = TextureManager::Load("Textures/line.png");
 	int fontHandle = TextureManager::Load("Textures/start.png");
 	startLine_sprite_.reset(Sprite::Create(lineHandle, screenPos_, { 1,1,1,1 }, { 0.5f, 0.5f }));
 	startFont_sprite_.reset(Sprite::Create(fontHandle, screenPos_, { 1,1,1,1 }, { -1.0f, 0.0f }));

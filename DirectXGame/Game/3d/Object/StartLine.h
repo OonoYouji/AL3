@@ -59,8 +59,6 @@ private:
 	/// private : objects
 	/// ===================================================
 
-	Model* model_ = nullptr;
-
 	BaseGameObject* gameManagerObject_ = nullptr;
 	BaseGameObject* player_ = nullptr;
 
