@@ -130,6 +130,7 @@
     <ClCompile Include="Game\3d\Object\BulletItem.cpp" />
     <ClCompile Include="Game\3d\Object\DeadZone.cpp" />
     <ClCompile Include="Game\3d\Object\GameManagerObject.cpp" />
+    <ClCompile Include="Game\3d\Object\GoalLine.cpp" />
     <ClCompile Include="Game\3d\Object\Ground.cpp" />
     <ClCompile Include="Game\3d\Object\OperationUI.cpp" />
     <ClCompile Include="Game\3d\Object\StartLine.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="Game\3d\Object\BulletItem.h" />
     <ClInclude Include="Game\3d\Object\DeadZone.h" />
     <ClInclude Include="Game\3d\Object\GameManagerObject.h" />
+    <ClInclude Include="Game\3d\Object\GoalLine.h" />
     <ClInclude Include="Game\3d\Object\Ground.h" />
     <ClInclude Include="Game\3d\Object\OperationUI.h" />
     <ClInclude Include="Game\3d\Object\StartLine.h" />

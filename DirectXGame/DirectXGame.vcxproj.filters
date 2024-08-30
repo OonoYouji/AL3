@@ -243,6 +243,9 @@
     <ClCompile Include="Game\3d\Object\OperationUI.cpp">
       <Filter>Game\3d\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Game\3d\Object\GoalLine.cpp">
+      <Filter>Game\3d\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -450,6 +453,9 @@
       <Filter>Game\Math</Filter>
     </ClInclude>
     <ClInclude Include="Game\3d\Object\OperationUI.h">
+      <Filter>Game\3d\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Object\GoalLine.h">
       <Filter>Game\3d\Object</Filter>
     </ClInclude>
   </ItemGroup>

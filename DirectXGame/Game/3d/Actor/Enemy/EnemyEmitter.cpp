@@ -52,7 +52,7 @@ void EnemyEmitter::Initialize() {
 	pPlayer_ = dynamic_cast<Player*>(GameObjectManager::GetInstance()->GetGameObject("Player"));
 	assert(pPlayer_);
 
-	if(!Random::Int(0, 1)) {
+	if(!Random::Int(0, 5)) {
 		enemyHasItem_ = true;
 	}
 
