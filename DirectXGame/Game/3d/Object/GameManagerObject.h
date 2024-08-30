@@ -43,19 +43,13 @@ public:
 	void CreateObjectGroup();
 
 	
-	/// <summary>
-	/// ゲームのスタートフラグのセット
-	/// </summary>
-	/// <param name="isGameStart"></param>
 	void SetIsGameStart(bool isGameStart);
-
 	bool GetIsGameStart() const { return isGameStart_; }
 
-	/// <summary>
-	/// ゲームオーバーのフラグのセット
-	/// </summary>
-	/// <param name="isGameOver"></param>
 	void SetIsGameOver(bool isGameOver);
+
+	void SetIsGameClear(bool isGameClear) { isGameClear_ = isGameClear; }
+	bool GetIsGameClear() const { return isGameClear_; }
 
 private:
 
@@ -65,7 +59,7 @@ private:
 
 	bool isGameStart_ = false;
 	bool isGameOver_ = false;
-
+	bool isGameClear_ = false;
 
 
 };

@@ -174,6 +174,7 @@ void Player::Update() {
 	/// -----------------------------------------------------------------
 	PartAnimation(move_ != Vec3(0, 0, 0), WorldTime::FrameTime() * 8.0f);
 
+	worldTransform_.rotation_.x = 0.125f;
 	worldTransform_.rotation_.y = 0.0f;
 	if(move_.x > 0.0f) {
 		worldTransform_.rotation_.y = 1.0f / 6.0f;
@@ -181,10 +182,6 @@ void Player::Update() {
 		worldTransform_.rotation_.y = -1.0f / 6.0f;
 	}
 
-	/*worldTransform_.rotation_.x = 0.0f;
-	if(move_.z > 0.0f) {
-	}*/
-		worldTransform_.rotation_.x = 0.125f;
 
 
 	/// -----------------------------------------------------------------
@@ -242,6 +239,15 @@ void Player::LastUpdate() {
 	for(auto& part : modelParts_) {
 		part->transform.UpdateMatrix();
 	}
+
+	/*if(GetPosition().z > 1000.0f) {
+		GameManagerObject* object = 
+			dynamic_cast<GameManagerObject*>(GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
+
+		object->SetIsGameClear(true);
+
+	}*/
+
 }
 
 

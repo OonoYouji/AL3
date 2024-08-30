@@ -19,7 +19,7 @@
 #include <StartLine.h>
 #include <GameManagerObject.h>
 #include <DeadZone.h>
-#include <PrimitiveDrawer.h>
+#include <OperationUI.h>
 
 Scene_Game::Scene_Game() {}
 Scene_Game::~Scene_Game() {}
@@ -65,6 +65,7 @@ void Scene_Game::Initialize() {
 	}
 
 	(new DeadZone())->Initialize();
+	(new OperationUI())->Initialize();
 
 	EnemyManager::GetInstance()->Initialize();
 
@@ -74,8 +75,6 @@ void Scene_Game::Initialize() {
 	AudioManager::Load("ItemGet", "Audios/ItemGet.mp3");
 	AudioManager::Load("Start", "Audios/start.mp3");
 
-
-	PrimitiveDrawer::GetInstance()->SetViewProjection(&MainCamera::GetInstance()->GetViewProjection());
 
 }
 
