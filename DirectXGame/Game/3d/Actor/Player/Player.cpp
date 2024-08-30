@@ -28,6 +28,7 @@
 #include <Enemy.h>
 #include <GameCamera.h>
 #include <ParticleSystem.h>
+#include <GoalLine.h>
 
 
 Player::Player() {
@@ -293,10 +294,7 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 	Enemy* enemy = dynamic_cast<Enemy*>(collision);
 	if(enemy) {
 
-		GameManagerObject* object = dynamic_cast<GameManagerObject*>(
-			GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
-
-		object->SetIsGameOver(true);
+		gameManagerObject->SetIsGameOver(true);
 		isAlive_ = false;
 
 		DeadZone* deadZone = dynamic_cast<DeadZone*>(
@@ -324,11 +322,8 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 	/// デッドゾーンに衝突したときの処理
 	DeadZone* deadZone = dynamic_cast<DeadZone*>(collision);
 	if(deadZone) {
-
-		GameManagerObject* object = dynamic_cast<GameManagerObject*>(
-			GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
-
-		object->SetIsGameOver(true);
+		
+		gameManagerObject->SetIsGameOver(true);
 		isAlive_ = false;
 		deadZone->isActive = false;
 
@@ -336,7 +331,13 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 	}
 
 
+	GoalLine* goalLine = dynamic_cast<GoalLine*>(collision);
+	if(goalLine) {
 
+		gameManagerObject->SetIsGameClear(true);
+
+		return;
+	}
 
 
 }

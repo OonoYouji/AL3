@@ -1,5 +1,6 @@
 #include "GoalLine.h"
 
+#include <ModelManager.h>
 #include <TextureManager.h>
 #include <Player.h>
 
@@ -16,9 +17,12 @@ GoalLine::GoalLine() {
 void GoalLine::Initialize() {
 
 	/// 座標の初期化
-	worldTransform_.translation_.z = 10.0f;
+	worldTransform_.translation_.z = 800.0f;
 
 	UpdateMatrix();
+
+	/// collider 
+	CreateBoxCollider(ModelManager::GetModel("startLine"));
 
 	/// textureの初期化
 	uint32_t lnieTexHandle = TextureManager::Load("Textures/line.png");
