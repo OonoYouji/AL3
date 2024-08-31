@@ -26,6 +26,9 @@ public:
 
 	void FrontSpriteDraw() override;
 
+	void SetScore(float score) { score_ = score; }
+	float GetScore() const { return score_; }
+
 private:
 
 	/// ===================================================

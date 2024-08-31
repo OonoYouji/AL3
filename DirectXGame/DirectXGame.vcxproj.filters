@@ -249,6 +249,9 @@
     <ClCompile Include="Game\3d\Object\InformationHUD.cpp">
       <Filter>Game\3d\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Game\3d\Object\GameStartEffect.cpp">
+      <Filter>Game\3d\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -462,6 +465,9 @@
       <Filter>Game\3d\Object</Filter>
     </ClInclude>
     <ClInclude Include="Game\3d\Object\InformationHUD.h">
+      <Filter>Game\3d\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Object\GameStartEffect.h">
       <Filter>Game\3d\Object</Filter>
     </ClInclude>
   </ItemGroup>
