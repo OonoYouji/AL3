@@ -7,7 +7,7 @@
 #include <GameObjectManager.h>
 #include <Enemy.h>
 
-const float PlayerBullet::skLifeTime_ = 180.0f;
+const float PlayerBullet::skLifeTime_ = 90.0f;
 int PlayerBullet::sInstanceCount_ = 0;
 
 

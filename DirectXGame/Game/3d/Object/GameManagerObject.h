@@ -42,11 +42,12 @@ public:
 	/// </summary>
 	void CreateObjectGroup();
 
-	
+
 	void SetIsGameStart(bool isGameStart);
 	bool GetIsGameStart() const { return isGameStart_; }
 
 	void SetIsGameOver(bool isGameOver);
+	bool GetIsGameOver() const { return isGameOver_; }
 
 	void SetIsGameClear(bool isGameClear) { isGameClear_ = isGameClear; }
 	bool GetIsGameClear() const { return isGameClear_; }

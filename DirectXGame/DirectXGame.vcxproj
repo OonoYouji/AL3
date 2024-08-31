@@ -132,6 +132,7 @@
     <ClCompile Include="Game\3d\Object\GameManagerObject.cpp" />
     <ClCompile Include="Game\3d\Object\GoalLine.cpp" />
     <ClCompile Include="Game\3d\Object\Ground.cpp" />
+    <ClCompile Include="Game\3d\Object\InformationHUD.cpp" />
     <ClCompile Include="Game\3d\Object\OperationUI.cpp" />
     <ClCompile Include="Game\3d\Object\StartLine.cpp" />
     <ClCompile Include="Game\Audio\AudioManager.cpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="Game\3d\Object\GameManagerObject.h" />
     <ClInclude Include="Game\3d\Object\GoalLine.h" />
     <ClInclude Include="Game\3d\Object\Ground.h" />
+    <ClInclude Include="Game\3d\Object\InformationHUD.h" />
     <ClInclude Include="Game\3d\Object\OperationUI.h" />
     <ClInclude Include="Game\3d\Object\StartLine.h" />
     <ClInclude Include="Game\Audio\AudioManager.h" />

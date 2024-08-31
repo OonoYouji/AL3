@@ -3,6 +3,7 @@
 #include <ModelManager.h>
 #include <TextureManager.h>
 #include <Player.h>
+#include <GameManagerObject.h>
 
 #include <Vec3Math.h>
 
@@ -32,6 +33,7 @@ void GoalLine::Initialize() {
 
 	/// 他クラスのポインタの初期化
 	player_ = dynamic_cast<Player*>(GameObjectManager::GetInstance()->GetGameObject("Player"));
+	gameManagerObject_ = dynamic_cast<GameManagerObject*>(GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
 
 }
 
@@ -51,6 +53,8 @@ void GoalLine::Draw() {
 }
 
 void GoalLine::FrontSpriteDraw() {
-	lineSprite_->Draw();
-	fontSprite_->Draw();
+	if(!gameManagerObject_->GetIsGameOver()) {
+		lineSprite_->Draw();
+		fontSprite_->Draw();
+	}
 }

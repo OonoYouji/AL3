@@ -53,9 +53,10 @@ void GameManagerObject::Draw() {
 /// 変数のグループ作成
 /// ===================================================
 void GameManagerObject::CreateObjectGroup() {
-	BaseGameObject::Group& isStartGroup = CreateGroup("Is Start");
+	BaseGameObject::Group& isStartGroup = CreateGroup("variables");
 	isStartGroup.SetPtr("is game start", &isGameStart_);
 	isStartGroup.SetPtr("is game over", &isGameOver_);
+	isStartGroup.SetPtr("is game clear", &isGameClear_);
 }
 
 

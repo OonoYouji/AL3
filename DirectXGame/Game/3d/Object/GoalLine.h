@@ -24,5 +24,6 @@ private:
 	std::unique_ptr<Sprite> fontSprite_;
 
 	class Player* player_ = nullptr;
+	class GameManagerObject* gameManagerObject_ = nullptr;
 
 };
