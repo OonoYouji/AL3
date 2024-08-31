@@ -20,8 +20,10 @@ void OperationUI::Initialize() {
 
 void OperationUI::Update() {
 
-	animationTime_ += WorldTime::GetDeltaTime() * 0.5f;
-	animationTime_ = -fmod(animationTime_, 1.0f);
+	animationTime_ -= WorldTime::GetDeltaTime() * 0.5f;
+	if(animationTime_ < -1.0f) {
+		animationTime_ = -fmod(animationTime_, 1.0f);
+	}
 
 	/// 座標計算
 	position_.x = 960.0f;

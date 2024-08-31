@@ -51,7 +51,6 @@ void Scene_Game::Initialize() {
 	(new GameManagerObject())->Initialize();
 	(new StartLine())->Initialize();
 	(new GoalLine())->Initialize();
-	(new InformationHUD())->Initialize();
 
 
 	(new Ground())->Initialize();
@@ -71,6 +70,7 @@ void Scene_Game::Initialize() {
 
 	(new DeadZone())->Initialize();
 	(new OperationUI())->Initialize();
+	(new InformationHUD())->Initialize();
 
 	EnemyManager::GetInstance()->Initialize();
 
