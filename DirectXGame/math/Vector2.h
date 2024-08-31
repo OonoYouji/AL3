@@ -12,6 +12,7 @@ struct Vector2 final {
 	float Len() const;
 
 
+	inline Vector2 operator + (const Vector2& other) const;
 	inline Vector2 operator * (float scaler) const;
 	inline Vector2 operator / (const Vector2& other) const;
 	inline Vector2 operator / (float scaler) const;
@@ -19,6 +20,13 @@ struct Vector2 final {
 	inline Vector2 operator- () const;
 
 };
+
+inline Vector2 Vector2::operator+(const Vector2& other) const {
+	return Vector2(
+		this->x + other.x,
+		this->y + other.y
+	);
+}
 
 inline Vector2 Vector2::operator*(float scaler) const {
 	return Vector2(

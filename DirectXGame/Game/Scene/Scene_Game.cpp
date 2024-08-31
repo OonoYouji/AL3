@@ -21,6 +21,8 @@
 #include <GameManagerObject.h>
 #include <DeadZone.h>
 #include <OperationUI.h>
+#include <InformationHUD.h>
+
 
 Scene_Game::Scene_Game() {}
 Scene_Game::~Scene_Game() {}
@@ -49,6 +51,7 @@ void Scene_Game::Initialize() {
 	(new GameManagerObject())->Initialize();
 	(new StartLine())->Initialize();
 	(new GoalLine())->Initialize();
+	(new InformationHUD())->Initialize();
 
 
 	(new Ground())->Initialize();
