@@ -269,6 +269,10 @@ void Player::Draw() {
 
 void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 
+	if(!isAlive_) {
+		return;
+	}
+
 	/// スタートラインに衝突したときの処理
 	StartLine* startLine = dynamic_cast<StartLine*>(collision);
 	if(startLine) {

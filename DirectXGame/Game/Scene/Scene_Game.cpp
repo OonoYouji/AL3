@@ -83,7 +83,7 @@ void Scene_Game::Initialize() {
 	AudioManager::Load("gameBGM", "Audios/gameBGM.mp3");
 	
 	AudioManager::StopAudioAll("gameBGM");
-	AudioManager::PlayAudio("gameBGM", 0.2f, true);
+	AudioManager::PlayAudio("gameBGM", 0.05f, true);
 
 }
 
