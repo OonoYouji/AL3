@@ -48,7 +48,6 @@ void InformationHUD::Update() {
 
 	if(player_->GetIsAlive()) {
 
-		scoreDigit_ = 0;
 		for(int i = 0; i < 4; ++i) {
 
 			int currentDigitNum = score_ / static_cast<int>(std::pow(10, i)) % 10;
@@ -62,12 +61,16 @@ void InformationHUD::Update() {
 
 			numberSprites_[i]->SetPosition(position + Vec2(digitInterval_ * (3.0f - i), 0.0f));
 
-			if(!currentDigitNum) {
+		}
+
+		scoreDigit_ = 4;
+		for(int i = 3; i > 0; --i) {
+			uint32_t texHandle = numberSprites_[i]->GetTextureHandle();
+			if(texHandle == numberTexHandles_[0]) {
+				--scoreDigit_;
+			} else {
 				break;
 			}
-
-			++scoreDigit_;
-
 		}
 
 	}
