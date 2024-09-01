@@ -25,6 +25,7 @@ using json = nlohmann::json;
 /// 初期化
 /// ===================================================
 void EnemyManager::Initialize() {
+
 	emitters_.clear();
 
 	moveStates_.resize(Enemy::kCount);

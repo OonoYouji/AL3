@@ -104,7 +104,7 @@ Vec3 MaxVec3(const Vec3& left, const Vec3& right) {
 }
 
 Vec2 ConvertScreen(const Vec3& worldPosition) {
-	
+
 	/// view projection viewport 行列の計算
 	Matrix4x4 matViewport = MakeViewport(0, 0, WinApp::kWindowWidth, WinApp::kWindowHeight, 0.0f, 1.0f);
 	MainCamera* camera = MainCamera::GetInstance();
@@ -113,4 +113,27 @@ Vec2 ConvertScreen(const Vec3& worldPosition) {
 	/// world -> screen計算
 	Vec3 positionRaticle = Transform(worldPosition, matVPV);
 	return Vec2(positionRaticle.x, positionRaticle.y);
+}
+
+Vec3 ConvertRGB(float h, float s, float v) {
+	if(s == 0.0) {
+		return Vec3(v, v, v);
+	}
+
+	h *= 6.0;
+	int i = int(h);
+	float f = h - i;
+
+	float p = v * (1.0f - s);
+	float q = v * (1.0f - s * f);
+	float t = v * (1.0f - s * (1.0f - f));
+
+	switch(i % 6) {
+	case 0:  return Vec3(v, t, p);
+	case 1:  return Vec3(q, v, p);
+	case 2:  return Vec3(p, v, t);
+	case 3:  return Vec3(p, q, v);
+	case 4:  return Vec3(t, p, v);
+	default: return Vec3(v, p, q);
+	}
 }

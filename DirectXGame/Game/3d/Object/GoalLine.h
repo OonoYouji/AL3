@@ -23,6 +23,8 @@ private:
 	std::unique_ptr<Sprite> lineSprite_;
 	std::unique_ptr<Sprite> fontSprite_;
 
+	float clearAnimationTime_ = 0.0f;
+
 	class Player* player_ = nullptr;
 	class GameManagerObject* gameManagerObject_ = nullptr;
 

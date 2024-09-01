@@ -1,3 +1,4 @@
+#define NOMINMAX
 #include "GoalLine.h"
 
 #include <ModelManager.h>
@@ -5,7 +6,10 @@
 #include <Player.h>
 #include <GameManagerObject.h>
 
+#include <WorldTime.h>
+#include <Vec2Math.h>
 #include <Vec3Math.h>
+#include <Easing.h>
 
 
 GoalLine::GoalLine() {
@@ -45,6 +49,24 @@ void GoalLine::Update() {
 
 	lineSprite_->SetPosition(screenPosition);
 	fontSprite_->SetPosition(screenPosition);
+
+	if(gameManagerObject_->GetIsGameClear()) {
+
+		clearAnimationTime_ += 10.0f * WorldTime::GetDeltaTime();
+
+		clearAnimationTime_ = std::min(clearAnimationTime_ + WorldTime::GetDeltaTime(), 0.5f);
+		float t = clearAnimationTime_ / 0.5f;
+
+		Vec2 pos = Lerp(screenPosition, { screenPosition.x - 1500.0f, screenPosition.y }, Ease::In::Back(t));
+
+		lineSprite_->SetPosition(pos);
+		fontSprite_->SetPosition(pos);
+
+		if(t == 1.0f) {
+			GameObjectManager::GetInstance()->Destory(this);
+		}
+
+	}
 
 }
 

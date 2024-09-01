@@ -63,6 +63,8 @@ public:
 
 	void SetGameManagerObject(class GameManagerObject* object);
 
+	void SetColor(const Vec4& color);
+
 private:
 
 	/// ============================================

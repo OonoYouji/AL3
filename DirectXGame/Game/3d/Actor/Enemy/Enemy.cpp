@@ -129,6 +129,7 @@ void Enemy::LastUpdate() {
 		particle->Initialize();
 		particle->SetThisLifeTime(0.5f);
 		particle->SetPos(GetPosition());
+		particle->UpdateMatrix();
 		particle->SetCreateParticleCount(3);
 		particle->SetSpawnCT(0.02f);
 		particle->SetIsActiveAttenuation(true);

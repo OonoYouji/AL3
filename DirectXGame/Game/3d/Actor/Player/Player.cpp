@@ -344,6 +344,11 @@ void Player::SetGameManagerObject(GameManagerObject* object) {
 	gameManagerObject_ = object;
 }
 
+void Player::SetColor(const Vec4& color) {
+	color_.SetColor(color);
+	color_.TransferMatrix();
+}
+
 
 
 PlayerBullet* Player::Fire() {
@@ -558,10 +563,12 @@ bool Player::DeadEffect() {
 				for(int i = 0; i < 60; ++i) {
 					particle->Update();
 				}
+
+				color_.SetColor(Vector4(91 / 255.0f, 110 / 255.0f, 225 / 255.0f, 1.0f));
+				color_.TransferMatrix();
+
 			}
 
-			color_.SetColor(Vector4(91 / 255.0f, 110 / 255.0f, 225 / 255.0f, 1.0f));
-			color_.TransferMatrix();
 
 			deadSinceTime_ = 0.0f;
 		}

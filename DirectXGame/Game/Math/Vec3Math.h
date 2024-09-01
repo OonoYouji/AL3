@@ -56,3 +56,5 @@ Vec3 MinDot(const Vec3& direction, const std::vector<Vec3>& vertices);
 Vec3 MaxVec3(const Vec3& left, const Vec3& right);
 
 Vec2 ConvertScreen(const Vec3& worldPosition);
+
+Vec3 ConvertRGB(float h, float s, float v);

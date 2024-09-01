@@ -116,6 +116,13 @@ void Scene_Game::Update() {
 
 		ImGui::Separator();
 
+		if(ImGui::Button("player clear line transition")) {
+			Player* player = dynamic_cast<Player*>(GameObjectManager::GetInstance()->GetGameObject("Player"));
+			player->SetPosZ(750.0f);
+			GameManagerObject* gameManagerObject = dynamic_cast<GameManagerObject*>(GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
+			gameManagerObject->SetIsGameStart(true);
+		}
+
 
 
 		ImGui::End();
