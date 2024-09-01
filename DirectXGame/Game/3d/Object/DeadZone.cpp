@@ -19,7 +19,10 @@ void DeadZone::Initialize() {
 	UpdateMatrix();
 
 	model_ = ModelManager::GetModel("deadZone");
-	
+	objectColor_.Initialize();
+	objectColor_.SetColor(Vec4(0, 0, 0, 1));
+	objectColor_.TransferMatrix();
+
 	BaseGameObject* obj = GameObjectManager::GetInstance()->GetGameObject("GameManagerObject");
 	gameManagerObjecrt_ = dynamic_cast<GameManagerObject*>(obj);
 
@@ -38,6 +41,6 @@ void DeadZone::Update() {
 
 void DeadZone::Draw() {
 	if(model_) {
-		model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection());
+		model_->Draw(worldTransform_, MainCamera::GetInstance()->GetViewProjection(), &objectColor_);
 	}
 }

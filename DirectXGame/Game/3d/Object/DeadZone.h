@@ -1,8 +1,7 @@
 #pragma once
 
-#include <BaseGameObject.h>
-
-class GameManagerObject;
+#include <GameObjectManager.h>
+#include <ObjectColor.h>
 
 class DeadZone final : public BaseGameObject {
 public:
@@ -10,15 +9,15 @@ public:
 	DeadZone();
 	~DeadZone() {}
 
-
 	void Initialize() override;
-
 	void Update() override;
-
 	void Draw() override;
 
 private:
 
 	Model* model_ = nullptr;
-	GameManagerObject* gameManagerObjecrt_ = nullptr;
+	ObjectColor objectColor_;
+	
+	class GameManagerObject* gameManagerObjecrt_ = nullptr;
+	
 };
