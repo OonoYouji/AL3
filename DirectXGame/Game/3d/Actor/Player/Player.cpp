@@ -515,6 +515,7 @@ bool Player::DeadEffect() {
 
 			if(t == 1.0f) {
 				isDrawActive = true;
+				isEffectEnded_ = true;
 			}
 
 		}
