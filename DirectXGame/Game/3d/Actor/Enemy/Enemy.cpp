@@ -13,6 +13,7 @@
 #include <WorldTime.h>
 #include <PlayerBullet.h>
 #include <InformationHUD.h>
+#include <Player.h>
 
 
 /// ===================================================
@@ -63,6 +64,8 @@ void Enemy::Initialize() {
 	objectColor_.Initialize();
 	SetColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 
+	player_ = dynamic_cast<Player*>(GameObjectManager::GetInstance()->GetGameObject("Player"));
+
 }
 
 
@@ -88,7 +91,7 @@ void Enemy::Update() {
 		GameObjectManager::GetInstance()->Destory(this);
 	}
 
-	if(position.z <= -50.0f) {
+	if(player_->GetPosition().z - GetPosition().z > 200.0f) {
 		GameObjectManager::GetInstance()->Destory(this);
 	}
 

@@ -29,7 +29,7 @@ void InformationHUD::Initialize() {
 		sprite.reset(Sprite::Create(numberTexHandles_[0], Vec2(0, 0), Vec4(1, 1, 1, 1), Vec2(0.5f, 0.5f)));
 	}
 
-	score_ = 1234;
+	score_ = 0;
 
 	digitInterval_ = 20.0f;
 

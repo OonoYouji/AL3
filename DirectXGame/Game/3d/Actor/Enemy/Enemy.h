@@ -101,4 +101,6 @@ private:
 
 	float animationTime_ = 0.0f;
 
+	class Player* player_ = nullptr;
+
 };
