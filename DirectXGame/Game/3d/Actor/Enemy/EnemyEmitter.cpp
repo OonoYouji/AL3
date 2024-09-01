@@ -135,6 +135,7 @@ void EnemyEmitter::CreateEnemies() {
 		enemy->SetMoveType(std::min(type_, static_cast<int>(Enemy::kCount - 1)));
 		enemy->SetHP(enemyHP_);
 		enemy->SetRotateY(rotateYs_[type_]);
+		enemy->SetScale(Vec3(1, 1, 1) * static_cast<float>(enemyHP_));
 
 		if(type_ == Enemy::kChase) {
 			enemy->SetColor({ 1,0,0,1 });

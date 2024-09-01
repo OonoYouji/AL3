@@ -1,6 +1,8 @@
 #define NOMINMAX
 #include "GameStartEffect.h"
 
+#include <algorithm>
+
 #include <TextureManager.h>
 #include <SceneManager.h>
 
@@ -26,13 +28,12 @@ void GameStartEffect::Update() {
 	animationTime_ += WorldTime::GetDeltaTime();
 
 	title_->SetPosition(Lerp(
-		Vec2(640.0f + 1280.0f, 360.0f), 
-		Vec2(640.0f, 360.0f), 
+		Vec2(640.0f + 1280.0f, 360.0f),
+		Vec2(640.0f, 360.0f),
 		std::min(animationTime_ / 0.5f, 1.0f)
 	));
 
-
-	if(animationTime_ > 1.0f) {
+	if(animationTime_ > 1.2f) {
 		SceneManager::Load(new Scene_Game);
 	}
 

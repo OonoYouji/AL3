@@ -27,7 +27,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
-	win->CreateGameWindow();
+	win->CreateGameWindow(L"AL3", WS_OVERLAPPEDWINDOW & ~(WS_MAXIMIZEBOX | WS_THICKFRAME));
+	win->SetSizeChangeMode(WinApp::SizeChangeMode::kNone);
 
 	// DirectX初期化処理
 	dxCommon = DirectXCommon::GetInstance();

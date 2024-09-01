@@ -309,6 +309,8 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 			GameObjectManager::GetInstance()->GetGameObject("DeadZone"));
 		deadZone->isActive = false;
 
+		AudioManager::PlayAudio("playerDead", 1.0f);
+
 		return;
 	}
 
@@ -334,6 +336,7 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 		gameManagerObject->SetIsGameOver(true);
 		isAlive_ = false;
 		deadZone->isActive = false;
+		AudioManager::PlayAudio("playerDead", 1.0f);
 
 		return;
 	}

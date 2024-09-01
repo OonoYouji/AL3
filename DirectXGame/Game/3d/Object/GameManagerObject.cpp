@@ -29,14 +29,6 @@ void GameManagerObject::Initialize() {
 /// ===================================================
 void GameManagerObject::Update() {
 
-	if(isGameOver_) {
-
-		if(Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-			SceneManager::GetInstance()->Load(new Scene_Game());
-		}
-
-	}
-
 
 }
 

@@ -79,6 +79,7 @@ void Scene_Game::Initialize() {
 	AudioManager::Load("EnemyDead", "Audios/EnemyDead.mp3");
 	AudioManager::Load("ItemGet", "Audios/ItemGet.mp3");
 	AudioManager::Load("Start", "Audios/start.mp3");
+	AudioManager::Load("playerDead", "Audios/playerDead.mp3");
 
 
 }

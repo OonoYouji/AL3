@@ -12,7 +12,7 @@
 #include <BulletItem.h>
 #include <WorldTime.h>
 #include <PlayerBullet.h>
-
+#include <InformationHUD.h>
 
 
 /// ===================================================
@@ -139,6 +139,12 @@ void Enemy::LastUpdate() {
 			BulletItem* item = new BulletItem();
 			item->Initialize();
 			item->SetPos(GetPosition());
+		}
+
+		/// スコアを加算
+		InformationHUD* infoHUD = dynamic_cast<InformationHUD*>(GameObjectManager::GetInstance()->GetGameObject("InformationHUD"));
+		if(infoHUD) {
+			infoHUD->AddScore(static_cast<uint32_t>(5 * worldTransform_.scale_.Len()));
 		}
 
 		AudioManager::PlayAudio("EnemyDead", 0.2f);

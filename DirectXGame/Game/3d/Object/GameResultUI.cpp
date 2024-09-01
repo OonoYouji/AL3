@@ -1,5 +1,7 @@
 #include "GameResultUI.h"
 
+#include <WinApp.h>
+#include <DirectXCommon.h>
 #include <SceneManager.h>
 #include <TextureManager.h>
 #include <Input.h>
@@ -37,10 +39,25 @@ void GameResultUI::Update() {
 
 
 	Vec2 mousePosition = input_->GetMousePosition();
+	
+	RECT clientRect{};
+	WinApp* winApp = WinApp::GetInstance();
+	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
+	GetClientRect(winApp->GetHwnd(), &clientRect);
+	Vec2 normalized = {
+		mousePosition.x / static_cast<float>(clientRect.right - clientRect.left),
+		mousePosition.y / static_cast<float>(clientRect.bottom - clientRect.top)
+	};
+
+	mousePosition = {
+		normalized.x * dxCommon->GetBackBufferWidth(),
+		normalized.y * dxCommon->GetBackBufferHeight()
+	};
 
 	Vec2 min, max;
 	min = nextButton_->GetPosition() - (nextButton_->GetSize() / 2.0f);
 	max = nextButton_->GetPosition() + (nextButton_->GetSize() / 2.0f);
+
 
 	isOverlapping_ = false;
 	if(min.x < mousePosition.x && min.y < mousePosition.y

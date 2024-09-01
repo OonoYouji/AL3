@@ -29,6 +29,10 @@ public:
 	void SetScore(uint32_t score) { score_ = score; }
 	uint32_t GetScore() const { return score_; }
 
+	void AddScore(uint32_t addValue) {
+		score_ += addValue;
+	}
+
 private:
 
 	/// ===================================================
