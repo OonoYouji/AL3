@@ -249,7 +249,7 @@ void Player::LastUpdate() {
 	}
 
 	/*if(GetPosition().z > 1000.0f) {
-		GameManagerObject* object = 
+		GameManagerObject* object =
 			dynamic_cast<GameManagerObject*>(GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
 
 		object->SetIsGameClear(true);
@@ -330,7 +330,7 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 	/// デッドゾーンに衝突したときの処理
 	DeadZone* deadZone = dynamic_cast<DeadZone*>(collision);
 	if(deadZone) {
-		
+
 		gameManagerObject->SetIsGameOver(true);
 		isAlive_ = false;
 		deadZone->isActive = false;
@@ -518,8 +518,10 @@ bool Player::DeadEffect() {
 
 			if(t == 1.0f) {
 				isDrawActive = true;
+				if(!isEffectEnded_) {
+					(new GameResultUI())->Initialize();
+				}
 				isEffectEnded_ = true;
-				(new GameResultUI())->Initialize();
 			}
 
 		}

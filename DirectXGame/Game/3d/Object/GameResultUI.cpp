@@ -49,7 +49,7 @@ void GameResultUI::Update() {
 	}
 
 	if(isOverlapping_) {
-		nextButton_->SetColor(Vec4(1, 0, 0, 1));
+		nextButton_->SetColor(Vec4(0.9f, 0.9f, 0.9f, 1));
 
 		/// 左キー
 		if(input_->IsTriggerMouse(0)) {
