@@ -30,6 +30,8 @@
 #include <ParticleSystem.h>
 #include <GoalLine.h>
 #include <InformationHUD.h>
+#include <GameResultUI.h>
+
 
 
 Player::Player() {
@@ -302,6 +304,7 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 		gameManagerObject->SetIsGameOver(true);
 		isAlive_ = false;
 
+
 		DeadZone* deadZone = dynamic_cast<DeadZone*>(
 			GameObjectManager::GetInstance()->GetGameObject("DeadZone"));
 		deadZone->isActive = false;
@@ -516,6 +519,7 @@ bool Player::DeadEffect() {
 			if(t == 1.0f) {
 				isDrawActive = true;
 				isEffectEnded_ = true;
+				(new GameResultUI())->Initialize();
 			}
 
 		}

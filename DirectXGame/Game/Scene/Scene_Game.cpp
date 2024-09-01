@@ -24,7 +24,6 @@
 #include <InformationHUD.h>
 #include <GameStartEffect.h>
 
-
 Scene_Game::Scene_Game() {}
 Scene_Game::~Scene_Game() {}
 
