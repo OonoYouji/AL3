@@ -6,6 +6,7 @@
 #include <TextureManager.h>
 #include <Input.h>
 
+#include <GameManagerObject.h>
 #include <Scene_Game.h>
 
 
@@ -21,10 +22,12 @@ void GameResultUI::Initialize() {
 
 	nextButton_.reset(Sprite::Create(texHandle, Vec2(position), Vec4(1, 1, 1, 1), Vec2(0.5f, 0.5f)));
 
-
+	int gameOverTex = TextureManager::Load("Textures/gameOver.png");
+	gameOver_.reset(Sprite::Create(gameOverTex, Vec2(640.0f, 100.0f), Vec4(0, 0, 0, 1), Vec2(0.5f, 0.5f)));
 
 	/// 他クラスポインタ
 	input_ = Input::GetInstance();
+	gameManagerObject_ = dynamic_cast<GameManagerObject*>(GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
 
 }
 
@@ -39,7 +42,7 @@ void GameResultUI::Update() {
 
 
 	Vec2 mousePosition = input_->GetMousePosition();
-	
+
 	RECT clientRect{};
 	WinApp* winApp = WinApp::GetInstance();
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
@@ -81,4 +84,9 @@ void GameResultUI::Update() {
 
 void GameResultUI::FrontSpriteDraw() {
 	nextButton_->Draw();
+
+	if(gameManagerObject_->GetIsGameOver()) {
+		gameOver_->Draw();
+	}
+
 }

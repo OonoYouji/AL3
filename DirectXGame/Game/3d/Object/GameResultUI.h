@@ -25,10 +25,12 @@ public:
 private:
 
 	std::unique_ptr<Sprite> nextButton_;
+	std::unique_ptr<Sprite> gameOver_;
 
 	bool isOverlapping_ = false;
 
 
 	class Input* input_ = nullptr;
+	class GameManagerObject* gameManagerObject_ = nullptr;
 
 };
