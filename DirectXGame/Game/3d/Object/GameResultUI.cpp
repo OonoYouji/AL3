@@ -55,8 +55,8 @@ void GameResultUI::Update() {
 	};
 
 	Vec2 min, max;
-	min = nextButton_->GetPosition() - (nextButton_->GetSize() / 2.0f);
-	max = nextButton_->GetPosition() + (nextButton_->GetSize() / 2.0f);
+	min = position - (nextButton_->GetSize() / 2.0f);
+	max = position + (nextButton_->GetSize() / 2.0f);
 
 
 	isOverlapping_ = false;

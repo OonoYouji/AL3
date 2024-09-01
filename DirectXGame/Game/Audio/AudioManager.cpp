@@ -8,11 +8,14 @@ void AudioManager::Load(const std::string& key, const std::string& filePath) {
 }
 
 uint32_t AudioManager::PlayAudio(const std::string& key, float volume, bool isLoop) {
-	return sInstance_->audio_->PlayWave(
+	int voiceHandle = sInstance_->audio_->PlayWave(
 		sInstance_->soundDatas_.at(key).handle,	/// 再生する音のハンドル
 		isLoop,									/// ループフラグ
 		volume * sInstance_->masterVolume_		/// 再生する音の大きさ
 	);
+
+	sInstance_->soundDatas_.at(key).voiceHandles_.push_back(voiceHandle);
+	return voiceHandle;
 }
 
 void AudioManager::StopAudio(uint32_t voiceHandle) {

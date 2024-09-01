@@ -80,7 +80,10 @@ void Scene_Game::Initialize() {
 	AudioManager::Load("ItemGet", "Audios/ItemGet.mp3");
 	AudioManager::Load("Start", "Audios/start.mp3");
 	AudioManager::Load("playerDead", "Audios/playerDead.mp3");
-
+	AudioManager::Load("gameBGM", "Audios/gameBGM.mp3");
+	
+	AudioManager::StopAudioAll("gameBGM");
+	AudioManager::PlayAudio("gameBGM", 0.2f, true);
 
 }
 
