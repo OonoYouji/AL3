@@ -73,8 +73,6 @@ void Scene_Game::Initialize() {
 	(new OperationUI())->Initialize();
 	(new InformationHUD())->Initialize();
 
-	(new GameStartEffect())->Initialize();
-
 	EnemyManager::GetInstance()->Initialize();
 
 
@@ -152,7 +150,6 @@ void Scene_Game::Update() {
 /// ===================================================
 void Scene_Game::BackSpriteDraw() {
 	GameObjectManager::GetInstance()->BackSpriteDraw();
-
 }
 
 
@@ -160,9 +157,7 @@ void Scene_Game::BackSpriteDraw() {
 /// 3d objectの描画
 /// ===================================================
 void Scene_Game::Object3dDraw() {
-
 	GameObjectManager::GetInstance()->Draw();
-
 }
 
 

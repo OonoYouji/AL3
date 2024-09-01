@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 
+#include "Scene_Title.h"
 #include "Scene_Game.h"
 #include <GameObjectManager.h>
 #include <CollisionManager.h>
@@ -17,7 +18,7 @@ SceneManager* SceneManager::GetInstance() {
 /// 初期化
 /// ===================================================
 void SceneManager::Initialize() {
-	currentScene_.reset(new Scene_Game());
+	currentScene_.reset(new Scene_Title());
 	currentScene_->Initialize();
 	
 }
@@ -60,7 +61,7 @@ void SceneManager::Draw() {
 /// シーンのロード
 /// ===================================================
 void SceneManager::Load(BaseScene* next) {
-	nextScene_.reset(next);
+	GetInstance()->nextScene_.reset(next);
 }
 
 

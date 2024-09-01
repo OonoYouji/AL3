@@ -39,7 +39,7 @@ public:
 	/// <summary>
 	/// シーンの読み込み
 	/// </summary>
-	void Load(BaseScene* next);
+	static void Load(BaseScene* next);
 
 	/// <summary>
 	/// シーンのゲット
