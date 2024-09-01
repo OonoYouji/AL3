@@ -61,6 +61,7 @@ public:
 	bool GetIsAlive() const { return isAlive_; }
 	bool GetIsEffectEnded() const { return isEffectEnded_; }
 
+	void SetGameManagerObject(class GameManagerObject* object);
 
 private:
 
@@ -148,5 +149,6 @@ private:
 
 	/// 他クラス pointer
 	class InformationHUD* infoHUD_ = nullptr;
+	class GameManagerObject* gameManagerObject_ = nullptr;
 
 };

@@ -258,6 +258,9 @@
     <ClCompile Include="Game\3d\Object\GameResultUI.cpp">
       <Filter>Game\3d\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Game\3d\Object\GameClearEffect.cpp">
+      <Filter>Game\3d\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -480,6 +483,9 @@
       <Filter>Game\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Game\3d\Object\GameResultUI.h">
+      <Filter>Game\3d\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3d\Object\GameClearEffect.h">
       <Filter>Game\3d\Object</Filter>
     </ClInclude>
   </ItemGroup>

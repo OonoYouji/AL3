@@ -13,7 +13,7 @@ namespace EnemyState {
 	private:
 
 		Vec3 move_ = { 0, 0, 1 };
-		float speed_ = 6.0f;
+		float speed_ = 5.0f;
 		
 	};
 

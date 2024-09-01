@@ -31,6 +31,7 @@
 #include <GoalLine.h>
 #include <InformationHUD.h>
 #include <GameResultUI.h>
+#include <GameClearEffect.h>
 
 
 
@@ -46,14 +47,7 @@ Player::~Player() {
 
 void Player::Initialize() {
 
-	//isActive = false;
-	//isDrawActive = false;
-
 	input_ = Input::GetInstance();
-
-
-	//model_ = ModelManager::GetModel("player");
-
 
 	worldTransform_.translation_.y = 0.5f;
 
@@ -85,7 +79,7 @@ void Player::Initialize() {
 	modelParts_[R_LEG]->transform.translation_ = { 0.576401f,  0.705473f, 0.0f };
 
 	color_.Initialize();
-	color_.SetColor({ 1,0,0,1 });
+	color_.SetColor(Vector4(91 / 255.0f, 110 / 255.0f, 225 / 255.0f, 1.0f));
 	color_.TransferMatrix();
 
 
@@ -124,6 +118,7 @@ void Player::Initialize() {
 
 	/// 他クラスポインタの初期化
 	infoHUD_ = dynamic_cast<InformationHUD*>(GameObjectManager::GetInstance()->GetGameObject("InformationHUD"));
+	gameManagerObject_ = dynamic_cast<GameManagerObject*>(GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
 
 }
 
@@ -248,14 +243,6 @@ void Player::LastUpdate() {
 		part->transform.UpdateMatrix();
 	}
 
-	/*if(GetPosition().z > 1000.0f) {
-		GameManagerObject* object =
-			dynamic_cast<GameManagerObject*>(GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
-
-		object->SetIsGameClear(true);
-
-	}*/
-
 }
 
 
@@ -277,25 +264,18 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 	StartLine* startLine = dynamic_cast<StartLine*>(collision);
 	if(startLine) {
 
-		GameManagerObject* object = dynamic_cast<GameManagerObject*>(
-			GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
-
-
-		if(!object->GetIsGameStart()) {
-
-			object->SetIsGameStart(true);
+		if(!gameManagerObject_->GetIsGameStart()) {
+			gameManagerObject_->SetIsGameStart(true);
+			MainCamera::GetInstance()->SetShake(0.2f, 0.2f);
 			AudioManager::PlayAudio("Start", 0.2f);
-
 		}
 
 		return;
 	}
 
 
-	GameManagerObject* gameManagerObject = dynamic_cast<GameManagerObject*>(
-		GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
-	if(gameManagerObject) {
-		if(!gameManagerObject->GetIsGameStart()) {
+	if(gameManagerObject_) {
+		if(!gameManagerObject_->GetIsGameStart()) {
 			return;
 		}
 	}
@@ -305,7 +285,7 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 	Enemy* enemy = dynamic_cast<Enemy*>(collision);
 	if(enemy) {
 
-		gameManagerObject->SetIsGameOver(true);
+		gameManagerObject_->SetIsGameOver(true);
 		isAlive_ = false;
 
 
@@ -337,7 +317,7 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 	DeadZone* deadZone = dynamic_cast<DeadZone*>(collision);
 	if(deadZone) {
 
-		gameManagerObject->SetIsGameOver(true);
+		gameManagerObject_->SetIsGameOver(true);
 		isAlive_ = false;
 		deadZone->isActive = false;
 		AudioManager::PlayAudio("playerDead", 1.0f);
@@ -349,12 +329,19 @@ void Player::OnCollisionEnter([[maybe_unused]] BaseGameObject* collision) {
 	GoalLine* goalLine = dynamic_cast<GoalLine*>(collision);
 	if(goalLine) {
 
-		gameManagerObject->SetIsGameClear(true);
+		gameManagerObject_->SetIsGameClear(true);
+		isAlive_ = false;
+
+		AudioManager::PlayAudio("Start");
 
 		return;
 	}
 
 
+}
+
+void Player::SetGameManagerObject(GameManagerObject* object) {
+	gameManagerObject_ = object;
 }
 
 
@@ -527,7 +514,12 @@ bool Player::DeadEffect() {
 				isDrawActive = true;
 				if(!isEffectEnded_) {
 					(new GameResultUI())->Initialize();
+
+					if(gameManagerObject_->GetIsGameClear()) {
+						(new GameClearEffect)->Initialize();
+					}
 				}
+
 				isEffectEnded_ = true;
 			}
 
@@ -542,25 +534,30 @@ bool Player::DeadEffect() {
 		deadEffect_.currentTime = std::min(deadEffect_.currentTime + WorldTime::GetDeltaTime(), deadEffect_.maxTime);
 		deadEffect_.lerpT = deadEffect_.currentTime / deadEffect_.maxTime;
 
-		float t = 0.5f * (sin(deadEffect_.lerpT * 10.0f) + 1.0f) * 0.5f + 0.5f;
-		color_.SetColor(Vector4(91 / 255.0f, 110 / 255.0f, 225 / 255.0f, 1.0f) * t);
-		color_.TransferMatrix();
+		if(gameManagerObject_->GetIsGameOver()) {
+			float t = 0.5f * (sin(deadEffect_.lerpT * 10.0f) + 1.0f) * 0.5f + 0.5f;
+			color_.SetColor(Vector4(91 / 255.0f, 110 / 255.0f, 225 / 255.0f, 1.0f) * t);
+			color_.TransferMatrix();
+		}
 
 		if(deadEffect_.lerpT == 1.0f) {
 			isDrawActive = false;
 
-			ParticleSystem* particle = new ParticleSystem();
-			particle->Initialize();
-			particle->SetPos(GetPosition());
-			particle->UpdateMatrix();
-			particle->SetThisLifeTime(1.0f);
-			particle->SetCreateParticleCount(3);
-			particle->SetIsActiveAttenuation(true);
-			particle->SetObjectColor(color_);
-
 			WorldTime::SetAttenuation(0.5f);
-			for(int i = 0; i < 60; ++i) {
-				particle->Update();
+
+			if(gameManagerObject_->GetIsGameOver()) {
+				ParticleSystem* particle = new ParticleSystem();
+				particle->Initialize();
+				particle->SetPos(GetPosition());
+				particle->UpdateMatrix();
+				particle->SetThisLifeTime(1.0f);
+				particle->SetCreateParticleCount(3);
+				particle->SetIsActiveAttenuation(true);
+				particle->SetObjectColor(color_);
+
+				for(int i = 0; i < 60; ++i) {
+					particle->Update();
+				}
 			}
 
 			color_.SetColor(Vector4(91 / 255.0f, 110 / 255.0f, 225 / 255.0f, 1.0f));

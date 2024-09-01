@@ -48,7 +48,11 @@ void Scene_Game::Initialize() {
 	camera_->SetTarget(player);
 
 
-	(new GameManagerObject())->Initialize();
+	GameManagerObject* gameManagerObject = new GameManagerObject();
+	gameManagerObject->Initialize();
+
+	player->SetGameManagerObject(gameManagerObject);
+
 	(new StartLine())->Initialize();
 	(new GoalLine())->Initialize();
 
