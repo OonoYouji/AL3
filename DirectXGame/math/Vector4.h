@@ -45,3 +45,5 @@ inline Vector4 operator* (float scaler, const Vector4& v) {
 		v.w * scaler
 	};
 }
+
+using Vec4 = Vector4;

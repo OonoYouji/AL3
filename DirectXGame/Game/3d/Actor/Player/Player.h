@@ -139,4 +139,8 @@ private:
 	Vec3 playerLerpStartPos_;
 	Vec3 playerLerpEndPos_;
 
+
+	/// 他クラス pointer
+	class InformationHUD* infoHUD_ = nullptr;
+
 };

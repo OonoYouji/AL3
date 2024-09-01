@@ -29,6 +29,7 @@
 #include <GameCamera.h>
 #include <ParticleSystem.h>
 #include <GoalLine.h>
+#include <InformationHUD.h>
 
 
 Player::Player() {
@@ -117,6 +118,10 @@ void Player::Initialize() {
 	FireMethods_[ArrRefe_Twin] = std::bind(&Player::TwinFire, this);
 	FireMethods_[ArrRefe_Wide] = std::bind(&Player::WideFire, this);
 	FireMethods_[ArrRefe_Side] = std::bind(&Player::SideFire, this);
+
+
+	/// 他クラスポインタの初期化
+	infoHUD_ = dynamic_cast<InformationHUD*>(GameObjectManager::GetInstance()->GetGameObject("InformationHUD"));
 
 }
 

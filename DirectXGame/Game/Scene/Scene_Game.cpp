@@ -22,6 +22,7 @@
 #include <DeadZone.h>
 #include <OperationUI.h>
 #include <InformationHUD.h>
+#include <GameStartEffect.h>
 
 
 Scene_Game::Scene_Game() {}
@@ -71,6 +72,8 @@ void Scene_Game::Initialize() {
 	(new DeadZone())->Initialize();
 	(new OperationUI())->Initialize();
 	(new InformationHUD())->Initialize();
+
+	(new GameStartEffect())->Initialize();
 
 	EnemyManager::GetInstance()->Initialize();
 
