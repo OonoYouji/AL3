@@ -124,6 +124,7 @@
     <ClCompile Include="Game\3d\Camera\GameCamera.cpp" />
     <ClCompile Include="Game\3d\Camera\MainCamera.cpp" />
     <ClCompile Include="Game\3d\Camera\MyDebugCamera.cpp" />
+    <ClCompile Include="Game\3d\Demo\DemoObject.cpp" />
     <ClCompile Include="Game\3d\GameObject\BaseGameObject.cpp" />
     <ClCompile Include="Game\3d\GameObject\GameObjectManager.cpp" />
     <ClCompile Include="Game\3d\ModelManager\ModelManager.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="Game\3d\Camera\GameCamera.h" />
     <ClInclude Include="Game\3d\Camera\MainCamera.h" />
     <ClInclude Include="Game\3d\Camera\MyDebugCamera.h" />
+    <ClInclude Include="Game\3d\Demo\DemoObject.h" />
     <ClInclude Include="Game\3d\GameObject\BaseGameObject.h" />
     <ClInclude Include="Game\3d\GameObject\GameObjectManager.h" />
     <ClInclude Include="Game\3d\ModelManager\ModelManager.h" />

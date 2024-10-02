@@ -12,17 +12,7 @@
 #include <CollisionManager.h>
 #include <AudioManager.h>
 
-#include <Player.h>
-#include <Enemy.h>
-#include <EnemyManager.h>
-#include <Ground.h>
-#include <StartLine.h>
-#include <GoalLine.h>
-#include <GameManagerObject.h>
-#include <DeadZone.h>
-#include <OperationUI.h>
-#include <InformationHUD.h>
-#include <GameStartEffect.h>
+#include <Demo/DemoObject.h>
 
 Scene_Game::Scene_Game() {}
 Scene_Game::~Scene_Game() {}
@@ -36,6 +26,8 @@ void Scene_Game::Initialize() {
 
 	camera_ = new GameCamera();
 	camera_->Initialize();
+	camera_->SetPos({0,2.2f,-7});
+	camera_->SetRotateX(0.2f);
 
 	debugCamera_ = new MyDebugCamera();
 	debugCamera_->Initialize();
@@ -43,51 +35,7 @@ void Scene_Game::Initialize() {
 
 	MainCamera::GetInstance()->SetCamera(camera_);
 
-	Player* player = new Player();
-	player->Initialize();
-	camera_->SetTarget(player);
-
-
-	GameManagerObject* gameManagerObject = new GameManagerObject();
-	gameManagerObject->Initialize();
-
-	player->SetGameManagerObject(gameManagerObject);
-
-	(new StartLine())->Initialize();
-	(new GoalLine())->Initialize();
-
-
-	(new Ground())->Initialize();
-	/// 左右の移動制限ゾーンの描画用
-	for(uint32_t i = 0; i < 2; ++i) {
-		Ground* ground = new Ground();
-		ground->Initialize();
-
-		if(i == 0) {
-			ground->SetPos({ -120,0,0 });
-		} else {
-			ground->SetPos({ 120,0,0 });
-		}
-
-		ground->SetColor({ 0.5f, 0.5f, 0.5f, 1 });
-	}
-
-	(new DeadZone())->Initialize();
-	(new OperationUI())->Initialize();
-	(new InformationHUD())->Initialize();
-
-	EnemyManager::GetInstance()->Initialize();
-
-
-	AudioManager::Load("fire", "Audios/Fire.mp3");
-	AudioManager::Load("EnemyDead", "Audios/EnemyDead.mp3");
-	AudioManager::Load("ItemGet", "Audios/ItemGet.mp3");
-	AudioManager::Load("Start", "Audios/start.mp3");
-	AudioManager::Load("playerDead", "Audios/playerDead.mp3");
-	AudioManager::Load("gameBGM", "Audios/gameBGM.mp3");
-	
-	AudioManager::StopAudioAll("gameBGM");
-	AudioManager::PlayAudio("gameBGM", 0.05f, true);
+	(new DemoObject)->Initialize();
 
 }
 
@@ -116,21 +64,13 @@ void Scene_Game::Update() {
 
 		ImGui::Separator();
 
-		if(ImGui::Button("player clear line transition")) {
-			Player* player = dynamic_cast<Player*>(GameObjectManager::GetInstance()->GetGameObject("Player"));
-			player->SetPosZ(750.0f);
-			GameManagerObject* gameManagerObject = dynamic_cast<GameManagerObject*>(GameObjectManager::GetInstance()->GetGameObject("GameManagerObject"));
-			gameManagerObject->SetIsGameStart(true);
-		}
-
-
 
 		ImGui::End();
 
 		GameObjectManager::GetInstance()->ImGuiDebug();
 		WorldTime::GetInstance()->ImGuiDebug();
 		CollisionManager::GetInstance()->ImGuiDebug();
-		EnemyManager::GetInstance()->ImGuiDebug();
+		//EnemyManager::GetInstance()->ImGuiDebug();
 
 		if(debugCamera_->isActive) {
 			MainCamera::GetInstance()->SetCamera(debugCamera_);
@@ -149,11 +89,7 @@ void Scene_Game::Update() {
 
 
 	GameObjectManager::GetInstance()->Update();
-	EnemyManager::GetInstance()->Update();
-
-
 	CollisionManager::GetInstance()->Update();
-
 	GameObjectManager::GetInstance()->LastUpdate();
 
 }

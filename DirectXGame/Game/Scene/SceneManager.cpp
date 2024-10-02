@@ -18,7 +18,7 @@ SceneManager* SceneManager::GetInstance() {
 /// 初期化
 /// ===================================================
 void SceneManager::Initialize() {
-	currentScene_.reset(new Scene_Title());
+	currentScene_.reset(new Scene_Game());
 	currentScene_->Initialize();
 	
 }

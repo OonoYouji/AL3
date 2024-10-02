@@ -16,7 +16,7 @@ void GameCamera::Initialize() {
 	viewProjection_.Initialize();
 
 	//SetPos(Vec3(0.0f, 43.45f, -11.25f));
-	SetRotateX(1.1f);
+	//SetRotateX(1.1f);
 
 	offset_ = Vec3(0.0f, 43.45f, -11.25f);
 
